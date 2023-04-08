@@ -1,0 +1,13 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/Parakeet.Net/src/Parakeet.Net.Web/appsettings.json
+/Parakeet.Net/src/Parakeet.Net.Web/appsettings.Development.json
+/Parakeet.Net/src/Parakeet.Net.Web/appsettings.secrets.json
+/Parakeet.Net/src/Parakeet.Net.AuthServer/appsettings.secrets.json
+/Parakeet.Net/src/Parakeet.Net.AuthServer/appsettings.json
+/Parakeet.Net/src/Parakeet.Net.AuthServer/appsettings.Development.json
+/Parakeet.Net/src/Parakeet.Net.HttpApi.Host/appsettings.json
+/Parakeet.Net/src/Parakeet.Net.DbMigrator/appsettings.json
+/Parakeet.Net/src/Parakeet.Net.DbMigrator/appsettings.secrets.json

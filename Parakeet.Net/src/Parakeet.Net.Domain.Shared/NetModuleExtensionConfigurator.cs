@@ -37,6 +37,7 @@ public static class NetModuleExtensionConfigurator
 
     private static void ConfigureExtraProperties()
     {
+        //todo:user表 字段扩展
         /* You can configure extra properties for the
          * entities defined in the modules used by your application.
          *

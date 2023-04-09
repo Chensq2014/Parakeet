@@ -1,0 +1,23 @@
+{
+  "profiles": {
+    "Parakeet.Net.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger/index.html",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AppName": "parakeet",
+        "SelfUrl": "http://localhost:23517",
+        "DATABASE_TYPE": "3",
+        "DATABASE_CONNECTION_STRING": "host=localhost;port=5432;database=Parakeet;userid=postgres;pwd=123456;",
+        "CSREDISCONFIGURATIONBASE": "127.0.0.1:6379,password=,prefix=iot",
+        "STACKREDISCONN": "127.0.0.1:6379",
+        "EXCHANGEREDISCONN": "127.0.0.1:6379"
+      },
+      "applicationUrl": "http://localhost:23517"
+      //"applicationUrl": "http://localhost:50000"
+      //"applicationUrl": "http://127.0.0.1:50000"
+      //"applicationUrl": "http://172.27.0.26"
+    }
+  }
+}

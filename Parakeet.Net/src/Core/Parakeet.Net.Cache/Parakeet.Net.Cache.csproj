@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+
+		<PackageReference Include="Caching.CSRedis" Version="3.8.670" />
+		<PackageReference Include="EasyCaching.CSRedis" Version="1.9.0" />
+		<PackageReference Include="EasyCaching.Redis" Version="1.9.0" />
+		<PackageReference Include="EasyCaching.Serialization.MessagePack" Version="1.9.0" />
+		<PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.DistributedLocking" Version="6.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Parakeet.Net.Domain.Shared\Parakeet.Net.Domain.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="ServiceStack.Common">
+			<HintPath>..\..\..\test\ServiceStack.RedisCrack\CacheStack\ServiceStack.Common.dll</HintPath>
+		</Reference>
+		<Reference Include="ServiceStack.Interfaces">
+			<HintPath>..\..\..\test\ServiceStack.RedisCrack\CacheStack\ServiceStack.Interfaces.dll</HintPath>
+		</Reference>
+		<Reference Include="ServiceStack.Redis">
+			<HintPath>..\..\..\test\ServiceStack.RedisCrack\CacheStack\ServiceStack.Redis.dll</HintPath>
+		</Reference>
+		<Reference Include="ServiceStack.Text">
+			<HintPath>..\..\..\test\ServiceStack.RedisCrack\CacheStack\ServiceStack.Text.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+</Project>

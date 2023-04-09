@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Parakeet.Net.CustomAttributes;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -114,6 +115,38 @@ namespace Parakeet.Net.Extensions
             return (T)JsonConvert.DeserializeObject(source, sourceType);
         }
 
+        /// <summary>
+        /// 将JSON字符串转换为匿名类型
+        /// </summary>
+        /// <typeparam name="T">匿名类型</typeparam>
+        /// <param name="json">JSON字符串 </param>
+        /// <param name="anonymousTypeObject">匿名类型</param>
+        /// <returns></returns>
+        public static T FromJsonString<T>(this string json, T anonymousTypeObject)
+        {
+            return string.IsNullOrWhiteSpace(json)
+                ? default(T)
+                : JsonConvert.DeserializeAnonymousType(json, anonymousTypeObject);
+        }
+
+        /// <summary>
+        /// 将JSON字符串转成对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="json">JSON字符串 </param>
+        /// <param name="converters">JSON转换器</param>
+        /// <returns></returns>
+        public static T FromJsonString<T>(this string json, IEnumerable<JsonConverter> converters)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return default(T);
+            }
+            var settings = new JsonSerializerSettings();
+            (settings.Converters as List<JsonConverter>)?.AddRange(converters);
+            return JsonConvert.DeserializeObject<T>(json, settings);
+        }
+        
         /// <summary>
         ///     转<see cref="DateTime" />对象
         /// </summary>

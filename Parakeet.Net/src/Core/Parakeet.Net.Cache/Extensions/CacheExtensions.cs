@@ -14,7 +14,9 @@ using ServiceStack;
 using Volo.Abp.Caching;
 using Nest;
 using Parakeet.Net.Cache.Services;
+using Parakeet.Net.Extensions;
 using Volo.Abp.Caching.StackExchangeRedis;
+using StackExchange.Redis;
 
 namespace Parakeet.Net.Cache.Extensions
 {
@@ -35,6 +37,8 @@ namespace Parakeet.Net.Cache.Extensions
     /// </summary>
     public static class CacheExtensions
     {
+        #region IServiceCollection 注册委托扩展
+
         /// <summary>
         /// 添加RedisCache 缓存
         /// </summary>
@@ -214,6 +218,87 @@ namespace Parakeet.Net.Cache.Extensions
                 Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、配置{nameof(AbpDistributedCacheOptions)} GlobalCacheEntryOptions.SlidingExpiration:{TimeSpan.FromHours(2)}....");
             });
         }
+
+
+
+        #endregion
+
+        #region 缓存转换方法扩展
+
+        /// <summary>
+        /// 转redisValue
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static RedisValue ToRedisValue(this object value)
+        {
+            switch (value)
+            {
+                case null:
+                    return string.Empty;
+                case string:
+                    return value.ToString();
+                case int:
+                    return value.ToString();
+                default:
+                    return value.ToJsonString();
+            }
+        }
+
+        /// <summary>
+        /// 转redisValues
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static RedisValue[] ToRedisValues<T>(this T[] values)
+        {
+            return values.Select(x => ToRedisValue(x)).ToArray();
+        }
+
+        /// <summary>
+        /// keys转Rediskey[]
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public static RedisKey[] ToRedisKeys(this string[] keys)
+        {
+            return keys.Select(x => new RedisKey(x)).ToArray();
+        }
+
+        /// <summary>
+        /// RedisValue[] 转 string[]
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static string[] ToValues(RedisValue[] values)
+        {
+            return values.Select(x => (string)x).ToArray();
+        }
+
+        /// <summary>
+        /// 转泛型数组
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static T[] ToValues<T>(this IEnumerable<string> values)
+        {
+            return values.Select(ToObjectValue<T>).ToArray();
+        }
+
+        /// <summary>
+        /// 字符串转泛型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static T ToObjectValue<T>(this string value)
+        {
+            return value.FromJsonString<T>();
+        }
+
+        #endregion
     }
 
 }

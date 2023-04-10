@@ -47,24 +47,43 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
 
         #region SqlServer  PostgreSQL Mysql Bulk
         /// <summary>
-        /// sqlserver 批量插入
+        /// 批量插入
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        [Obsolete("Obsolete")]
         public async Task BulkInsertAsync(IList<TEntity> entities)
         {
-            await base.DbContext.BulkInsertAsync(entities);
+            await (await GetDbContextAsync()).BulkInsertAsync(entities);
         }
+
         /// <summary>
-        /// sqlserver 批量删除
+        ///  批量更新或插入
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        [Obsolete("Obsolete")]
+        public async Task BulkInsertOrUpdateAsync(IList<TEntity> entities)
+        {
+            await (await GetDbContextAsync()).BulkInsertOrUpdateAsync(entities);
+        }
+
+        /// <summary>
+        ///  批量更新或插入或删除
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        public async Task BulkInsertOrUpdateOrDeleteAsync(IList<TEntity> entities)
+        {
+            await (await GetDbContextAsync()).BulkInsertOrUpdateOrDeleteAsync(entities);
+        }
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
         public async Task BulkDeleteAsync(IList<TEntity> entities)
         {
-            await base.DbContext.BulkDeleteAsync(entities);
+            await (await GetDbContextAsync()).BulkDeleteAsync(entities);
         }
 
         #endregion
@@ -530,7 +549,7 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
         /// <returns>task</returns>
         private async Task ExecuteSqlWithParameterAsync(KeyValuePair<string, SqlParameter[]> sqlParameterPair)
         {
-            var transaction = await base.DbContext.Database.BeginTransactionAsync();
+            var transaction = await (await GetDbContextAsync()).Database.BeginTransactionAsync();
             var cancel = new Task(async () =>
             {
                 await transaction.RollbackAsync();
@@ -538,7 +557,7 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
             });
             var action = string.IsNullOrWhiteSpace(sqlParameterPair.Key)
                 ? new Task(() => { })
-                : base.DbContext.Database.ExecuteSqlRawAsync(sqlParameterPair.Key, sqlParameterPair.Value, cancel);//sqlParameterPair.Value.Select(m => m.Value)
+                : (await GetDbContextAsync()).Database.ExecuteSqlRawAsync(sqlParameterPair.Key, sqlParameterPair.Value, cancel);//sqlParameterPair.Value.Select(m => m.Value)
             await action;
             await transaction.CommitAsync();//action委托逻辑完毕之后再执行commit
         }

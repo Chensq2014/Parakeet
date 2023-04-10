@@ -1,12 +1,6 @@
 # Parakeet
 the latest net with abp framework and years of accumulation libraries
 
-#### MySql 数据库迁移命令:
-
-add-migration [MySqlMigrationName] -c MySqlMigrationsDbContext -o Migrations\MySqlMigrations
-
-update-database -c MySqlMigrationsDbContext
-
 #### PgSql 数据库迁移命令:
 
 add-migration [PgSqlMigrationName] -c PgSqlMigrationsDbContext -o Migrations\PgSqlMigrations
@@ -18,6 +12,12 @@ update-database -c PgSqlMigrationsDbContext
 add-migration [SqlServerMigrationName] -c SqlServerMigrationsDbContext -o Migrations\SqlServerMigrations
 
 update-database -c SqlServerMigrationsDbContext
+
+#### MySql 数据库迁移命令:
+
+add-migration [MySqlMigrationName] -c MySqlMigrationsDbContext -o Migrations\MySqlMigrations
+
+update-database -c MySqlMigrationsDbContext
 
 # docker client 命令
 docker system prune — 删除所有未使用的容器、网络以及无名称的镜像(虚悬镜像)

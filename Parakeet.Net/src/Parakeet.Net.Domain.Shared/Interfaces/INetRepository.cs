@@ -17,23 +17,39 @@ namespace Parakeet.Net.Interfaces
         : IRepository<TEntity, TPrimaryKey>
         where TEntity : BaseEntity<TPrimaryKey>//Entity<TPrimaryKey>//
     {
-        #region SqlServer PostgreSQL Mysql Bulk
+
+        #region SqlServer  PostgreSQL Mysql Bulk
 
         /// <summary>
-        /// sqlserver 批量插入
+        /// 批量插入
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
         Task BulkInsertAsync(IList<TEntity> entities);
 
         /// <summary>
-        /// sqlserver 批量删除
+        ///  批量更新或插入
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        Task BulkInsertOrUpdateAsync(IList<TEntity> entities);
+
+        /// <summary>
+        ///  批量更新或插入或删除
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        Task BulkInsertOrUpdateOrDeleteAsync(IList<TEntity> entities);
+
+        /// <summary>
+        /// 批量删除
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
         Task BulkDeleteAsync(IList<TEntity> entities);
 
         #endregion
+
 
     }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 
@@ -17,7 +18,7 @@ namespace Parakeet.Net.EntityFrameworkCore
         }
 
 
-        public override string Resolve(string connectionStringName = null)
+        public override async Task<string> ResolveAsync(string connectionStringName = null)
         {
             //if (connectionStringName != null && Magics.STABLE_DB.Contains(connectionStringName))
             //{
@@ -27,7 +28,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             //    var connectionString = tenant.TenantDbConnectionStrings.First(m => m.IsMaster && m.Year == currentYear).Value;
             //    return connectionString;
             //}
-            return base.Resolve(connectionStringName);
+            return await base.ResolveAsync(connectionStringName);
         }
     }
 }

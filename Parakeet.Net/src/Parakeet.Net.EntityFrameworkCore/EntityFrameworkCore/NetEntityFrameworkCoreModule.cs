@@ -136,8 +136,7 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //context.Services.AddScoped<ITaxCalculator>(sp => sp.GetRequiredService<TaxCalculator>());
         #endregion
 
-
-
+        
         Configure<AbpDbContextOptions>(options =>
         {
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpDbContextOptions)} UseSqlServer or UseNpgsql or UseMySQL....  ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
@@ -179,8 +178,7 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //context.Services.AddCachePool();//domain模块已调用
 
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetEntityFrameworkCoreModule)} End ConfigureServices ....");
-
-
+        
     }
 
 

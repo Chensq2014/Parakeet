@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>Parakeet.Net</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Core\Parakeet.Net.Cache\Parakeet.Net.Cache.csproj" />
+		<ProjectReference Include="..\Parakeet.Net.Domain.Shared\Parakeet.Net.Domain.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Atom.Base64Url" Version="1.0.3" />
+		<PackageReference Include="FreeSql.Provider.MySql" Version="3.2.693" />
+		<PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.693" />
+		<PackageReference Include="FreeSql.Provider.PostgreSQL" Version="3.2.693" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+		<PackageReference Include="NPOI.Core.Extension" Version="1.0.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
+		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0007" />
+		<PackageReference Include="Volo.Abp.Emailing" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.Identity.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.OpenIddict.Domain" Version="6.0.2" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="6.0.2" />
+	</ItemGroup>
+
+</Project>

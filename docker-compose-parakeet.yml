@@ -2,7 +2,7 @@ version: "3.1"
 services:
   es:
     hostname: es
-    image: 172.29.250.56:8089/akso/es6.7.1:20210517152613
+    image: es:latest
     restart: always
     # volumes:
     #   - /home/es:/usr/share/elasticsearch/data
@@ -19,7 +19,7 @@ services:
       - parakeet
   kibana:
     hostname: kibana
-    image: docker.elastic.co/kibana/kibana:6.7.1
+    image: docker.elastic.co/kibana/kibana:latest
     environment:
       ELASTICSEARCH_HOSTS: http://es:9200
     ports:
@@ -58,14 +58,31 @@ services:
         condition: on-failure
     networks:
       - parakeet
+  nacos:
+    hostname: nacos
+    image: nacos:latest
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    volumes:
+       - D:/docker/nacos/data:/home/nacos/data
+    networks:
+       - parakeet
+    environment:
+       - MODE=standalone
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
   mysql:
     hostname: mysql
-    image: 172.29.250.56:8089/akso/mysql:8.0.19
+    image: mysql:latest
     command:
       --default-authentication-plugin=mysql_native_password
       --innodb-doublewrite=0
       --lower-case-table-names=1
       --innodb-page-size=64K
+      --local_infile=1
     ports: 
       - 3306:3306
     volumes:
@@ -73,10 +90,13 @@ services:
     networks: 
       - parakeet    
     environment:
-      MYSQL_ROOT_PASSWORD: Eqms123456
+      MYSQL_ROOT_PASSWORD: parakeet123456
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+      #restart_policy:
+      #  condition: on-failuredocker stack deploy -c docker-compose-parakeet.yml parakeet
+      #  docker stack deploy -c docker-compose-parakeet.yml parakeet
 networks:
   parakeet:

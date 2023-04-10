@@ -50,15 +50,15 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
     private async Task CreateScopesAsync()
     {
-        if (await _scopeManager.FindByNameAsync("Net") == null)
+        if (await _scopeManager.FindByNameAsync("parakeet") == null)
         {
             await _scopeManager.CreateAsync(new OpenIddictScopeDescriptor
             {
-                Name = "Net",
-                DisplayName = "Net API",
+                Name = "parakeet",
+                DisplayName = "Parakeet API",
                 Resources =
                 {
-                    "Net"
+                    "parakeet"
                 }
             });
         }
@@ -73,16 +73,46 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             OpenIddictConstants.Permissions.Scopes.Phone,
             OpenIddictConstants.Permissions.Scopes.Profile,
             OpenIddictConstants.Permissions.Scopes.Roles,
-            "Net"
+            "parakeet"
         };
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
+        #region appsetting.json 配置
+        
+        //var configurationSection1 = _configuration.GetSection("identityServer:Clients");
+        //"OpenIddict": { 
+        //    "Applications": {
+        //        "Parakeet_Web": {
+        //            "ClientId": "Parakeet_Web",
+        //            "RootUrl": "http://localhost:50000"
+        //        },
+        //        "Parakeet_App": {
+        //            "ClientId": "Parakeet_App",
+        //            "RootUrl": "http://localhost:50000"
+        //        },
+        //        "Parakeet_Blazor": {
+        //            "ClientId": "Parakeet_Blazor",
+        //            "RootUrl": "http://localhost:50000"
+        //        },
+        //        "Parakeet_BlazorServerTiered": {
+        //            "ClientId": "Parakeet_BlazorServerTiered",
+        //            "RootUrl": "http://localhost:50000"
+        //        },
+        //        "Parakeet_Swagger": {
+        //            "ClientId": "Parakeet_Swagger",
+        //            "RootUrl": "http://localhost:50000"
+        //        }
+        //    }
+        //}
+
+        #endregion
+
         //Web Client
-        var webClientId = configurationSection["Net_Web:ClientId"];
+        var webClientId = configurationSection["Parakeet_Web:ClientId"];
         if (!webClientId.IsNullOrWhiteSpace())
         {
-            var webClientRootUrl = configurationSection["Net_Web:RootUrl"].EnsureEndsWith('/');
+            var webClientRootUrl = configurationSection["Parakeet_Web:RootUrl"].EnsureEndsWith('/');
 
             /* Net_Web client is only needed if you created a tiered
              * solution. Otherwise, you can delete this client. */
@@ -91,7 +121,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Web Application",
-                secret: configurationSection["Net_Web:ClientSecret"] ?? "1q2w3e*",
+                secret: configurationSection["Parakeet_Web:ClientSecret"] ?? "1q2w3E*",
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -105,10 +135,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         }
 
         //Console Test / Angular Client
-        var consoleAndAngularClientId = configurationSection["Net_App:ClientId"];
+        var consoleAndAngularClientId = configurationSection["Parakeet_App:ClientId"];
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
-            var consoleAndAngularClientRootUrl = configurationSection["Net_App:RootUrl"]?.TrimEnd('/');
+            var consoleAndAngularClientRootUrl = configurationSection["Parakeet_App:RootUrl"]?.TrimEnd('/');
             await CreateApplicationAsync(
                 name: consoleAndAngularClientId,
                 type: OpenIddictConstants.ClientTypes.Public,
@@ -130,10 +160,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         }
 
         // Blazor Client
-        var blazorClientId = configurationSection["Net_Blazor:ClientId"];
+        var blazorClientId = configurationSection["Parakeet_Blazor:ClientId"];
         if (!blazorClientId.IsNullOrWhiteSpace())
         {
-            var blazorRootUrl = configurationSection["Net_Blazor:RootUrl"].TrimEnd('/');
+            var blazorRootUrl = configurationSection["Parakeet_Blazor:RootUrl"].TrimEnd('/');
 
             await CreateApplicationAsync(
                 name: blazorClientId,
@@ -153,17 +183,17 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         }
 
         // Blazor Server Tiered Client
-        var blazorServerTieredClientId = configurationSection["Net_BlazorServerTiered:ClientId"];
+        var blazorServerTieredClientId = configurationSection["Parakeet_BlazorServerTiered:ClientId"];
         if (!blazorServerTieredClientId.IsNullOrWhiteSpace())
         {
-            var blazorServerTieredRootUrl = configurationSection["Net_BlazorServerTiered:RootUrl"].EnsureEndsWith('/');
+            var blazorServerTieredRootUrl = configurationSection["Parakeet_BlazorServerTiered:RootUrl"].EnsureEndsWith('/');
 
             await CreateApplicationAsync(
                 name: blazorServerTieredClientId,
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Blazor Server Application",
-                secret: configurationSection["Net_BlazorServerTiered:ClientSecret"] ?? "1q2w3e*",
+                secret: configurationSection["Net_BlazorServerTiered:ClientSecret"] ?? "1q2w3E*",
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -177,10 +207,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         }
 
         // Swagger Client
-        var swaggerClientId = configurationSection["Net_Swagger:ClientId"];
+        var swaggerClientId = configurationSection["Parakeet_Swagger:ClientId"];
         if (!swaggerClientId.IsNullOrWhiteSpace())
         {
-            var swaggerRootUrl = configurationSection["Net_Swagger:RootUrl"].TrimEnd('/');
+            var swaggerRootUrl = configurationSection["Parakeet_Swagger:RootUrl"].TrimEnd('/');
 
             await CreateApplicationAsync(
                 name: swaggerClientId,
@@ -197,6 +227,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 clientUri: swaggerRootUrl
             );
         }
+
     }
 
     private async Task CreateApplicationAsync(

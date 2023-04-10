@@ -8,5 +8,6 @@ public class NetSettingDefinitionProvider : SettingDefinitionProvider
     {
         //Define your own settings here. Example:
         //context.Add(new SettingDefinition(NetSettings.MySetting1));
+        //context读取节点 对应配置文件 Settings节点下
     }
 }

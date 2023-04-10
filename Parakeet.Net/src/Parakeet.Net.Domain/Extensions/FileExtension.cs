@@ -1,0 +1,201 @@
+﻿using Microsoft.AspNetCore.Http;
+using NPOI.XSSF.UserModel;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Parakeet.Net.Extensions
+{
+    /// <summary>
+    /// 提供Excel导入导出及文件等扩展
+    /// 静态类中的静态方法不占内存，普通变量也会释放
+    /// 只有静态类中的静态字段常驻内存
+    /// </summary>
+    public class FileExtension
+    {
+        #region 内存流写入文件
+
+        /// <summary>
+        /// 内存流写入文件
+        /// </summary>
+        /// <param name="ms">内存流</param>
+        /// <param name="filePath">创建文件的物理地址</param>
+        public static void MemoryToFile(MemoryStream ms, string filePath)
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            if (ms.CanWrite)
+            {
+                using (fs)
+                {
+                    ms.WriteTo(fs);
+                    fs.Flush();
+                    fs.Close();
+                }
+                ms.Close();
+            }
+        }
+
+        #endregion
+
+        #region 保存文件
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="file">文件</param>
+        /// <param name="filePath">文件物理地址</param>
+        public static async Task SavaFile(IFormFile file, string filePath)
+        {
+            //File.Copy(file.FileName, filePath);//CreateNew
+            using (var fs = new FileStream(filePath, FileMode.CreateNew))//, FileAccess.Write//File.Create(filePath))//
+            {
+                await file.CopyToAsync(fs); //CopyTo(fs);//
+                //fs.Flush();
+            }
+        }
+
+        #endregion
+
+        #region 保存文件目录/文件
+        // 检查是否要创建上传文件夹
+        public static bool CreateFolderIfNeeded(string path)
+        {
+            bool success = true;
+            if (!Directory.Exists(path))
+            {
+                try
+                {
+                    Directory.CreateDirectory(path);
+                }
+                catch (Exception)
+                {
+                    //TODO：处理异常
+                    success = false;
+                }
+            }
+            return success;
+        }
+
+        /// <summary>
+        /// 清空指定目录下的文件
+        /// </summary>
+        /// <param name="targetPath"></param>
+        public static void ClearDir(string targetPath)
+        {
+            if (Directory.Exists(targetPath))
+            {
+                var dirInfo = new DirectoryInfo(targetPath);
+                foreach (var file in dirInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+                Directory.Delete(targetPath);//删除这个目录及文件
+            }
+        }
+
+        /// <summary>
+        /// 删除指定目录下的文件后，检查目录是否为空，为空就删除目录
+        /// </summary>
+        /// <param name="filePath"></param>
+        public static void CheckClearParentDir(string filePath)
+        {
+            var dirInfo = new DirectoryInfo(filePath);
+            if (dirInfo.Parent != null)
+            {
+                if (dirInfo.Parent.Exists)
+                {
+                    if (dirInfo.Parent.GetFiles().Any())
+                    {
+                        return;//还有文件就不删除目录
+                    }
+                    Directory.Delete(dirInfo.Parent.FullName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 根据文件全名删除文件
+        /// </summary>
+        /// <param name="fileFullName"></param>
+        public static void ClearFile(string fileFullName)
+        {
+            if (File.Exists(fileFullName))
+            {
+                File.Delete(fileFullName);
+            }
+        }
+
+        /// <summary>
+        /// 查找指定路劲下所有目录
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <returns></returns>
+        public static List<DirectoryInfo> GetAllDirectories(string rootPath)
+        {
+            var directories = new List<DirectoryInfo>();
+            if (!Directory.Exists(rootPath))
+            {
+                return directories;
+            }
+            var directory = new DirectoryInfo(rootPath);
+            directories.Add(directory);
+            foreach (var directoryInfo in directory.GetDirectories())
+            {
+                directories.AddRange(GetAllDirectories(directoryInfo.FullName));
+            }
+            return directories;
+        }
+
+        #endregion
+
+        #region 根据XSSFWorkbook创建Excel文件
+        /// <summary>
+        /// 根据XSSFWorkbook创建Excel文件
+        /// </summary>
+        /// <param name="workbook">XSSFWorkbook工作簿</param>
+        /// <param name="filePath">创建文件的物理地址</param>
+        public static void WriteWorkbookToFile(XSSFWorkbook workbook, string filePath)
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            using (fs)
+            {
+                workbook.Write(fs);
+                fs.Close();
+            }
+        }
+
+        #endregion
+
+        #region 将文件转换为byte[]
+
+        /// <summary>   
+        /// 将文件转换为byte[]
+        /// </summary>   
+        /// <param name="path">图片路径</param>   
+        /// <returns>二进制数组</returns>   
+        public static async Task<byte[]> GetBinaryData(string path)
+        {
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                var imageBytes = await GetBinaryData(fs);
+                await fs.FlushAsync();
+                fs.Close();
+                return imageBytes;
+            }
+        }
+        /// <summary>   
+        /// 内存流转换为byte[]
+        /// </summary>   
+        /// <param name="fs">文件流/内存流</param>
+        /// <returns>二进制数组</returns>
+        public static async Task<byte[]> GetBinaryData(Stream fs)
+        {
+            var imageBytes = new byte[fs.Length];
+            await fs.ReadAsync(imageBytes, 0, Convert.ToInt32(fs.Length));
+            return imageBytes;
+        }
+        #endregion
+
+    }
+}

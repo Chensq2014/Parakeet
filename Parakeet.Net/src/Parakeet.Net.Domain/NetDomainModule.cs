@@ -390,7 +390,7 @@ public class NetDomainModule : AbpModule
 
             ////可以不用写 系统自动发现define
             //options.DefinitionProviders.Add<EmailSettingProvider>();
-            //options.DefinitionProviders.Add<NetCoreSettingDefinitionProvider>();
+            //options.DefinitionProviders.Add<NetSettingDefinitionProvider>();
         });
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetDomainModule)} End ConfigureServices ....");
 

@@ -51,6 +51,16 @@ namespace Parakeet.Net.Helper
         /// </summary>
         public static string RootPath => Environment.GetFolderPath(Environment.SpecialFolder.Programs);
         
+        /// <summary>
+        /// 字体目录 默认@"C:\Windows\Fonts\arial.ttf"
+        /// </summary>
+        public static string FontPath => GetValue("APPFONTPATH",@"C:\Windows\Fonts\arial.ttf");
+
+        /// <summary>
+        /// Watermark路径 默认 https://www.parakeet.vip
+        /// </summary>
+        public static string Watermark => GetValue("WATERMARK",@"https://www.parakeet.vip");
+        
         #endregion
 
         #region GetValue方法 Environment launchSetting只能配置 字符串数字和布尔类型 

@@ -21,6 +21,7 @@ namespace Parakeet.Net.Settings
              Use the SettingStore or another data source */
             return Task.FromResult(setting.DefaultValue);
         }
+
         public override Task<List<SettingValue>> GetAllAsync(SettingDefinition[] settings)
         {
             return Task.FromResult(settings.Select(x=>new SettingValue(x.Name,x.DefaultValue)).ToList());

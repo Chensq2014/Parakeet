@@ -17,7 +17,7 @@ namespace Parakeet.Net.Users
      * - You can query users from database with this entity.
      * - You can update values of your custom properties.
      */
-    public class AppUser :  FullAuditedAggregateRoot<Guid>, IUser
+    public class AppUser :  FullAuditedAggregateRoot<Guid>, IUser//IdentityUser
     {
         #region Base properties
 

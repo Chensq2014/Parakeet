@@ -76,7 +76,7 @@ services:
         condition: on-failure
   mysql:
     hostname: mysql
-    image: mysql:latest
+    image: mysql:8.0.31
     command:
       --default-authentication-plugin=mysql_native_password
       --innodb-doublewrite=0

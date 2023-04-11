@@ -4,9 +4,9 @@ namespace Parakeet.Net;
 
 public static class NetConsts
 {
-    public const string DbTablePrefix = "parakeet";
+    public const string DbTablePrefix = "parakeet_";
 
-    public const string DbSchema = null;//$"public"
+    public const string DbSchema = null;//$"public"//$"parakeet"//
 
     #region MimeTypeNames
 

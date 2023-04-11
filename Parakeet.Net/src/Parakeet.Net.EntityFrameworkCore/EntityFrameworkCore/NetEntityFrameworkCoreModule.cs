@@ -11,7 +11,9 @@ using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.DependencyInjection;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.EntityFrameworkCore.PostgreSql;
+using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Modularity;
@@ -29,6 +31,8 @@ namespace Parakeet.Net.EntityFrameworkCore;
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCorePostgreSqlModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
+    //typeof(AbpEntityFrameworkCoreMySQLModule),
     typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
@@ -114,6 +118,9 @@ public class NetEntityFrameworkCoreModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetEntityFrameworkCoreModule)} Start ConfigureServices ....");
+
+        #region 注册DbContext  配置AbpDbContextOptions
+
         //告诉容器 构造NetDbContext 时把options当作参数传递给构造函数
         context.Services.AddAbpDbContext<NetDbContext>(options =>
         {
@@ -123,20 +130,31 @@ public class NetEntityFrameworkCoreModule : AbpModule
             options.AddDefaultRepositories(includeAllEntities: true);
         });
 
-
-        #region 一旦禁用依赖注入自动注册服务,你应该手动注册你的服务.
-        ////按Module程序集批量注册
-        //context.Services.AddAssemblyOf<NetCoreEntityFrameworkCoreModule>();
-
-        ////单独注册一个transient实例
-        //context.Services.AddTransient<>()
-        ////单独注册一个singleton实例
-        //context.Services.AddSingleton<TaxCalculator>(new TaxCalculator(taxRatio: 0.18));
-        ////单独注册一个从IServiceProvider解析得来的工厂方法
-        //context.Services.AddScoped<ITaxCalculator>(sp => sp.GetRequiredService<TaxCalculator>());
-        #endregion
-
-        
+        context.Services.AddAbpDbContext<MySqlMigrationsDbContext>(options =>
+        {
+            Log.Error($"{{0}}",
+                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(MySqlMigrationsDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            /* Remove "includeAllEntities: true" to create
+             * default repositories only for aggregate roots */
+            options.AddDefaultRepositories(includeAllEntities: true);
+        });
+        context.Services.AddAbpDbContext<PgSqlMigrationsDbContext>(options =>
+        {
+            Log.Error($"{{0}}",
+                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(PgSqlMigrationsDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            /* Remove "includeAllEntities: true" to create
+             * default repositories only for aggregate roots */
+            options.AddDefaultRepositories(includeAllEntities: true);
+        });
+        context.Services.AddAbpDbContext<SqlServerMigrationsDbContext>(options =>
+        {
+            Log.Error($"{{0}}",
+                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(SqlServerMigrationsDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            /* Remove "includeAllEntities: true" to create
+             * default repositories only for aggregate roots */
+            options.AddDefaultRepositories(includeAllEntities: true);
+        });
+                
         Configure<AbpDbContextOptions>(options =>
         {
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpDbContextOptions)} UseSqlServer or UseNpgsql or UseMySQL....  ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
@@ -150,7 +168,20 @@ public class NetEntityFrameworkCoreModule : AbpModule
             //});
             //options.UseSqlServer();
         });
+        #endregion
+        
+        #region 一旦禁用依赖注入自动注册服务,你应该手动注册你的服务.
+        ////按Module程序集批量注册
+        //context.Services.AddAssemblyOf<NetCoreEntityFrameworkCoreModule>();
 
+        ////单独注册一个transient实例
+        //context.Services.AddTransient<>()
+        ////单独注册一个singleton实例
+        //context.Services.AddSingleton<TaxCalculator>(new TaxCalculator(taxRatio: 0.18));
+        ////单独注册一个从IServiceProvider解析得来的工厂方法
+        //context.Services.AddScoped<ITaxCalculator>(sp => sp.GetRequiredService<TaxCalculator>());
+        #endregion
+        
         #region 替换默认Service 三种方式任选一种  ReplaceService 
 
         ////1、在resolver实现类(ConnectionStringResolver)上添加 替换默认服务的属性 [Dependency(ReplaceServices = true)]
@@ -165,6 +196,8 @@ public class NetEntityFrameworkCoreModule : AbpModule
 
         #endregion
 
+        #region 缓存放入domain层注册
+        
         //Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、{nameof(NetCoreEntityFrameworkCoreModule)} 注册IFreeSql、ICacheContainer、DevicePool....");
 
         ////注册freeSql、ICacheContainer、 DevicePool高速缓存单例
@@ -176,6 +209,8 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //context.Services.TryAddSingleton<DevicePool>();
         //context.Services.TryAddSingleton<LicensePool>();
         //context.Services.AddCachePool();//domain模块已调用
+
+        #endregion
 
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetEntityFrameworkCoreModule)} End ConfigureServices ....");
         

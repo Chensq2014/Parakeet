@@ -41,9 +41,9 @@ public class NetDbContext :
     ITenantManagementDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
-    public static string TablePrefix { get; set; } = CustomerConsts.DefaultDbTablePrefix;
+    //public static string TablePrefix { get; set; } = CustomerConsts.DefaultDbTablePrefix;
 
-    public static string Schema { get; set; } = CustomerConsts.DefaultDbSchema;
+    //public static string Schema { get; set; } = CustomerConsts.DefaultDbSchema;
 
     #region Entities from the modules
 

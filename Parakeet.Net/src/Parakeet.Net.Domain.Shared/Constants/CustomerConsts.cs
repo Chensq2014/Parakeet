@@ -88,7 +88,7 @@
         public const string UserUnReadNotify = "UserUnReadNotify";
         #endregion
 
-        public const string DefaultDbTablePrefix = "Parakeet_";
+        public const string DefaultDbTablePrefix = "parakeet_";
         public const string DefaultDbSchema = null;
         public const string ParakeetSchema = "parakeet";
 

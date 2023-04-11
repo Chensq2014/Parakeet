@@ -1,0 +1,10 @@
+﻿namespace Parakeet.Net.Dtos.DeviceAnalogRules
+{
+    /// <summary>
+    /// 设备模拟数据规则
+    /// </summary>
+    public class CreateUpdateDeviceAnalogRuleInput : DeviceAnalogRuleDto
+    {
+
+    }
+}

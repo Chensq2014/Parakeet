@@ -1,12 +1,10 @@
 ﻿using Parakeet.Net.CustomAttributes;
 using Parakeet.Net.Enums;
+using Parakeet.Net.ValueObjects;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Parakeet.Net.ValueObjects;
-using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Identity;
-using Volo.Abp.Users;
 
 namespace Parakeet.Net.Users
 {

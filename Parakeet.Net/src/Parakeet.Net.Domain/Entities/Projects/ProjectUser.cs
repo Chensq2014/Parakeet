@@ -3,6 +3,7 @@ using Parakeet.Net.CustomAttributes;
 using Parakeet.Net.Users;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using Volo.Abp.Identity;
 
 namespace Parakeet.Net.Entities.Projects
 {
@@ -47,7 +48,7 @@ namespace Parakeet.Net.Entities.Projects
         /// 用户
         /// </summary>
         [NotSet, Description("用户")]
-        public virtual AppUser User { get; set; }
+        public virtual IdentityUser User { get; set; }
 
         #endregion
     }

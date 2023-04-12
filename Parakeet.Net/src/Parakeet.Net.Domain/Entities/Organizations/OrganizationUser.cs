@@ -2,6 +2,7 @@
 using Parakeet.Net.Users;
 using System;
 using System.ComponentModel;
+using Volo.Abp.Identity;
 
 namespace Parakeet.Net.Entities.Organizations
 {
@@ -44,7 +45,7 @@ namespace Parakeet.Net.Entities.Organizations
         /// 用户
         /// </summary>
         [NotSet, Description("用户")]
-        public virtual AppUser User { get; set; }
+        public virtual IdentityUser User { get; set; }
 
         #endregion
     }

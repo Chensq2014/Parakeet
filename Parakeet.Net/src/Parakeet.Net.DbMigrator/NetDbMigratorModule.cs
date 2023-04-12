@@ -22,10 +22,7 @@ public class NetDbMigratorModule : AbpModule
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetDbMigratorModule)} End PreConfigureServices ....");
     }
 
-
-
-
-
+    
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetDbMigratorModule)} Start ConfigureServices ....");
@@ -35,8 +32,6 @@ public class NetDbMigratorModule : AbpModule
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetDbMigratorModule)} End ConfigureServices ....");
 
     }
-
-
 
 
     public override void PostConfigureServices(ServiceConfigurationContext context)

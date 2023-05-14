@@ -32,6 +32,9 @@
         public const string LocalizationSourceName = "Parakeet";
 
         public const string ConnectionStringName = "Default";//SqlServer/PgSql/MySql
+        public const string DefaultConnectStringName = "Default";
+        public const string TenantConnectStringName = "Tenant";
+        public const string MutiTenantConnectionStringName = "MutiTenant";// MutiTenant SqlServer/PgSql/MySql
         public const string SqlServerConnectionStringName = "SqlServer";
         public const string PgSqlConnectionStringName = "PgSql";
         public const string MySqlConnectionStringName = "MySql";
@@ -91,6 +94,7 @@
         public const string DefaultDbTablePrefix = "parakeet_";
         public const string DefaultDbSchema = null;
         public const string ParakeetSchema = "parakeet";
+
 
         public const int MaxEmailAddressLength = 256;
 

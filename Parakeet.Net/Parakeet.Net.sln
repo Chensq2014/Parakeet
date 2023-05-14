@@ -43,9 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceStack.RedisCrack", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F2DC0FA1-26A1-4D78-A662-6526F78C01E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parakeet.Net.Cache", "src\Core\Parakeet.Net.Cache\Parakeet.Net.Cache.csproj", "{A56EF3BD-5485-478B-81B4-00CEBB405D6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parakeet.Net.Cache", "src\Core\Parakeet.Net.Cache\Parakeet.Net.Cache.csproj", "{A56EF3BD-5485-478B-81B4-00CEBB405D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "test\ConsoleApp\ConsoleApp.csproj", "{6F814B23-A109-44A3-86D5-BDBE1C62C506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "test\ConsoleApp\ConsoleApp.csproj", "{6F814B23-A109-44A3-86D5-BDBE1C62C506}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parakeet.Net.MultiTenancy", "src\Parakeet.Net.MultiTenancy\Parakeet.Net.MultiTenancy.csproj", "{8BF47D85-A61F-4667-8872-1AD64FC25D30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{6F814B23-A109-44A3-86D5-BDBE1C62C506}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F814B23-A109-44A3-86D5-BDBE1C62C506}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F814B23-A109-44A3-86D5-BDBE1C62C506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BF47D85-A61F-4667-8872-1AD64FC25D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF47D85-A61F-4667-8872-1AD64FC25D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF47D85-A61F-4667-8872-1AD64FC25D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF47D85-A61F-4667-8872-1AD64FC25D30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +160,7 @@ Global
 		{F2DC0FA1-26A1-4D78-A662-6526F78C01E1} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{A56EF3BD-5485-478B-81B4-00CEBB405D6B} = {F2DC0FA1-26A1-4D78-A662-6526F78C01E1}
 		{6F814B23-A109-44A3-86D5-BDBE1C62C506} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
+		{8BF47D85-A61F-4667-8872-1AD64FC25D30} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

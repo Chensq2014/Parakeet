@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using System;
 
-namespace DataProcess.MultiTenancy
+namespace Parakeet.Net.MultiTenancy
 {
     public static class MultiTenancyApplicationBuilderExtensions
     {

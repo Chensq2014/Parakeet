@@ -8,7 +8,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Settings;
 
-namespace Net.MultiTenancy
+namespace Parakeet.Net.MultiTenancy
 {
     /// <summary>
     /// 重写MultiTenancyMiddleware

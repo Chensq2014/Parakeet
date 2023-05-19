@@ -12,12 +12,19 @@ using Volo.Abp.MultiTenancy;
 
 namespace Parakeet.Net.MultiTenancy
 {
+    /// <summary>
+    /// 替换默认实现 IConnectionStringResolver, ITransientDependency
+    /// </summary>
     [Dependency(ReplaceServices = true)]
     public class TenantConnectionStringResolver : DefaultConnectionStringResolver
     {
         private readonly ICurrentTenant _currentTenant;
         private readonly IServiceProvider _serviceProvider;
-
+        /// <summary>
+        /// 属性注入试试
+        /// </summary>
+        public ICurrentTenant CurrentTenant { get; set; }
+        public Guid? TenentId { get; set; }
         public TenantConnectionStringResolver(
             IOptionsMonitor<AbpDbConnectionOptions> options,
             ICurrentTenant currentTenant,
@@ -25,18 +32,20 @@ namespace Parakeet.Net.MultiTenancy
             : base(options)
         {
             _currentTenant = currentTenant;
+            //CurrentTenant = currentTenant;
+            TenentId = _currentTenant.Id;
             _serviceProvider = serviceProvider;
         }
 
         public override async Task<string> ResolveAsync(string connectionStringName = null)
         {
-            if (_currentTenant.Id == null || (connectionStringName?.Equals(CustomerConsts.MutiTenantConnectionStringName) == true))
+            if (TenentId == null || (connectionStringName?.Equals(CustomerConsts.MutiTenantConnectionStringName) == true))
             {
                 //No current tenant, fallback to default logic
                 return await base.ResolveAsync(connectionStringName);
             }
 
-            var tenant = await FindTenantConfigurationAsync(_currentTenant.Id.Value);
+            var tenant = await FindTenantConfigurationAsync(TenentId.Value);
 
             if (tenant == null || tenant.ConnectionStrings.IsNullOrEmpty())
             {

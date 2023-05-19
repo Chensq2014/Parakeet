@@ -32,6 +32,7 @@ namespace Parakeet.Net.MultiTenancy
         {
             var tenantConfiguration = await _tenantCache.GetOrAddAsync(name, async () =>
             {
+                //_tenantRepository 如有自己租户这里换成自己的租户表或租户dbContext的repository
                 var tenant = await _tenantRepository.FindByNameAsync(name);
                 var tenantConfiguration = tenant != null
                     ? new TenantConfiguration(tenant.Id, tenant.Name)

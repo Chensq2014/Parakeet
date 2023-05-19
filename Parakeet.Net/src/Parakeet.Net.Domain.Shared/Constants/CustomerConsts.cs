@@ -40,6 +40,7 @@
         public const string MySqlConnectionStringName = "MySql";
 
         public const bool MultiTenancyEnabled = true;//多租户开关
+        public const string TenantKey = "__tenantId";//多租户key
         #endregion
 
         #region 默认格式

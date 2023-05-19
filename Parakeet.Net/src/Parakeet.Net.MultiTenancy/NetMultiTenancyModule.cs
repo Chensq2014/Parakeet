@@ -2,15 +2,16 @@
 using Parakeet.Net.MultiTenancy;
 using Serilog;
 using Volo.Abp;
+using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.MultiTenancy.ConfigurationStore;
 
 namespace Parakeet.Net;
 
 [DependsOn(
     typeof(NetDomainModule),
-    typeof(AbpMultiTenancyModule)
+    //typeof(AbpMultiTenancyModule),
+    typeof(AbpAspNetCoreMultiTenancyModule)
 )]
 public class NetMultiTenancyModule : AbpModule
 {
@@ -29,6 +30,10 @@ public class NetMultiTenancyModule : AbpModule
             Log.Debug($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpMultiTenancyOptions)}....");
             options.IsEnabled = MultiTenancyConsts.IsEnabled;
         });
+        //Configure<AbpAspNetCoreMultiTenancyOptions>(options =>
+        //{
+        //    options.TenantKey = CustomerConsts.TenantKey;//默认 就是 __tenantId
+        //});
     }
 
     public override void PostConfigureServices(ServiceConfigurationContext context)
@@ -48,11 +53,12 @@ public class NetMultiTenancyModule : AbpModule
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetMultiTenancyModule)} Start OnApplicationInitialization ....");
-        //var app = context.GetApplicationBuilder();
-        //if (MultiTenancyConsts.IsEnabled)
-        //{
-        //    app.UseMultiTenancy();
-        //}
+        var app = context.GetApplicationBuilder();
+        if (MultiTenancyConsts.IsEnabled)
+        {
+            app.UseCustomMultiTenancy();
+            //app.UseMultiTenancy();
+        }
         base.OnApplicationInitialization(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetMultiTenancyModule)} End OnApplicationInitialization ....");
     }

@@ -72,7 +72,68 @@ namespace Parakeet.Net.Extensions
         {
             return (float)number;
         }
+        
+        #region  统计最大连续数字重复个数
 
+        /// <summary>
+        /// 循环计算重复数字个数 
+        /// 11123140000000.98   11123140000000 中有  3 一定是连续的数字个数且不为0  因为出现了3个连续的1
+        /// 10000430004500   0的最大次数4
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static Dictionary<int, int> ComputeMaxContinueNumCount(this long num)
+        {
+            var integers = num.ToString().ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
+            var lastNum = integers.First();
+            var index = 0;//, maxContinueValue = 0, maxCount = 0;
+            var numContinueCountDic = new Dictionary<int, int>();
+            while (true)
+            {
+                var continueCount = 1;
+                while (++index < integers.Count && integers[index] == lastNum) continueCount++;
+                //if (continueCount > maxCount) { maxCount = continueCount; maxContinueValue = lastNum; }
+                if (numContinueCountDic.ContainsKey(lastNum))
+                {
+                    if (numContinueCountDic[lastNum] < continueCount)
+                    {
+                        numContinueCountDic[lastNum] = continueCount;
+                    }
+                }
+                else
+                {
+                    numContinueCountDic.Add(lastNum, continueCount);
+                }
+                if (index < integers.Count)
+                {
+                    lastNum = integers[index];
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return numContinueCountDic;
+        }
+
+        /// <summary>
+        /// 计算末尾0的个数
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static int ComputeLastZeroContinueCount(this long num)
+        {
+            var count = 0;
+            while (num % 10 == 0)
+            {
+                count++;
+                num = num / 10;
+            }
+            return count;
+        }
+
+        #endregion
+            
         #region 关于decimal/数字字符串 与中文金额大写的相互转换算法 待测试
         ///第一种方法：将小写金额转换成大写金额
         ///用正则表达式

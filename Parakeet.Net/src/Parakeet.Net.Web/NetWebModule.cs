@@ -44,6 +44,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 
 namespace Parakeet.Net.Web;
 
@@ -240,10 +241,12 @@ public class NetWebModule : AbpModule
 
     private void ConfigureAbpAntiForgerys()
     {
-        //去掉接口调用RequestVerificationToken验证
+        //忽略接口调用Header的RequestVerificationToken验证
         Configure<AbpAntiForgeryOptions>(options =>
         {
             options.AutoValidateIgnoredHttpMethods.Add("POST");
+            options.AutoValidateIgnoredHttpMethods.Add("PUT");
+            options.AutoValidateIgnoredHttpMethods.Add("DELETE");
         });
     }
 

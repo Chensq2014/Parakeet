@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Parakeet.Net.Application\Parakeet.Net.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

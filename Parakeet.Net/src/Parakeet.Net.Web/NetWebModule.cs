@@ -95,6 +95,7 @@ public class NetWebModule : AbpModule
         ConfigureNavigationServices(configuration);
         ConfigureMultiTenancy();
         ConfigureSwaggerServices(context.Services);
+        ConfigureAbpAntiForgerys();
     }
 
     private void ConfigureBundles()
@@ -234,6 +235,15 @@ public class NetWebModule : AbpModule
             var connection = ConnectionMultiplexer
                 .Connect(configuration["Redis:Configuration"]);
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
+        });
+    }
+
+    private void ConfigureAbpAntiForgerys()
+    {
+        //去掉接口调用RequestVerificationToken验证
+        Configure<AbpAntiForgeryOptions>(options =>
+        {
+            options.AutoValidateIgnoredHttpMethods.Add("POST");
         });
     }
 

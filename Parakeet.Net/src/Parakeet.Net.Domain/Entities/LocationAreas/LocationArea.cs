@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.LocationAreas
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     ///     位置区域（全国省市区城乡等区域代码位置信息）
@@ -20,7 +20,7 @@ namespace Parakeet.Net.Entities.LocationAreas
 
         public LocationArea(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 父级

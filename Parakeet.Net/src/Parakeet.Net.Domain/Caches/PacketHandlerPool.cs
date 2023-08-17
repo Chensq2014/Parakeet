@@ -1,6 +1,6 @@
 ﻿using EasyCaching.Core;
 using Parakeet.Net.Cache;
-using Parakeet.Net.Entities.PacketHandlers;
+using Parakeet.Net.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

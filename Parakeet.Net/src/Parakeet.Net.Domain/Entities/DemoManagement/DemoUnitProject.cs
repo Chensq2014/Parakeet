@@ -2,7 +2,7 @@
 using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Entities;
 
-namespace Parakeet.Net.Entities.DemoManagement
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 项目下的子项目

@@ -15,7 +15,7 @@ namespace Parakeet.Net.Entities
         public License() { }
         public License(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         /// <summary>

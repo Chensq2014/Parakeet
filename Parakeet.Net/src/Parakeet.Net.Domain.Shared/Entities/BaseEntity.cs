@@ -30,7 +30,7 @@ namespace Parakeet.Net.Entities
         //    //base.Id = id; //default(TPrimaryKey);
         //    //CreationTime = DateTime.Now;
         //    //LastModificationTime = CreationTime;
-        //    SetEntityPrimaryKey(id);
+        //    base.SetEntityPrimaryKey(id);
         //}
 
         /// <summary>

@@ -1,14 +1,13 @@
-﻿using Parakeet.Net.Entities.Devices;
-using Parakeet.Net.Enums;
+﻿using Parakeet.Net.Enums;
+using Parakeet.Net.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Parakeet.Net.Extensions;
 
-namespace Parakeet.Net.Entities.Mediators
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 中介器:转发配置
@@ -23,7 +22,7 @@ namespace Parakeet.Net.Entities.Mediators
 
         public Mediator(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段

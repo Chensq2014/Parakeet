@@ -1,18 +1,16 @@
-﻿using Parakeet.Net.Entities.Houses;
-using Parakeet.Net.Entities.LocationAreas;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.Sections
+namespace Parakeet.Net.Entities
 {
     /// <summary>
-    /// 小区
+    /// 地块/小区
     /// </summary>
     [Table("Parakeet_Sections", Schema = "public")]
-    [Description("小区")]
+    [Description("地块")]
     public class Section : BaseEntity
     {
         public Section()
@@ -21,7 +19,7 @@ namespace Parakeet.Net.Entities.Sections
 
         public Section(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段
@@ -76,5 +74,16 @@ namespace Parakeet.Net.Entities.Sections
 
         #endregion
 
+        #region 小区
+
+        [Description("项目Id")]
+        public Guid? ProjectId { get; set; }
+
+        /// <summary>
+        /// 小区
+        /// </summary>
+        public virtual Project Project { get; set; }
+
+        #endregion
     }
 }

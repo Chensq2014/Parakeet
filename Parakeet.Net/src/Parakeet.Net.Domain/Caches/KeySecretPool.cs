@@ -1,9 +1,9 @@
 ﻿using EasyCaching.Core;
 using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Cache;
-using Parakeet.Net.Entities.Devices;
 using System;
 using System.Linq;
+using Parakeet.Net.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Threading;
 

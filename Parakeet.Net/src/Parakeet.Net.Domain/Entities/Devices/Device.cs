@@ -1,16 +1,12 @@
-﻿using Parakeet.Net.Entities.LocationAreas;
-using Parakeet.Net.Entities.Suppliers;
-using Parakeet.Net.Entities.Thresholds;
-using Parakeet.Net.Enums;
+﻿using Parakeet.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Parakeet.Net.Entities.Projects;
 
-namespace Parakeet.Net.Entities.Devices
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 设备
@@ -23,7 +19,7 @@ namespace Parakeet.Net.Entities.Devices
         }
         public Device(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 设备基础字段

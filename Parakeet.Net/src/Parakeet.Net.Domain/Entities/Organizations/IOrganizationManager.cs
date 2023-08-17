@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Parakeet.Net.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Parakeet.Net.Dtos;
-using Parakeet.Net.Entities.Organizations;
-using Volo.Abp.DependencyInjection;
+using Parakeet.Net.Entities;
 
 namespace Parakeet.Net
 {

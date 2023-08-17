@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.Devices.DeviceRecords
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 环境监测

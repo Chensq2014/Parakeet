@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Parakeet.Net.Entities.Devices.DeviceRecords
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 心跳

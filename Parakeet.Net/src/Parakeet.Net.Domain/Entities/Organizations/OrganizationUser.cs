@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using Volo.Abp.Identity;
 
-namespace Parakeet.Net.Entities.Organizations
+namespace Parakeet.Net.Entities
 {
     [Description("岗位用户")]
     public class OrganizationUser : BaseEntity
@@ -14,7 +14,7 @@ namespace Parakeet.Net.Entities.Organizations
         }
         public OrganizationUser(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 机构

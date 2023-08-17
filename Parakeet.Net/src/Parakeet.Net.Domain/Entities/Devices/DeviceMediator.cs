@@ -1,10 +1,9 @@
-﻿using Parakeet.Net.Entities.Mediators;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities;
 
-namespace Parakeet.Net.Entities.Devices
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 设备转发

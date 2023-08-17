@@ -1,12 +1,11 @@
-﻿using Parakeet.Net.Entities.Devices;
-using Parakeet.Net.Enums;
+﻿using Parakeet.Net.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.Workers
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 劳务人员

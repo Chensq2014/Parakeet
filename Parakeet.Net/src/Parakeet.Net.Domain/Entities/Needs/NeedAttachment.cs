@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Parakeet.Net.Entities.Needs
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 需求附件表

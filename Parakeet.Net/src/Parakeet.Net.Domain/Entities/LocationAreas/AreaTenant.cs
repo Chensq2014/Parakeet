@@ -1,11 +1,10 @@
-﻿using Parakeet.Net.Entities.Devices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.LocationAreas
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 区域租户
@@ -17,7 +16,7 @@ namespace Parakeet.Net.Entities.LocationAreas
         public AreaTenant() { }
         public AreaTenant(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段

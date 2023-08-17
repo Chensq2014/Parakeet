@@ -1,6 +1,4 @@
 ﻿using Parakeet.Net.CustomAttributes;
-using Parakeet.Net.Entities.Devices;
-using Parakeet.Net.Entities.Organizations;
 using Parakeet.Net.Events;
 using Parakeet.Net.ValueObjects;
 using System;
@@ -9,9 +7,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Parakeet.Net.Entities.LocationAreas;
 
-namespace Parakeet.Net.Entities.Projects
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 项目
@@ -25,7 +22,7 @@ namespace Parakeet.Net.Entities.Projects
         }
         public Project(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段

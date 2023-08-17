@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Parakeet.Net.Entities.Projects
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 项目附件表
@@ -16,7 +16,7 @@ namespace Parakeet.Net.Entities.Projects
 
         public ProjectAttachment(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 项目

@@ -1,16 +1,14 @@
 ﻿using Parakeet.Net.CustomAttributes;
-using Parakeet.Net.Entities.Projects;
 using Parakeet.Net.Enums;
+using Parakeet.Net.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Parakeet.Net.Entities.LocationAreas;
-using Parakeet.Net.ValueObjects;
 
-namespace Parakeet.Net.Entities.Organizations
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 组织机构/岗位
@@ -31,7 +29,7 @@ namespace Parakeet.Net.Entities.Organizations
 
         public Organization(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 机构/岗位基础字段

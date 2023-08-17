@@ -2,7 +2,7 @@
 //using System.Collections.Generic;
 //using System.ComponentModel;
 
-//namespace Parakeet.Net.Entities.Licenses
+//namespace Parakeet.Net.Entities
 //{
 //    /// <summary>
 //    /// 许可证
@@ -16,7 +16,7 @@
 
 //        public License(Guid id)
 //        {
-//            SetEntityPrimaryKey(id);
+//            base.SetEntityPrimaryKey(id);
 //        }
 
 //        /// <summary>

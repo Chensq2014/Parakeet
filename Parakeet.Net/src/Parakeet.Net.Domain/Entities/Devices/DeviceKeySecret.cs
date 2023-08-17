@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities;
 
-namespace Parakeet.Net.Entities.Devices
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 各区域设备转发密钥

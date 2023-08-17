@@ -1,13 +1,11 @@
-﻿using Parakeet.Net.Entities.Devices;
+﻿using Parakeet.Net.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Parakeet.Net.Entities.LocationAreas;
-using Parakeet.Net.ValueObjects;
 
-namespace Parakeet.Net.Entities.Suppliers
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 供应商
@@ -22,7 +20,7 @@ namespace Parakeet.Net.Entities.Suppliers
         }
         public Supplier(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段

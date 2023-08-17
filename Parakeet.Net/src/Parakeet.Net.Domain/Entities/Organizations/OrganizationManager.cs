@@ -9,7 +9,7 @@ using Parakeet.Net.Extensions;
 using Parakeet.Net.Interfaces;
 using Volo.Abp.Domain.Repositories;
 
-namespace Parakeet.Net.Entities.Organizations
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 组织机构领域层服务

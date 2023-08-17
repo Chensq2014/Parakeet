@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Entities.Devices
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 设备记录的父类
@@ -16,7 +16,7 @@ namespace Parakeet.Net.Entities.Devices
 
         public DeviceRecord(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         /// <summary>

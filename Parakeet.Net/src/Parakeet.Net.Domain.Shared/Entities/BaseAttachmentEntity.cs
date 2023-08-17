@@ -17,7 +17,7 @@ namespace Parakeet.Net.Entities
 
         public BaseAttachmentEntity(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         /// <summary>

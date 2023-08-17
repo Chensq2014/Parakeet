@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Parakeet.Net.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Parakeet.Net.Entities.Devices;
-using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Entities.Thresholds
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 阈值
@@ -19,7 +18,7 @@ namespace Parakeet.Net.Entities.Thresholds
 
         public Threshold(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础信息

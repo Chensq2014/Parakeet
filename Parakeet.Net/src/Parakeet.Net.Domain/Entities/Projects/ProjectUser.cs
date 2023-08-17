@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Identity;
 
-namespace Parakeet.Net.Entities.Projects
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 项目用户
@@ -18,7 +18,7 @@ namespace Parakeet.Net.Entities.Projects
         }
         public ProjectUser(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
         #region 项目
 

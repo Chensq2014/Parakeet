@@ -10,7 +10,7 @@ namespace Parakeet.Net.Entities
         public Ticket() { }
         public Ticket(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         public string Name { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Entities.Devices
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 设备人员

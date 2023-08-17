@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.SecurePolicies
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 安全策略
@@ -18,7 +18,7 @@ namespace Parakeet.Net.Entities.SecurePolicies
 
         public SecurePolicy(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 数据源

@@ -1,7 +1,7 @@
 ﻿using System;
-using Parakeet.Net.Entities.System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Parakeet.Net.Entities;
 using Volo.Abp.Domain.Entities.Events.Distributed;
 
 namespace Parakeet.Net.Events

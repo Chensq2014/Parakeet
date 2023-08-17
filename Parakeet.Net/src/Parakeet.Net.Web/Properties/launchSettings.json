@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Parakeet.Net.Web": {
+    "Dev": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger/index.html",

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities;
 
-namespace Parakeet.Net.Entities.LocationAreas
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 租户连接字符串信息

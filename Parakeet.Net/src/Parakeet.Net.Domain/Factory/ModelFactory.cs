@@ -16,7 +16,7 @@ namespace Parakeet.Net.Factory
         private static readonly Type DllType = null;
         static ModelFactory()
         {
-            var dllConfig = EnvironmentHelper.GetValue("APPMODELDLL");//CustomConfigurationManager.Configuration["App:ModelDll"];
+            var dllConfig = EnvironmentHelper.GetValue("APPMODELDLL");
             if (dllConfig.HasValue())
             {
                 var dllName = dllConfig.Split(',')[0];

@@ -1,12 +1,10 @@
-﻿using Parakeet.Net.Entities.Products;
-using Parakeet.Net.Entities.Sections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.Houses
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 房间
@@ -21,7 +19,7 @@ namespace Parakeet.Net.Entities.Houses
 
         public House(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Parakeet.Net.Enums;
 using Volo.Abp.Domain.Entities;
 
-namespace Parakeet.Net.Entities.Devices
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 设备编号自增序列

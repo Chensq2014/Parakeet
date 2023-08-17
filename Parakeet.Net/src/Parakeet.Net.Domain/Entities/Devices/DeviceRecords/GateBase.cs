@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Entities.Devices.DeviceRecords
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 考勤

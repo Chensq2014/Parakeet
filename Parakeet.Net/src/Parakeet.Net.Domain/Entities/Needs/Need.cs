@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using Parakeet.Net.Helper;
 
-namespace Parakeet.Net.Entities.Needs
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 需求
@@ -24,7 +24,7 @@ namespace Parakeet.Net.Entities.Needs
         }
         public Need(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 基础字段
@@ -109,7 +109,7 @@ namespace Parakeet.Net.Entities.Needs
         {
             foreach (var attachment in attachments)
             {
-                //attachment.SetEntityPrimaryKey(Guid.NewGuid());
+                //attachment.base.SetEntityPrimaryKey(Guid.NewGuid());
                 Attachments.Add(attachment);
             }
         }

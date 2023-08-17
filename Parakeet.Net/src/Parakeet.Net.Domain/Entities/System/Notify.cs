@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Entities.System
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 消息通知/列表
@@ -15,7 +15,7 @@ namespace Parakeet.Net.Entities.System
 
         public Notify(Guid id)
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 消息基本属性

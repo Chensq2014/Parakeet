@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Parakeet.Net.Entities.PacketHandlers
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// Tcp包头 不用存表，放在配置文件或者缓存里或者tcp模块写死更合适
@@ -18,7 +18,7 @@ namespace Parakeet.Net.Entities.PacketHandlers
 
         public PacketHandler(Guid id) 
         {
-            SetEntityPrimaryKey(id);
+            base.SetEntityPrimaryKey(id);
         }
 
         /// <summary>

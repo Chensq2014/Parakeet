@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Domain.Services;
 
-namespace Parakeet.Net.Entities.DemoManagement
+namespace Parakeet.Net.Entities
 {
     /// <summary>
     /// 领域服务

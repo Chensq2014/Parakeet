@@ -18,6 +18,7 @@ using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
@@ -58,6 +59,7 @@ public class NetHttpApiHostModule : AbpModule
         ConfigureDistributedLocking(context, configuration);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        ConfigureAbpAntiForgerys();
     }
 
     private void ConfigureCache(IConfiguration configuration)
@@ -122,6 +124,17 @@ public class NetHttpApiHostModule : AbpModule
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             });
+    }
+
+    private void ConfigureAbpAntiForgerys()
+    {
+        //忽略接口调用Header的RequestVerificationToken验证
+        Configure<AbpAntiForgeryOptions>(options =>
+        {
+            options.AutoValidateIgnoredHttpMethods.Add("POST");
+            options.AutoValidateIgnoredHttpMethods.Add("PUT");
+            options.AutoValidateIgnoredHttpMethods.Add("DELETE");
+        });
     }
 
     private void ConfigureLocalization()

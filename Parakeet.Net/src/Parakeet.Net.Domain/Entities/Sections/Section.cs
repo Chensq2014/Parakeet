@@ -74,7 +74,7 @@ namespace Parakeet.Net.Entities
 
         #endregion
 
-        #region 小区
+        #region 项目
 
         [Description("项目Id")]
         public Guid? ProjectId { get; set; }

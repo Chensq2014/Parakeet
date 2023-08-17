@@ -142,6 +142,10 @@ namespace Parakeet.Net.Extensions
                 x.Property(t => t.Photo).DbType("text");
                 x.Property(t => t.InfraredPhoto).DbType("text");
             });
+            codeFirst.ConfigEntity<WorkerType>(x =>
+            {
+                x.Name(GetTableName<WorkerType>());
+            });
             codeFirst.ConfigEntity<DeviceWorker>(x =>
             {
                 x.Name(GetTableName<DeviceWorker>());

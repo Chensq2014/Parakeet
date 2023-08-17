@@ -60,6 +60,9 @@ namespace Parakeet.Net.Entities
 
         #region 房间
 
+        /// <summary>
+        /// 房间Id
+        /// </summary>
         [Description("房间Id")]
         public Guid? HouseId { get; set; }
 

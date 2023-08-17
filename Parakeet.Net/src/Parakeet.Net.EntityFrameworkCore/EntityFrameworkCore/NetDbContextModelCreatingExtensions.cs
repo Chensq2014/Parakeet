@@ -229,6 +229,11 @@ namespace Parakeet.Net.EntityFrameworkCore
                 x.ConfigureFullAuditedAggregateRoot();
                 x.ToTable(options.TablePrefix + $"{nameof(Worker)}s", options.Schema);
             });
+            builder.Entity<WorkerType>(x =>
+            {
+                x.ConfigureFullAuditedAggregateRoot();
+                x.ToTable(options.TablePrefix + $"{nameof(WorkerType)}s", options.Schema);
+            });
             builder.Entity<Mediator>(x =>
             {
                 x.ConfigureFullAuditedAggregateRoot();

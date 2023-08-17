@@ -86,7 +86,7 @@ namespace Parakeet.Net.Entities
         /// 证件有效期止，格式: 20010101
         /// </summary>
         [MaxLength(CustomerConsts.MaxLength11)]
-        [Description("证件有效期起，格式: 20010101")]
+        [Description("证件有效期止，格式: 20010101")]
         public string TermValidityEnd { get; set; }
 
         /// <summary>

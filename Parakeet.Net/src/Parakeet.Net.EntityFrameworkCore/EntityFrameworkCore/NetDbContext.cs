@@ -169,6 +169,11 @@ public class NetDbContext :
     public DbSet<Worker> Workers { get; set; }
 
     /// <summary>
+    /// 工种
+    /// </summary>
+    public DbSet<WorkerType> WorkerTypes { get; set; }
+
+    /// <summary>
     /// 中介器表
     /// </summary>
     public DbSet<Mediator> Mediators { get; set; }

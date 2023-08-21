@@ -25,7 +25,6 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Users;
-using License = Nest.License;
 
 namespace Parakeet.Net.EntityFrameworkCore
 {
@@ -240,10 +239,10 @@ namespace Parakeet.Net.EntityFrameworkCore
                 x.ToTable(options.TablePrefix + $"{nameof(Mediator)}s", options.Schema);
             });
 
-            builder.Entity<License>(x =>
+            builder.Entity<Entities.License>(x =>
             {
                 x.ConfigureFullAuditedAggregateRoot();
-                x.ToTable(options.TablePrefix + $"{nameof(License)}s", options.Schema);
+                x.ToTable(options.TablePrefix + $"{nameof(Entities.License)}s", options.Schema);
             });
             builder.Entity<LicenseResource>(x =>
             {
@@ -254,6 +253,14 @@ namespace Parakeet.Net.EntityFrameworkCore
             {
                 x.ConfigureFullAuditedAggregateRoot();
                 x.ToTable(options.TablePrefix + $"{nameof(Section)}s", options.Schema);
+            });
+            builder.Entity<SectionWorker>(x =>
+            {
+                x.ToTable(options.TablePrefix + $"{nameof(SectionWorker)}s", options.Schema);
+            });
+            builder.Entity<SectionWorkerDetail>(x =>
+            {
+                x.ToTable(options.TablePrefix + $"{nameof(SectionWorkerDetail)}s", options.Schema);
             });
             builder.Entity<House>(x =>
             {
@@ -362,7 +369,7 @@ namespace Parakeet.Net.EntityFrameworkCore
 
                 #region 统一时间格式为带时区的时间格式
 
-                //默认不带时区好了，需要时再加
+                ////默认不带时区好了，需要时再加
                 //if (property.PropertyType == typeof(DateTime) || property.PropertyType == typeof(DateTime?))
                 //{
                 //    propotyBuilder.HasColumnType(CustomerConsts.Timestamptz);

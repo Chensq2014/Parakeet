@@ -10,7 +10,7 @@ namespace Parakeet.Net.Entities
     /// 地块/小区
     /// </summary>
     [Table("Parakeet_Sections", Schema = "public")]
-    [Description("地块")]
+    [Description("地块/小区")]
     public class Section : BaseEntity
     {
         public Section()
@@ -25,17 +25,17 @@ namespace Parakeet.Net.Entities
         #region 基础字段
 
         /// <summary>
-        /// 小区名称
+        /// 地块/小区名称
         /// </summary>
-        [Description("小区名称")]
+        [Description("地块/小区名称")]
         [MaxLength(CustomerConsts.MaxLength255)]
         public string Name { get; set; }
 
         /// <summary>
-        /// 小区地址
+        /// 小区/地块地址
         /// </summary>
         [Required]
-        [Description("小区地址")]
+        [Description("小区/地块地址")]
         [MaxLength(CustomerConsts.MaxLength2048)]
         public string Address { get; set; }
 
@@ -46,6 +46,36 @@ namespace Parakeet.Net.Entities
         [Description("描述")]
         public string Description { get; set; }
 
+
+        #endregion
+
+        #region 小区住户
+
+        /// <summary>
+        /// 小区住户房间
+        /// </summary>
+        public virtual ICollection<House> Houses { get; set; } = new HashSet<House>();
+
+        #endregion
+
+        #region 工区劳务人员
+
+        /// <summary>
+        /// 工区劳务人员
+        /// </summary>
+        public virtual ICollection<SectionWorker> SectionWorkers { get; set; } = new HashSet<SectionWorker>();
+
+        #endregion
+
+        #region 项目
+
+        [Description("项目Id")]
+        public Guid? ProjectId { get; set; }
+
+        /// <summary>
+        /// 小区
+        /// </summary>
+        public virtual Project Project { get; set; }
 
         #endregion
 
@@ -65,25 +95,5 @@ namespace Parakeet.Net.Entities
 
         #endregion
 
-        #region 小区住户
-
-        /// <summary>
-        /// 小区住户房间
-        /// </summary>
-        public virtual ICollection<House> Houses { get; set; } = new HashSet<House>();
-
-        #endregion
-
-        #region 项目
-
-        [Description("项目Id")]
-        public Guid? ProjectId { get; set; }
-
-        /// <summary>
-        /// 小区
-        /// </summary>
-        public virtual Project Project { get; set; }
-
-        #endregion
     }
 }

@@ -141,10 +141,21 @@ namespace Parakeet.Net.Entities
         #endregion
 
         #region 设备人员
+
         /// <summary>
         /// 人员所在设备集合
         /// </summary>
         public virtual ICollection<DeviceWorker> DeviceWorkers { get; set; } = new HashSet<DeviceWorker>();
+
+        #endregion
+
+        #region 工区人员
+
+        /// <summary>
+        /// 设备所有人员
+        /// </summary>
+        public virtual ICollection<SectionWorker> SectionWorkers { get; set; } = new HashSet<SectionWorker>();
+
         #endregion
     }
 }

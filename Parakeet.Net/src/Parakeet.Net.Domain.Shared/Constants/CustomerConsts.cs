@@ -9,16 +9,25 @@
         public const int MaxLength11 = 11;
         public const int MaxLength16 = 16;
         public const int MaxLength18 = 18;
+        public const int MaxLength20 = 20;
         public const int MaxLength32 = 32;
+        public const int MaxLength37 = 37;
         public const int MaxLength36 = 36;
+        public const int MaxLength60 = 60;
         public const int MaxLength64 = 64;
+        public const int MaxLength80 = 80;
+        public const int MaxLength100 = 100;
+        public const int MaxLength120 = 120;
         public const int MaxLength128 = 128;
+        public const int MaxLength200 = 200;
         public const int MaxLength255 = 255;
+        public const int MaxLength300 = 300;
         public const int MaxLength512 = 512;
         public const int MaxLength1024 = 1024;
         public const int MaxLength2048 = 2048;
         public const int MaxLength4096 = 4096;
         public const int MaxLength8192 = 8192;
+        public const int MaxLengthJson = 8192000;
         #endregion
 
         #region 系统默认

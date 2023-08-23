@@ -2,7 +2,7 @@
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Interactive.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 消息列表输入类

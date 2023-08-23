@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -51,11 +49,9 @@ namespace Parakeet.Net.Extensions
         public static async Task SaveFile(IFormFile file, string filePath)
         {
             //File.Copy(file.FileName, filePath);//CreateNew
-            using (var fs = new FileStream(filePath, FileMode.CreateNew))//, FileAccess.Write//File.Create(filePath))//
-            {
-                await file.CopyToAsync(fs); //CopyTo(fs);//
-                //fs.Flush();
-            }
+            await using var fs = new FileStream(filePath, FileMode.CreateNew);
+            await file.CopyToAsync(fs); //CopyTo(fs);//
+            //fs.Flush();
         }
 
         /// <summary>
@@ -66,11 +62,9 @@ namespace Parakeet.Net.Extensions
         public static async Task SaveOrUpdateFile(IFormFile file, string filePath)
         {
             //File.Copy(file.FileName, filePath);//CreateNew
-            using (var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))//, FileAccess.Write//File.Create(filePath))//
-            {
-                await file.CopyToAsync(fs); //CopyTo(fs);//
-                //fs.Flush();
-            }
+            await using var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            await file.CopyToAsync(fs); //CopyTo(fs);//
+            //fs.Flush();
         }
 
         #endregion
@@ -254,12 +248,10 @@ namespace Parakeet.Net.Extensions
         {
             try
             {
-                using (var zip = ICSharpCode.SharpZipLib.Zip.ZipFile.Create(zipFile))
-                {
-                    zip.BeginUpdate();
-                    zip.Add(sourceFile, Path.GetFileName(sourceFile));
-                    zip.CommitUpdate();
-                }
+                using var zip = ICSharpCode.SharpZipLib.Zip.ZipFile.Create(zipFile);
+                zip.BeginUpdate();
+                zip.Add(sourceFile, Path.GetFileName(sourceFile));
+                zip.CommitUpdate();
             }
             catch (Exception ex)
             {

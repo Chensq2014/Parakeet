@@ -3,11 +3,11 @@ using Volo.Abp.MultiTenancy;
 
 namespace Parakeet.Net;
 
-/* test 服务*/
-public class TestAppService : NetAppService
+/* play 服务*/
+public class PlayAppService : CustomerAppService
 {
     private ICurrentTenant _currentTenant;
-    protected TestAppService(ICurrentTenant currentTenant)
+    protected PlayAppService(ICurrentTenant currentTenant)
     {
         _currentTenant = currentTenant;
     }

@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
-namespace Parakeet.Net.Dtos.SecurePolicies
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 更新安全策略传输对象

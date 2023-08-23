@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Dtos.SecurePolicies
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 获取安全策略列表数据源传输对象

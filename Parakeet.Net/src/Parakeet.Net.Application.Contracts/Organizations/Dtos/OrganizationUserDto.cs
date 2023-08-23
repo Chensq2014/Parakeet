@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Parakeet.Net.Dtos;
 
-namespace Parakeet.Net.Organizations.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 岗位用户

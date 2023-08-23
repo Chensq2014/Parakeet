@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Dtos.Requests
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 通过邮箱获取企业微信用户id输入类

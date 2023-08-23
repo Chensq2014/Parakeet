@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Parakeet.Net.Dtos.Options
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 浏览器配置信息 无参构造函数

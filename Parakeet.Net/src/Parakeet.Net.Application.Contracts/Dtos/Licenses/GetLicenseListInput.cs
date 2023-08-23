@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Parakeet.Net.Dtos.Licenses
+namespace Parakeet.Net.Dtos
 {
     public class GetLicenseListInput : PagedInputDto
     {

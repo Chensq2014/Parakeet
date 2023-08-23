@@ -23,12 +23,12 @@ namespace Parakeet.Net.Dtos
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var errors = new List<ValidationResult>();
-            StartDate ??= (StartDate ??= DateTime.Now).AddMonths(-6);
-            EndDate ??= StartDate.Value.AddMonths(6);
+            StartDate ??= (StartDate ??= DateTime.Now).AddMonths(-12);
+            EndDate ??= StartDate.Value.AddMonths(12);
             var period = (EndDate - StartDate).Value.TotalDays;
-            if (period < 0 || period > 184)
+            if (period < 0 || period > 365)
             {
-                errors.Add(new ValidationResult("时间区间有误,结束日期不能早于开始日期且做多可查6个月内数据"));
+                errors.Add(new ValidationResult("时间区间有误,结束日期不能早于开始日期且做多可查12个月内数据"));
             }
 
             return errors;

@@ -32,14 +32,14 @@ namespace Parakeet.Net
         /// 获取实体Queryable
         /// </summary>
         /// <returns></returns>
-        IQueryable<TEntity> GetAll();
+        Task<IQueryable<TEntity>> GetAll();
 
         /// <summary>
         /// 表达式目录树filter参数过滤数据
         /// </summary>
         /// <param name="filter">表达式目录树</param>
         /// <returns></returns>
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
+        Task<IQueryable<TEntity>> Get(Expression<Func<TEntity, bool>> filter);
 
         /// <summary>
         /// 根据主键获取实体
@@ -66,7 +66,7 @@ namespace Parakeet.Net
         /// 按创建时间降序直接获取全部数据 泛型
         /// </summary>
         /// <returns></returns>
-        IQueryable<TEntityDto> GridDto<TEntityDto>() where TEntityDto : BaseDto;
+        Task<IQueryable<TEntityDto>> GridDto<TEntityDto>() where TEntityDto : BaseDto;
 
         /// <summary>
         ///  获取列表数据(分页) 泛型

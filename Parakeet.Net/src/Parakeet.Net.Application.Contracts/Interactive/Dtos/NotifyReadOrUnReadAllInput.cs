@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Interactive.Dtos
+namespace Parakeet.Net.Dtos
 {
     public class NotifyReadOrUnReadAllInput : NotifyDeleteAllInput
     {

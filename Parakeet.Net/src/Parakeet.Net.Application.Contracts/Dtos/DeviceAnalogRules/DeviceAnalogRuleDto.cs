@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
-namespace Parakeet.Net.Dtos.DeviceAnalogRules
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 设备模拟数据规则

@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Dtos.Requests
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 获取企业微信部门id列表输入类

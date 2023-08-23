@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Dtos.DeviceAnalogRules
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 设备模拟数据规则

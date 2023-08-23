@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Parakeet.Net.Dtos.Requests
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 企业微信成员列表返回类

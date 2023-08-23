@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Needs.Dtos
+namespace Parakeet.Net.Dtos
 {
     public class PopulateAttachementInputDto : IValidatableObject
     {

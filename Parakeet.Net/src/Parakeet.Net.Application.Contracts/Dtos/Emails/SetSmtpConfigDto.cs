@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Dtos.Emails
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// smtp配置项

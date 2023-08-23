@@ -1,7 +1,7 @@
 ﻿using Parakeet.Net.Dtos;
 using System;
 
-namespace Parakeet.Net.Projects.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 获取项目分页

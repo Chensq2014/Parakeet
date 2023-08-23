@@ -1,10 +1,10 @@
-﻿using Parakeet.Net.Dtos.Houses;
+﻿using Parakeet.Net.Dtos;
 using Parakeet.Net.Enums;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Dtos.Products
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 产品

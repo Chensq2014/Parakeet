@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Parakeet.Net.Dtos.Options;
+using Parakeet.Net.Dtos;
 using System;
 
 namespace Parakeet.Net.Options

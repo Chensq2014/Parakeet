@@ -1,12 +1,12 @@
-﻿using Parakeet.Net.Dtos.Products;
-using Parakeet.Net.Dtos.Sections;
+﻿using Parakeet.Net.Dtos;
+using Parakeet.Net.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Parakeet.Net.Dtos.Houses
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 住户

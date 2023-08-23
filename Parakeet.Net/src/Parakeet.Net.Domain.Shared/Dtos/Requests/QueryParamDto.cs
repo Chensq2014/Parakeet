@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Dtos.Requests
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 查询参数

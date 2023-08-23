@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Dtos.Requests
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 获取企业某用户输入类

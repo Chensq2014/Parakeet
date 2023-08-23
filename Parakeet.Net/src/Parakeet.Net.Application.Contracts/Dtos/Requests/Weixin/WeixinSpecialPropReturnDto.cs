@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Dtos.Requests
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 用户敏感信息返回类

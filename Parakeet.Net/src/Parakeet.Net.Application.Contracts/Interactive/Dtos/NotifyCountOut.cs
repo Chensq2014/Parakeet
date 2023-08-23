@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Interactive.Dtos
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 用户未读消息数据

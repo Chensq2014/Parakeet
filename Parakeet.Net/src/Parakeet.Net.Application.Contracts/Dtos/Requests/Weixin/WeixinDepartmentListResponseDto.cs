@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Parakeet.Net.Dtos.Requests
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 企业微信获取部门列表返回对象

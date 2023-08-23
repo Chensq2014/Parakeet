@@ -1,0 +1,40 @@
+﻿using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Parakeet.Net.Dtos;
+using Parakeet.Net.Entities;
+using Parakeet.Net.Interfaces;
+using Parakeet.Net.Dtos;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Parakeet.Net.Needs
+{
+    /// <summary>
+    /// 需求附件服务
+    /// </summary>
+    public class NeedAttachmentAppService : BaseNetAppService<NeedAttachment>, INeedAttachmentAppService
+    {
+        //private readonly INetRepository<NeedAttachment> _needAttachmentRepository;
+        public NeedAttachmentAppService(
+            INetRepository<NeedAttachment> baseRepository) : base(baseRepository)
+        {
+            //_needAttachmentRepository = baseRepository;
+        }
+
+        /// <summary>
+        /// 获取所有附件信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<IList<NeedAttachmentDto>> GetNeedAttachments(InputIdDto input)
+        {
+            return await (await Repository.GetQueryableAsync())
+                .Where(m => m.NeedId == input.Id)
+                .OrderByDescending(n => n.Order)
+                .ProjectTo<NeedAttachmentDto>(Configuration)
+                .ToListAsync();
+        }
+    }
+}

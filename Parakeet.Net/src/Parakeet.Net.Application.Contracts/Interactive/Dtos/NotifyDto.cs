@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
-namespace Parakeet.Net.Interactive.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 消息通知/列表

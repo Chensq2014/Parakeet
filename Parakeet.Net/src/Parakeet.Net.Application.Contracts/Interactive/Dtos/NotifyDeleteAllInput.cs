@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Parakeet.Net.Interactive.Dtos
+namespace Parakeet.Net.Dtos
 {
     public class NotifyDeleteAllInput : NotifyInput, IValidatableObject
     {

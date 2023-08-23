@@ -1,6 +1,5 @@
 ﻿using AlibabaCloud.SDK.Dm20151123.Models;
 using Parakeet.Net.Dtos;
-using Parakeet.Net.Dtos.Emails;
 
 namespace Parakeet.Net.Emails
 {

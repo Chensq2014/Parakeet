@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Parakeet.Net.Dtos.Requests;
+using Parakeet.Net.Dtos;
 
 namespace Parakeet.Net.Helper
 {

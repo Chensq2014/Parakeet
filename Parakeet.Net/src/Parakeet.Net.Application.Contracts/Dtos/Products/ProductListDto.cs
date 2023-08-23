@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Dtos.Products
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 产品列表

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Parakeet.Net.Projects.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 更新项目

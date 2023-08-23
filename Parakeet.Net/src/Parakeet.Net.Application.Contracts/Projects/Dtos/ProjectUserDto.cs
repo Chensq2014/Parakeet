@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Parakeet.Net.Projects.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 项目/课程 用户/学员

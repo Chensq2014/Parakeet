@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Dtos.Products
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// PivotGridInputDto

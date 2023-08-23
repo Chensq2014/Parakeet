@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Parakeet.Net.Dtos.DeviceAnalogRules
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 获取规则数据列表

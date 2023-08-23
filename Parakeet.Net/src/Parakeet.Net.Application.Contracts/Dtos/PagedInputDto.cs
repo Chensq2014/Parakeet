@@ -9,16 +9,10 @@ namespace Parakeet.Net.Dtos
     /// </summary>
     public abstract class PagedInputDto : ISortedResultRequest, IPagedResultRequest
     {
-        protected PagedInputDto()
-        {
-            MaxResultCount = CustomerConsts.DefaultPageSize;
-            SkipCount = PageIndex * MaxResultCount ?? SkipCount;
-        }
-
         /// <summary>
         ///     传递页码后影响SkipCount的值
         /// </summary>
-        public int? PageIndex { get; set; }
+        public int? PageIndex { get; set; } = 1;
 
         /// <summary>
         ///     提供给前端传递字符串或者json字符串的数据过滤对象，后端可以直接获取或者反序列化为需要的对象
@@ -35,9 +29,13 @@ namespace Parakeet.Net.Dtos
         ///// </summary>
         //public int? PageSize { get; set; }
 
-        [Range(1, CustomerConsts.MaxPageSize)] public int MaxResultCount { get; set; }
+        [Range(1, CustomerConsts.MaxPageSize)] public int MaxResultCount { get; set; } = CustomerConsts.DefaultPageSize;
 
-        [Range(0, int.MaxValue)] public int SkipCount { get; set; }
+        [Range(0, int.MaxValue)] public int SkipCount
+        {
+            get => (PageIndex??1 - 1) * MaxResultCount;
+            set { }
+        }
 
         /// <summary>
         /// 是否需要获取总页数，默认为true

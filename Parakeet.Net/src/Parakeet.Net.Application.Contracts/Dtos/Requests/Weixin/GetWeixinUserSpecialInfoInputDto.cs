@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Dtos.Requests
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 根据用户票据获取用户敏感信息输入类

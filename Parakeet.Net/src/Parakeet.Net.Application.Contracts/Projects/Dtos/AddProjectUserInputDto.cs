@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Parakeet.Net.Projects.Dtos
+namespace Parakeet.Net.Dtos
 {
     public class AddProjectUserInputDto : BaseDto, IValidatableObject
     {

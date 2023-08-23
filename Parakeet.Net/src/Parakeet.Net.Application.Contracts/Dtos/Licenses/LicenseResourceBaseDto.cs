@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
-namespace Parakeet.Net.Dtos.Licenses
+namespace Parakeet.Net.Dtos
 {
     public class LicenseResourceBaseDto : EntityDto<Guid>
     {

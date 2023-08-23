@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Parakeet.Net.CustomAttributes;
 using Parakeet.Net.Enums;
 
-namespace Parakeet.Net.Dtos.SecurePolicies
+namespace Parakeet.Net.Dtos
 {
     public class SecurePolicyPageListInputDto : PagedInputDto, IValidatableObject
     {

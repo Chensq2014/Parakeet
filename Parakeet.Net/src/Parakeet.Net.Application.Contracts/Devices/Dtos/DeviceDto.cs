@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Parakeet.Net.Projects.Dtos;
-using Parakeet.Net.Thresholds.Dtos;
+using Parakeet.Net.Dtos;
+using Parakeet.Net.Dtos;
 
 namespace Parakeet.Net.Dtos
 {

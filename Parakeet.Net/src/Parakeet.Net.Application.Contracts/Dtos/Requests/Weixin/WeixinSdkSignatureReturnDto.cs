@@ -1,4 +1,4 @@
-﻿namespace Parakeet.Net.Dtos.Requests
+﻿namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 企业微信自建/三方应用获取微信api返回dto

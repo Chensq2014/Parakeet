@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.Dtos.SecurePolicies
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 安全策略

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Parakeet.Net.CustomAttributes;
 using Parakeet.Net.Dtos;
-using Parakeet.Net.Organizations.Dtos;
+using Parakeet.Net.Dtos;
+using Parakeet.Net.Dtos;
 using Parakeet.Net.ValueObjects;
 
-namespace Parakeet.Net.Projects.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 项目
@@ -132,6 +134,43 @@ namespace Parakeet.Net.Projects.Dtos
         /// 项目设备
         /// </summary>
         public virtual List<DeviceDto> Devices { get; set; } = new List<DeviceDto>();
+
+        #endregion
+
+        #region 项目地块
+
+        /// <summary>
+        /// 项目地块
+        /// </summary>
+        public virtual List<SectionDto> Sections { get; set; } = new List<SectionDto>();
+
+        #region 统计
+
+        /// <summary>
+        /// 房间合计
+        /// </summary>
+        [Description("房间合计")]
+        public decimal? HouseTotal => Sections.Sum(m => m.HouseTotal ?? 0);
+
+        /// <summary>
+        /// 总工价
+        /// </summary>
+        [Description("总工价")]
+        public decimal? CostTotal => Sections.Sum(m => m.CostTotal ?? 0);
+
+        /// <summary>
+        /// 总利润
+        /// </summary>
+        [Description("总利润")]
+        public decimal? ProfitTotal => Sections.Sum(m => m.ProfitTotal ?? 0);
+
+        /// <summary>
+        /// 用工总计
+        /// </summary>
+        [Description("用工总计")]
+        public decimal? WorkerTotal => Sections.Sum(m => m.WorkerTotal ?? 0);
+
+        #endregion
 
         #endregion
 

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Volo.Abp.Application.Dtos;
 
-namespace Parakeet.Net.Dtos.DeviceAnalogRules
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 规则启用禁用

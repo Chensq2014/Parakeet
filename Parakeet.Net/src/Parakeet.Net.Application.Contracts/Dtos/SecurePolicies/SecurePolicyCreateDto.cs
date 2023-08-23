@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Parakeet.Net.Dtos.SecurePolicies
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 创建安全策略传输对象

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Parakeet.Net.Dtos;
 
-namespace Parakeet.Net.Needs.Dtos
+namespace Parakeet.Net.Dtos
 {
     public class NeedAttachmentDto : BaseAttachmentDto, IValidatableObject
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Volo.Abp.Application.Dtos;
 
-namespace Parakeet.Net.Dtos.Licenses
+namespace Parakeet.Net.Dtos
 {
     public class GetLicenseResourceListInput : PagedInputDto
     {

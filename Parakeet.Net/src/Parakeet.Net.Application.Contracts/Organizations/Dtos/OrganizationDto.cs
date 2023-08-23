@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Parakeet.Net.CustomAttributes;
-using Parakeet.Net.Projects.Dtos;
+using Parakeet.Net.Dtos;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Enums;
 using Parakeet.Net.ValueObjects;
 
-namespace Parakeet.Net.Organizations.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// 组织机构

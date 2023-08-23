@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parakeet.Net.PacketHandlers.Dtos
+namespace Parakeet.Net.Dtos
 {
     /// <summary>
     /// tcp包头 传输对象

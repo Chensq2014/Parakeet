@@ -34,14 +34,57 @@ namespace Parakeet.Net.ExcelUploader
 
         #endregion
 
-        #region 仅给子类继承的加载excel文件到内存获取Sheet方法 不可重写
+        #region 加载excel文件到内存 仅给子类继承的加载excel文件到内存获取Sheet方法 不可重写
+
+        /// <summary>
+        /// 加载Workbook
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<IWorkbook> LoadBook(string path)
+        {
+            Stream fs = null;
+            IWorkbook book;
+            try
+            {
+                if (File.Exists(path))
+                {
+                    fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                }
+                else
+                {
+                    CheckError("不存在此文件");
+                }
+
+                if (path.EndsWith(".xlsx"))
+                {
+                    book = new XSSFWorkbook(fs);
+                }
+                else if (path.EndsWith(".xls"))
+                {
+                    book = new HSSFWorkbook(fs);
+                }
+                else
+                {
+                    throw new Exception($"上传文件类型出错:只允许上传.xlsx/.xls文件");
+                }
+                return await Task.FromResult(book);
+            }
+            finally
+            {
+                fs?.Dispose();
+                fs?.Close();
+            }
+        }
 
         /// <summary>
         /// 加载文件重载1
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="sheetNum"></param>
         /// <returns></returns>
-        protected ISheet LoadFile(string path)
+        protected ISheet LoadFile(string path, int sheetNum = 0)
         {
             if (!File.Exists(path))
             {
@@ -62,7 +105,7 @@ namespace Parakeet.Net.ExcelUploader
                 throw new UserFriendlyException("上传文件类型出错");
             }
 
-            var sheet = book.GetSheetAt(0);
+            var sheet = book.GetSheetAt(sheetNum);
 
             if (sheet.GetRow(1) == null)
             {
@@ -76,8 +119,9 @@ namespace Parakeet.Net.ExcelUploader
         /// 加载文件重载2
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="sheetNum"></param>
         /// <returns></returns>
-        protected ISheet LoadFile(IFormFile file)
+        protected ISheet LoadFile(IFormFile file, int sheetNum = 0)
         {
             // 100M以内
             var maxFileSize = 1024 * 1024 * 100;
@@ -98,7 +142,7 @@ namespace Parakeet.Net.ExcelUploader
             }
 
             IWorkbook book = new XSSFWorkbook(file.OpenReadStream());
-            ISheet sheet = book.GetSheetAt(0);
+            ISheet sheet = book.GetSheetAt(sheetNum);
             if (sheet.GetRow(1) == null)
             {
                 CheckError("不存在数据");

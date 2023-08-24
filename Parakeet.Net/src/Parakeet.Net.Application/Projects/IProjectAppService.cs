@@ -1,6 +1,5 @@
 ﻿using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
-using Parakeet.Net.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

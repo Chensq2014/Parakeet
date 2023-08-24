@@ -1,10 +1,10 @@
 ﻿using Parakeet.Net.Dtos;
+using Parakeet.Net.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Parakeet.Net.Helper;
 
 namespace Parakeet.Net.EnumServices
 {

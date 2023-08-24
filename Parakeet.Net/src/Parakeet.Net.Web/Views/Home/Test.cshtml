@@ -1,0 +1,123 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link href="~/css/devextreme/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    <style>
+        #form-container {
+            margin: 10px;
+        }
+
+        .long-title h3 {
+            font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+            font-weight: 200;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+<body class="dx-viewport">
+    <div class="demo-container">
+        <div class="long-title"><h3>Personal details</h3></div>
+        <div id="form-container">
+            <div id="form"></div>
+        </div>
+    </div>
+
+    <script src="~/js/devextreme/jquery.js"></script>
+    <script src="~/js/devextreme/bootstrap.js"></script>
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+    <script src="~/js/devextreme/jszip.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/vectormap-data/world.js"></script>
+    <script src="~/js/devextreme/localization/dx.messages.zh.js"></script>
+    <script src="~/js/devextreme/localization/supplemental.js"></script>
+    <script src="~/js/devextreme/localization/zh.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script>
+        Globalize.locale(navigator.languages && navigator.languages[0] ||
+            navigator.language ||
+            navigator.userLanguage);
+        var employees = {
+            "ID": 1,
+            "FirstName": "John",
+            "LastName": "Heart",
+            "CompanyName": "Super Mart of the West",
+            "Position": "CEO",
+            "OfficeNo": "901",
+            "BirthDate": new Date(1964, 2, 16),
+            "HireDate": new Date(1995, 0, 15),
+            "Address": "351 S Hill St.",
+            "City": "Los Angeles",
+            "State": "CA",
+            "Zipcode": "90013",
+            "Phone": "+1(213) 555-9392",
+            "Email": "jheart@dx-email.com",
+            "Skype": "jheart_DX_skype"
+        };
+        $(function () {
+            $("#form").dxForm({
+                formData: employees,
+                colCount: 2,
+                items: [{
+                    itemType: "group",
+                    caption: "System Information",
+                    items: ["ID", "FirstName", "LastName", "HireDate", "Position", "OfficeNo"]
+                }, {
+                    itemType: "group",
+                    caption: "Personal Data",
+                    items: ["BirthDate", {
+                        itemType: "group",
+                        caption: "Home Address",
+                        items: ["Address", "City", "State", "Zipcode"]
+                    }]
+                }, {
+                    itemType: "group",
+                    caption: "Contact Information",
+
+                    items: [{
+                        itemType: "tabbed",
+                        tabPanelOptions: {
+                            deferRendering: false
+                        },
+                        tabs: [{
+                            title: "Phone",
+                            items: ["Phone"]
+                        }, {
+                            title: "Skype",
+                            items: ["Skype"]
+                        }, {
+                            title: "Email",
+                            items: ["Email"]
+                        }]
+                    }]
+                }]
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+

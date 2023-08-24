@@ -13,10 +13,13 @@ namespace Parakeet.Net.Sections
         public SectionDtoMapper()
         {
             CreateMap<Section, SectionDto>()
+                //.Ignore(x => x.SectionWorkers)
+                //.Ignore(x => x.Houses)
                 .Ignore(x => x.CostTotal)
                 .Ignore(x => x.ProfitTotal)
                 .Ignore(x => x.HouseTotal)
                 .Ignore(x => x.WorkerTotal);
+
             CreateMap<SectionDto, Section>()
                 .Ignore(x => x.IsDeleted)
                 .Ignore(x => x.DeleterId)
@@ -28,6 +31,7 @@ namespace Parakeet.Net.Sections
                 .Ignore(x => x.ExtraProperties)
                 .Ignore(x => x.ConcurrencyStamp)
                 .Ignore(x => x.LocationArea);
+
         }
     }
 }

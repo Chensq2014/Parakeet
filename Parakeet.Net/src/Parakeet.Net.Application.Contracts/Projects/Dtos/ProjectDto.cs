@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Parakeet.Net.CustomAttributes;
+using Parakeet.Net.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Parakeet.Net.CustomAttributes;
-using Parakeet.Net.Dtos;
-using Parakeet.Net.Dtos;
-using Parakeet.Net.Dtos;
-using Parakeet.Net.ValueObjects;
 
 namespace Parakeet.Net.Dtos
 {

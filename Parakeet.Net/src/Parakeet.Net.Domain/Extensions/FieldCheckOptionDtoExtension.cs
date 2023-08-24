@@ -1,7 +1,7 @@
 ﻿using Parakeet.Net.Dtos;
-using Parakeet.Net.Entities;
 using System;
 using System.Linq.Expressions;
+using Volo.Abp.Domain.Entities;
 
 namespace Parakeet.Net.Extensions
 {
@@ -18,7 +18,7 @@ namespace Parakeet.Net.Extensions
         /// <param name="option">实体某属性字段选项类</param>
         /// <returns></returns>
         public static Expression<Func<TEntity, bool>> CheckLambda<TEntity, TPrimaryKey>(this FieldCheckOptionDto<TPrimaryKey> option)
-            where TEntity : BaseEntity<TPrimaryKey>
+            where TEntity : Entity<TPrimaryKey>
         {
             return ExpressionExtension.DynamicField<TEntity, TPrimaryKey>(option);
         }

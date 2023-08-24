@@ -135,5 +135,12 @@ namespace Parakeet.Net.Dtos
         /// </summary>
         public virtual List<DeviceWorkerDto> DeviceWorkers { get; set; } = new List<DeviceWorkerDto>();
         #endregion
+
+        #region 人员地块集合
+        /// <summary>
+        /// 人员地块集合
+        /// </summary>
+        public virtual List<SectionWorkerDto> SectionWorkers { get; set; } = new List<SectionWorkerDto>();
+        #endregion
     }
 }

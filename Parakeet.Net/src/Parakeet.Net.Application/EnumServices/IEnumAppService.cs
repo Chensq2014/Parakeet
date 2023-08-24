@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Parakeet.Net.Dtos;
+﻿using Parakeet.Net.Dtos;
+using System.Collections.Generic;
 
 namespace Parakeet.Net.EnumServices
 {

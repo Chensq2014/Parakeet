@@ -1,6 +1,5 @@
-﻿using System;
-using Parakeet.Net.CustomAttributes;
-using Serilog;
+﻿using Parakeet.Net.CustomAttributes;
+using System;
 using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.Aop

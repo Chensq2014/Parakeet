@@ -3,10 +3,10 @@ using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Dtos;
+using Parakeet.Net.Entities;
 using Parakeet.Net.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
-using Parakeet.Net.Entities;
 
 namespace Parakeet.Net.Houses
 {

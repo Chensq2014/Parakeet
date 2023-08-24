@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using DevExtreme.AspNet.Data;
+﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
 using Parakeet.Net.Interfaces;
+using System.Threading.Tasks;
 
 namespace Parakeet.Net.Sections
 {

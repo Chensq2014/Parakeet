@@ -1,0 +1,87 @@
+﻿@using Parakeet.Net.Permissions
+@using Microsoft.AspNetCore.Authorization
+@{
+    ViewData["Title"] = "模拟数据规则列表";
+    var authorizationService = (IAuthorizationService)ViewBag.AuthorizationService;
+}
+
+@section styles{
+    <!-- boottable CSS -->
+    <link href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet" />
+    <!-- Daterange picker plugins css -->
+    <link href="~/lib/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!--alerts CSS -->
+    <link href="~/lib/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/bootstrap-switch/css/bootstrap3/bootstrap-switch.css" rel="stylesheet" />
+}
+
+<div class="row bg-title">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div class="form-group form-horizontal">
+            <label class="control-label col-sm-1" for="filter">模糊搜索</label>
+            <div class="col-sm-2">
+                <input id="filter" name="filter" type="text" class="form-control col-sm-2" placeholder="设备名称/区域/编码" />
+            </div>
+            <div class="col-sm-1">
+                <button id="clear" class="btn btn-block btn-info">重置</button>
+            </div>
+
+            @if (await authorizationService.IsGrantedAsync(DeviceAnalogRulePermissions.DeviceAnalogRule.Create))
+            {
+                <div class="col-sm-1">
+                    <a target="_blank" href="~/deviceAnalogRule-add" class="btn btn-block btn-info">新增</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div class="white-box">
+            <div class="scrollable">
+                <div class="table-responsive">
+                    <table id="bootstrap_table" class="table table-hover menu-list"
+                           data-minimum-count-columns="2"
+                           data-pagination="true"
+                           data-id-field="id"
+                           data-show-footer="false"
+                           data-side-pagination="server"
+                           data-query-params-type="page"
+                           data-method="get"
+                           data-locale="zh-CN"
+                           data-url="/api/parakeet/deviceAnalogRule/pageList">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <!-- jQuery -->
+    <!--<script src="~/lib/jquery/dist/jquery.min.js"></script>-->
+    <!-- Bootstrap Core JavaScript -->
+    <!--<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>-->
+
+    <!-- Menu Plugin JavaScript -->
+    <script src="~/lib/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--Style Switcher -->
+    <script src="~/lib/styleswitcher/jQuery.style.switcher.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="~/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/js/waves.js"></script>
+    <!--Validator-->
+    <script src="~/js/validator.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/js/custom.js"></script>
+
+    <script src="~/lib/bootstrap-table/dist/bootstrap-table-all.min.js"></script>
+    <script src="~/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
+    <script src="~/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/lib/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- Sweet-Alert  -->
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+    <script src="~/js/device-analogrule/index.js"></script>
+}

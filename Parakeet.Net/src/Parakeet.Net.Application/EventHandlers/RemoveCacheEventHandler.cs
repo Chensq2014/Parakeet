@@ -3,7 +3,6 @@ using Parakeet.Net.Events;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
-using Volo.Abp.EventBus.Distributed;
 
 namespace Parakeet.Net.EventHandlers
 {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
-using Parakeet.Net.Dtos;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;

@@ -1,0 +1,82 @@
+﻿@model Parakeet.Net.Dtos.AreaTenantListDto
+
+
+<div id="tenant-connectString">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="grid-connectString" class="show-grid"></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script type='text/javascript'>
+        $(function () {
+
+            function initTenantConnectStrringGrid() {
+                var tenantId = '@Model.Id';
+                var config = dxConfig.editGrid('/api/parakeet/areaTenant/tenantDbConnectionString?id=' + tenantId);
+                config.dataSource = DevExpress.data.AspNet.createStore({
+                    key: 'id',
+                    loadUrl: '/api/parakeet/areaTenant/tenantDbConnectionString?id=' +tenantId,
+                    insertUrl: '/api/parakeet/areaTenant/tenantDbConnectionString',
+                    updateUrl: '/api/parakeet/areaTenant/tenantDbConnectionString',
+                    deleteUrl: '/api/parakeet/areaTenant/tenantDbConnectionString'
+                });
+                config.gridId = 'grid-connectString';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowUpdating = true;
+                config.editing.allowDeleting = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'areaTenantName',
+                        alignment: 'center',
+                        caption: '区域名称',
+                        allowEditing: false
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        caption: '连接名称',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' }
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            //{ type: 'fieldUnique', checkUrl: '/api/parakeet/need/checkField', message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'isMaster',
+                        alignment: 'center',
+                        caption: '是否主库'
+                    },
+                    {
+                        dataField: 'value',
+                        alignment: 'center',
+                        caption: '连接字符串',
+                        validationRules: [
+                            { type: 'required', message: '连接字符串必填项' }
+                        ]
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    e.data.areaTenantId = tenantId;
+                };
+                config.onContentReady = function (e) {
+                    //
+                };
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+            }
+
+            initTenantConnectStrringGrid();
+        });
+
+    </script>
+}

@@ -1,12 +1,10 @@
 ﻿using AutoMapper.QueryableExtensions;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Parakeet.Net.Dtos;
-using Parakeet.Net.Entities;
 using Parakeet.Net.Extensions;
 using Parakeet.Net.Interfaces;
 using Parakeet.Net.LinqExtensions;
@@ -18,6 +16,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Auditing;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
 namespace Parakeet.Net
@@ -27,7 +27,7 @@ namespace Parakeet.Net
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
-    public abstract class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
+    public abstract class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : Entity<TPrimaryKey>
         //where TPrimaryKey : struct
     {
         public INetRepository<TEntity, TPrimaryKey> Repository;
@@ -111,7 +111,7 @@ namespace Parakeet.Net
         public virtual async Task<IQueryable<TEntityDto>> GridDto<TEntityDto>() where TEntityDto : BaseDto
         {
             var result = (await GetAll()).AsNoTracking()
-                .OrderByDescending(o => o.CreationTime)
+                //.OrderByDescending(o => o.CreationTime)
                 .ProjectTo<TEntityDto>(Configuration);
             return result;
         }
@@ -194,7 +194,10 @@ namespace Parakeet.Net
         {
             var entity = await GetByPrimaryKey(new InputIdDto<TPrimaryKey> { Id = GetTPrimaryKey() });
             JsonConvert.PopulateObject(GetValuesString(), entity);
-            entity.LastModificationTime = Clock.Now;
+            if (entity is IHasModificationTime)
+            {
+                ((IHasModificationTime)entity).LastModificationTime = Clock.Now;
+            }
         }
 
         #endregion
@@ -506,7 +509,7 @@ namespace Parakeet.Net
     /// <typeparam name="TEntity">实体类</typeparam>
     public class BaseNetAppService<TEntity> : BaseNetAppService<TEntity, Guid>
         , IBaseNetAppService<TEntity>
-        where TEntity : BaseEntity
+        where TEntity : Entity<Guid>
     {
         public BaseNetAppService(
             INetRepository<TEntity, Guid> baseRepository) : base(baseRepository)

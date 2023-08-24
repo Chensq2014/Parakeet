@@ -1,0 +1,137 @@
+.content-bg-box {
+    height: 680px;
+    width: 100%;
+}
+
+.content-bg-img {
+    background-image: url('../images/login_bg.jpg');
+    background-size: 100% 100%;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.content-bg-register {
+    width: 395px;
+    height: 530px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /*transform: translate(-50%, -50%);*/
+    margin-top: -275px;
+    margin-left: -197.5px;
+    background-color: #fff;
+    text-align: center;
+}
+
+    .content-bg-register .title {
+        margin: 20px 0;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .content-bg-register .userName,
+    .content-bg-register .phone,
+    .content-bg-register .password {
+        position: relative;
+    }
+
+    .content-bg-register .inpPrefix {
+        display: inline-block;
+        width: 70px;
+        text-align: right;
+    }
+
+.content-bg-register-input {
+    width: 240px;
+    height: 40px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    text-indent: 15px;
+    outline: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #999;
+}
+
+.content-bg-register .protocol {
+    margin: 5px 0 20px;
+}
+
+    .content-bg-register .protocol a {
+        vertical-align: text-bottom;
+    }
+
+    .content-bg-register .protocol .forgetPwd {
+        color: #02d6dc;
+    }
+
+.content-bg-register button {
+    width: 315px;
+    height: 45px;
+    background-color: #ccc;
+    border-radius: 5px;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+.content-bg-register .register {
+    margin-top: 20px;
+}
+
+    .content-bg-register .register a {
+        font-size: 14px;
+        color: #02d6dc;
+    }
+
+.identCode {
+    position: relative;
+}
+
+.identCode-span {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    right: 41px;
+    line-height: 40px;
+    border-radius: 0 5px 5px 0;
+}
+
+.tooltip .tooltip-inner {
+    background-color: #fff;
+    text-align: left;
+    padding-left: 2em;
+    color: #333;
+    box-shadow: 1px 1px 1px #ccc;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: #fff;
+}
+
+.warning_icon {
+    position: absolute;
+    right: 50px;
+    top: 12px;
+    cursor: pointer;
+    display: none;
+}
+
+.alert-warning {
+    position: absolute;
+    display: none;
+    width: 320px;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background: #ef7f7f;
+    color: #fff;
+    border-color: #ef7f7f;
+}
+
+    .alert-warning .close {
+        opacity: .6;
+    }

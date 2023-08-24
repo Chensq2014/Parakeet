@@ -21,7 +21,8 @@ namespace Parakeet.Net.Workers
                 .Ignore(x => x.CreationTime)
                 .Ignore(x => x.ExtraProperties)
                 .Ignore(x => x.ConcurrencyStamp)
-                .Ignore(x => x.DeviceWorkers);
+                .Ignore(x => x.DeviceWorkers)
+                .Ignore(x => x.SectionWorkers);
         }
     }
 }

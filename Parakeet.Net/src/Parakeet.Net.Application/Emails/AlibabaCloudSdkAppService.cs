@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using Parakeet.Net.Dtos;
+﻿using AlibabaCloud.SDK.Dm20151123.Models;
+using Microsoft.Extensions.Options;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.ServiceGroup.AlibabaSdk;
 using System;
 using System.Collections.Generic;
-using AlibabaCloud.SDK.Dm20151123.Models;
 using Tea;
 
 namespace Parakeet.Net.Emails

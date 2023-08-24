@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.Data.SqlClient;
+using Volo.Abp.Domain.Entities;
 
 namespace Parakeet.Net.Extensions
 {
@@ -23,7 +24,7 @@ namespace Parakeet.Net.Extensions
         /// <typeparam name="TPrimaryKey">实体主键类型</typeparam>
         /// <param name="option">实体某属性字段选项类</param>
         /// <returns></returns>
-        public static Expression<Func<TEntity, bool>> DynamicField<TEntity, TPrimaryKey>(FieldCheckOptionDto<TPrimaryKey> option) where TEntity : BaseEntity<TPrimaryKey>
+        public static Expression<Func<TEntity, bool>> DynamicField<TEntity, TPrimaryKey>(FieldCheckOptionDto<TPrimaryKey> option) where TEntity : Entity<TPrimaryKey>
         {
             //ParameterExpression
             var param = Expression.Parameter(typeof(TEntity), "m");

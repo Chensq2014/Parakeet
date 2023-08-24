@@ -4,7 +4,6 @@ using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Dtos;
-using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
 using Parakeet.Net.Extensions;
 using Parakeet.Net.Interfaces;

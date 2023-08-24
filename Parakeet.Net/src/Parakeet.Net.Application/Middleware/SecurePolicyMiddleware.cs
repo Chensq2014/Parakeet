@@ -3,19 +3,16 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Parakeet.Net.Dtos;
+using Parakeet.Net.Cache;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Enums;
 using Parakeet.Net.Extensions;
 using Parakeet.Net.Helper;
-using Parakeet.Net.Interfaces;
 using Parakeet.Net.SecurePolicies;
-using Parakeet.Net.Storage;
 using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Parakeet.Net.Cache;
 
 namespace Parakeet.Net.Middleware
 {

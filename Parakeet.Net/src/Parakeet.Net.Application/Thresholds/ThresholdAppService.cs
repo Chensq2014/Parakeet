@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
 using Parakeet.Net.Interfaces;
-using Parakeet.Net.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;

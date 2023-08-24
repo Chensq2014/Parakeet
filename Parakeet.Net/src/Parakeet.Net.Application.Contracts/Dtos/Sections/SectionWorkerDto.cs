@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Parakeet.Net.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Parakeet.Net.Dtos;
 
 namespace Parakeet.Net.Dtos
 {
@@ -83,6 +83,11 @@ namespace Parakeet.Net.Dtos
         /// 工种
         /// </summary>
         public virtual WorkerTypeDto WorkType { get; set; }
+
+        /// <summary>
+        /// 劳务类型
+        /// </summary>
+        public LaborType LaborType { get; set; }
 
         #endregion
 

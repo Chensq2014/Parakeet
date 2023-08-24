@@ -1,5 +1,4 @@
 ﻿using Localization.Resources.AbpUi;
-using Microsoft.Extensions.Options;
 using Parakeet.Net.Localization;
 using Volo.Abp.Account;
 using Volo.Abp.AspNetCore.Mvc;

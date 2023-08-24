@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NPOI.SS.UserModel;
+using Parakeet.Net.Entities;
 using Parakeet.Net.Enums;
 using Parakeet.Net.ExcelUploader;
 using Parakeet.Net.Extensions;
@@ -7,7 +8,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Parakeet.Net.Entities;
 using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.LocationAreas

@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="鹦鹉工作室">
+    <meta name="author" content="parakeet">
+
+    <title>小鹦鹉工作室</title>
+    <link href="~/favicon.gif" rel="shortcut icon" type="image/x-icon" />
+    <!--bootstrap v4.3.1-->
+    <link href="~/css/devextreme/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="~/plugins/rs-plugin/css/settings.css" media="screen" asp-append-version="true" />
+
+    <!-- Custom CSS -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" asp-append-version="true">
+    <link href="~/css/ionicons.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/responsive.css" rel="stylesheet" asp-append-version="true">
+
+    <!-- 网站样式，谷歌字体 CSS COLORS -->
+    <link rel="stylesheet" id="color" href="~/css/default.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+    @RenderSection("styles", required: false)
+    <!-- JavaScripts modernizr 放在head标签内，兼容Ie -->
+    <script src="~/js/modernizr.js"></script>
+</head>
+
+<body>
+    <div id="wrap" class="container-fluid">
+
+        <!-- header -->
+        <header class="header-normal">
+            <div class="sticky">
+                <div class="container">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="/Home"><img class="img-responsive" width="70" src="~/images/logo-parakeet17.png" alt=""><span>小鹦鹉工作室</span></a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="navbar webimenu">
+                        <!-- MENU BUTTON RESPONSIVE -->
+                        <div class="menu-toggle"> <i class="fa fa-bars"> </i> </div>
+                        <!-- NAV -->
+
+                        <ul class="nav ownmenu">
+                            <li class="active">
+                                <a href="~/home">主页</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/areaTenant/areaTreeListIndex">区域管理</a> </li>
+                                    <li> <a href="~/api/parakeet/areaTenant">区域连接管理</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/project/index"> 项目简介 </a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/organization/index">组织架构</a> </li>
+                                    <li> <a href="~/api/parakeet/project/index">项目简介</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/need/index">用户需求</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/organization/index">门户网站</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">系统定制</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">公众号</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">小程序</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/need/create">联系我们</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/need/create">联系我们</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">联系我们</a> </li>
+                                </ul>
+                            </li>
+                            @Html.Partial("_LoginPartial")
+                            <li><img class="parakeet" width="60" src="~/images/parakeet.png" alt="" /></li>
+                        </ul>
+
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div id="content">
+            <div class="base-content">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScripts jquery bootstrap(v4.3.1) -->
+    <!-- jquery vv3.4.1 -->
+    <script src="~/js/devextreme/jquery.min.js"></script>
+    <script src="~/js/devextreme/bootstrap.min.js"></script>
+
+    <!-- 皮肤 -->
+    <script src="~/js/own-menu.js"></script>
+    <script src="~/js/jquery.lighter.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/color-switcher.js"></script>
+
+    <!-- DevExtreme cldr & globalize jszip all mvc data SCRIPTS  -->
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+    <script src="~/js/devextreme/jszip.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/vectormap-data/world.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js" asp-append-version="true"></script>
+
+    <!-- DevExtreme Localization SCRIPTS  本地化-->
+    <script src="~/js/devextreme/localization/dx.messages.zh.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/localization/supplemental.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/localization/zh.js" asp-append-version="true"></script>
+
+    <!-- DevExtreme Extension SCRIPTS  devextreme扩展-->
+    <script src="~/plugins/devextreme/dx.extension.js" asp-append-version="true"></script>
+    <script src="~/plugins/devextreme/dx.page.extension.js" asp-append-version="true"></script>
+    <script src="~/plugins/devextreme/common.js" asp-append-version="true"></script>
+    
+    <!-- dxDragFiles SCRIPTS  -->
+    <script src="~/plugins/drags/dxDragFiles.js" asp-append-version="true"></script>
+
+    <!-- jquery-validation SCRIPTS 验证-->
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- site SCRIPTS  -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

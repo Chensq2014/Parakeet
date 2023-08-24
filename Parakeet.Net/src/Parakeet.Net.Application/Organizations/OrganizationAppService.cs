@@ -7,7 +7,6 @@ using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
 using Parakeet.Net.Enums;
 using Parakeet.Net.Interfaces;
-using Parakeet.Net.Dtos;
 using Serilog;
 using System;
 using System.Collections.Generic;

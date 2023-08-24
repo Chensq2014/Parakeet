@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
 using Microsoft.Extensions.Logging;
 
 namespace Parakeet.Net.Filters

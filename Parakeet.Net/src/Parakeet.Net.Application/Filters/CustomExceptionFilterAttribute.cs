@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Parakeet.Net.Cache;
 using Parakeet.Net.Dtos;
-using Parakeet.Net.Storage;
 
 namespace Parakeet.Net.Filters
 {

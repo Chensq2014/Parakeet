@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Account.HttpApi" Version="6.0.2" />
     <PackageReference Include="Volo.Abp.Identity.HttpApi" Version="6.0.2" />
+    <PackageReference Include="Volo.Abp.IdentityModel" Version="6.0.2" />
     <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi" Version="6.0.2" />
     <PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="6.0.2" />
     <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi" Version="6.0.2" />

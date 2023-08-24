@@ -1,14 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Parakeet.Net.Cache;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Nest;
-using Parakeet.Net.Cache;
-using Parakeet.Net.Storage;
 using Volo.Abp.BackgroundWorkers;
-using Volo.Abp.DependencyInjection;
-using Volo.Abp.Guids;
 using Volo.Abp.Threading;
 
 namespace Parakeet.Net.BackgroundWorks

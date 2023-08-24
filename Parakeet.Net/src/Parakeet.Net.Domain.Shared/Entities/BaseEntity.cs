@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Parakeet.Net.Entities
@@ -42,4 +43,36 @@ namespace Parakeet.Net.Entities
             base.Id = id;
         }
     }
+
+    /// <summary>
+    /// 实体类基类 确保只含有基础字段
+    /// </summary>
+    [Serializable, Description("实体类基类")]
+    public abstract class EntityBase : EntityBase<Guid>
+    {
+    }
+
+    /// <summary>
+    /// 实体类基类 确保只含有基础字段
+    /// </summary>
+    [Serializable, Description("实体类基类")]
+    public abstract class EntityBase<TPrimaryKey> : Entity<TPrimaryKey>
+    {
+        //protected EntityBase()
+        //{
+        //}
+        //protected EntityBase(TPrimaryKey id) : base(id)
+        //{
+        //}
+
+        /// <summary>
+        /// 提供一个公共方法设置主键 protected
+        /// </summary>
+        /// <param name="id"></param>
+        public virtual void SetEntityPrimaryKey(TPrimaryKey id)
+        {
+            base.Id = id;
+        }
+    }
+
 }

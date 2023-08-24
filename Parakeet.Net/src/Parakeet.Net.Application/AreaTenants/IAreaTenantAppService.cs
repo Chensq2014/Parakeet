@@ -1,9 +1,9 @@
 ﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
+using Parakeet.Net.Entities;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Parakeet.Net.Entities;
 using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.AreaTenants

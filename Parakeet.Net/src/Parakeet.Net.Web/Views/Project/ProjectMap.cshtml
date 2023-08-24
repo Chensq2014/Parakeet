@@ -1,0 +1,93 @@
+﻿
+<div class="project-map-container row">
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="gallery-scorll">
+            <div id="project-map-gallery"></div>
+            @*<img id="project-map" title="项目导图" src="@Url.Action("Map")" onerror="onerror=null;width='300';src='@Url.Action("Error")'" width="100%" />*@
+        </div>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1">
+        <div id="project-map-upload"></div>
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+        <span>允许图片扩展名: <span> .png .jpg .gif .bmp</span>.</span>
+        <span>文件大小限制: <span>6 MB.</span></span>
+    </div>
+</div>
+
+<div id="contextMenu"></div>
+
+
+<script>
+    $(function() {
+        //更换ProjectMap图片
+        var config = dxConfig.fileUploader({
+            name: 'uploadFile',
+            uploadUrl: '@Url.Action("UploadFile","Project",new{ProjectId= ViewBag.ProjectId })',
+            onUploaded: function(e) {
+                sucNotify('上传成功');
+                initAttachment();
+                hideLoading();
+            }
+        });
+        $('#project-map-upload').dxFileUploader(config);
+
+        initAttachment();
+    });
+
+    function initAttachment() {
+
+        var config = dxConfig.gallery({
+            dataSource: DevExpress.data.AspNet.createStore({
+                key: 'id',
+                loadUrl: '@Url.Action("GetProjectAttachments", "Project", new { ProjectId = ViewBag.ProjectId })'
+            }),
+            height: 800,
+            width: '100%',
+            loop: true,
+            slideshowDelay: 20000,
+            //elementAttr: {
+            //    id: 'elementId',
+            //    class: 'class-name'
+            //},
+            itemTemplate: function (item, index, itemElement) {
+                $('<img id="' + item.Order + '">').attr('src', item.VirtualPath).attr('filePath', item.FilePath).addClass('dx-gallery-item-image')
+                    //.attr('width', '98%')
+                    //.attr('width', 'auto').attr('height', 'auto')
+                    //.attr('max-width', '100%').attr('max-height', '100%')
+                    .dxContextMenu({
+                        dataSource: [{ text: '删除' }],
+                        width: 200,
+                        target: '#' + item.Order,//item.Order,
+                        filePath: item.FilePath,
+                        onItemClick: function (f) {
+                            //f.component._options.filePath// f.element.attr('filePath')
+                            syncGet('/api/parakeet/Project/RemoveAttachment?path=' + f.component._options.filePath,
+                                function (r) { },
+                                function (res, d) {
+                                    initAttachment();
+                                });
+                        }
+                    })
+                    .appendTo(itemElement);
+                $('<div>').addClass('item-file-name').text(item.FileName).appendTo(itemElement);
+                return itemElement;
+            }
+            //itemTemplate: $("#item-template"),
+            //onItemClick: function (e) {
+            //    //showGalleryPopup('查看大图', itemPopupconfig);
+            //    debugger;
+            //},
+            //onItemContextMenu: function (e) {
+            //    //删除功能 '/api/parakeet/Project/RemoveAttachment?path='
+            //}
+        });
+
+        $('#project-map-gallery').dxGallery(config);
+
+    }
+
+
+</script>

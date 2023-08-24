@@ -1,5 +1,4 @@
-﻿using Parakeet.Net.Dtos;
-using System;
+﻿using System;
 using System.ComponentModel;
 
 namespace Parakeet.Net.Dtos

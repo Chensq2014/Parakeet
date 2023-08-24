@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using Serilog;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Parakeet.Net.Extensions;
+using Serilog;
+using System;
 using Volo.Abp.Caching;
 
 namespace Parakeet.Net.Filters

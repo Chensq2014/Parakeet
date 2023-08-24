@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Parakeet.Net.Dtos;
-using Parakeet.Net.Dtos;
+﻿using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.SecurePolicies

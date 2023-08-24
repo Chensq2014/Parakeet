@@ -1,5 +1,5 @@
-﻿using System;
-using Parakeet.Net.ValueObjects;
+﻿using Parakeet.Net.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

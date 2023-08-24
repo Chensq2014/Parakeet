@@ -1,0 +1,179 @@
+﻿
+@*<div>
+    <div id="area_vue">
+        <div class="form-group">
+            <label for="parentArea" class="col-sm-3 control-label">省/直辖市/自治区<span class="font-red">*</span></label>
+            <div class="col-sm-9">
+                <select name="parentArea" id="parentArea" class="form-control" v-model="parentAreaSelected" @@change="parentAreaChanged">
+                    <option v-for="(area,index) in parentAreas" :key="area.code" :value="area.code">{{area.name}}({{area.code}})</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="area" class="col-sm-3 control-label">城市</label>
+            <div class="col-sm-9">
+                <select name="area" id="area" class="form-control" v-model="areaSelected" @@change="areaChanged">
+                    <option v-for="(area,index) in areas" :key="area.code" :value="area.code">{{area.name}}({{area.code}})</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="subArea" class="col-sm-3 control-label">区/县</label>
+            <div class="col-sm-9">
+                <select name="subArea" id="subArea" class="form-control" v-model="subAreaSelected">
+                    <option v-for="(area,index) in subAreas" :key="area.code" :value="area.code">{{area.name}}({{area.code}})</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div id="grid-device" class="show-grid"></div>
+
+@section scripts
+{
+    <script src="~/libs/vue/vue.min.js"></script>
+    <script type='text/javascript'>
+
+        $(function () {
+
+            initDeviceGrid();
+
+            function initDeviceGrid() {
+                var config = dxConfig.editGrid('/api/parakeet/device');
+                config.projects = dxConfig.selectBox('/api/parakeet/project/projectSelectList?id=');
+                config.gridId = 'grid-device';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = false;
+                config.editing.allowUpdating = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        caption: '名称',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/checkField', message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'serialNo',
+                        alignment: 'center',
+                        caption: '序列号',
+                        validationRules: [
+                            { type: 'required', message: '序列号为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/checkField', message: '序列号重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'fakeNo',
+                        alignment: 'center',
+                        caption: '编码',
+                        validationRules: [
+                            { type: 'required', message: '编码为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '编码避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/checkField', message: '编码重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'locationAreaId',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        //allowEditing: false,
+                        caption: '区域',
+                        lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?level=1'),
+                        validationRules: [{ type: "required", message: "区域必填项" }]
+                    },
+                    {
+                        dataField: 'projectId',
+                        caption: '项目',
+                        minWidth: 100,
+                        sortIndex: 0,
+                        sortOrder: 'asc',
+                        lookup: config.projects
+                    },
+                    {
+                        dataField: 'remark',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        allowExporting: false,
+                        caption: '备注'
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+                    //
+                };
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+            }
+
+        });
+
+        //var areaVm = new Vue({
+        //    el: "#area_vue",
+        //    data: {
+        //        parentAreas: [],
+        //        parentAreaSelected: '50',
+        //        areas: [],
+        //        areaSelected: '5001',
+        //        subAreas: [],
+        //        subAreaSelected: '500106',
+        //        tempSelected: null
+        //    },
+        //    created() {
+        //        this.getArea('86',
+        //            function (res) {
+        //                areaVm.parentAreas = res;
+        //            });
+        //        this.getArea(this.parentAreaSelected,
+        //            function (res) {
+        //                areaVm.areas = res;
+        //            });
+        //        this.getArea(this.areaSelected,
+        //            function (res) {
+        //                areaVm.subAreas = res;
+        //            });
+        //    },
+        //    methods: {
+        //        getArea(pCode, callBack) {
+        //            //jquery ajax请求json数据，然后赋值给areas
+        //            $.ajax({
+        //                type: 'get',
+        //                dataType: 'json',
+        //                url: '/api/parakeet/locationArea/locationAreas',
+        //                contentType: 'application/x-www-form-urlencoded',
+        //                data: { parentCode: pCode },
+        //                success: function (res) {
+        //                    callBack(res);
+        //                }
+        //            });
+        //        },
+        //        parentAreaChanged() {
+        //            this.getArea(this.parentAreaSelected, function (res) {
+        //                areaVm.areas = res;
+        //                areaVm.subAreaSelected = null;
+        //            });
+        //        },
+        //        areaChanged() {
+        //            this.getArea(this.areaSelected, function (res) {
+        //                areaVm.subAreas = res;
+        //            });
+        //        }
+        //    }
+        //});
+    </script>
+}

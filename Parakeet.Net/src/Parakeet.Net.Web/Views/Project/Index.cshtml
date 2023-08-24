@@ -1,0 +1,313 @@
+﻿@*<div>
+        展示项目列表图，然后点击某个项目图后，跳转到项目附件页
+
+        <div id="area_vue">
+            <div class="form-group">
+                <label for="parentArea" class="col-sm-3 control-label">省/直辖市/自治区<span class="font-red">*</span></label>
+                <div class="col-sm-9">
+                    <select name="parentArea" id="parentArea" class="form-control" v-model="parentAreaSelected" @@change="parentAreaChanged">
+                        <option v-for="(area,index) in parentAreas" :key="area.code" :value="area.code">{{area.name}}({{area.code}})</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="area" class="col-sm-3 control-label">城市</label>
+                <div class="col-sm-9">
+                    <select name="area" id="area" class="form-control" v-model="areaSelected" @@change="areaChanged">
+                        <option v-for="(area,index) in areas" :key="area.code" :value="area.code">{{area.name}}({{area.code}})</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="subArea" class="col-sm-3 control-label">区/县</label>
+                <div class="col-sm-9">
+                    <select name="subArea" id="subArea" class="form-control" v-model="subAreaSelected">
+                        <option v-for="(area,index) in subAreas" :key="area.code" :value="area.code">{{area.name}}({{area.code}})</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+<div id="grid-project" class="show-grid"></div>
+
+@section scripts
+{
+    <script src="~/libs/vue/vue.min.js"></script>
+    <script type='text/javascript'>
+
+        $(function () {
+
+            initProjectGrid();
+
+            function initProjectGrid() {
+                var config = dxConfig.editGrid('/api/parakeet/project');
+                config.organizations = dxConfig.selectBox('/api/parakeet/Organization/ParentSelectList?id=');
+                config.gridId = 'grid-project';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = false;
+                config.editing.allowUpdating = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        caption: '名称',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/project/checkField', message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'startDate',
+                        caption: '开始',
+                        dataType: 'date',
+                        width: 150,
+                        validationRules: [{ type: 'required', message: '开始时间必填' }],
+                        editorOptions: {
+                            acceptCustomValue: false,
+                            maxZoomLevel: 'year'
+                        },
+                        cellTemplate: function (ele, info) {
+                            info.data.startDate = T(info.data.startDate, __DateFormat);
+                            $(ele).html(info.data.startDate);
+                        }
+                    }, {
+                        dataField: 'endDate',
+                        caption: '结束',
+                        dataType: 'date',
+                        validationRules: [{ type: 'required', message: '结束时间必填' }],
+                        width: 150,
+                        editorOptions: {
+                            acceptCustomValue: false,
+                            maxZoomLevel: 'year'
+                        },
+                        cellTemplate: function (ele, info) {
+                            info.data.endDate = T(info.data.endDate, __DateFormat);
+                            $(ele).html(info.data.endDate);
+                        }
+                    },
+                    {
+                        dataField: 'locationAreaId',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        //allowEditing: false,
+                        caption: '区域',
+                        lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?cancelValid=true'),
+                        validationRules: [{ type: "required", message: "区域必填项" }]
+                    },
+                    {
+                        dataField: 'organizationId',
+                        caption: '组织',
+                        minWidth: 100,
+                        sortIndex: 0,
+                        sortOrder: 'asc',
+                        lookup: config.organizations
+                    },
+                    //{
+                    //    dataField: 'Amount',
+                    //    caption: '首年定额',
+                    //    dataType: 'number',
+                    //    format: { type: 'fixedPoint', precision: 2 },
+                    //    editorOptions: { min: 0, max: __Max },
+                    //    allowHeaderFiltering: false,
+                    //    validationRules: [
+                    //        {
+                    //            type: 'custom', validationCallback: function (options) {
+                    //                var newData = options.validator._validationGroup.data;
+                    //                var oldData = options.validator._validationGroup.oldData;
+                    //                var mode = newData && newData.BudgetaryMode ? newData.BudgetaryMode : (oldData ? oldData.BudgetaryMode : 0);
+                    //                if (mode===quota)
+                    //                {
+                    //                    if (!options.value)
+                    //                    {
+                    //                        options.rule.message = '定额必填';
+                    //                        return false;
+                    //                    }
+                    //                }
+                    //                return true;
+                    //            }
+                    //        }
+                    //    ]
+                    //},
+                    {
+                        dataField: 'remark',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        allowExporting: false,
+                        caption: '备注'
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+                    //
+                };
+
+                //config.onEditingStart = function(e) {
+                //    var disableField = ['locationAreaId'];
+                //    if (disableField.indexOf(e.column.dataField) > -1) {
+                //        e.cancel = true;
+                //    }
+                //};
+
+
+                var treeList = getOrganizations();
+
+                config.onEditorPreparing = function (e) {
+                    //&& e.parentType === 'filterRow'
+                    if (e.dataField === 'locationAreaId') {
+                        e.editorName = 'dxDropDownBox';
+                        var dropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/locationArea/locationAreaTree?cancelValid=true');
+                        dropDownBoxConfig.width = '100%';
+                        //dropDownBoxConfig.valueExpr = 'id';
+                        //dropDownBoxConfig.displayExpr = 'name';
+                        dropDownBoxConfig.placeholder = e.lookup.valueMap[e.value];
+                        var treeView = getDxTreeViewConfig({
+                            selectionMode: 'single',//单选
+                            height: 500
+                        });
+                        getDxDropDownBoxConfig(dropDownBoxConfig, treeView, 'TreeView');
+
+                        dropDownBoxConfig.onValueChanged = function (arg) {
+                            if (arg.value != null) {
+                                e.setValue(arg.value);
+                                //$(e.editorElement).text(e.lookup.valueMap[arg.value]);
+                                $(e.editorElement)[0].innerHTML = e.lookup.valueMap[arg.value];
+                                //$(e.editorElement)[0].outerText = e.lookup.valueMap[arg.value];
+                            }
+                        };
+                        e.editorOptions = dropDownBoxConfig;
+                    }
+                    if (e.dataField === 'organizationId') {
+                        e.editorName = 'dxDropDownBox';
+                        //var organizDropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/organization/rootTrees?cancelValid=true');
+                        var organizDropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/organization/get');
+                        //organizDropDownBoxConfig.width = '100%';
+                        organizDropDownBoxConfig.placeholder = e.lookup.valueMap[e.value];
+                        //organizDropDownBoxConfig.text = e.row.cells[5].text;
+
+                        getDxDropDownBoxConfig(organizDropDownBoxConfig, treeList, 'TreeList');
+
+                        organizDropDownBoxConfig.onOptionChanged = function (arg) {
+                            if (arg.value != null && arg.fullName === 'value') {
+                                e.setValue(arg.value);
+                                //$(e.editorElement).text(e.lookup.valueMap[arg.value]);
+                                $(e.editorElement)[0].innerHTML = e.lookup.valueMap[arg.value];
+                                //$(e.editorElement)[0].outerText = e.lookup.valueMap[arg.value];
+                            }
+                        };
+                        e.editorOptions = organizDropDownBoxConfig;
+                    }
+                };
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+            }
+
+            function getOrganizations() {
+
+                //var organizations = dxConfig.setStore('/api/parakeet/organization');//syncGet('/api/parakeet/organization');
+                var organizationTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=OrganizationType');
+                //var treeList = dxConfig.treeList('/api/parakeet/organization');
+                var treeList = {
+                    dataSource: dxConfig.setStore('/api/parakeet/organization'),//organizations,
+                    selection: {
+                        allowSelectAll: true,
+                        mode: 'single'
+                    },
+                    autoExpandAll: true,
+                    columns: [
+                        {
+                            dataField: 'id',
+                            caption: '序号',
+                            sortIndex: 0,
+                            sortOrder: 'asc',
+                            visible: false
+                        },
+                        {
+                            dataField: 'name',
+                            caption: '名称',
+                            minWidth: 200
+                        },
+                        {
+                            dataField: 'organizationType',
+                            caption: '组织类型',
+                            minWidth: 100,
+                            lookup: organizationTypeSelects
+                        }
+                    ]
+                };
+
+
+                return treeList;
+            }
+
+        });
+
+
+
+
+                //var areaVm = new Vue({
+                //    el: "#area_vue",
+                //    data: {
+                //        parentAreas: [],
+                //        parentAreaSelected: '50',
+                //        areas: [],
+                //        areaSelected: '5001',
+                //        subAreas: [],
+                //        subAreaSelected: '500106',
+                //        tempSelected: null
+                //    },
+                //    created() {
+                //        this.getArea('86',
+                //            function (res) {
+                //                areaVm.parentAreas = res;
+                //            });
+                //        this.getArea(this.parentAreaSelected,
+                //            function (res) {
+                //                areaVm.areas = res;
+                //            });
+                //        this.getArea(this.areaSelected,
+                //            function (res) {
+                //                areaVm.subAreas = res;
+                //            });
+                //    },
+                //    methods: {
+                //        getArea(pCode, callBack) {
+                //            //jquery ajax请求json数据，然后赋值给areas
+                //            $.ajax({
+                //                type: 'get',
+                //                dataType: 'json',
+                //                url: '/api/parakeet/locationArea/locationAreas',
+                //                contentType: 'application/x-www-form-urlencoded',
+                //                data: { parentCode: pCode },
+                //                success: function (res) {
+                //                    callBack(res);
+                //                }
+                //            });
+                //        },
+                //        parentAreaChanged() {
+                //            this.getArea(this.parentAreaSelected, function (res) {
+                //                areaVm.areas = res;
+                //                areaVm.subAreaSelected = null;
+                //            });
+                //        },
+                //        areaChanged() {
+                //            this.getArea(this.areaSelected, function (res) {
+                //                areaVm.subAreas = res;
+                //            });
+                //        }
+                //    }
+                //});
+    </script>
+}

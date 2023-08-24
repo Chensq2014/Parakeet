@@ -1,0 +1,265 @@
+﻿@page
+@model NetCore.Views.Home.LocalizationModel
+@{
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DevExtreme Demo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    <script src="~/js/devextreme/jquery.js"></script>
+    <link href="~/css/devextreme/bootstrap.css" rel="stylesheet" />
+    <style>
+        .options {
+            padding: 20px;
+            background-color: rgba(191, 191, 191, 0.15);
+            margin-top: 20px;
+        }
+
+        .option {
+            margin-top: 10px;
+        }
+
+        .caption {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .option > label {
+            margin-right: 10px;
+        }
+
+        .option > .dx-selectbox {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+    <!-- DevExtreme cldr & globalize SCRIPTS  -->
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/localization/dx.messages.de.js"></script>
+    <script src="~/js/devextreme/localization/dx.messages.ru.js"></script>
+    <script src="~/js/devextreme/localization/dx.messages.zh.js"></script>
+    <script src="https://unpkg.com/devextreme-cldr-data/supplemental.js"></script>
+    <script src="https://unpkg.com/devextreme-cldr-data/de.js"></script>
+    <script src="https://unpkg.com/devextreme-cldr-data/ru.js"></script>
+    <script src="https://unpkg.com/devextreme-cldr-data/zh.js"></script>
+
+</head>
+<body class="dx-viewport">
+    <div class="demo-container">
+        <div id="data-grid-demo">
+            <div id="data-grid-demo">
+                <div id="gridContainer"></div>
+                <div class="options">
+                    <div class="caption">Options</div>
+                    <div class="option">
+                        <label for="selectInput">Language</label>
+                        <div id="selectBox"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(function () {
+        var payments = [{
+                "PaymentId": 1,
+                "ContactName": "Nancy Davolio",
+                "CompanyName": "Premier Buy",
+                "Amount": 1740,
+                "PaymentDate": "2013/01/06"
+            },
+            {
+                "PaymentId": 2,
+                "ContactName": "Andrew Fuller",
+                "CompanyName": "ElectrixMax",
+                "Amount": 850,
+                "PaymentDate": "2013/01/13"
+            },
+            {
+                "PaymentId": 3,
+                "ContactName": "Janet Leverling",
+                "CompanyName": "Video Emporium",
+                "Amount": 2235,
+                "PaymentDate": "2013/01/07"
+            },
+            {
+                "PaymentId": 4,
+                "ContactName": "Margaret Peacock",
+                "CompanyName": "Screen Shop",
+                "Amount": 1965,
+                "PaymentDate": "2013/01/03"
+            },
+            {
+                "PaymentId": 5,
+                "ContactName": "Steven Buchanan",
+                "CompanyName": "Braeburn",
+                "Amount": 880,
+                "PaymentDate": "2013/01/10"
+            },
+            {
+                "PaymentId": 6,
+                "ContactName": "Michael Suyama",
+                "CompanyName": "PriceCo",
+                "Amount": 5260,
+                "PaymentDate": "2013/01/17"
+            },
+            {
+                "PaymentId": 7,
+                "ContactName": "Robert King",
+                "CompanyName": "Ultimate Gadget",
+                "Amount": 2790,
+                "PaymentDate": "2013/01/21"
+            },
+            {
+                "PaymentId": 8,
+                "ContactName": "Laura Callahan",
+                "CompanyName": "EZ Stop",
+                "Amount": 3140,
+                "PaymentDate": "2013/01/01"
+            },
+            {
+                "PaymentId": 9,
+                "ContactName": "Anne Dodsworth",
+                "CompanyName": "Clicker",
+                "Amount": 6175,
+                "PaymentDate": "2013/01/24"
+            },
+            {
+                "PaymentId": 10,
+                "ContactName": "Clark Morgan",
+                "CompanyName": "Store of America",
+                "Amount": 4575,
+                "PaymentDate": "2013/01/11"
+            }];
+        var dictionary = {
+            "en": {
+                "Number": "Number",
+                "Contact": "Contact",
+                "Company": "Company",
+                "Amount": "Amount",
+                "PaymentDate": "Payment Date"
+            },
+            "de": {
+                "Number": "Nummer",
+                "Contact": "Ansprechpartner",
+                "Company": "Firma",
+                "Amount": "Betrag",
+                "PaymentDate": "Zahlungsdatum"
+            },
+            "ru": {
+                "Number": "Номер",
+                "Contact": "Имя",
+                "Company": "Организация",
+                "Amount": "Сумма",
+                "PaymentDate": "Дата оплаты"
+            },
+            "zh": {
+                "Number": "名称",
+                "Contact": "联系人",
+                "Company": "公司",
+                "Amount": "关于",
+                "PaymentDate": "支付日期"
+            }
+        };
+        Globalize.loadMessages(dictionary);
+
+        var locale = getLocale();
+        Globalize.locale(locale);
+
+        var locales = [
+            { name: "English", value: "en" },
+            { name: "Deutsch", value: "de" },
+            { name: "Русский", value: "ru" },
+            { name: "中文", value: "zh" }
+        ];
+
+        var dataGridOptions = {
+            dataSource: payments,
+            columns: [{
+                dataField: "PaymentId",
+                caption: Globalize.formatMessage("Number"),
+                allowEditing: false,
+                width: "100px"
+            }, {
+                dataField: "ContactName",
+                caption: Globalize.formatMessage("Contact")
+            }, {
+                dataField: "CompanyName",
+                caption: Globalize.formatMessage("Company")
+            }, {
+                dataField: "Amount",
+                caption: Globalize.formatMessage("Amount"),
+                dataType: "number",
+                format: "currency",
+                editorOptions: {
+                    format: "currency",
+                    showClearButton: true
+                }
+            }, {
+                dataField: "PaymentDate",
+                caption: Globalize.formatMessage("PaymentDate"),
+                dataType: "date"
+            }],
+            filterRow: {
+                visible: true,
+                applyFilter: "auto"
+            },
+            editing: {
+                mode: "popup",
+                allowUpdating: true,
+                popup: {
+                    width: 700,
+                    height: 345
+                }
+            }
+        };
+
+        var selectBoxOptions = {
+            inputAttr: { id: "selectInput" },
+            dataSource: locales,
+            displayExpr: "name",
+            valueExpr: "value",
+            value: locale,
+            onValueChanged: changeLocale
+        };
+
+        function changeLocale(data) {
+            setLocale(data.value);
+            document.location.reload();
+        }
+
+        function getLocale() {
+            var locale = sessionStorage.getItem("locale");
+            return locale != null ? locale : "en";
+        }
+
+        function setLocale(locale) {
+            sessionStorage.setItem("locale", locale);
+        }
+
+        $("#gridContainer").dxDataGrid(dataGridOptions);
+        $("#selectBox").dxSelectBox(selectBoxOptions);
+    });
+    </script>
+</body>
+</html>

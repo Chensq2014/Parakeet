@@ -1,20 +1,18 @@
 ﻿using AutoMapper.QueryableExtensions;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
 using Parakeet.Net.Extensions;
 using Parakeet.Net.Interfaces;
-using Parakeet.Net.Dtos;
 using Parakeet.Net.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 

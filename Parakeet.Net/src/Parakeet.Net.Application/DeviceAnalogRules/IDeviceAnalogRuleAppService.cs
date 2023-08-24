@@ -1,8 +1,7 @@
 ﻿using Parakeet.Net.Dtos;
-using Parakeet.Net.Dtos;
+using Parakeet.Net.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Parakeet.Net.Entities;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.DependencyInjection;
 

@@ -1,0 +1,949 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+
+    body {
+        .base-content {
+            padding-top: 5rem;
+            /*padding-top: 100px;*/
+            .header-normal {
+                .sticky-wrapper {
+                    background-color: slategray
+                }
+            }
+        }
+
+        .header-normal {
+            background-color: #212121;
+        }
+    }
+}
+/*@media (min-width: 1920px) {
+    .container {
+        max-width: 1900px;
+    }
+}*/
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+
+/* custom styles
+-------------------------------------------------- */
+
+/* google font styles
+-------------------------------------------------- */
+/* latin-ext */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Lato Hairline'), local('Lato-Hairline'), url(../fonts/s6u8w4bmutphh30aui-qjcy.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Lato Hairline'), local('Lato-Hairline'), url('../fonts/s6u8w4bmutphh30axc-q.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Lato Light'), local('Lato-Light'), url('../fonts/s6u9w4bmutphh50xswapgr_p.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Lato Light'), local('Lato-Light'), url('../fonts/s6u9w4bmutphh50xswipgq.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lato Regular'), local('Lato-Regular'), url('../fonts/s6uyw4bmutphjxawxjeu.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lato Regular'), local('Lato-Regular'), url('../fonts/s6uyw4bmutphjx4wxg.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Lato Bold'), local('Lato-Bold'), url('../fonts/s6u9w4bmutphh7usswapgr_p.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Lato Bold'), local('Lato-Bold'), url('../fonts/s6u9w4bmutphh6uvswipgq.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Lato Black'), local('Lato-Black'), url('../fonts/s6u9w4bmutphh6uvswapgr_p.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Lato Black'), local('Lato-Black'), url('../fonts/s6u9w4bmutphh50xswipgq.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* Rubik-Regular */
+@font-face {
+    font-family: 'Rubik-Regular';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* Rubik*/
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Rubik*/
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Rubik */
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/Rubik-Regular.ttf') format('truetype');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* dx styles
+-------------------------------------------------- */
+@import "_global.scss";
+/*设置分页居中*/
+.dx-pages {
+    float: none !important;
+}
+
+.dx-datagrid-pager, .dx-widget dx-pager, .dx-light-mode {
+    text-align: center;
+    border-top: 0px !important;
+}
+
+.dx-datagrid-table .dx-header-row td:first-child,
+.dx-datagrid-rowsview .dx-datagrid-content table tbody .dx-data-row td:first-child {
+    padding-left: 10px;
+}
+
+.dx-popup-content .dx-datagrid {
+    margin: 0 !important;
+}
+
+/*.dx-checkbox-indeterminate .dx-checkbox-icon:before {
+    left: 11px;
+    top: 11px;
+}
+
+.dx-layout-manager .dx-label-h-align .dx-field-item-content .dx-checkbox, .dx-layout-manager .dx-label-h-align .dx-field-item-content .dx-switch {
+    margin-top: 0px;
+}*/
+
+/*.dx-treeview .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-selected > .dx-treeview-item {
+    background-color: rgb(60,141,188);
+    color: white !important;
+}*/
+.dx-page-sizes {
+    margin: 0 10px;
+}
+/*.dx-datagrid-rowsview .read-only {
+    background-color: whitesmoke;
+}*/
+/*.dx-scrollbar-horizontal {
+    margin-bottom: -15px;
+}
+
+.dx-scrollbar-vertical {
+    margin-right: -15px;
+}*/
+/*master-detail 间距*/
+.dx-datagrid-rowsview {
+    .dx-row {
+        .dx-master-detail-cell {
+            .dx-datagrid.dx-gridbase-container {
+                padding: 0 20px;
+            }
+        }
+    }
+}
+
+
+.dx-datagrid .dx-link {
+    text-decoration: none;
+}
+
+.dx-datagrid-rowsview .dx-row > .dx-master-detail-cell {
+    padding: 10px 0 10px 0;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row > td, .dx-datagrid-content .dx-datagrid-table .dx-row > tr > td {
+    vertical-align: middle; //datagrid 控制cell的垂直居中
+}
+
+#frameBody {
+    height: 100%;
+}
+/*.nav-tabs-custom.multi-tabs {
+    margin: 10px 10px 0 10px;
+}*/
+/*.nav-tabs-custom > .nav-tabs > li.active > a {
+    border-left-color: #e6e6e6;
+    border-right-color: #e6e6e6;
+}
+
+.nav-tabs-custom > .nav-tabs {
+    border-bottom-color: #dcdcdc;
+}*/
+/*.tab-content > .tab-pane {
+    overflow: auto;
+}*/
+/*选项卡 选项卡名称*/
+.nav-tabs-custom {
+    .nav-tabs {
+        background-color: #fff;
+        border-bottom-color: #dcdcdc;
+
+        li {
+            border-top: 3px solid transparent;
+            margin-bottom: -1px;
+            margin-right: 5px;
+
+            &.active {
+                /*border-radius: 5px;*/
+                border-top-color: #1bbc9b;
+                border-left: none;
+                border-right: none;
+                margin-bottom: -2px;
+                border-bottom: 1px solid white;
+            }
+
+            a {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        background-color: #fff;
+    }
+}
+
+
+
+
+
+/*登录页面样式：*/
+
+
+
+/*master-grid  前面的三角符号：*/
+.dx-datagrid-group-opened:before, .dx-datagrid-group-closed:before {
+    font-size: 30px;
+    color: mediumaquamarine;
+}
+
+.dx-datagrid-group-opened:before {
+    content: "\f001";
+    font-size: 30px;
+    color: mediumaquamarine;
+}
+/*pivotgrid 折叠展开的三角符号：*/
+.dx-pivotgrid {
+    .dx-pivotgrid-expanded, .dx-pivotgrid-collapsed {
+        .dx-expand:before {
+            margin-left: -18px;
+            color: mediumaquamarine;
+            font-size: 30px;
+        }
+    }
+}
+
+.dx-cell-hover-point:hover {
+    cursor: pointer;
+}
+
+.panel.panel-default {
+    padding-bottom: 0;
+}
+
+.panel-body {
+    padding: 10px;
+}
+
+.has-grid {
+    padding-bottom: 50px;
+}
+
+
+.a-link {
+    color: blue;
+    cursor: pointer;
+}
+
+.a-link-underline {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.a-header-link {
+    display: block;
+}
+
+
+.red {
+    color: red
+}
+
+.green {
+    color: green
+}
+
+.blue {
+    color: blue
+}
+
+.purple {
+    color: purple
+}
+
+.gray {
+    color: gray
+}
+
+.orange {
+    color: orange;
+}
+
+
+/*jquery validate error style*/
+form {
+    label.error {
+        font-style: italic;
+        color: red;
+    }
+
+    .error, span.required {
+        color: red;
+    }
+
+    .field-validation-error {
+        color: red;
+    }
+}
+
+
+
+
+
+/*导航菜单*/
+ul.treeview-menu.menu-open {
+    background: #ddd;
+}
+
+.sidebar-menu li.active > .treeview-menu {
+    background-color: #ddd;
+}
+
+
+
+.read-only {
+    background-color: #fff;
+    color: #999999;
+}
+/*有时候会在Grid下方有空白的格子*/
+.dx-datagrid-total-footer .read-only {
+    background-color: #fff;
+}
+/*列头*/
+/*.dx-header-row td {
+    font-weight: 800;
+    background-color: #0677b3;
+}*/
+.dx-datagrid-nowrap.dx-datagrid-headers .dx-header-row > td {
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+}
+
+.dx-datagrid-borders > .dx-datagrid-pager, .dx-datagrid-borders > .dx-datagrid-headers {
+    border-top: none;
+}
+
+.dx-datagrid-rowsview .dx-row.dx-row-lines td {
+    border-left: none;
+    border-right: none;
+}
+/*表格数据里面没有fix的单元格*/
+.dx-datagrid .dx-datagrid-rowsview .dx-data-row td.dx-pointer-events-none, .dx-datagrid .dx-datagrid-rowsview .dx-freespace-row td.dx-pointer-events-none, .dx-datagrid .dx-datagrid-headers .dx-row td.dx-pointer-events-none {
+    border-left: 1px solid #ddd;
+}
+
+
+
+
+.main-footer {
+    background: #fff;
+    padding: 10px;
+    color: #444;
+    border-top: 1px solid #d2d6de;
+}
+/*PivotGrid 的列头*/
+/*.dx-pivotgrid-horizontal-headers {
+    background-color: #0677b3;
+}*/
+.dx-pivotgrid .dx-pivotgrid-area .dx-meta-data {
+    color: black;
+}
+
+.dx-pivotgrid .dx-grandtotal {
+    background: #fff;
+}
+/*pivotgrid单元格*/
+.dx-pivotgrid .dx-pivotgrid-horizontal-headers td {
+    border-bottom: 1px solid rgba(27, 188, 155, 0.3);
+    border-top: 1px solid rgba(27, 188, 155, 0.3);
+    border-left: 1px solid rgba(27, 188, 155, 0.3);
+    border-right: 1px solid rgba(27, 188, 155, 0.3);
+}
+
+.dx-pivotgrid .dx-row-lines .dx-pivotgrid-area td {
+    border-bottom: 1px solid rgba(27, 188, 155, 0.3);
+    border-top: 1px solid rgba(27, 188, 155, 0.3);
+    border-left: 1px solid rgba(27, 188, 155, 0.3);
+    border-right: 1px solid rgba(27, 188, 155, 0.3);
+}
+
+.dx-pivotgrid .dx-pivotgrid-horizontal-headers tr:first-child td {
+    border-bottom: 1px solid rgba(27, 188, 155, 0.3);
+    border-top: 1px solid rgba(27, 188, 155, 0.3);
+    border-left: 1px solid rgba(27, 188, 155, 0.3);
+    border-right: 1px solid rgba(27, 188, 155, 0.3);
+}
+/*.dx-pivotgrid .dx-area-row-cell, .dx-pivotgrid .dx-area-description-cell td {
+    border-top: 1px solid rgba(27, 188, 155, 0.3);
+}*/
+.dx-datagrid-header-panel {
+    border-bottom: none;
+}
+
+.dx-pivotgrid .dx-area-description-cell {
+    border-bottom: 1px solid rgba(27, 188, 155, 0.3);
+    border-top: 1px solid rgba(27, 188, 155, 0.3);
+    border-left: 1px solid rgba(27, 188, 155, 0.3);
+    border-right: 1px solid rgba(27, 188, 155, 0.3);
+}
+
+.dx-pivotgrid .dx-bottom-row .dx-area-row-cell .dx-pivotgrid-vertical-headers .dx-scrollable-content .dx-pivotgrid-vertical-headers td {
+    border-left: 1px solid rgba(27, 188, 155, 0.3);
+}
+/*.dx-pivotgrid .dx-pivotgrid-border .dx-data-header
+, .dx-pivotgrid .dx-pivotgrid-border .dx-filter-header
+, .dx-pivotgrid .dx-pivotgrid-border .dx-area-description-cell
+, */
+.dx-pivotgrid .dx-pivotgrid-border .dx-area-row-cell {
+    border-left: none;
+}
+/*加上后或许grandTotal列头会有多余的border*/
+/*.dx-pivotgrid .dx-pivotgrid-area-data tbody tr:first-child .dx-grandtotal {
+    border-top-width: 1px;
+}*/
+/*.dx-pivotgrid-vertical-headers span {
+    color: #0677b3;
+}*/
+/*.dx-pivotgrid .dx-pivotgrid-horizontal-headers .dx-grandtotal {
+    color: white;
+    background-color: #0677b3;
+}*/
+/*PivotGrid的首列*/
+/*.dx-row-total .dx-grandtotal {
+    background-color: #0677b3;
+}*/
+/**/
+.btn-primary:hover, .btn-primary:active, .btn-primary.hover {
+    background-color: #1bbc9b;
+}
+
+
+
+.dx-column-indicators .dx-header-filter {
+    color: red;
+}
+
+.dx-column-indicators .dx-header-filter-empty {
+    color: #ddd;
+}
+/*panel header*/
+.panel-default > .panel-heading {
+    background-color: #a4b4bf;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.panel-default > .panel-heading a {
+    color: #fff;
+}
+
+
+.dx-datagrid-nowrap.dx-datagrid-headers .dx-header-row > td {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+/*treelist的表头*/
+.dx-treelist {
+    background-color: #fff;
+}
+
+.dx-treelist .dx-header-filter {
+    position: relative;
+    font: 14px/1 DXIcons;
+}
+
+.dx-treelist-headers .dx-treelist-table .dx-row > td,
+.dx-treelist-content .dx-treelist-table .dx-row > td:first-child {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.dx-treelist .dx-column-lines > td {
+    border-left: none;
+    border-right: none;
+}
+
+.dx-treelist-rowsview {
+    border-top: none;
+}
+/*TreeList的展开符号*/
+.dx-treelist-icon-container {
+    float: left;
+}
+/*.dx-datagrid, .dx-treelist {
+    margin: 0 10px 0 10px;
+}*/
+.dx-treelist .dx-treelist-headers td {
+    /*text-align: center !important;
+    vertical-align: middle !important;*/
+}
+
+.dx-treelist .dx-header-filter:before {
+    content: "\f050";
+}
+/*普通按钮*/
+.btn-primary {
+    background-color: #1bbc9b;
+    border-color: #1bbc9b;
+}
+/*单选按钮*/
+.dx-radiobutton-checked .dx-radiobutton-icon-dot {
+    background-color: #1bbc9b;
+}
+
+.dx-radiobutton.dx-state-readonly .dx-radiobutton-icon:before {
+    border-color: #f4f4f4;
+    background-color: #fff;
+}
+
+.dx-radiobutton.dx-state-hover .dx-radiobutton-icon:before {
+    border-color: #1bbc9b;
+}
+
+.dx-radiobutton.dx-state-focused:not(.dx-state-active) .dx-radiobutton-icon:before {
+    border: 1px solid #1bbc9b;
+}
+/*配置a标签的样式*/
+.show-link a {
+    color: blue !important;
+}
+
+.show-link a :hover {
+    text-decoration: underline !important;
+}
+/*配置mini-grid样式*/
+.mini-grid {
+    /*.dx-row:nth-of-type(odd) {
+        background: none;
+    }*/
+    .dx-datagrid {
+        /*border: 1px solid $minGridBorder;
+        border-bottom:none;*/
+        /*头部样式*/
+        /*.dx-datagrid-headers {
+            .dx-datagrid-content {
+                .dx-datagrid-table {
+                    .dx-row {
+                        & > td {
+                            &:first-child {
+                                border-left: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
+        /*顶部toolbar样式层*/
+        /*.dx-datagrid-group-panel {
+            .dx-group-panel-message {
+                color: white;
+                font-size: 12pt;
+                font-weight: 800;
+            }
+        }*/
+        /*header列头样式层*/
+        .dx-datagrid-headers {
+            .dx-datagrid-content {
+                .dx-datagrid-table {
+                    .dx-header-row {
+                        td {
+                            border: 1px solid $minGridBorder !important;
+                            border-bottom: none !important;
+                            /*.dx-datagrid-text-content {
+                                    white-space: pre-line;//不换行
+                                   }*/
+                        }
+                    }
+                }
+            }
+        }
+        /*content内容区域样式层*/
+        .dx-datagrid-rowsview {
+            border-bottom: none;
+
+            .dx-row {
+                &.dx-data-row {
+                    &.dx-row-lines {
+                        td {
+                            border: 1px solid $minGridBorder;
+                        }
+                    }
+
+                    &.dx-column-lines {
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/*dx  id="btn-upload" class="custom-upload-btn" 上传文件按钮样式*/
+.custom-upload-btn {
+    border: 1px dashed slategray;
+
+    .dx-fileuploader-wrapper {
+        .dx-fileuploader-container {
+            .dx-fileuploader-content {
+                position: relative; //这儿relative 导入后js动态添加一个position为absolute的div标签，脱离文件流，相对此定位
+                .dx-fileuploader-input-wrapper {
+                    border: 3px dashed slategray;
+                    float: left;
+                    position: absolute; //同时设置float与absolute 让元素不占文件流位置
+                    .dx-button {
+                        .dx-button-content {
+                            padding: 0; //设置padding值让自定义上传按钮文本不显示
+                        }
+                    }
+
+                    .dx-fileuploader-input {
+                        height: 200px; //拖拽区域大小
+                    }
+                }
+
+                .dx-fileuploader-files-container {
+                    display: table-cell;
+                }
+
+                .dx-fileuploader-files-gallery {
+                    position: absolute;
+                    height: 100%;
+                    top: 200px;
+                    left: 20px;
+                }
+            }
+        }
+    }
+}
+
+//轮播图片样式
+.dx-gallery-item-image {
+    height: 100%;
+}
+/*//abp框架 分配角色权限列表滚动条
+.tab-content .mCustomScrollBox {
+    overflow: scroll;
+}*/

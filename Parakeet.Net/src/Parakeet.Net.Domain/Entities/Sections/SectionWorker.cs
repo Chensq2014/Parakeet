@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Parakeet.Net.Enums;
 using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Entities;
 
@@ -91,6 +92,11 @@ namespace Parakeet.Net.Entities
         /// 工种
         /// </summary>
         public virtual WorkerType WorkType { get; set; }
+
+        /// <summary>
+        /// 劳务类型
+        /// </summary>
+        public LaborType LaborType { get; set; }
 
         #endregion
 

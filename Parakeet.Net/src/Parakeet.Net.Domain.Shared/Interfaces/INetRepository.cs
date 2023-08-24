@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
 namespace Parakeet.Net.Interfaces
@@ -15,7 +16,7 @@ namespace Parakeet.Net.Interfaces
     /// <typeparam name="TPrimaryKey">实体主键类型</typeparam>
     public interface INetRepository<TEntity, TPrimaryKey>
         : IRepository<TEntity, TPrimaryKey>
-        where TEntity : BaseEntity<TPrimaryKey>//Entity<TPrimaryKey>//
+        where TEntity : Entity<TPrimaryKey>//Entity<TPrimaryKey>//
     {
 
         #region SqlServer  PostgreSQL Mysql Bulk
@@ -54,7 +55,7 @@ namespace Parakeet.Net.Interfaces
     }
 
     public interface INetRepository<TEntity> : INetRepository<TEntity, Guid>
-        where TEntity : BaseEntity//Entity<Guid> //
+        where TEntity : Entity<Guid> //
     {
         #region sql参数化 cqrs 的一个解决方案
         //1、dbcontext 默认链接读数据库的字符串为 "读"数据字符串。

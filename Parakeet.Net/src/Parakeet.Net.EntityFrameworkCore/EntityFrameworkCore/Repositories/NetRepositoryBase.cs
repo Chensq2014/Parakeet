@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Parakeet.Net.Cache;
 using Parakeet.Net.Helper;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -34,7 +35,7 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
     public abstract class NetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<NetDbContext, TEntity, TPrimaryKey>
         , INetRepository<TEntity, TPrimaryKey>
-        where TEntity : BaseEntity<TPrimaryKey>
+        where TEntity : Entity<TPrimaryKey>
     {
         protected NetRepositoryBase(IDbContextProvider<NetDbContext> dbContextProvider)
             : base(dbContextProvider)
@@ -100,7 +101,7 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
     //[Dependency(ReplaceServices = true)]
     public class NetRepositoryBase<TEntity> : NetRepositoryBase<TEntity, Guid>
         , INetRepository<TEntity>//IRepository<TEntity>//
-        where TEntity : BaseEntity
+        where TEntity : EntityBase
     {
         /// <summary>
         /// 缓存

@@ -1,0 +1,150 @@
+﻿@model Parakeet.Net.Dtos.NeedDto;
+
+@{
+    var formId = Guid.NewGuid().ToString();
+}
+@section Styles {
+
+    <style>
+        .block {
+            display: block;
+        }
+
+        form label.error {
+            display: none;
+        }
+
+        /*批量上传文件区域样式*/
+        .upload-container {
+            /*width: 600px;*/
+            height: 400px;
+            border: 1px solid lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+        }
+
+        .drag-container {
+            float: left;
+            margin-right: 80px;
+            padding: 0;
+            width: 100%;
+        }
+
+        .thumb {
+            height: 100px;
+            max-width: 100px;
+            border: 1px solid #000;
+            margin: 10px 5px 0 0;
+        }
+
+        /*tilevView*/
+        .dx-tile-content {
+            height: 100%;
+        }
+
+            .dx-tile-content .image {
+                height: 100%;
+                width: 100%;
+                /*background-position: center;
+            background-size: cover;*/
+                display: block;
+            }
+
+        /*隐藏useBotton的上传按钮*/
+        #fileUploader .dx-fileuploader-upload-button {
+            display: none;
+        }
+    </style>
+
+}
+
+<div class="form">
+    <form action="@Url.Action("Create", "Need")" method="post" class="form-horizontal" role="form" id="needForm" data-guid="@formId" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div id="form-container"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="container">
+    <h2>内联表单</h2>
+    <form class="form-inline">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"> Remember me
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h2>表单控件: input</h2>
+    <p>以下实例使用两个 input 元素，一个是 text，一个是 password ：</p>
+    <form>
+        <div class="form-group">
+            <label for="usr">用户名:</label>
+            <input type="text" class="form-control" id="usr">
+        </div>
+        <div class="form-group">
+            <label for="pwd">密码:</label>
+            <input type="password" class="form-control" id="pwd">
+        </div>
+    </form>
+
+    <h2>表单控件: textarea</h2>
+    <p>以下实例演示了 textarea 的样式。</p>
+    <form>
+        <div class="form-group">
+            <label for="comment">评论:</label>
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+        </div>
+    </form>
+
+    <h2>表单控件: checkbox</h2>
+    <p>以下实例包含了三个选项。最后一个是禁用的：</p>
+    <form>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Option 1
+            </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Option 2
+            </label>
+        </div>
+        <div class="form-check disabled">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="" disabled>Option 3
+            </label>
+        </div>
+    </form>
+    <h2>表单控件: checkbox</h2>
+    <p>以下实例包含了三个选项。最后一个是禁用的，使用 .form-check-inline 类可以让选项显示在同一行上：</p>
+    <form>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Option 1
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="">Option 2
+            </label>
+        </div>
+        <div class="form-check form-check-inline disabled">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="" disabled>Option 3
+            </label>
+        </div>
+    </form>
+</div>

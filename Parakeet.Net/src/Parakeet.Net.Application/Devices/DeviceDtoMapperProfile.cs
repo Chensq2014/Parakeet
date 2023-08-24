@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Parakeet.Net.Dtos;
 using Parakeet.Net.Entities;
 using Volo.Abp.AutoMapper;

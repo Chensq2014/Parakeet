@@ -21,7 +21,7 @@ namespace Parakeet.Net;
 )]
 public class NetHttpApiClientModule : AbpModule
 {
-    public const string RemoteServiceName = "Parakeet";
+    public const string RemoteServiceName = "parakeet";
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

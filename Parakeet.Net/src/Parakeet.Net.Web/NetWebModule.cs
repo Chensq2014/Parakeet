@@ -9,23 +9,26 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
-using Nest;
 using Parakeet.Net.Cache;
+using Parakeet.Net.Enums;
 using Parakeet.Net.Extensions;
 using Parakeet.Net.Localization;
 using Parakeet.Net.MultiTenancy;
 using Parakeet.Net.Web.Menus;
 using Serilog;
 using StackExchange.Redis;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
-using Polly;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
@@ -42,6 +45,7 @@ using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
+using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
 using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Http.Client.Web;
@@ -52,18 +56,10 @@ using Volo.Abp.MultiTenancy;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.Web;
+using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using Exceptionless;
-using Microsoft.IdentityModel.Logging;
-using Volo.Abp.IdentityServer.Jwt;
-using Microsoft.Extensions.FileProviders;
-using Parakeet.Net.Enums;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Volo.Abp.Data;
-using Volo.Abp.Threading;
 
 namespace Parakeet.Net.Web;
 
@@ -124,6 +120,11 @@ public class NetWebModule : AbpModule
         ConfigureBundles();
         ConfigureAbpAntiForgerys();
 
+
+        //context.Services.AddBrowserFilter();
+        //context.Services.AddMiddlewareFactory();
+        //context.Services.AddInheritedMiddleware();
+        context.Services.AddSession();
     }
 
     public override void PostConfigureServices(ServiceConfigurationContext context)
@@ -588,25 +589,25 @@ public class NetWebModule : AbpModule
         #endregion
         app.UseSession();
 
-        //自定义Use中间件逻辑
-        app.Use(next =>
-        {
-            Log.Logger.Warning($"{{0}}", $"{CacheKeys.LogCount++}、【MVC流程日志：3、Use作用域内返回RequestDelegate前的代码,属于Build中间件组装流程时会被reverse反序执行一次【注意Build方法在startup调用configure之后，所以此条日志显示在Startup Configure方法日志结束之后】 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        ////自定义Use中间件逻辑
+        //app.Use(next =>
+        //{
+        //    Log.Logger.Warning($"{{0}}", $"{CacheKeys.LogCount++}、【MVC流程日志：3、Use作用域内返回RequestDelegate前的代码,属于Build中间件组装流程时会被reverse反序执行一次【注意Build方法在startup调用configure之后，所以此条日志显示在Startup Configure方法日志结束之后】 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
 
-            return new RequestDelegate(async ctx =>
-            {
-                //ctx.Response.OnStarting(async () =>
-                //{
-                //    Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、ctx.Response.OnStarting ....");
-                //});
+        //    return new RequestDelegate(async ctx =>
+        //    {
+        //        //ctx.Response.OnStarting(async () =>
+        //        //{
+        //        //    Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、ctx.Response.OnStarting ....");
+        //        //});
 
-                Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、【MVC流程日志：4、请求进入中间件执行RequestDelegate委托中代码，下一步将进入---EndpointRoutingMiddleware中间件内部开始路由匹配】线程Id：【{Thread.CurrentThread.ManagedThreadId}】.....");
-                await next.Invoke(ctx);//执行下一个中间逻辑 (CustomLogMiddleware)
-                Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、【MVC流程日志：5、请求被中间件EndpointRoutingMiddleware(next.Invoke)处理后，回到当前RequestDelegate委托闭环】 线程Id：【{Thread.CurrentThread.ManagedThreadId}】....");
-            });
-        });
-        //插入一个自定义中间件，invoke方法内部含日志输出，可以清晰的看到中间件委托处理请求执行的先后顺序
-        //app.UseCustomLog();
+        //        Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、【MVC流程日志：4、请求进入中间件执行RequestDelegate委托中代码，下一步将进入---EndpointRoutingMiddleware中间件内部开始路由匹配】线程Id：【{Thread.CurrentThread.ManagedThreadId}】.....");
+        //        await next.Invoke(ctx);//执行下一个中间逻辑 (CustomLogMiddleware)
+        //        Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、【MVC流程日志：5、请求被中间件EndpointRoutingMiddleware(next.Invoke)处理后，回到当前RequestDelegate委托闭环】 线程Id：【{Thread.CurrentThread.ManagedThreadId}】....");
+        //    });
+        //});
+        ////插入一个自定义中间件，invoke方法内部含日志输出，可以清晰的看到中间件委托处理请求执行的先后顺序
+        ////app.UseCustomLog();
 
         #region 标准Middleware
         ////玩法1---Use传递---Add就无操作---IOptions<BrowserFilterOptions> options就是Use指定传递的 
@@ -621,10 +622,10 @@ public class NetWebModule : AbpModule
 
         //app.UseBrowserFilter();//玩法2
 
-        app.UseBrowserFilter(option =>
-        {
-            option.EnableEdge = true;
-        });//玩法3
+        //app.UseBrowserFilter(option =>
+        //{
+        //    option.EnableEdge = true;
+        //});//玩法3
 
         #endregion
 
@@ -729,11 +730,11 @@ public class NetWebModule : AbpModule
         //配置文件中如果配置了数组，那么这个中间件会报错？这个bug
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、将IdentityServer中间件添加到HTTP管道 (允许IdentityServer开始拦截路由并处理请求)....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         #endregion
-        app.UseIdentityServer();
+        //app.UseIdentityServer();
 
-        ////自定义安全策略
+        ////自定义安全策略及自定义中间件
         //app.UseSecurePolicy();
-        app.UseInheritedMiddleware();
+        //app.UseInheritedMiddleware();
 
 
         #region 用于授权用户访问安全资源的授权中间件
@@ -780,7 +781,7 @@ public class NetWebModule : AbpModule
             typeof(VersionType).GetEnumNames().ToList().ForEach(v =>
             {
                 //configuration["App:SwaggerEndpoint"]="/swagger/v1/swagger.json";
-                options.SwaggerEndpoint(string.Format(configuration["App:SwaggerEndpoint"], v) ?? $"/swagger/{v}/swagger.json", $"小鹦鹉工作室 NetCore API {v}");
+                options.SwaggerEndpoint(string.Format(configuration["App:SwaggerEndpoint"] ?? @$"/swagger/{v}/swagger.json", v), $"小鹦鹉工作室 NetCore API {v}");
             });
             //options.InjectJavascript("/swagger/ui/zh_CN.js"); // 加载中文包 无效
             //options.ShowExtensions();

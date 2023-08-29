@@ -19,12 +19,14 @@ using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Domain.Values;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
+using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Users;
+using Volo.Abp.Users.EntityFrameworkCore;
 
 namespace Parakeet.Net.EntityFrameworkCore
 {
@@ -59,8 +61,20 @@ namespace Parakeet.Net.EntityFrameworkCore
             builder.ConfigureFeatureManagement();
             builder.ConfigureTenantManagement();
             #endregion
-            
+
             #region 实体映射代码
+            builder.Entity<AppUser>(b =>
+            {
+                b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
+                b.ConfigureByConvention();
+                b.ConfigureAbpUser();
+
+                /* Configure mappings for your additional properties
+                  * Also see the NetCoreEfCoreEntityExtensionMappings class
+                  */
+                b.ConfigureCustomUserProperties(); //Moved customization to a method so we can share it with the NetCoreMigrationsDbContext class
+            });
+
             builder.Entity<Notify>(x =>
             {
                 x.ToTable(options.TablePrefix + $"Notifies", options.Schema);

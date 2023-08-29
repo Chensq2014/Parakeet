@@ -8,6 +8,7 @@ using Parakeet.Net.Test;
 using Parakeet.Net.Users;
 using Serilog;
 using System.Threading;
+using Parakeet.Net.Extensions;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
@@ -117,7 +118,6 @@ public class NetApplicationModule : AbpModule
         context.Services.AddSingleton<IOperationSingleton, Test.Operation>();
         context.Services.AddTransient<IPasswordHasher<AppUser>, PasswordHasher<AppUser>>();
         #endregion
-
 
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetApplicationModule)} End ConfigureServices ....");
     }

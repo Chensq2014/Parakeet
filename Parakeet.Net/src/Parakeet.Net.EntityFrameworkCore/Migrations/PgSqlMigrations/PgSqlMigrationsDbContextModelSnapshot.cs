@@ -3008,6 +3008,10 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DeletionTime");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -3128,6 +3132,10 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                     b.HasIndex("UserName");
 
                     b.ToTable("AbpUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserClaim", b =>
@@ -3832,6 +3840,76 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                     b.HasKey("TenantId", "Name");
 
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
+                });
+
+            modelBuilder.Entity("Parakeet.Net.Users.AppUser", b =>
+                {
+                    b.HasBaseType("Volo.Abp.Identity.IdentityUser");
+
+                    b.Property<DateTime?>("BirthDay")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("生日");
+
+                    b.Property<byte[]>("HeadPortraitImage")
+                        .HasColumnType("bytea")
+                        .HasComment("头像图片二进制");
+
+                    b.Property<string>("HeadPortraitKey")
+                        .HasMaxLength(8192)
+                        .HasColumnType("character varying(8192)")
+                        .HasComment("头像图片Key或Base64String");
+
+                    b.Property<string>("IdCardNo")
+                        .HasMaxLength(18)
+                        .HasColumnType("character varying(18)")
+                        .HasComment("身份证号码");
+
+                    b.Property<bool?>("IsCompleteGuide")
+                        .HasColumnType("boolean")
+                        .HasComment("是否完成新手引导");
+
+                    b.Property<bool?>("IsRealName")
+                        .HasColumnType("boolean")
+                        .HasComment("是否完成实名认证");
+
+                    b.Property<DateTime?>("LastLoginTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("最近登陆时间");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("integer")
+                        .HasComment("等级");
+
+                    b.Property<string>("Motto")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasComment("个性签名");
+
+                    b.Property<int?>("Sex")
+                        .HasColumnType("integer")
+                        .HasComment("性别");
+
+                    b.Property<string>("SignAccountId")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasComment("签章的SignAccountId值");
+
+                    b.Property<string>("Signature")
+                        .HasMaxLength(8192)
+                        .HasColumnType("character varying(8192)")
+                        .HasComment("个人签章照片-Base64");
+
+                    b.Property<int?>("UserStatus")
+                        .HasColumnType("integer")
+                        .HasComment("用户状态");
+
+                    b.Property<int?>("UserType")
+                        .HasColumnType("integer")
+                        .HasComment("用户类型");
+
+                    b.ToTable("AbpUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Parakeet.Net.Entities.AreaTenant", b =>

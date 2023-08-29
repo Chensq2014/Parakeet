@@ -27,7 +27,8 @@ public class EntityFrameworkCoreNetDbSchemaMigrator
          */
 
         await _serviceProvider
-            .GetRequiredService<NetDbContext>()
+            //.GetRequiredService<NetDbContext>()
+            .GetRequiredService<PgSqlMigrationsDbContext>()
             .Database
             .MigrateAsync();
     }

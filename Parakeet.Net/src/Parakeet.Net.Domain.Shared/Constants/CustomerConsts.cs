@@ -48,7 +48,7 @@
         public const string PgSqlConnectionStringName = "PgSql";
         public const string MySqlConnectionStringName = "MySql";
 
-        public const bool MultiTenancyEnabled = true;//多租户开关
+        public const bool MultiTenancyEnabled = false;//多租户开关
         public const string TenantKey = "__tenantId";//多租户key
         #endregion
 

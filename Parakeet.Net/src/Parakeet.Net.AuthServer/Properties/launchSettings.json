@@ -3,7 +3,7 @@
     "Parakeet.Net.AuthServer": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:50000",
+      "applicationUrl": "http://localhost:50010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

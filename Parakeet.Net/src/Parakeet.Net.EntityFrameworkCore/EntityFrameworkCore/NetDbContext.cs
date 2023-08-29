@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Cache;
 using Parakeet.Net.Entities;
+using Parakeet.Net.Users;
 using Serilog;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -15,6 +17,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Users.EntityFrameworkCore;
 
 namespace Parakeet.Net.EntityFrameworkCore;
 
@@ -55,163 +58,162 @@ public class NetDbContext :
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
-
-
+    
 
     #region 实体集(EF默认NetCore属性名称对应表名,可在OnModelCreating中配置表名)
 
 
-    //public DbSet<AppUser> AbpUsers { get; set; }
-
-    /// <summary>
-    /// 位置区域（全国省市区城乡等区域代码位置信息）
-    /// </summary>
-    public DbSet<LocationArea> LocationAreas { get; set; }
-
-    /// <summary>
-    /// 消息表
-    /// </summary>
-    public DbSet<Notify> Notifies { get; set; }
-
-    /// <summary>
-    /// 组织机构表
-    /// </summary>
-    public DbSet<Organization> Organizations { get; set; }
-
-    /// <summary>
-    /// 机构岗位用户表
-    /// </summary>
-    public DbSet<OrganizationUser> OrganizationUsers { get; set; }
-
-    /// <summary>
-    /// 项目表
-    /// </summary>
-    public DbSet<Project> Projects { get; set; }
-
-    /// <summary>
-    /// 项目用户表
-    /// </summary>
-    public DbSet<ProjectUser> ProjectUsers { get; set; }
-
-    /// <summary>
-    /// 项目附件表
-    /// </summary>
-    public DbSet<ProjectAttachment> ProjectAttachments { get; set; }
-
-    /// <summary>
-    /// 需求表
-    /// </summary>
-    public DbSet<Need> Needs { get; set; }
-
-    /// <summary>
-    /// 需求附件表
-    /// </summary>
-    public DbSet<NeedAttachment> NeedAttachments { get; set; }
-
-    /// <summary>
-    /// 区域租户表
-    /// </summary>
-    public DbSet<AreaTenant> AreaTenants { get; set; }
-
-    /// <summary>
-    /// 区域租户字符串连接表
-    /// </summary>
-    public DbSet<TenantDbConnectionString> TenantDbConnectionStrings { get; set; }
-
-    /// <summary>
-    /// 供应商表
-    /// </summary>
-    public DbSet<Supplier> Suppliers { get; set; }
-
-    /// <summary>
-    /// 阈值管理
-    /// </summary>
-    public DbSet<Threshold> Thresholds { get; set; }
-
-    /// <summary>
-    /// 设备表
-    /// </summary>
-    public DbSet<Device> Devices { get; set; }
-
-    /// <summary>
-    /// 设备扩展表
-    /// </summary>
-    public DbSet<DeviceExtend> DeviceExtends { get; set; }
-
-    /// <summary>
-    /// 设备区域转发密钥表
-    /// </summary>
-    public DbSet<DeviceKeySecret> DeviceKeySecrets { get; set; }
-
-    /// <summary>
-    /// 设备序号表
-    /// </summary>
-    public DbSet<DeviceSequence> DeviceSequences { get; set; }
-
-    /// <summary>
-    /// 设备转发表
-    /// </summary>
-    public DbSet<DeviceMediator> DeviceMediators { get; set; }
-
-    /// <summary>
-    /// 设备人员表
-    /// </summary>
-    public DbSet<DeviceWorker> DeviceWorkers { get; set; }
-
-    /// <summary>
-    /// 设备数据模拟表
-    /// </summary>
-    public DbSet<DeviceAnalogRule> DeviceAnalogRules { get; set; }
-
-    /// <summary>
-    /// 劳务人员表
-    /// </summary>
-    public DbSet<Worker> Workers { get; set; }
-
-    /// <summary>
-    /// 工种
-    /// </summary>
-    public DbSet<WorkerType> WorkerTypes { get; set; }
-
-    /// <summary>
-    /// 中介器表
-    /// </summary>
-    public DbSet<Mediator> Mediators { get; set; }
+    ////public DbSet<AppUser> AbpUsers { get; set; }
 
     ///// <summary>
-    ///// Tcp包头管理 不用存表放在配置文件或者redis缓存更合适
+    ///// 位置区域（全国省市区城乡等区域代码位置信息）
     ///// </summary>
-    //public DbSet<PacketHandler> PacketHandlers { get; set; }
-
-    /// <summary>
-    /// 许可证
-    /// </summary>
-    public DbSet<License> Licenses { get; set; }
-
-    /// <summary>
-    /// 许可证资源
-    /// </summary>
-    public DbSet<LicenseResource> LicenseResources { get; set; }
+    //public DbSet<LocationArea> LocationAreas { get; set; }
 
     ///// <summary>
-    ///// 小区
+    ///// 消息表
     ///// </summary>
-    //public DbSet<Section> Sections { get; set; }
+    //public DbSet<Notify> Notifies { get; set; }
 
-    /// <summary>
-    /// 房间
-    /// </summary>
-    public DbSet<House> Houses { get; set; }
+    ///// <summary>
+    ///// 组织机构表
+    ///// </summary>
+    //public DbSet<Organization> Organizations { get; set; }
 
-    /// <summary>
-    /// 产品
-    /// </summary>
-    public DbSet<Product> Products { get; set; }
+    ///// <summary>
+    ///// 机构岗位用户表
+    ///// </summary>
+    //public DbSet<OrganizationUser> OrganizationUsers { get; set; }
 
-    /// <summary>
-    /// 安全策略
-    /// </summary>
-    public DbSet<SecurePolicy> SecurePolicies { get; set; }
+    ///// <summary>
+    ///// 项目表
+    ///// </summary>
+    //public DbSet<Project> Projects { get; set; }
+
+    ///// <summary>
+    ///// 项目用户表
+    ///// </summary>
+    //public DbSet<ProjectUser> ProjectUsers { get; set; }
+
+    ///// <summary>
+    ///// 项目附件表
+    ///// </summary>
+    //public DbSet<ProjectAttachment> ProjectAttachments { get; set; }
+
+    ///// <summary>
+    ///// 需求表
+    ///// </summary>
+    //public DbSet<Need> Needs { get; set; }
+
+    ///// <summary>
+    ///// 需求附件表
+    ///// </summary>
+    //public DbSet<NeedAttachment> NeedAttachments { get; set; }
+
+    ///// <summary>
+    ///// 区域租户表
+    ///// </summary>
+    //public DbSet<AreaTenant> AreaTenants { get; set; }
+
+    ///// <summary>
+    ///// 区域租户字符串连接表
+    ///// </summary>
+    //public DbSet<TenantDbConnectionString> TenantDbConnectionStrings { get; set; }
+
+    ///// <summary>
+    ///// 供应商表
+    ///// </summary>
+    //public DbSet<Supplier> Suppliers { get; set; }
+
+    ///// <summary>
+    ///// 阈值管理
+    ///// </summary>
+    //public DbSet<Threshold> Thresholds { get; set; }
+
+    ///// <summary>
+    ///// 设备表
+    ///// </summary>
+    //public DbSet<Device> Devices { get; set; }
+
+    ///// <summary>
+    ///// 设备扩展表
+    ///// </summary>
+    //public DbSet<DeviceExtend> DeviceExtends { get; set; }
+
+    ///// <summary>
+    ///// 设备区域转发密钥表
+    ///// </summary>
+    //public DbSet<DeviceKeySecret> DeviceKeySecrets { get; set; }
+
+    ///// <summary>
+    ///// 设备序号表
+    ///// </summary>
+    //public DbSet<DeviceSequence> DeviceSequences { get; set; }
+
+    ///// <summary>
+    ///// 设备转发表
+    ///// </summary>
+    //public DbSet<DeviceMediator> DeviceMediators { get; set; }
+
+    ///// <summary>
+    ///// 设备人员表
+    ///// </summary>
+    //public DbSet<DeviceWorker> DeviceWorkers { get; set; }
+
+    ///// <summary>
+    ///// 设备数据模拟表
+    ///// </summary>
+    //public DbSet<DeviceAnalogRule> DeviceAnalogRules { get; set; }
+
+    ///// <summary>
+    ///// 劳务人员表
+    ///// </summary>
+    //public DbSet<Worker> Workers { get; set; }
+
+    ///// <summary>
+    ///// 工种
+    ///// </summary>
+    //public DbSet<WorkerType> WorkerTypes { get; set; }
+
+    ///// <summary>
+    ///// 中介器表
+    ///// </summary>
+    //public DbSet<Mediator> Mediators { get; set; }
+
+    /////// <summary>
+    /////// Tcp包头管理 不用存表放在配置文件或者redis缓存更合适
+    /////// </summary>
+    ////public DbSet<PacketHandler> PacketHandlers { get; set; }
+
+    ///// <summary>
+    ///// 许可证
+    ///// </summary>
+    //public DbSet<License> Licenses { get; set; }
+
+    ///// <summary>
+    ///// 许可证资源
+    ///// </summary>
+    //public DbSet<LicenseResource> LicenseResources { get; set; }
+
+    /////// <summary>
+    /////// 小区
+    /////// </summary>
+    ////public DbSet<Section> Sections { get; set; }
+
+    ///// <summary>
+    ///// 房间
+    ///// </summary>
+    //public DbSet<House> Houses { get; set; }
+
+    ///// <summary>
+    ///// 产品
+    ///// </summary>
+    //public DbSet<Product> Products { get; set; }
+
+    ///// <summary>
+    ///// 安全策略
+    ///// </summary>
+    //public DbSet<SecurePolicy> SecurePolicies { get; set; }
     #endregion
 
 
@@ -261,29 +263,31 @@ public class NetDbContext :
         }
         Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(NetDbContext)} OnModelCreating start.............");
 
-        base.OnModelCreating(builder);
 
+        base.OnModelCreating(builder);
         /* Include modules to your migration db context */
 
-        builder.ConfigurePermissionManagement();
-        builder.ConfigureSettingManagement();
-        builder.ConfigureBackgroundJobs();
-        builder.ConfigureAuditLogging();
-        builder.ConfigureIdentity();
-        builder.ConfigureOpenIddict();
-        builder.ConfigureFeatureManagement();
-        builder.ConfigureTenantManagement();
-
-        /* Configure your own tables/entities inside here */
-
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(NetConsts.DbTablePrefix + "YourEntities", NetConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        //builder.ConfigurePermissionManagement();
+        //builder.ConfigureSettingManagement();
+        //builder.ConfigureBackgroundJobs();
+        //builder.ConfigureAuditLogging();
+        //builder.ConfigureIdentity();
+        //builder.ConfigureOpenIddict();
+        //builder.ConfigureFeatureManagement();
+        //builder.ConfigureTenantManagement();
         
-        //builder.ConfigureNetCore();//以前的扩展 现在不需要了
+        //builder.Entity<IdentityUser>(b =>
+        //{
+        //    b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
+        //    b.ConfigureByConvention();
+        //    b.ConfigureAbpUser();
+
+        //    /* Configure mappings for your additional properties
+        //      * Also see the NetCoreEfCoreEntityExtensionMappings class
+        //      */
+        //    b.ConfigureCustomUserProperties(); //Moved customization to a method so we can share it with the NetCoreMigrationsDbContext class
+        //});
+        builder.Configure();//直接调用扩展
         Log.Logger.Information($"This is {nameof(NetDbContext)} OnModelCreating end.............");
     }
 }

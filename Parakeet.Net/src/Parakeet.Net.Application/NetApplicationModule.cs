@@ -12,6 +12,7 @@ using Parakeet.Net.Extensions;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.BackgroundWorkers;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -77,11 +78,11 @@ public class NetApplicationModule : AbpModule
         //workManager.Add(IocManager.Resolve<CleanLockCacheWorker>());//密码错误锁定自动任务
         //workManager.Start();
 
-        //Configure<AbpBackgroundJobOptions>(options =>
-        //{
-        //    ////禁用作业执行
-        //    //options.IsJobExecutionEnabled = true;
-        //});
+        Configure<AbpBackgroundJobOptions>(options =>
+        {
+            ////禁用作业执行
+            //options.IsJobExecutionEnabled = true;
+        });
 
         ////配置appJson节点反射类+微服务及节点及微服务节点的过滤器
         //context.Services.RegisterHttpsApi();

@@ -19,7 +19,7 @@ namespace Parakeet.Net.Dtos
         /// <summary>
         /// 默认密码
         /// </summary>
-        public const string DefaultPassword = "1q2w3E*";
+        public const string DefaultPassword = "1q2w3e*";
 
         #endregion
 

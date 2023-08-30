@@ -29,6 +29,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
+using Parakeet.Net.Dtos;
+using Parakeet.Net.EnumServices;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
@@ -41,12 +43,16 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
 using Volo.Abp.AspNetCore.Serilog;
+using Volo.Abp.Auditing;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
+using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Http.Client.Web;
 using Volo.Abp.Identity.Web;
@@ -124,7 +130,16 @@ public class NetWebModule : AbpModule
         //context.Services.AddBrowserFilter();
         //context.Services.AddMiddlewareFactory();
         //context.Services.AddInheritedMiddleware();
-        context.Services.AddSession();
+        //context.Services.AddSession();
+        //Configure<AbpAuditingOptions>(options =>
+        //{
+        //    //options.IsEnabledForGetRequests = true;
+        //    options.ApplicationName = "parakeet";
+        //});
+        //Configure<AbpBackgroundJobOptions>(options =>
+        //{
+        //    options.IsJobExecutionEnabled = false;
+        //});
     }
 
     public override void PostConfigureServices(ServiceConfigurationContext context)
@@ -234,7 +249,14 @@ public class NetWebModule : AbpModule
         services.AddAbpSwaggerGen(
             options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Net API", Version = "v1" });
+                EnumContext.Instance.GetEnumTypeItemKeyNameDescriptions(new InputNameDto { Name = nameof(VersionType) })
+                    .ForEach(v =>
+                    {
+                        options.SwaggerDoc($"{v.ItemDescription}", new OpenApiInfo { Title = "Net API", Version = $"{v.ItemDescription}" });
+                    });
+                //options.SwaggerDoc($"{VersionType.V1.DisplayName()}", new OpenApiInfo { Title = "Net API", Version = $"{VersionType.V1.DisplayName()}" });
+                //options.SwaggerDoc($"{VersionType.V2.DisplayName()}", new OpenApiInfo { Title = "Net API", Version = $"{VersionType.V2.DisplayName()}" });
+                //options.SwaggerDoc($"{VersionType.V3.DisplayName()}", new OpenApiInfo { Title = "Net API", Version = $"{VersionType.V3.DisplayName()}" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             }
@@ -585,9 +607,9 @@ public class NetWebModule : AbpModule
         //会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 
         //如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件
 
-        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         #endregion
-        app.UseSession();
+        //app.UseSession();
 
         ////自定义Use中间件逻辑
         //app.Use(next =>
@@ -778,11 +800,17 @@ public class NetWebModule : AbpModule
         app.UseSwaggerUI(options =>
         {
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、UseSwaggerUI {nameof(SwaggerUIOptions)}....");
-            typeof(VersionType).GetEnumNames().ToList().ForEach(v =>
+            EnumContext.Instance.GetEnumTypeItemKeyNameDescriptions(new InputNameDto{Name = nameof(VersionType) })
+                .ForEach(v =>
             {
                 //configuration["App:SwaggerEndpoint"]="/swagger/v1/swagger.json";
-                options.SwaggerEndpoint(string.Format(configuration["App:SwaggerEndpoint"] ?? @$"/swagger/{v}/swagger.json", v), $"小鹦鹉工作室 NetCore API {v}");
+                options.SwaggerEndpoint(string.Format(configuration["App:SwaggerEndpoint"] ?? @$"/swagger/{v.ItemDescription}/swagger.json", v.ItemDescription), $"小鹦鹉工作室 NetCore API {v.ItemDescription}");
             });
+            //typeof(VersionType).GetEnumNames().ToList().ForEach(v =>
+            //{
+            //    //configuration["App:SwaggerEndpoint"]="/swagger/v1/swagger.json";
+            //    options.SwaggerEndpoint(string.Format(configuration["App:SwaggerEndpoint"] ?? @$"/swagger/{v}/swagger.json", v), $"小鹦鹉工作室 NetCore API {v}");
+            //});
             //options.InjectJavascript("/swagger/ui/zh_CN.js"); // 加载中文包 无效
             //options.ShowExtensions();
             //options.DocExpansion(DocExpansion.None);
@@ -790,11 +818,11 @@ public class NetWebModule : AbpModule
         });
         #region ABP审计日志中间件
 
-        //判断请求是否需要写审计log  =》可配置，不允许匿名访问而且用户没有认证 不审计，
-        //get请求不写审记日志，需要的话，创建一个IAuditLogSaveHandle
-        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、判断请求是否需要写审计log ->可配置，不允许匿名访问而且用户没有认证 不审计 get请求不写审记日志，如需要的话，需创建一个IAuditLogSaveHandle....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        ////判断请求是否需要写审计log  =》可配置，不允许匿名访问而且用户没有认证 不审计，
+        ////get请求不写审记日志，需要的话，创建一个IAuditLogSaveHandle
+        ////Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、判断请求是否需要写审计log ->可配置，不允许匿名访问而且用户没有认证 不审计 get请求不写审记日志，如需要的话，需创建一个IAuditLogSaveHandle....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         #endregion
-        app.UseAuditing();
+        //app.UseAuditing();
 
         app.UseAbpSerilogEnrichers();
 

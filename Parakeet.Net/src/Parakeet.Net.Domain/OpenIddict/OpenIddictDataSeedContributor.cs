@@ -108,29 +108,29 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
         #endregion
 
-        //Web Server
-        var serverClientId = configurationSection["Parakeet_Server:ClientId"];
-        if (!serverClientId.IsNullOrWhiteSpace())
-        {
-            var serverClientRootUrl = configurationSection["Parakeet_Server:RootUrl"].EnsureEndsWith('/');
+        ////Web Server
+        //var serverClientId = configurationSection["Parakeet_Server:ClientId"];
+        //if (!serverClientId.IsNullOrWhiteSpace())
+        //{
+        //    var serverClientRootUrl = configurationSection["Parakeet_Server:RootUrl"].EnsureEndsWith('/');
             
-            await CreateApplicationAsync(
-                name: serverClientId,
-                type: OpenIddictConstants.ClientTypes.Confidential,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Server Application",
-                secret: configurationSection["Parakeet_Server:ClientSecret"] ?? "1q2w3E*",
-                grantTypes: new List<string> //Hybrid flow
-                {
-                    OpenIddictConstants.GrantTypes.AuthorizationCode,
-                    OpenIddictConstants.GrantTypes.Implicit
-                },
-                scopes: commonScopes,
-                redirectUri: $"{serverClientRootUrl}signin-oidc",
-                clientUri: serverClientRootUrl,
-                postLogoutRedirectUri: $"{serverClientRootUrl}signout-callback-oidc"
-            );
-        }
+        //    await CreateApplicationAsync(
+        //        name: serverClientId,
+        //        type: OpenIddictConstants.ClientTypes.Confidential,
+        //        consentType: OpenIddictConstants.ConsentTypes.Implicit,
+        //        displayName: "Server Application",
+        //        secret: configurationSection["Parakeet_Server:ClientSecret"] ?? "1q2w3e*",
+        //        grantTypes: new List<string> //Hybrid flow
+        //        {
+        //            OpenIddictConstants.GrantTypes.AuthorizationCode,
+        //            OpenIddictConstants.GrantTypes.Implicit
+        //        },
+        //        scopes: commonScopes,
+        //        redirectUri: $"{serverClientRootUrl}signin-oidc",
+        //        clientUri: serverClientRootUrl,
+        //        postLogoutRedirectUri: $"{serverClientRootUrl}signout-callback-oidc"
+        //    );
+        //}
 
         //Web Client
         var webClientId = configurationSection["Parakeet_Web:ClientId"];
@@ -145,7 +145,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Web Application",
-                secret: configurationSection["Parakeet_Web:ClientSecret"] ?? "1q2w3E*",
+                secret: configurationSection["Parakeet_Web:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -168,7 +168,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Public,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Console Test / Angular Application",
-                secret: configurationSection["Parakeet_App:ClientSecret"] ?? "1q2w3E*",
+                secret: null,
+                //secret: configurationSection["Parakeet_App:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string>
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -194,7 +195,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Public,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Blazor Application",
-                secret: configurationSection["Parakeet_Blazor:ClientSecret"] ?? "1q2w3E*",
+                secret:null,
+                //secret: configurationSection["Parakeet_Blazor:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string>
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -217,7 +219,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Blazor Server Application",
-                secret: configurationSection["Parakeet_BlazorServerTiered:ClientSecret"] ?? "1q2w3E*",
+                secret: configurationSection["Parakeet_BlazorServerTiered:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -241,7 +243,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Public,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Swagger Application",
-                secret: configurationSection["Parakeet_Swagger:ClientSecret"] ?? "1q2w3E*",
+                secret: null,
+                //secret: configurationSection["Parakeet_Swagger:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string>
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,

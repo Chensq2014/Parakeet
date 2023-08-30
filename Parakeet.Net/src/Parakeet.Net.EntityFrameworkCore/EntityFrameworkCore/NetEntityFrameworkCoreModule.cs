@@ -7,8 +7,11 @@ using Serilog;
 using System;
 using System.Threading;
 using Volo.Abp;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
+using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore.MySQL;
@@ -33,9 +36,9 @@ namespace Parakeet.Net.EntityFrameworkCore;
     typeof(AbpEntityFrameworkCorePostgreSqlModule),
     //typeof(AbpEntityFrameworkCoreSqlServerModule),
     //typeof(AbpEntityFrameworkCoreMySQLModule),
-    typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
-    typeof(AbpAuditLoggingEntityFrameworkCoreModule),
-    typeof(NetMultiTenancyModule),
+    ////typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
+    ////typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+    //typeof(NetMultiTenancyModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpFeatureManagementEntityFrameworkCoreModule)
     )]
@@ -102,8 +105,8 @@ public class NetEntityFrameworkCoreModule : AbpModule
         context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
         context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
 
-        //// 添加自定义指定类型仓储 为什么dbcontext不直接scope注册呢？
-        //context.Services.AddAbpDbContext<NetCoreDbContext>(options =>
+        //// 添加自定义指定类型仓储 为什么dbcontext不直接scope注册呢？同一次请求并发？
+        //context.Services.AddAbpDbContext<NetDbContext>(options =>
         //{
         //    options.AddDefaultRepositories();
         //    //options.AddRepository<AppUser, EfCoreIdentityUserRepository>();
@@ -177,8 +180,21 @@ public class NetEntityFrameworkCoreModule : AbpModule
             //});
             //options.UseSqlServer();
         });
+        //context.Services.AddDefaultRepository(
+        //    typeof(AuditLogAction),
+        //    typeof(EfCoreRepository<AbpAuditLoggingDbContext, AuditLogAction, Guid>)
+        //);
+        //context.Services.AddDefaultRepository(
+        //    typeof(AuditLog),
+        //    typeof(EfCoreRepository<AbpAuditLoggingDbContext, AuditLog, Guid>)
+        //);
+        //context.Services.AddDefaultRepository(
+        //    typeof(BackgroundJobRecord),
+        //    typeof(EfCoreRepository<BackgroundJobsDbContext, BackgroundJobRecord, Guid>)
+        //);
+
         #endregion
-        
+
         #region 一旦禁用依赖注入自动注册服务,你应该手动注册你的服务.
         ////按Module程序集批量注册
         //context.Services.AddAssemblyOf<NetCoreEntityFrameworkCoreModule>();
@@ -190,7 +206,7 @@ public class NetEntityFrameworkCoreModule : AbpModule
         ////单独注册一个从IServiceProvider解析得来的工厂方法
         //context.Services.AddScoped<ITaxCalculator>(sp => sp.GetRequiredService<TaxCalculator>());
         #endregion
-        
+
         #region 替换默认Service 三种方式任选一种  ReplaceService 
 
         ////1、在resolver实现类(ConnectionStringResolver)上添加 替换默认服务的属性 [Dependency(ReplaceServices = true)]
@@ -206,7 +222,7 @@ public class NetEntityFrameworkCoreModule : AbpModule
         #endregion
 
         #region 缓存放入domain层注册
-        
+
         //Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、{nameof(NetCoreEntityFrameworkCoreModule)} 注册IFreeSql、ICacheContainer、DevicePool....");
 
         ////注册freeSql、ICacheContainer、 DevicePool高速缓存单例

@@ -1,4 +1,5 @@
-﻿using Parakeet.Net.Cache;
+﻿using Microsoft.AspNetCore.Builder;
+using Parakeet.Net.Cache;
 using Parakeet.Net.MultiTenancy;
 using Serilog;
 using Volo.Abp;
@@ -56,8 +57,8 @@ public class NetMultiTenancyModule : AbpModule
         var app = context.GetApplicationBuilder();
         if (MultiTenancyConsts.IsEnabled)
         {
-            app.UseCustomMultiTenancy();
-            //app.UseMultiTenancy();
+            //app.UseCustomMultiTenancy();
+            app.UseMultiTenancy();
         }
         base.OnApplicationInitialization(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetMultiTenancyModule)} End OnApplicationInitialization ....");

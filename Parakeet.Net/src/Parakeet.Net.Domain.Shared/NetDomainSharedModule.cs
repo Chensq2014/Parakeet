@@ -20,8 +20,8 @@ using Volo.Abp.VirtualFileSystem;
 namespace Parakeet.Net;
 
 [DependsOn(
-    typeof(AbpAuditLoggingDomainSharedModule),
-    typeof(AbpBackgroundJobsDomainSharedModule),
+    //typeof(AbpAuditLoggingDomainSharedModule),
+    //typeof(AbpBackgroundJobsDomainSharedModule),
     typeof(AbpFeatureManagementDomainSharedModule),
     typeof(AbpIdentityDomainSharedModule),
     typeof(AbpOpenIddictDomainSharedModule),

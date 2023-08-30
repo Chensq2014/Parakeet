@@ -11,17 +11,17 @@ namespace Parakeet.Net.Enums
         /// <summary>
         /// 版本1
         /// </summary>
-        [Description("V1")]
+        [Description("v1")]
         V1 = 1,
         /// <summary>
         /// 版本2
         /// </summary>
-        [Description("V2")]
+        [Description("v2")]
         V2 = 2,
         /// <summary>
         /// 版本3
         /// </summary>
-        [Description("V3")]
+        [Description("v3")]
         V3 = 3
     }
 }

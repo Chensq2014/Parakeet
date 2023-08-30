@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Parakeet.Net.Migrations.PgSqlMigrations
 {
     [DbContext(typeof(PgSqlMigrationsDbContext))]
-    [Migration("20230829002011_Init")]
-    partial class Init
+    [Migration("20230830182219_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.AreaTenant", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("AreaCode")
@@ -106,6 +107,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Device", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Area")
@@ -242,6 +244,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.DeviceAnalogRule", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -320,6 +323,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.DeviceExtend", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("DeviceId")
@@ -345,6 +349,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.DeviceKeySecret", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Area")
@@ -376,6 +381,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.DeviceMediator", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("DeviceId")
@@ -402,6 +408,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.DeviceSequence", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Area")
@@ -429,6 +436,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.DeviceWorker", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("AreaTenantId")
@@ -605,6 +613,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.House", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<decimal?>("BuildingArea")
@@ -679,6 +688,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.License", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("AppId")
@@ -757,6 +767,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.LicenseResource", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -836,6 +847,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.LocationArea", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -949,6 +961,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Mediator", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Area")
@@ -1037,6 +1050,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Need", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1126,6 +1140,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.NeedAttachment", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1186,6 +1201,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Notify", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ApplicationId")
@@ -1308,6 +1324,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Organization", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -1391,6 +1408,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.OrganizationUser", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1451,6 +1469,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<decimal?>("Amount")
@@ -1529,6 +1548,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Project", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<decimal?>("Amount")
@@ -1634,6 +1654,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.ProjectAttachment", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1694,6 +1715,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.ProjectUser", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1754,6 +1776,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Section", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Address")
@@ -1832,18 +1855,17 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.SectionWorker", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<decimal?>("CoverArea")
                         .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreationTime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
@@ -1882,18 +1904,17 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.SectionWorkerDetail", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<decimal?>("Amount")
                         .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("CreationTime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
@@ -1928,6 +1949,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.SecurePolicy", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Browser")
@@ -2034,6 +2056,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Supplier", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -2112,6 +2135,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.TenantDbConnectionString", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("AreaTenantId")
@@ -2141,6 +2165,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Threshold", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -2225,6 +2250,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.Worker", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Address")
@@ -2356,6 +2382,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Parakeet.Net.Entities.WorkerType", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -2414,6 +2441,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ApplicationName")
@@ -2533,6 +2561,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("AuditLogId")
@@ -2582,6 +2611,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.EntityChange", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("AuditLogId")
@@ -2631,6 +2661,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.EntityPropertyChange", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("EntityChangeId")
@@ -2672,6 +2703,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.BackgroundJobs.BackgroundJobRecord", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -2729,6 +2761,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.FeatureManagement.FeatureValue", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -2760,6 +2793,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityClaimType", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -2806,6 +2840,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityLinkUser", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("SourceTenantId")
@@ -2831,6 +2866,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRole", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -2907,6 +2943,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentitySecurityLog", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Action")
@@ -2981,6 +3018,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("AccessFailedCount")
@@ -3272,6 +3310,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.Identity.OrganizationUnit", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -3372,6 +3411,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.OpenIddict.Applications.OpenIddictApplication", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ClientId")
@@ -3466,6 +3506,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.OpenIddict.Authorizations.OpenIddictAuthorization", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ApplicationId")
@@ -3542,6 +3583,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.OpenIddict.Scopes.OpenIddictScope", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -3616,6 +3658,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.OpenIddict.Tokens.OpenIddictToken", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ApplicationId")
@@ -3709,6 +3752,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.PermissionManagement.PermissionGrant", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -3741,6 +3785,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.SettingManagement.Setting", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -3772,6 +3817,7 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
             modelBuilder.Entity("Volo.Abp.TenantManagement.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")

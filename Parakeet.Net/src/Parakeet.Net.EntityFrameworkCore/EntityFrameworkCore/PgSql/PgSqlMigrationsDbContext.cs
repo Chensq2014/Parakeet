@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Parakeet.Net.Cache;
 using Serilog;
+using Volo.Abp.AuditLogging;
+using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.Identity;
+using Volo.Abp.TenantManagement;
 
 namespace Parakeet.Net.EntityFrameworkCore
 {
@@ -20,6 +24,7 @@ namespace Parakeet.Net.EntityFrameworkCore
         }
 
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             if (builder.IsUsingPostgreSql())
@@ -35,9 +40,9 @@ namespace Parakeet.Net.EntityFrameworkCore
                 Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、使用的SqlServer");
             }
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} OnModelCreating start.............");
-            builder.Configure(true);
             base.OnModelCreating(builder);
-
+            builder.Configure(true);
+            
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} OnModelCreating end.............");
         }
     }

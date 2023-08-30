@@ -28,18 +28,18 @@ public class Program
                 .UseAutofac()
                 .UseSerilog((context, config) =>
                 {
-                    var section = context.Configuration.GetSection(SerilogOptionDto.ConfigExceptionlessKey);
-                    if (section.Exists())
-                    {
-                        var exceptionlessOption = section.Get<ExceptionlessOptionDto>();
+                    //var section = context.Configuration.GetSection(SerilogOptionDto.ConfigExceptionlessKey);
+                    //if (section.Exists())
+                    //{
+                    //    var exceptionlessOption = section.Get<ExceptionlessOptionDto>();
 
-                        //如果你的程序中有在短时间内生成大量日志的情况，这个时候告诉Exceptionless (in-memory store)事件存储到内存当中,会快很多。
-                        ExceptionlessClient.Default.Configuration.UseInMemoryStorage();
+                    //    //如果你的程序中有在短时间内生成大量日志的情况，这个时候告诉Exceptionless (in-memory store)事件存储到内存当中,会快很多。
+                    //    ExceptionlessClient.Default.Configuration.UseInMemoryStorage();
 
-                        //Exceptionless 是开源免费的并且服务端也是可以本地部署的
-                        ExceptionlessClient.Default.Configuration.ServerUrl = exceptionlessOption.ServerUrl ?? ExceptionlessClient.Default.Configuration.ServerUrl;
-                        ExceptionlessClient.Default.Startup(exceptionlessOption.ApiKey ?? "Gum3CWHNe4uKf7CYGT1CIBEKRx17FreeOywYTIDr");
-                    }
+                    //    //Exceptionless 是开源免费的并且服务端也是可以本地部署的
+                    //    ExceptionlessClient.Default.Configuration.ServerUrl = exceptionlessOption.ServerUrl ?? ExceptionlessClient.Default.Configuration.ServerUrl;
+                    //    ExceptionlessClient.Default.Startup(exceptionlessOption.ApiKey ?? "Gum3CWHNe4uKf7CYGT1CIBEKRx17FreeOywYTIDr");
+                    //}
 
                     SerialLogConfig(config);
 
@@ -73,8 +73,8 @@ public class Program
             //// 将配置传给 Serilog 的提供程序 已在webBuilder.UseSerilog中使用配置文件替换
             //.ReadFrom.Configuration(Configuration)
 #if DEBUG
-            //.MinimumLevel.Debug()
-            .MinimumLevel.Error()
+            .MinimumLevel.Debug()
+            //.MinimumLevel.Error()
 #else
                 //.MinimumLevel.Information()
                 //.MinimumLevel.Error()

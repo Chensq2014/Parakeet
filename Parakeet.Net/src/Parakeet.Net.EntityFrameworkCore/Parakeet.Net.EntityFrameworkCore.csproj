@@ -37,6 +37,7 @@
 
 	<ItemGroup>
 		<Folder Include="Migrations\" />
+		<Folder Include="Migrations\DefaultMigrations\" />
 		<Folder Include="Migrations\PgSqlMigrations\" />
 	</ItemGroup>
 

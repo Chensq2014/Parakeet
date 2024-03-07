@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Parakeet.Net.Migrations.PgSqlMigrations
 {
     [DbContext(typeof(PgSqlMigrationsDbContext))]
-    [Migration("20230830182219_InitDb")]
+    [Migration("20230831152739_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -1858,37 +1858,78 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
                     b.Property<decimal?>("CoverArea")
-                        .HasColumnType("numeric");
+                        .HasColumnType("DECIMAL(27, 3)")
+                        .HasComment("面积");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("character varying(1024)")
+                        .HasComment("描述");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("text")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
 
                     b.Property<bool>("IsTemporary")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasComment("是否临时");
 
                     b.Property<int>("LaborType")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
                     b.Property<string>("Name")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasComment("工区名称");
 
                     b.Property<Guid?>("SectionId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasComment("区域/地块Id");
 
                     b.Property<Guid?>("WorkerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasComment("劳务人员Id");
 
                     b.Property<Guid?>("WorkerTypeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasComment("工种Id");
 
                     b.HasKey("Id");
 
@@ -1908,36 +1949,78 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                         .HasColumnType("uuid");
 
                     b.Property<decimal?>("Amount")
-                        .HasColumnType("numeric");
+                        .HasColumnType("DECIMAL(27, 3)")
+                        .HasComment("数量/工时");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("character varying(1024)")
+                        .HasComment("描述");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("结束时间");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("text")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
 
                     b.Property<string>("PositionName")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasComment("工作位置名称");
 
                     b.Property<Guid?>("SectionWorkerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasComment("区域工人");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("开始时间");
 
                     b.Property<decimal?>("UnitPrice")
-                        .HasColumnType("numeric");
+                        .HasColumnType("DECIMAL(27, 3)")
+                        .HasComment("人工单价");
 
                     b.Property<decimal?>("UnitProfit")
-                        .HasColumnType("numeric");
+                        .HasColumnType("DECIMAL(27, 3)")
+                        .HasComment("单位利润");
 
                     b.HasKey("Id");
 

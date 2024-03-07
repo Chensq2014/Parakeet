@@ -1,6 +1,7 @@
 ﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Parakeet.Net.Dtos;
+using Parakeet.Net.Entities;
 using Parakeet.Net.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Parakeet.Net
     /// <typeparam name="TEntity">实体类</typeparam>
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
     public interface IBaseNetAppService<TEntity, TPrimaryKey>
-        where TEntity : Entity<TPrimaryKey> //where TPrimaryKey : struct
+        where TEntity : BaseEntity<TPrimaryKey> //where TPrimaryKey : struct
     {
         #region 查询扩展
         /// <summary>
@@ -246,7 +247,7 @@ namespace Parakeet.Net
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
     public interface IBaseNetAppService<TEntity> : IBaseNetAppService<TEntity, Guid>
-        where TEntity : Entity<Guid>
+        where TEntity : BaseEntity<Guid>
     {
 
     }

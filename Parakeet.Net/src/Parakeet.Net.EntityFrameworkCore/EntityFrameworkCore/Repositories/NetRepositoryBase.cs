@@ -35,7 +35,7 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
     public abstract class NetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<NetDbContext, TEntity, TPrimaryKey>
         , INetRepository<TEntity, TPrimaryKey>
-        where TEntity : Entity<TPrimaryKey>
+        where TEntity : BaseEntity<TPrimaryKey>
     {
         protected NetRepositoryBase(IDbContextProvider<NetDbContext> dbContextProvider)
             : base(dbContextProvider)
@@ -101,7 +101,7 @@ namespace Parakeet.Net.EntityFrameworkCore.Repositories
     //[Dependency(ReplaceServices = true)]
     public class NetRepositoryBase<TEntity> : NetRepositoryBase<TEntity, Guid>
         , INetRepository<TEntity>//IRepository<TEntity>//
-        where TEntity : EntityBase
+        where TEntity : BaseEntity
     {
         /// <summary>
         /// 缓存

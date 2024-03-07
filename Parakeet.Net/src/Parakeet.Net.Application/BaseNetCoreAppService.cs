@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Parakeet.Net.Dtos;
+using Parakeet.Net.Entities;
 using Parakeet.Net.Extensions;
 using Parakeet.Net.Interfaces;
 using Parakeet.Net.LinqExtensions;
@@ -27,7 +28,7 @@ namespace Parakeet.Net
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
-    public abstract class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : Entity<TPrimaryKey>
+    public abstract class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
         //where TPrimaryKey : struct
     {
         public INetRepository<TEntity, TPrimaryKey> Repository;
@@ -509,7 +510,7 @@ namespace Parakeet.Net
     /// <typeparam name="TEntity">实体类</typeparam>
     public class BaseNetAppService<TEntity> : BaseNetAppService<TEntity, Guid>
         , IBaseNetAppService<TEntity>
-        where TEntity : Entity<Guid>
+        where TEntity : BaseEntity
     {
         public BaseNetAppService(
             INetRepository<TEntity, Guid> baseRepository) : base(baseRepository)

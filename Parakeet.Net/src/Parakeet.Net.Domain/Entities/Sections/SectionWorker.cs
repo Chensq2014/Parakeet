@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Parakeet.Net.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Parakeet.Net.Enums;
-using Volo.Abp.Auditing;
-using Volo.Abp.Domain.Entities;
 
 namespace Parakeet.Net.Entities
 {
@@ -14,14 +12,15 @@ namespace Parakeet.Net.Entities
     /// </summary>
     [Table("Parakeet_SectionWorkers", Schema = "public")]
     [Description("地块(区域)工人")]
-    public class SectionWorker  : Entity<Guid>, IHasCreationTime, IMayHaveCreator
+    public class SectionWorker  : BaseEntity
     {
         public SectionWorker()
         {
         }
 
-        public SectionWorker(Guid id) : base(id)
+        public SectionWorker(Guid id)
         {
+            base.SetEntityPrimaryKey(id);
         }
         #region 基础字段
 
@@ -121,20 +120,6 @@ namespace Parakeet.Net.Entities
         /// 劳务人员工作明细
         /// </summary>
         public virtual ICollection<SectionWorkerDetail> SectionWorkerDetails { get; set; } = new HashSet<SectionWorkerDetail>();
-
-        #endregion
-
-        #region IHasCreationTime,IMayHaveCreator
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreationTime { get; set; }
-
-        /// <summary>
-        /// 创建人
-        /// </summary>
-        public Guid? CreatorId { get; set; }
 
         #endregion
     }

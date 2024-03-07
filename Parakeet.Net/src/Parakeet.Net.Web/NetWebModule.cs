@@ -818,11 +818,11 @@ public class NetWebModule : AbpModule
         });
         #region ABP审计日志中间件
 
-        ////判断请求是否需要写审计log  =》可配置，不允许匿名访问而且用户没有认证 不审计，
-        ////get请求不写审记日志，需要的话，创建一个IAuditLogSaveHandle
-        ////Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、判断请求是否需要写审计log ->可配置，不允许匿名访问而且用户没有认证 不审计 get请求不写审记日志，如需要的话，需创建一个IAuditLogSaveHandle....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //判断请求是否需要写审计log  =》可配置，不允许匿名访问而且用户没有认证 不审计，
+        //get请求不写审记日志，需要的话，创建一个IAuditLogSaveHandle
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、判断请求是否需要写审计log ->可配置，不允许匿名访问而且用户没有认证 不审计 get请求不写审记日志，如需要的话，需创建一个IAuditLogSaveHandle....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         #endregion
-        //app.UseAuditing();
+        app.UseAuditing();
 
         app.UseAbpSerilogEnrichers();
 

@@ -12,14 +12,15 @@ namespace Parakeet.Net.Entities
     /// </summary>
     [Table("Parakeet_SectionWorkerDetails", Schema = "public")]
     [Description("地块(区域)工人")]
-    public class SectionWorkerDetail : Entity<Guid>, IHasCreationTime,IMayHaveCreator
+    public class SectionWorkerDetail : BaseEntity, IHasCreationTime,IMayHaveCreator
     {
         public SectionWorkerDetail()
         {
         }
 
-        public SectionWorkerDetail(Guid id) : base(id)
+        public SectionWorkerDetail(Guid id)
         {
+            base.SetEntityPrimaryKey(id);
         }
 
         #region 用工明细信息
@@ -82,20 +83,6 @@ namespace Parakeet.Net.Entities
         /// 区域工人
         /// </summary>
         public virtual SectionWorker SectionWorker { get; set; }
-
-        #endregion
-
-        #region IHasCreationTime,IMayHaveCreator
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreationTime { get; set; }
-
-        /// <summary>
-        /// 创建人
-        /// </summary>
-        public Guid? CreatorId { get; set; }
 
         #endregion
     }

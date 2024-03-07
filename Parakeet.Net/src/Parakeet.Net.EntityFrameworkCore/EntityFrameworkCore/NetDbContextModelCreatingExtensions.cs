@@ -270,10 +270,12 @@ namespace Parakeet.Net.EntityFrameworkCore
             });
             builder.Entity<SectionWorker>(x =>
             {
+                x.ConfigureFullAuditedAggregateRoot();
                 x.ToTable(options.TablePrefix + $"{nameof(SectionWorker)}s", options.Schema);
             });
             builder.Entity<SectionWorkerDetail>(x =>
             {
+                x.ConfigureFullAuditedAggregateRoot();
                 x.ToTable(options.TablePrefix + $"{nameof(SectionWorkerDetail)}s", options.Schema);
             });
             builder.Entity<House>(x =>

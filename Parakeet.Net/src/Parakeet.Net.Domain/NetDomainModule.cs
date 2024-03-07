@@ -28,8 +28,8 @@ namespace Parakeet.Net;
 [DependsOn(
     typeof(NetCacheMudule),
     typeof(NetDomainSharedModule),
-    //typeof(AbpAuditLoggingDomainModule),
-    //typeof(AbpBackgroundJobsDomainModule),
+    typeof(AbpAuditLoggingDomainModule),
+    typeof(AbpBackgroundJobsDomainModule),
     typeof(AbpFeatureManagementDomainModule),
     typeof(AbpIdentityDomainModule),
     typeof(AbpOpenIddictDomainModule),

@@ -1710,16 +1710,23 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    CoverArea = table.Column<decimal>(type: "numeric", nullable: true),
-                    IsTemporary = table.Column<bool>(type: "boolean", nullable: false),
-                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
-                    SectionId = table.Column<Guid>(type: "uuid", nullable: true),
-                    WorkerTypeId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true, comment: "工区名称"),
+                    CoverArea = table.Column<decimal>(type: "numeric(27,3)", nullable: true, comment: "面积"),
+                    IsTemporary = table.Column<bool>(type: "boolean", nullable: false, comment: "是否临时"),
+                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true, comment: "描述"),
+                    SectionId = table.Column<Guid>(type: "uuid", nullable: true, comment: "区域/地块Id"),
+                    WorkerTypeId = table.Column<Guid>(type: "uuid", nullable: true, comment: "工种Id"),
                     LaborType = table.Column<int>(type: "integer", nullable: false),
-                    WorkerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    WorkerId = table.Column<Guid>(type: "uuid", nullable: true, comment: "劳务人员Id"),
+                    ExtraProperties = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true)
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1783,16 +1790,23 @@ namespace Parakeet.Net.Migrations.PgSqlMigrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    PositionName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: true),
-                    UnitPrice = table.Column<decimal>(type: "numeric", nullable: true),
-                    UnitProfit = table.Column<decimal>(type: "numeric", nullable: true),
-                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
-                    SectionWorkerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    PositionName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true, comment: "工作位置名称"),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "开始时间"),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "结束时间"),
+                    Amount = table.Column<decimal>(type: "numeric(27,3)", nullable: true, comment: "数量/工时"),
+                    UnitPrice = table.Column<decimal>(type: "numeric(27,3)", nullable: true, comment: "人工单价"),
+                    UnitProfit = table.Column<decimal>(type: "numeric(27,3)", nullable: true, comment: "单位利润"),
+                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true, comment: "描述"),
+                    SectionWorkerId = table.Column<Guid>(type: "uuid", nullable: true, comment: "区域工人"),
+                    ExtraProperties = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true)
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

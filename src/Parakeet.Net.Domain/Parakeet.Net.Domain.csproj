@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\Common\Config\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <RootNamespace>Parakeet.Net</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Emailing" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.Identity.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.OpenIddict.Domain" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.Entities\Common.Entities.csproj" />
+    <ProjectReference Include="..\Parakeet.Net.Domain.Shared\Parakeet.Net.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

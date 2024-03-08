@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-	  <RootNamespace>Parakeet.Net</RootNamespace>
+	<RootNamespace>Parakeet.Net</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

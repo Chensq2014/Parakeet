@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Parakeet.Net.Localization;
-using Parakeet.Net.MultiTenancy;
 using Parakeet.Net.Web.Menus;
 using StackExchange.Redis;
 using Microsoft.OpenApi.Models;

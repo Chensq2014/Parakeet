@@ -1,7 +1,6 @@
 ﻿using Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Parakeet.Net.MultiTenancy;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Emailing;

@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Parakeet.Net.EntityFrameworkCore;
-using Parakeet.Net.MultiTenancy;
 using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
 using Volo.Abp;

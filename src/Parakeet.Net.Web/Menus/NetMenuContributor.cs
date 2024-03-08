@@ -4,7 +4,6 @@ using Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Parakeet.Net.Localization;
-using Parakeet.Net.MultiTenancy;
 using Volo.Abp.Account.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Identity.Web.Navigation;

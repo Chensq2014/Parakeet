@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Parakeet.Net.EntityFrameworkCore;
 using Parakeet.Net.Localization;
-using Parakeet.Net.MultiTenancy;
 using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.Account;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Parakeet.Net.Localization;
@@ -51,7 +52,7 @@ public class NetMenuContributor : IMenuContributor
             )
         );
 
-        if (MultiTenancyConsts.IsEnabled)
+        if (CommonConsts.MultiTenancyEnabled)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
         }

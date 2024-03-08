@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Common;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -133,7 +134,7 @@ public class NetWebModule : AbpModule
     {
         Configure<AbpMultiTenancyOptions>(options =>
         {
-            options.IsEnabled = MultiTenancyConsts.IsEnabled;
+            options.IsEnabled = CommonConsts.MultiTenancyEnabled;
         });
     }
 
@@ -309,7 +310,7 @@ public class NetWebModule : AbpModule
         app.UseRouting();
         app.UseAuthentication();
 
-        if (MultiTenancyConsts.IsEnabled)
+        if (CommonConsts.MultiTenancyEnabled)
         {
             app.UseMultiTenancy();
         }

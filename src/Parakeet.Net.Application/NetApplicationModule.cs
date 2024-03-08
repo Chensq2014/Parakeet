@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Account;
+﻿using Common;
+using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -10,6 +11,7 @@ using Volo.Abp.TenantManagement;
 namespace Parakeet.Net;
 
 [DependsOn(
+    typeof(CommonModule),
     typeof(NetDomainModule),
     typeof(AbpAccountApplicationModule),
     typeof(NetApplicationContractsModule),

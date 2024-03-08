@@ -60,7 +60,7 @@ public class NetDomainModule : AbpModule
 
         Configure<AbpMultiTenancyOptions>(options =>
         {
-            options.IsEnabled = MultiTenancyConsts.IsEnabled;
+            options.IsEnabled = CommonConsts.MultiTenancyEnabled;
         });
 
 #if DEBUG

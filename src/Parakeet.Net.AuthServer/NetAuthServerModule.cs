@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Common;
 using Localization.Resources.AbpUi;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
@@ -204,7 +205,7 @@ public class NetAuthServerModule : AbpModule
         app.UseAuthentication();
         app.UseAbpOpenIddictValidation();
 
-        if (MultiTenancyConsts.IsEnabled)
+        if (CommonConsts.MultiTenancyEnabled)
         {
             app.UseMultiTenancy();
         }

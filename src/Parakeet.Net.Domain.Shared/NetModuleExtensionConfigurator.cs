@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Identity;
-using Volo.Abp.ObjectExtending;
+﻿using Common.Storage;
+using Serilog;
 using Volo.Abp.Threading;
 
 namespace Parakeet.Net;
@@ -13,6 +12,7 @@ public static class NetModuleExtensionConfigurator
     {
         OneTimeRunner.Run(() =>
         {
+            Log.Error($"{{0}}", $"{CacheKeys.LogCount++}、NetModuleExtensionConfigurator OneTimeRunner 委托....");
             ConfigureExistingProperties();
             ConfigureExtraProperties();
         });

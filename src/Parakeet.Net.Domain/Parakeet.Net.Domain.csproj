@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Volo.Abp.Emailing" Version="8.0.4" />
     <PackageReference Include="Volo.Abp.Identity.Domain" Version="8.0.4" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="8.0.4" />
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common.Entities\Common.Entities.csproj" />
+    <ProjectReference Include="..\..\..\Common\Core\Common.CacheMudule\Common.CacheMudule.csproj" />
     <ProjectReference Include="..\Parakeet.Net.Domain.Shared\Parakeet.Net.Domain.Shared.csproj" />
   </ItemGroup>
 

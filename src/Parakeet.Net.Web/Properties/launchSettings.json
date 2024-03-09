@@ -20,7 +20,13 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44363",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AppName": "parakeet",
+        "SelfUrl": "https://localhost:44363",
+        "DATABASE_TYPE": "3",
+        "DATABASE_CONNECTION_STRING": "host=localhost;port=5432;database=parakeet2024;userid=postgres;pwd=123456;",
+        "CSREDISCONFIGURATIONBASE": "localhost:6379,password=,prefix=iot",
+        "STACKREDISCONN": "127.0.0.1:6379"
       }
     }
   }

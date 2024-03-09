@@ -6,5 +6,5 @@ namespace Parakeet.Net.Web;
 [Dependency(ReplaceServices = true)]
 public class NetBrandingProvider : DefaultBrandingProvider
 {
-    public override string AppName => "Net";
+    public override string AppName => "parakeet";
 }

@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.RabbitMQModule", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.TcpMudule", "..\Common\Core\Common.TcpMudule\Common.TcpMudule.csproj", "{D1EE0B15-A2A4-43B3-A5FC-100F6551FA90}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parakeet.Net.MultiTenancy", "src\Parakeet.Net.MultiTenancy\Parakeet.Net.MultiTenancy.csproj", "{B1745BFC-3BD1-476E-9539-288225BF4527}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +151,10 @@ Global
 		{D1EE0B15-A2A4-43B3-A5FC-100F6551FA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1EE0B15-A2A4-43B3-A5FC-100F6551FA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1EE0B15-A2A4-43B3-A5FC-100F6551FA90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1745BFC-3BD1-476E-9539-288225BF4527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1745BFC-3BD1-476E-9539-288225BF4527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1745BFC-3BD1-476E-9539-288225BF4527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1745BFC-3BD1-476E-9539-288225BF4527}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,6 +184,7 @@ Global
 		{8E0B18C6-BC72-4EDC-9758-31131C1C0220} = {22018BCE-F76E-476E-9255-A072D12B11DA}
 		{9B3BE4BC-0A70-40CC-BD39-83E0C8DE5A7F} = {22018BCE-F76E-476E-9255-A072D12B11DA}
 		{D1EE0B15-A2A4-43B3-A5FC-100F6551FA90} = {22018BCE-F76E-476E-9255-A072D12B11DA}
+		{B1745BFC-3BD1-476E-9539-288225BF4527} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

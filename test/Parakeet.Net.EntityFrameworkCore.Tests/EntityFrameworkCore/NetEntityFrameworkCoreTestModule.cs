@@ -62,11 +62,11 @@ public class NetEntityFrameworkCoreTestModule : AbpModule
         var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
 
-        var options = new DbContextOptionsBuilder<SqlServerDbContext>()
+        var options = new DbContextOptionsBuilder<NetDbContext>()
             .UseSqlite(connection)
             .Options;
 
-        using (var context = new SqlServerDbContext(options))
+        using (var context = new NetDbContext(options))
         {
             context.GetService<IRelationalDatabaseCreator>().CreateTables();
         }

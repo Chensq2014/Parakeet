@@ -19,7 +19,7 @@ public static class NetGlobalFeatureConfigurator
              * Please refer to the documentation to lear more about the Global Features System:
              * https://docs.abp.io/en/abp/latest/Global-Features
              */
-            Log.Error($"{{0}}", $"{CacheKeys.LogCount++}、NetGlobalFeatureConfigurator OneTimeRunner委托....");
+            Log.Debug($"{{0}}", $"{CacheKeys.LogCount++}、NetGlobalFeatureConfigurator OneTimeRunner委托....");
         });
     }
 }

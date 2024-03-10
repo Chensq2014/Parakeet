@@ -1,18 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Parakeet.Net.Data;
+using System;
+using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.EntityFrameworkCore;
 
-public class EntityFrameworkCoreNetDbSchemaMigrator
+public class SqlServerSchemaMigrator
     : INetDbSchemaMigrator, ITransientDependency
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public EntityFrameworkCoreNetDbSchemaMigrator(
+    public SqlServerSchemaMigrator(
         IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -27,7 +27,7 @@ public class EntityFrameworkCoreNetDbSchemaMigrator
          */
 
         await _serviceProvider
-            .GetRequiredService<SqlServerDbContext>()
+            .GetRequiredService<SqlServerMigrationsDbContext>()
             .Database
             .MigrateAsync();
     }

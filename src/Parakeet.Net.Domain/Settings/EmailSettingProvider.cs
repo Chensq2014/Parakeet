@@ -57,7 +57,7 @@ public class EmailSettingProvider : SettingDefinitionProvider
         //    "Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
         //    "Smtp.Port": "587", //"465", //
         //    "Smtp.UserName": "chensq0523@foxmail.com",
-        //    "Smtp.Password": "cqcxtfqmunlrddbc",
+        //    "Smtp.Password": "",
         //    "Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
         //    "Smtp.UseDefaultCredentials": "fasle",
         //    "Abp.Mailing.DefaultFromAddress": "chensq0523@foxmail.com",
@@ -65,7 +65,7 @@ public class EmailSettingProvider : SettingDefinitionProvider
         //    "Abp.Mailing.Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
         //    "Abp.Mailing.Smtp.Port": "587", //"465", //
         //    "Abp.Mailing.Smtp.UserName": "chensq0523@foxmail.com", //"chenshuangquan@xywgzs1.onexmail.com",
-        //    "Abp.Mailing.Smtp.Password": "cqcxtfqmunlrddbc",
+        //    "Abp.Mailing.Smtp.Password": "",
         //    "Abp.Mailing.Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
         //    "Abp.Mailing.Smtp.UseDefaultCredentials": "false"
         //},

@@ -23,6 +23,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "AppName": "parakeet",
         "SelfUrl": "https://localhost:44363",
+        "GUID_TYPE": "0",
         "DATABASE_TYPE": "3",
         "DATABASE_CONNECTION_STRING": "host=localhost;port=5432;database=parakeet2024;userid=postgres;pwd=123456;",
         "CSREDISCONFIGURATIONBASE": "localhost:6379,password=,prefix=iot",

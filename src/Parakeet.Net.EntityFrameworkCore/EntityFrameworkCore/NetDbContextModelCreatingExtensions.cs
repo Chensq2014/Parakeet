@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.CustomAttributes;
 using Common.Entities;
-using Common.Entities.Devices;
 using Common.Enums;
 using Common.Extensions;
 using JetBrains.Annotations;

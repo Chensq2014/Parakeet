@@ -1,5 +1,5 @@
 ﻿using Common.Cache;
-using Common.Entities.Devices;
+using Common.Entities;
 using Common.Storage;
 using EasyCaching.Core;
 using Microsoft.EntityFrameworkCore;

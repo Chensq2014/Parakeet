@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
-using Common.Entities.Devices;
 using Parakeet.Net.Caches;
 using Volo.Abp;
 using Volo.Abp.Modularity;

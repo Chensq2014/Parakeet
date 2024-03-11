@@ -24,6 +24,7 @@ namespace Parakeet.Net.EntityFrameworkCore;
 
 [DependsOn(
     typeof(NetDomainModule),
+    typeof(NetMultiTenancyModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpOpenIddictEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),

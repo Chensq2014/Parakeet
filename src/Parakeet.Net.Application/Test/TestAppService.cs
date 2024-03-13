@@ -6,7 +6,7 @@
 //using Microsoft.Extensions.Hosting;
 //using Microsoft.Extensions.Logging;
 //using Parakeet.Net.CustomAttributes;
-//using Parakeet.Net.Helper;
+//using Common.Helpers;
 //using Parakeet.Net.Permissions;
 //using Parakeet.Net.RabbitMQModule.Core;
 //using Parakeet.Net.RabbitMQModule.Producers;

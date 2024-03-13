@@ -1,7 +1,7 @@
 ﻿//using Microsoft.Extensions.Logging;
 //using Microsoft.Extensions.Options;
 //using Parakeet.Net.Extensions;
-//using Parakeet.Net.Helper;
+//using Common.Helpers;
 //using System.Text;
 //using System.Threading.Tasks;
 //using Volo.Abp;

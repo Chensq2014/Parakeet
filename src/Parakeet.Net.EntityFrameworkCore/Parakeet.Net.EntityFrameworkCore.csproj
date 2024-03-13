@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
     <ProjectReference Include="..\Parakeet.Net.Domain\Parakeet.Net.Domain.csproj" />
     <ProjectReference Include="..\Parakeet.Net.MultiTenancy\Parakeet.Net.MultiTenancy.csproj" />
     <PackageReference Include="EFCore.BulkExtensions" Version="8.0.2" />

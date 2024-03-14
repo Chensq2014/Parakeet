@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Common;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -11,6 +12,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Parakeet.Net;
 
 [DependsOn(
+    typeof(CommonSharedModule),
     typeof(NetApplicationContractsModule),
     typeof(AbpAccountHttpApiClientModule),
     typeof(AbpIdentityHttpApiClientModule),
@@ -21,7 +23,7 @@ namespace Parakeet.Net;
 )]
 public class NetHttpApiClientModule : AbpModule
 {
-    public const string RemoteServiceName = "Default";
+    public const string RemoteServiceName = "parakeet";
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

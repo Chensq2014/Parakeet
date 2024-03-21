@@ -1,5 +1,7 @@
 ﻿using Common.Dtos;
 using System.Collections.Generic;
+using Common.EnumServices;
+using Common.Interfaces;
 
 namespace Parakeet.Net.EnumServices
 {

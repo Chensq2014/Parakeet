@@ -50,3 +50,28 @@ vim /etc/nginx/conf.d/xxx.xxx.com.conf
 nginx -s reload
 
 
+
+# Abp.Cli 安装及创建项目示例
+dotnet tool update -g Volo.Abp.Cli
+
+abp new Parakeet.Net -dbms PostgreSQL --tiered -csf  --version 6.0.2
+
+abp new DataProcess -t app-nolayers -csf --version 6.0.2
+
+abp new DataProcess -t module -csf --version 6.0.2
+
+abp new DataProcess-t module --no-ui -csf --version 6.0.2
+
+abp new DataProcess -t app-nolayers --theme basic -csf --version 6.0.2
+
+
+
+# Abp.Cli如果装错了，可以移除cli工具，再重新装指定版本
+abp cli remove
+dotnet tool install -g Volo.Abp.Cli --version 6.0.2
+
+# Abp.Cli 命令行 安装libs前端皮肤插件依赖
+abp install-libs --version 6.0.2
+会自动把最小依赖安装包自动安装到 /wwwroot/libs 目录下
+或者直接去源码测试项目路径找：abp\framework\test\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Demo\wwwroot\libs
+

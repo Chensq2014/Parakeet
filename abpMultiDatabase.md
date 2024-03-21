@@ -21,8 +21,13 @@ ABP定义了 IConnectionStringResolver,并在需要连接字符串时使用它. 
     • MultiTenantConnectionStringResolver 用于多租户应用程序,并尝试获取当前租户的已配置连接字符串(如果有). 它使用 ITenantStore 查找连接字符串. 它继承了 DefaultConnectionStringResolver, 如果没有为当前租户指定连接字符串则回退到基本逻辑.
 如果需要自定义逻辑来确定连接字符串,可以实现 IConnectionStringResolver 接口(也可以从现有类派生)并使用依赖注入系统替换现有实现.
 
-### 两个数据库：
+
+### 数据库：TenantDbContext
 add-migration InitTenantDb -c TenantDbContext -o Migrations/TenantlMigrations
+Script-Migration -From "[migration_pre文件名]" -To "[migration_next文件名]" -context TenantDbContext
 update-database -context TenantDbContext
+
+### 数据库：ProjectDbContext
 add-migration InitProjectDb -c ProjectDbContext -o Migrations/ProjectMigrations
+Script-Migration -From "[migration_pre文件名]" -To "[migration_next文件名]" -context ProjectDbContext
 update-database -context ProjectDbContext

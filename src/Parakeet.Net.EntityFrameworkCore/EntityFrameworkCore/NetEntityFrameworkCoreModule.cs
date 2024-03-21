@@ -125,6 +125,14 @@ public class NetEntityFrameworkCoreModule : AbpModule
              * default repositories only for aggregate roots */
             options.AddDefaultRepositories(includeAllEntities: true);
         });
+        context.Services.AddAbpDbContext<SqlServerMigrationsDbContext>(options =>
+        {
+            Log.Error($"{{0}}",
+                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(SqlServerMigrationsDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            /* Remove "includeAllEntities: true" to create
+             * default repositories only for aggregate roots */
+            options.AddDefaultRepositories(includeAllEntities: true);
+        });
         context.Services.AddAbpDbContext<MySqlMigrationsDbContext>(options =>
         {
             Log.Error($"{{0}}",
@@ -137,14 +145,6 @@ public class NetEntityFrameworkCoreModule : AbpModule
         {
             Log.Error($"{{0}}",
                 $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(PgSqlMigrationsDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-            /* Remove "includeAllEntities: true" to create
-             * default repositories only for aggregate roots */
-            options.AddDefaultRepositories(includeAllEntities: true);
-        });
-        context.Services.AddAbpDbContext<SqlServerMigrationsDbContext>(options =>
-        {
-            Log.Error($"{{0}}",
-                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(SqlServerMigrationsDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             /* Remove "includeAllEntities: true" to create
              * default repositories only for aggregate roots */
             options.AddDefaultRepositories(includeAllEntities: true);

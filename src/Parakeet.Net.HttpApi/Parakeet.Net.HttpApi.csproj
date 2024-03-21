@@ -7,8 +7,10 @@
 	  <RootNamespace>Parakeet.Net</RootNamespace>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\Parakeet.Net.Application\Parakeet.Net.Application.csproj" />
+    <ProjectReference Include="..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
+	<ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

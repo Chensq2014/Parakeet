@@ -117,7 +117,7 @@ public class NetWebModule : AbpModule
     {
         Configure<AbpDistributedCacheOptions>(options =>
         {
-            options.KeyPrefix = "Net:";
+            options.KeyPrefix = "net:";
         });
     }
 
@@ -165,7 +165,7 @@ public class NetWebModule : AbpModule
                 options.Scope.Add("roles");
                 options.Scope.Add("email");
                 options.Scope.Add("phone");
-                options.Scope.Add("Net");
+                options.Scope.Add("parakeet");
             });
             /*
             * This configuration is used when the AuthServer is running on the internal network such as docker or k8s.
@@ -221,7 +221,7 @@ public class NetWebModule : AbpModule
     {
         Configure<AbpAutoMapperOptions>(options =>
         {
-            options.AddMaps<NetWebModule>();
+            options.AddMaps<NetWebModule>(true);
         });
     }
 
@@ -256,7 +256,7 @@ public class NetWebModule : AbpModule
         services.AddAbpSwaggerGen(
             options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Net API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             }
@@ -268,11 +268,11 @@ public class NetWebModule : AbpModule
         IConfiguration configuration,
         IWebHostEnvironment hostingEnvironment)
     {
-        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Net");
+        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
             var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
-            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Net-Protection-Keys");
+            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         }
     }
 
@@ -319,7 +319,7 @@ public class NetWebModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Net API");
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Parakeet API");
         });
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();

@@ -270,3 +270,6 @@ src/Parakeet.Net.Blazor.Server.Tiered/Logs/*
 /src/Parakeet.Net.AuthServer/appsettings.Development.json
 /src/Parakeet.Net.HttpApi.Host/appsettings.json
 /src/Parakeet.Net.HttpApi.Host/appsettings.Development.json
+/src/Grpc/GrpcServers/Reverse/Parakeet.Net.ROServer/Certs/reverse.spdyun.cn.crt
+/src/Grpc/GrpcServers/Reverse/Parakeet.Net.ROServer/Certs/reverse.spdyun.cn.key
+/src/Grpc/GrpcServers/Reverse/Parakeet.Net.ROServer/appsettings.json

@@ -1,4 +1,6 @@
-﻿using Volo.Abp.Domain.Services;
+﻿using Microsoft.Extensions.Options;
+using Volo.Abp.Domain.Services;
+using Volo.Abp.Guids;
 
 namespace Parakeet.Net.Services
 {
@@ -7,5 +9,8 @@ namespace Parakeet.Net.Services
     /// </summary>
     public class NetDomainServiceBase : DomainService
     {
+        //protected IOptions<AbpSequentialGuidGeneratorOptions> SequentialGuidGeneratorOptions => LazyServiceProvider.LazyGetService<IOptions<AbpSequentialGuidGeneratorOptions>>();
+        //protected IGuidGenerator SequentialGuidGenerator => LazyServiceProvider.LazyGetService<IGuidGenerator>(new SequentialGuidGenerator(SequentialGuidGeneratorOptions));
+
     }
 }

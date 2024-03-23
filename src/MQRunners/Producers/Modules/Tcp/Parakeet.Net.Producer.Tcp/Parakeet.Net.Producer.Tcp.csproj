@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\..\..\..\..\..\Common\Config\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<RootNamespace>Parakeet.Net.Producer.Tcp</RootNamespace>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>..\..\..\Parakeet.Net.TcpHost\bin\Debug\net8.0\Plugins</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>..\..\..\Parakeet.Net.TcpHost\bin\Release\net8.0\Plugins</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\..\..\..\Common\Core\Common.TcpMudule\Common.TcpMudule.csproj" />
+		<ProjectReference Include="..\..\..\Parakeet.Net.Producer\Parakeet.Net.Producer.csproj" />
+	</ItemGroup>
+</Project>

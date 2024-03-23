@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\..\..\..\Common\Config\common.props" />
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+		<RootNamespace>Parakeet.Net.ROClient</RootNamespace>
+		<Version>1.0.0</Version>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<Authors>Parakeet</Authors>
+		<Company>Parakeet</Company>
+		<Product>Parakeet.IOT</Product>
+		<LangVersion>8.0</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+		<DocumentationFile>Parakeet.Net.ROClient.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="Grpc.Net.Client" Version="2.33.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Parakeet.Net.ROClient.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Parakeet.Net.ROClient.xml">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.19.3" />
+		<PackageReference Include="Grpc" Version="2.33.1" />
+		<PackageReference Include="Grpc.Core" Version="2.33.1" />
+		<PackageReference Include="Grpc.Tools" Version="2.33.1" PrivateAssets="All" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="..\..\Protos\Reverse.proto" Link="Protos\Reverse.proto" GrpcServices="Client" />
+	</ItemGroup>
+</Project>

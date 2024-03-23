@@ -74,11 +74,11 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //但测试AutoRepositoryTypes属性添加后运行错误,仍然需要在模块中显示注册
 
         //IocManager.IocContainer.Register(Component.For(typeof(INetCoreRepository<>))
-        //    .ImplementedBy(typeof(NetCoreRepositoryBase<>)).LifestyleTransient());
+        //    .ImplementedBy(typeof(NetRepositoryBase<>)).LifestyleTransient());
         //IocManager.IocContainer.Register(Component.For(typeof(INetCoreRepository<,>))
-        //    .ImplementedBy(typeof(NetCoreRepositoryBase<,>)).LifestyleTransient());
+        //    .ImplementedBy(typeof(NetRepositoryBase<,>)).LifestyleTransient());
         ////IocManager.IocContainer.Register(
-        ////    Classes.FromAssembly(typeof(NetCoreEntityFrameworkModule).GetAssembly())//这种方式注入有bug
+        ////    Classes.FromAssembly(typeof(NetEntityFrameworkModule).GetAssembly())//这种方式注入有bug
         ////        //.IncludeNonPublicTypes()
         ////        .BasedOn<IRepository>()
         ////        //.If(type => type.GetTypeInfo().Namespace == typeof(INetCoreRepository<>).GetTypeInfo().Namespace
@@ -90,9 +90,9 @@ public class NetEntityFrameworkCoreModule : AbpModule
 
         //查看源码，仓储的注册使用的是如下方法，但必须指定类型才可以
         //context.Services.AddDefaultRepository(typeof(INetCoreRepository<>), 
-        //    EntityHelper.FindPrimaryKeyType(typeof(NetCoreRepositoryBase<>)));
+        //    EntityHelper.FindPrimaryKeyType(typeof(NetRepositoryBase<>)));
         //context.Services.AddDefaultRepository(typeof(INetCoreRepository<,>), 
-        //    EntityHelper.FindPrimaryKeyType(typeof(NetCoreRepositoryBase<,>)));
+        //    EntityHelper.FindPrimaryKeyType(typeof(NetRepositoryBase<,>)));
 
         //vnext版本直接这样在容器里直接注册 
         context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
@@ -206,7 +206,7 @@ public class NetEntityFrameworkCoreModule : AbpModule
 
         #region 缓存放入domain层注册
 
-        //Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、{nameof(NetCoreEntityFrameworkCoreModule)} 注册IFreeSql、ICacheContainer、DevicePool....");
+        //Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、{nameof(NetEntityFrameworkCoreModule)} 注册IFreeSql、ICacheContainer、DevicePool....");
 
         ////注册freeSql、ICacheContainer、 DevicePool高速缓存单例
         //var dbConnectionString = context.Services.GetConfiguration()

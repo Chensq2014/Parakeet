@@ -15,6 +15,7 @@ using Common.Extensions;
 using Common.ValueObjects;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Guids;
 
 namespace Parakeet.Net.Projects
 {
@@ -202,6 +203,25 @@ namespace Parakeet.Net.Projects
                 .ProjectTo<ProjectAttachmentDto>(Configuration)
                 .ToListAsync();
             return result;
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Guid> Test()
+        {
+            var guid = GuidGenerator.Create();
+            if (GuidGenerator is SequentialGuidGenerator)
+            {
+                Console.WriteLine($"{nameof(SequentialGuidGenerator)}");
+            }
+            if (GuidGenerator is SimpleGuidGenerator)
+            {
+                Console.WriteLine($"{nameof(SimpleGuidGenerator)}");
+            }
+
+            return guid;
         }
     }
 }

@@ -252,24 +252,15 @@ paket-files/
 *.sln.iml
 
 # Net
-src/Parakeet.Net.Web/Logs/*
-src/Parakeet.Net.Web/Logs/*
-src/Parakeet.Net.AuthServer/Logs/*
-src/Parakeet.Net.HttpApi.Host/Logs/*
-src/Parakeet.Net.HttpApi.HostWithIds/Logs/*
-src/Parakeet.Net.DbMigrator/Logs/*
-src/Parakeet.Net.Blazor.Server/Logs/*
-src/Parakeet.Net.Blazor.Server.Tiered/Logs/*
+**/Logs/*
 
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
-/src/Parakeet.Net.Web/appsettings.json
-/src/Parakeet.Net.Web/appsettings.Development.json
-/src/Parakeet.Net.DbMigrator/appsettings.json
-/src/Parakeet.Net.AuthServer/appsettings.json
-/src/Parakeet.Net.AuthServer/appsettings.Development.json
-/src/Parakeet.Net.HttpApi.Host/appsettings.json
-/src/Parakeet.Net.HttpApi.Host/appsettings.Development.json
-/src/Grpc/GrpcServers/Reverse/Parakeet.Net.ROServer/Certs/reverse.spdyun.cn.crt
-/src/Grpc/GrpcServers/Reverse/Parakeet.Net.ROServer/Certs/reverse.spdyun.cn.key
-/src/Grpc/GrpcServers/Reverse/Parakeet.Net.ROServer/appsettings.json
+**/appsettings.json
+**/appsettings.Development.json
+**/appsettings.Test.json
+**/appsettings.Staging.json
+**/appsettings.Production.json
+**/*.crt
+**/*.key
+**/*.rsa

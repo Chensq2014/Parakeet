@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Common;
@@ -67,12 +68,36 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp.Data;
 using Volo.Abp.Threading;
+using System.Linq;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.ResponseCaching;
+using Polly;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
+using Grpc.Core;
+using Grpc.Net.ClientFactory;
+using Microsoft.Extensions.Logging;
+using Parakeet.Net.Aop;
+using Parakeet.Net.Extentions;
+using Parakeet.Net.GrpcLessonServer;
+using Parakeet.Net.GrpcService;
+using Parakeet.Net.ServiceGroup;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Parakeet.Net.Extensions;
 
 namespace Parakeet.Net.Web;
 
 [DependsOn(
     typeof(NetHttpApiClientModule),
     typeof(NetHttpApiModule),
+    typeof(NetApplicationModule),
     typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
     typeof(AbpAspNetCoreMvcClientModule),
     typeof(AbpHttpClientWebModule),
@@ -104,32 +129,47 @@ public class NetWebModule : AbpModule
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} Start ConfigureServices ....");
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
 
-        ConfigureBundles();
-        ConfigureCache();
+        ConfigureBundles();//mvc前端配置压缩的资源bundles
+        ConfigureCache(context);//配置缓存和Redis 在domain模块已配置
+        ConfigureFilters(context);//mvc的全局filter统一配置 AddMvc
         ConfigureDataProtection(context, configuration, hostingEnvironment);
         ConfigureDistributedLocking(context, configuration);
         ConfigureUrls(configuration);
-        ConfigureAuthentication(context, configuration);
+        ConfigureAuthentication(context);//配置鉴权
+        ConfigureAuthorization(context);//配置授权
         ConfigureAutoMapper();
         ConfigureVirtualFileSystem(hostingEnvironment);
         ConfigureNavigationServices(configuration);
-        ConfigureMultiTenancy();
-        ConfigureSwaggerServices(context.Services);
+        ConfigureGrpcs(context);
+        //ConfigureMultiTenancy();//放在NetMultiTenancyModule里面
+        ConfigureSwaggerServices(context);//配置swagger
 
         ConfigCookie(context);
+        ConfigSession(context);
+        ConfigureCors(context); //配置跨域
         ConfigureHsts(context);
         ConfigureHttpPolly(context);
         ConfigureCompressServices(context);
         ConfigureLocalizationServices();
         ConfigureAbpAntiForgerys();
 
-        //context.Services.AddBrowserFilter();
-        //context.Services.AddMiddlewareFactory();
-        //context.Services.AddInheritedMiddleware();
-        //context.Services.AddSession();
+        if (!hostingEnvironment.IsDevelopment())
+        {
+            //https 需要增加443端口
+            //context.Services.AddHttpsRedirection(option => option.HttpsPort = 443);
+            //ConfigurHsts(context);
+        }
+        //context.Services.AddControllersWithViews()//反射收集dll-控制器--action--PartManager
+        //    .AddNewtonsoftJson();
+
+        Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、AddDirectoryBrowser:配置允许指定的目录浏览 AddRazorPages:支持Razor 的Pages view模式....ConfigureServices中的流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        context.Services.AddDirectoryBrowser();//允许指定的目录浏览
+
+
         //Configure<AbpAuditingOptions>(options =>
         //{
         //    //options.IsEnabledForGetRequests = true;
@@ -140,14 +180,127 @@ public class NetWebModule : AbpModule
         //    options.IsJobExecutionEnabled = false;
         //});
 
+        //AddControllersWithViews/AddRazorPages/AddControllersCore-->AddMvcCore/AddAuthorization(包含了授权的服务注册)
+        //AddAuthorization-->AddAuthorizationCore、AddAuthorizationPolicyEvaluator
+        //AddAuthorizationCore-->注册IAuthorizationService、IAuthorizationHandler....
+        context.Services.AddRazorPages(options =>
+        {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddRazorPages (参数委托)配置{nameof(RazorPagesOptions)},【MVC流程日志：1、ConfigreServices最后的流程AddRazorPages，开始MVC资源及配置】AddRazorPages-->AddMvcCore/-->ApplicationPartManager(一次性加载当前及关联的所有终结点(Action/Controller)所在程序集dll，准备好控制器提供器，完成MVC处理动作初始化，包括Controller-Action,为中间件UseRouting 匹配路由做准备)...ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+
+        })//支持Razor 的Pages view模式
+          //.AddNewtonsoftJson(options =>
+          //{
+          //    Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddNewtonsoftJson {nameof(MvcNewtonsoftJsonOptions)} 设置 返回数据给前端序列化时key为驼峰样式,时区 日期格式 空对象处理，忽略循环引用等配置...ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+          //    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); //序列化时key为驼峰样式
+          //    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+          //    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+          //    options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
+          //    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;//忽略循环引用
+          //})
+            .AddJsonOptions(options =>
+            {
+                Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddJsonOptions {nameof(JsonOptions)} 设置 返回数据给前端序列化时key为驼峰样式,时区 日期格式 空对象处理，忽略循环引用等配置...ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+                //options.JsonSerializerOptions.MaxDepth = 2;
+                //options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
+                //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;//序列化后驼峰命名规则
+                //options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            })
+            .AddRazorRuntimeCompilation();//修改cshtml后能自动编译
+          //context.Services.AddControllers(options =>
+          //    {
+          //        var jsonInputFormatter = options.InputFormatters
+          //            .OfType<Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonInputFormatter>()
+          //            .First();
+          //        jsonInputFormatter.SupportedMediaTypes.Add("multipart/form-data; boundary=*");
+          //    }
+          //);
+
+        //AddControllersWithViews-->AddControllersCore->AddMvcCore/AddAuthorization(包含了授权的服务注册)
+        //context.Services.AddControllersWithViews(
+        //    options =>
+        //    {
+        //        options.Filters.Add<CustomExceptionFilterAttribute>();//全局注册
+        //        options.Filters.Add<CustomGlobalActionFilterAttribute>();
+        //    })
+        //    .AddNewtonsoftJson(options =>
+        //        {
+        //            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); //序列化时key为驼峰样式
+        //            options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+        //            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        //            options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
+        //            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;//忽略循环引用
+        //        })
+        //    .AddRazorRuntimeCompilation();//修改cshtml后能自动编译
+
+
+        #region 参数验证自定义和mvc过滤器
+
+        ////禁用ModelState默认行为 覆盖ModelState管理的默认行为
+        //context.Services.Configure<ApiBehaviorOptions>(options =>
+        //{
+        //    //第一种方案：符合Framework时代的风格，需要额外在指定覆盖原有的模型验证
+        //    //options.SuppressModelStateInvalidFilter = true;
+        //    //官方建议做法，符合Core时代的风格，只需复写InvalidModelStateResponseFactory委托即可
+        //    options.InvalidModelStateResponseFactory = (context) =>
+        //    {
+        //        var error = context.ModelState.GetValidationSummary();
+        //        return new JsonResult(Result.FromError($"参数验证不通过：{error.ToString()}", ResultCode.InvalidParams));
+        //    };
+        //});
+
+        ////老版本需要账号密码登录设置的全局过滤器 使用identityserver后不再需要
+        //context.Services.AddMvc(o =>
+        //{
+        //    //o.Filters.Add<CustomExceptionFilterAttribute>();//异常处理全局filter
+        //    //o.Filters.Add(typeof(CustomGlobalActionFilterAttribute));//全局注册filter
+        //    o.Filters.Add(typeof(CustomAuthorityActionFilterAttribute)); //Mvc5 全局权限验证 (项目搬迁)
+        //});
+
+        #endregion
+
+        //ConfigureDbContext(context);//可以单独配置本Module的dbcontext及连接字符串
+
+
+        //ConfigurePlugins(context);
+
+
+        #region HttpClient请求Policy配置
+        ConfigureHttpPolly(context);
+        #endregion
+
+        #region 标准中间件注册option套路
+
+        ////context.Services.AddBrowserFilter();//无option注册
+        //context.Services.AddBrowserFilter(option =>
+        //{
+        //    //option.EnableIE = false;
+        //    //option.EnableEdge = false;
+        //    //option.EnableChorme = false;
+        //    option.EnableFirefox = true;
+        //});//option委托1
+
+        //context.Services.AddBrowserFilter(option =>
+        //{
+        //    option.EnableIE = true;
+        //    option.EnableEdge = true;
+        //    option.EnableChorme = true;
+        //    option.EnableFirefox = true;
+        //});//option委托2
+
+        //context.Services.AddMiddlewareFactory();
+        //context.Services.AddInheritedMiddleware();
+
+        #endregion
+
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End ConfigureServices ....");
+        //设置一个全局的解析Provider提供器，使用的地方不再依赖注入 待测试
+
     }
 
     #region 所有配置项
 
     private void ConfigureBundles()
     {
-
-
         Configure<AbpBundlingOptions>(options =>
         {
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpBundlingOptions)} ScriptBundles:{LeptonXLiteThemeBundles.Styles.Global},StyleBundles:{LeptonXLiteThemeBundles.Scripts.Global}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
@@ -197,32 +350,274 @@ public class NetWebModule : AbpModule
         });
     }
 
-    private void ConfigureCache()
+    /// <summary>
+    /// 配置分布式缓存，Redis缓存连接字符串,前缀等
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigureCache(ServiceConfigurationContext context)
     {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureCache...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //var configuration = context.Services.GetConfiguration();
+        //var hostingEnvironment = context.Services.GetHostingEnvironment();
+
         Configure<AbpDistributedCacheOptions>(options =>
         {
             options.KeyPrefix = "net:";
+        });
+
+        #region Redis 缓存已放入领域层
+
+
+        #region Caching.CSRedis 跟StackExchangeRedis 做的事情一样 
+
+        //Log.Logger.Information($"配置Caching.CSRedis(跟StackExchangeRedis 做的事情一样)....");
+        //Microsoft.Extensions.Caching.Redis--CSRedisCore   
+        //Microsoft.AspNetCore.DataProtection.StackExchangeRedis  使用这个便于配置
+
+
+
+        //缓存已放入领域层先执行,这里是外层模块后执行
+        //context.Services.AddStackExchangeRedisCache();
+        //context.Services.AddCachePool();//包含 context.Services.AddCsRedisCache();
+        //context.Services.ConfigAbpDistributeCacheOptions();
+
+        #endregion
+
+
+        #region 老版本
+
+        //Configuration.Caching.UseRedis(options =>
+        //{
+        //    options.ConnectionString = configuration["Abp:RedisCache:ConnectionStrings"];
+        //    options.DatabaseId = Convert.ToInt32(configuration["Abp:RedisCache:DatabaseId"]);
+        //});
+        //Configuration.Caching.ConfigureAll(cache =>
+        //{
+        //    //缓存默认过期时间设置为2h
+        //    cache.DefaultSlidingExpireTime = TimeSpan.FromHours(2);
+        //});
+        ////用户个性签名验证码等缓存5分钟
+        //Configuration.Caching.Configure(CustomerConsts.PersonalCaches, cache =>
+        //{
+        //    cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(5);
+        //});
+
+        #endregion
+
+        #endregion
+
+        context.Services.AddResponseCaching(options =>
+        {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddResponseCaching参数委托配置{nameof(ResponseCachingOptions)} (客户端同一请求应答缓存,暂测无效)....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        });
+
+        //if (!hostingEnvironment.IsDevelopment())
+        //{
+        //    var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+        //    context.Services
+        //        .AddDataProtection()
+        //        .PersistKeysToStackExchangeRedis(redis, "NetCore-Protection-Keys");
+        //}
+    }
+
+
+    private void ConfigureFilters(ServiceConfigurationContext context)
+    {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureFilters...ConfigureServices中的流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //mvc全局过滤器
+        context.Services.AddMvc(options =>
+        {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddMvc配置{nameof(MvcOptions)} mvc全局过滤器....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】  ");
+            //options.Filters.Add(typeof(AreaAttribute));
         });
     }
 
     private void ConfigureUrls(IConfiguration configuration)
     {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、配置{nameof(AppUrlOptions)}....ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         Configure<AppUrlOptions>(options =>
         {
+            Log.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AppUrlOptions)}  RootUrl={configuration["App:SelfUrl"]}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
         });
     }
 
     private void ConfigureMultiTenancy()
     {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureMultiTenancy...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         Configure<AbpMultiTenancyOptions>(options =>
         {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpMultiTenancyOptions)} 是否启用多租户配置:{CommonConsts.MultiTenancyEnabled}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             options.IsEnabled = CommonConsts.MultiTenancyEnabled;
         });
     }
 
-    private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
+
+    /// <summary>
+    /// Authentication认证
+    /// 通过添加AddAuthentication注册了AuthenticationService, AuthenticationHandlerProvider,AuthenticationSchemeProvider
+    /// 
+    /// 配置权限使用IdentityServer，IdentityServer服务器地址，
+    /// 注册到 ApiName到IdentityServer服务器
+    ///
+    ///
+    /// jwt   https://jwt.io/   debugger
+    /// 通过加密算法来建立信任 HS256(对称) RS256(非对称)
+    /// 其实还是那套东西
+    /// 1、登录写入凭证
+    /// 2、鉴权就是找出用户
+    /// 3、授权就是判断权限
+    /// 4、退出就是清理凭证
+    /// 
+    /// 鉴权授权里面，是通过AuthenticationHttpContextExtensions的5个方法—
+    /// SignInAsync, AuthenticateAsync,ForbidAsync, ChallengeAsync, SignOutAsync【AuthenticationService的5个方法】
+    /// -其实最终还是要写cookie/session/信息
+    /// 
+    ///     都是调用的IAuthenticationService，ConfigureService注册
+    ///     AuthenticationCoreServiceCollectionExtensions.AddAuthenticationCore
+    ///         IAuthenticationService
+    ///         IAuthenticationHandlerProvider
+    ///         IAuthenticationSchemeProvider
+    /// 
+    /// 5个方法默认就在AuthenticationService，找handler完成处理
+    ///     造轮子
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigureAuthentication(ServiceConfigurationContext context)
     {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureAuthentication...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        var configuration = context.Services.GetConfiguration();
+
+        #region 客户端模式
+
+        //context.Services.AddIdentityServer() //定义处理规则
+        //    .AddDeveloperSigningCredential() //默认的开发者证书--临时证书--生产环境为了保证token不失效，证书是不变的
+        //    .AddInMemoryClients(ClientInitConfig.GetClients())
+        //    .AddInMemoryApiResources(ClientInitConfig.GetApiResources());
+
+        #endregion
+
+        #region 客户端 密码模式 注意 如果要给第三方使用token 就不要再AddCookie()【如果AddCookie 第三方Header里面就必须传递cookie】
+
+        ////通过添加AddAuthentication注册了AuthenticationService, AuthenticationHandlerProvider,AuthenticationSchemeProvider这三个对象
+        ////通过AddAuthentication返回的AuthenticationBuilder通过AddJwtBearer（或者AddCookie）
+        ////来指定Scheme类型和需要验证的参数,并指定了AuthenticationHandler
+        ////Bearer (scheme 策略名称)
+        ////IdentityServerAuthenticationDefaults.AuthenticationScheme CookieAuthenticationDefaults.AuthenticationScheme
+        //context.Services.AddAuthentication(options =>
+        //{
+        //    //注册Scheme：Bearer/Cookie
+        //    //options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        //    //options.DefaultChallengeScheme = "oidc";//OpenIdConnectDefaults.AuthenticationScheme
+        //})
+        //    //.AddJwtBearer(options =>//AddIdentityServerAuthentication已替换AddJwtBearer
+        //    //    {
+        //    //        options.Authority = context.Services.GetConfiguration()["AuthServer:Authority"];
+        //    //        options.RequireHttpsMetadata = false;
+        //    //        //options.Audience = configuration["AuthServer:ApiName"] ?? "parakeet";
+        //    //        options.TokenValidationParameters = new TokenValidationParameters
+        //    //        {
+        //    //            ValidateAudience = false
+        //    //        };
+        //    //    })
+        //    //.AddOpenIdConnect("oidc", options =>
+        //    //{
+        //    //    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        //    //    options.Authority = context.Services.GetConfiguration()["AuthServer:Authority"];
+        //    //    options.RequireHttpsMetadata = false;
+        //    //    options.ClientId = "DataCenterWebApp";
+        //    //    options.SaveTokens = true;
+        //    //})
+        //    .AddIdentityServerAuthentication(options =>//定义校验规则如何校验
+        //    {
+        //        Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddAuthentication AddIdentityServerAuthentication配置{nameof(IdentityServerAuthenticationOptions)} idserver4服务器授权地址:{configuration["AuthServer:Authority"]}Api:{configuration["AuthServer:ApiName"] ?? "parakeet"}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //        //idserver4授权地址(应该是获取公钥,还有自身api资源名称需要注册到ids4)
+        //        //声明自身服务器api资源名称(parakeet) 注册到ids4...(客户端请求ids时，ids返回token中就带有这个(parakeet作用域)信息)
+        //        options.Authority = configuration["AuthServer:Authority"];
+        //        options.RequireHttpsMetadata = false;
+        //        options.ApiName = configuration["AuthServer:ApiName"] ?? "parakeet";
+        //        options.JwtBackChannelHandler = new HttpClientHandler
+        //        {
+        //            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        //        };
+        //    });
+
+        #endregion
+
+        #region 最基础认证--自定义Handler 只要Scheme【解决方案不同】 就可以多个Scheme
+        //////services.AddAuthentication().AddCookie();-->
+        //////AddAuthentication()-->services.AddAuthenticationCore();//本质
+        //context.Services.AddAuthenticationCore(options => options.AddScheme<CustomHandler>("CustomScheme", "DemoScheme"));
+        #endregion
+
+        #region cookie方式验证 初始化登录地址与无权限时跳转地址
+
+        ////cookie方式验证 初始化登录地址与无权限时跳转地址
+        ////context.Services.AddAuthentication(defaultScheme: CookieAuthenticationDefaults.AuthenticationScheme);
+        //context.Services.AddAuthentication(options =>
+        //    {
+        //        //默认解决方案名称
+        //        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;//Scheme不能少
+        //        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        //        options.DefaultChallengeScheme = "Account/Login";
+        //    })
+        //    .AddCookie(authenticationScheme: CookieAuthenticationDefaults.AuthenticationScheme, configureOptions: options =>
+        //    {
+        //        //这里可以使用context.Services.BuildServiceProvider()
+        //        //是因为这是内部委托，已经是Build之后才会执行的代码了
+        //        Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddCookie配置{nameof(NetCoreWebModule)} AddAuthentication....AddCookie中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //        options.SessionStore = context.Services.BuildServiceProvider().GetRequiredService<ITicketStore>();
+        //        options.LoginPath = new PathString("/Account/Login");//登录地址
+        //        options.AccessDeniedPath = new PathString("/Account/Login");//未授权跳转地址
+
+        //        options.Events = new CookieAuthenticationEvents()
+        //        {
+        //            //扩展事件
+        //            OnSignedIn = new Func<CookieSignedInContext, Task>(
+        //                async ctx =>
+        //                {
+        //                    Console.WriteLine($"{ctx.Request.Path} is OnSignedIn");
+        //                    await Task.CompletedTask;
+        //                }),
+        //            OnSigningIn = async ctx =>
+        //            {
+        //                Console.WriteLine($"{ctx.Request.Path} is OnSigningIn");
+        //                await Task.CompletedTask;
+        //            },
+        //            OnSigningOut = async ctx =>
+        //            {
+        //                Console.WriteLine($"{ctx.Request.Path} is OnSigningOut");
+        //                await Task.CompletedTask;
+        //            }
+        //        };
+        //    });
+
+        //AddCookie 里面ITicketStore需先注入容器
+        //context.Services.AddScoped<ITicketStore, MemoryCacheTicketStore>();
+        ////context.Services.AddAuthorization(options =>
+        ////{
+        ////    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        ////        .RequireAuthenticatedUser()
+        ////        .Build();
+        ////});
+        #endregion
+
+        #region 回退策略FallbackPolicy 默认为 null
+
+        //// 未提供IAuthorizeData时CombineAsync(IAuthorizationPolicyProvider, IEnumerable<IAuthorizeData>)使用的回退授权策略。
+        //// 因此，如果资源没有IAuthorizeData实例，AuthorizationMiddleware 将使用回退策略。
+        //// 如果资源具有任何IAuthorizeData， 则将评估它们而不是回退策略。默认情况下，回退策略为 null，
+        //// 除非您的管道中有 AuthorizationMiddleware，否则通常不会产生任何影响。
+        //// 默认IAuthorizationService不以任何方式使用它。
+        //context.Services.AddAuthorization(options =>
+        //{
+        //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //        .RequireAuthenticatedUser()
+        //        .Build();
+        //});
+        #endregion
+
         context.Services.AddAuthentication(options =>
         {
             options.DefaultScheme = "Cookies";
@@ -301,6 +696,69 @@ public class NetWebModule : AbpModule
         });
     }
 
+
+    /// <summary>
+    /// 授权
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigureAuthorization(ServiceConfigurationContext context)
+    {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureAuthentication...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        var configuration = context.Services.GetConfiguration();
+
+        #region 最基础认证--自定义Handler 只要Scheme【解决方案不同】 就可以多个Scheme
+        ////services.AddAuthentication().AddCookie();-->
+        ////services.AddAuthenticationCore();//本质
+        //context.Services.AddAuthenticationCore(options => options.AddScheme<CustomHandler>("CustomScheme", "DemoScheme"));
+        #endregion
+
+
+        #region 授权:基于角色||策略授权
+
+        ////定义一个共用的policy
+        //var qqEmailPolicy = new AuthorizationPolicyBuilder().AddRequirements(new QQEmailRequirement("qqEmailPolicy")).Build();
+
+        context.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminPolicy",
+                policyBuilder => policyBuilder
+                .RequireRole("admin")//Claim的Role是Admin
+                .RequireUserName("parakeet")//Claim的Name是parakeet
+                .RequireClaim(ClaimTypes.Email)//必须有某个Cliam
+                //.Combine(qqEmailPolicy)
+                );//内置
+
+            options.AddPolicy("UserPolicy",
+                policyBuilder => policyBuilder.RequireAssertion(ctx =>
+                    ctx.User.HasClaim(c => c.Type == ClaimTypes.Role)
+                && ctx.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value == "admin")
+           //.Combine(qqEmailPolicy)
+           );//自定义
+             //policy层面  没有Requirements
+
+            //options.AddPolicy("QQEmail", policyBuilder => policyBuilder.Requirements.Add(new QQEmailRequirement("QQEmail")));
+            //options.AddPolicy("DoubleEmail", policyBuilder => policyBuilder.Requirements.Add(new DoubleEmailRequirement()));
+        });
+
+        ////父类为AuthorizationHandler<TRequirement>:IAuthorizationHandler，所以可以多次单例注册
+        ////可以试试 servicepProvider.GetService<IAuthorizationHandler>()能获取多少
+        //context.Services.AddSingleton<IAuthorizationHandler, OtherMailHandler>();
+        //context.Services.AddSingleton<IAuthorizationHandler, QQMailHandler>();
+
+        #endregion
+
+
+        //代码发布后，如通过代理服务器nginx等进行https->http中转,转发原始请求的Header参数配置
+        context.Services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.All;
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+            //options.KnownProxies.Add(IPAddress.Parse("47.65.1.1"));//添加受信任的代理服务器
+        });
+
+    }
+
     private void ConfigureAutoMapper()
     {
         Configure<AbpAutoMapperOptions>(options =>
@@ -311,35 +769,108 @@ public class NetWebModule : AbpModule
 
     private void ConfigureVirtualFileSystem(IWebHostEnvironment hostingEnvironment)
     {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureVirtualFileSystem...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+
         if (hostingEnvironment.IsDevelopment())
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
+                Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、 Configure配置{nameof(AbpVirtualFileSystemOptions)} 虚拟文件系统:{nameof(NetDomainSharedModule)}{nameof(NetDomainModule)}{nameof(NetApplicationContractsModule)}{nameof(NetApplicationModule)}{nameof(NetWebModule)}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+                // "YourRootNameSpace" 是项目的根命名空间名字. 如果你的项目的根命名空间名字为空,则无需传递此参数.
+                //options.FileSets.AddEmbedded<MyModule>("YourRootNameSpace");
                 options.FileSets.ReplaceEmbeddedByPhysical<NetDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Parakeet.Net.Domain.Shared"));
                 options.FileSets.ReplaceEmbeddedByPhysical<NetApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Parakeet.Net.Application.Contracts"));
+                options.FileSets.ReplaceEmbeddedByPhysical<NetDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Parakeet.Net.Domain"));
+                options.FileSets.ReplaceEmbeddedByPhysical<NetApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Parakeet.Net.Application"));
                 options.FileSets.ReplaceEmbeddedByPhysical<NetWebModule>(hostingEnvironment.ContentRootPath);
             });
         }
     }
 
+    /// <summary>
+    /// 配置前端导航菜单
+    /// </summary>
+    /// <param name="context"></param>
     private void ConfigureNavigationServices(IConfiguration configuration)
     {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureNavigationServices...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         Configure<AbpNavigationOptions>(options =>
         {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpNavigationOptions)} NetCoreMenuContributor:{nameof(NetMenuContributor)}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             options.MenuContributors.Add(new NetMenuContributor(configuration));
         });
 
         Configure<AbpToolbarOptions>(options =>
         {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpToolbarOptions)} NetToolbarContributor:{nameof(NetToolbarContributor)}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             options.Contributors.Add(new NetToolbarContributor());
         });
     }
 
-    private void ConfigureSwaggerServices(IServiceCollection services)
+
+    /// <summary>
+    /// 配置GRPC 集中管理
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigureGrpcs(ServiceConfigurationContext context)
     {
-        services.AddAbpSwaggerGen(
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureGrpcs...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        var logger = context.Services.GetRequiredServiceLazy<ILogger<CustomClientLoggerInterceptor>>();
+        context.Services.AddGrpcClient<CustomMath.CustomMathClient>(options =>
+        {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddGrpcClient配置{nameof(GrpcClientFactoryOptions)} ....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            options.Address = new Uri("https://localhost:5001");
+            options.Interceptors.Add(new CustomClientLoggerInterceptor(logger));
+        });
+        //.ConfigureChannel(grpcOptions =>
+        //{
+        //    //HttpClient --443 代替grpc-https://localhost:5001
+        //    grpcOptions.HttpClient=new HttpClient(new HttpClientHandler
+        //    {
+        //        ServerCertificateCustomValidationCallback = (msg,cert,chain,error)=>true//忽略证书
+        //    });
+        //});
+
+        context.Services
+            .AddGrpcClient<Lesson.LessonClient>(options =>
+            {
+                options.Address = new Uri("https://localhost:5002");
+                options.Interceptors.Add(new CustomClientLoggerInterceptor(logger));
+            })
+            .ConfigureChannel(grpcOptions =>
+            {
+                var callCredentials = CallCredentials.FromInterceptor(async (ctx, metaData) =>
+                {
+                    var token = await JWTTokenHelper.GetJWTToken();//todo:即时获取--待加缓存
+                    Log.Logger.Information($"token:{token}");
+                    metaData.Add("Authorization", $"Bearer {token}");
+                });
+                //请求都带上token
+                grpcOptions.Credentials = ChannelCredentials.Create(new SslCredentials(), callCredentials);
+            });
+    }
+
+
+    /// <summary>
+    /// 配置Swagger
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigureSwaggerServices(ServiceConfigurationContext context)
+    {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureSwaggerServices...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        var apiSecurityScheme = new OpenApiSecurityScheme
+        {
+            Description =
+                "JWT Authorization header using the bearer scheme. Example: \"Authorization: Bearer {token}\"",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey
+        };
+
+        context.Services.AddAbpSwaggerGen(
             options =>
             {
+                //typeof(VersionType).GetEnumNames().ToList().ForEach
                 EnumContext.Instance.GetEnumTypeItemKeyNameDescriptions(new InputNameDto { Name = nameof(VersionType) })
                     .ForEach(v =>
                     {
@@ -348,6 +879,28 @@ public class NetWebModule : AbpModule
                 //options.SwaggerDoc($"{VersionType.V1.DisplayName()}", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
+
+                //以下部分属于自定义扩展 添加资源文件及...
+                //options.OperationFilter<SwaggerFileUploadFilter>(); //支持swagger上传文件(包装一下header) 新版本默认支持
+                options.IncludeXmlCommentFiles()
+                    .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "bearerAuth"
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
+
+                ////api起冲突时默认使用第一个
+                //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             }
         );
     }
@@ -411,6 +964,56 @@ public class NetWebModule : AbpModule
         });
     }
 
+    /// <summary>
+    /// 配置Session
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigSession(ServiceConfigurationContext context)
+    {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigSession...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        context.Services.AddSession(options =>
+        {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddSession 配置{nameof(SessionOptions)}Session Cookie 可跨站点cookie Chrome新版本对SameSite有要求Cookie.SameSite必须为:{SameSiteMode.Lax.DisplayName()}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            options.IdleTimeout = TimeSpan.FromHours(2);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.Name = "ops_cookie";
+            options.Cookie.IsEssential = true;
+            //您可能只想通过安全连接设置应用程序cookie：
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;//CookieSecurePolicy.None;
+            options.Cookie.SameSite = SameSiteMode.Lax;//可跨站点cookie Chrome新版本对SameSite有要求
+            //options.Cookie.SameSite = SameSiteMode.None;
+        });
+    }
+
+    /// <summary>
+    /// 配置跨域
+    /// </summary>
+    /// <param name="context"></param>
+    private void ConfigureCors(ServiceConfigurationContext context)
+    {
+        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureCors...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        var configuration = context.Services.GetConfiguration();
+        context.Services.AddCors(options =>
+        {
+            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddCors配置跨域{nameof(Microsoft.AspNetCore.Cors.Infrastructure.CorsOptions)}....这里是ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            //跨域默认名称 与中间件
+            options.AddPolicy(CommonConsts.AppName, builder =>
+            {
+                Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、CorsOptions.AddPolicy配置跨域AddPolicy Name：{CommonConsts.AppName},CorsOrigins:{configuration["App:CorsOrigins"]}....这里是ConfigureServices中的 {options.GetType().Name}_AddPolicy_{builder.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+                builder
+                    .WithOrigins(
+                        configuration["App:CorsOrigins"]
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => o.RemovePostFix("/"))
+                            .ToArray())
+                    .WithAbpExposedHeaders()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+    }
 
     /// <summary>
     /// 配置Hsts
@@ -543,7 +1146,7 @@ public class NetWebModule : AbpModule
         //}
         #endregion
         app.UseForwardedHeaders();
-        
+
         #region 全局异常处理 可在业务系统没有捕获到框架的最外层捕获全局异常
         //应尽早在管道中调用异常处理委托，这样就能捕获在后续管道发生的异常
         //先把异常处理的中间件写在最前面，这样方可捕获稍后调用中发生的任何异常。
@@ -609,7 +1212,7 @@ public class NetWebModule : AbpModule
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、创建RequestLocalizationMiddleware，导入LocalizationOptions和_loggerFactory....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         #endregion
         app.UseAbpRequestLocalization();
-        
+
         #region 向header写入一个相关性Id
         //添加一个中间件,检查并确定给response header返回一个correlationId（相关性Id）
         //request: request没有header,则返回一个Guid.NewGuid().ToString("N")，
@@ -769,14 +1372,17 @@ public class NetWebModule : AbpModule
             RequestPath = "/MyImages"
         });
 
-        #region 多租户
-        //多租户
-        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、多租户....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        #region 多租户 放在NetMultiTenancyModule里面
+
+        ////多租户 放在NetMultiTenancyModule模块里面
+        //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、多租户....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+
+        //if (CommonConsts.MultiTenancyEnabled)
+        //{
+        //    app.UseMultiTenancy();
+        //}
         #endregion
-        if (CommonConsts.MultiTenancyEnabled)
-        {
-            app.UseMultiTenancy();
-        }
+
 
         #region 将IdentityServer中间件添加到HTTP管道 (允许IdentityServer开始拦截路由并处理请求)
         //将IdentityServer中间件添加到HTTP管道 (允许IdentityServer开始拦截路由并处理请求)

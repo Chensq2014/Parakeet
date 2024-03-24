@@ -92,6 +92,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Parakeet.Net.Extensions;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace Parakeet.Net.Web;
 
@@ -121,7 +123,9 @@ public class NetWebModule : AbpModule
         {
             options.AddAssemblyResource(
                 typeof(NetResource),
+                typeof(NetDomainModule).Assembly,
                 typeof(NetDomainSharedModule).Assembly,
+                typeof(NetApplicationModule).Assembly,
                 typeof(NetApplicationContractsModule).Assembly,
                 typeof(NetWebModule).Assembly
             );
@@ -157,6 +161,7 @@ public class NetWebModule : AbpModule
         ConfigureCompressServices(context);
         ConfigureLocalizationServices();
         ConfigureAbpAntiForgerys();
+        ConfigureFileUploadOptions();
 
         if (!hostingEnvironment.IsDevelopment())
         {
@@ -207,14 +212,14 @@ public class NetWebModule : AbpModule
                 //options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             })
             .AddRazorRuntimeCompilation();//修改cshtml后能自动编译
-          //context.Services.AddControllers(options =>
-          //    {
-          //        var jsonInputFormatter = options.InputFormatters
-          //            .OfType<Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonInputFormatter>()
-          //            .First();
-          //        jsonInputFormatter.SupportedMediaTypes.Add("multipart/form-data; boundary=*");
-          //    }
-          //);
+                                          //context.Services.AddControllers(options =>
+                                          //    {
+                                          //        var jsonInputFormatter = options.InputFormatters
+                                          //            .OfType<Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonInputFormatter>()
+                                          //            .First();
+                                          //        jsonInputFormatter.SupportedMediaTypes.Add("multipart/form-data; boundary=*");
+                                          //    }
+                                          //);
 
         //AddControllersWithViews-->AddControllersCore->AddMvcCore/AddAuthorization(包含了授权的服务注册)
         //context.Services.AddControllersWithViews(
@@ -417,7 +422,7 @@ public class NetWebModule : AbpModule
         //    var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
         //    context.Services
         //        .AddDataProtection()
-        //        .PersistKeysToStackExchangeRedis(redis, "NetCore-Protection-Keys");
+        //        .PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         //}
     }
 
@@ -852,13 +857,8 @@ public class NetWebModule : AbpModule
     }
 
 
-    /// <summary>
-    /// 配置Swagger
-    /// </summary>
-    /// <param name="context"></param>
-    private void ConfigureSwaggerServices(ServiceConfigurationContext context)
+    private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
     {
-        Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureSwaggerServices...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         var apiSecurityScheme = new OpenApiSecurityScheme
         {
             Description =
@@ -867,22 +867,19 @@ public class NetWebModule : AbpModule
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.ApiKey
         };
-
-        context.Services.AddAbpSwaggerGen(
+        var configuration = context.Services.GetConfiguration();
+        context.Services.AddAbpSwaggerGenWithOAuth(
+            configuration["AuthServer:Authority"]!,
+            new Dictionary<string, string>
+            {
+                {"parakeet", "Parakeet API"}
+            },
             options =>
             {
-                //typeof(VersionType).GetEnumNames().ToList().ForEach
-                EnumContext.Instance.GetEnumTypeItemKeyNameDescriptions(new InputNameDto { Name = nameof(VersionType) })
-                    .ForEach(v =>
-                    {
-                        options.SwaggerDoc($"{v.ItemDescription}", new OpenApiInfo { Title = "Parakeet API", Version = $"{v.ItemDescription}" });
-                    });
-                //options.SwaggerDoc($"{VersionType.V1.DisplayName()}", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
 
-                //以下部分属于自定义扩展 添加资源文件及...
-                //options.OperationFilter<SwaggerFileUploadFilter>(); //支持swagger上传文件(包装一下header) 新版本默认支持
                 options.IncludeXmlCommentFiles()
                     .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -902,10 +899,8 @@ public class NetWebModule : AbpModule
 
                 ////api起冲突时默认使用第一个
                 //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-            }
-        );
+            });
     }
-
     private void ConfigureDataProtection(
         ServiceConfigurationContext context,
         IConfiguration configuration,
@@ -941,6 +936,34 @@ public class NetWebModule : AbpModule
             options.AutoValidateIgnoredHttpMethods.Add("POST");
             options.AutoValidateIgnoredHttpMethods.Add("PUT");
             options.AutoValidateIgnoredHttpMethods.Add("DELETE");
+        });
+    }
+
+    /// <summary>
+    /// 配置文件上传 
+    /// </summary>
+    private void ConfigureFileUploadOptions()
+    {
+        // 配置Kestrel自身对上传文件大小的限制
+        Configure<KestrelServerOptions>(options =>
+        {
+            options.Limits.MaxRequestBodySize = null; // 设置为null则不限制大小，也可设置为具体的大小（如5GB）
+
+            //单位：字节 From testing, the MaxRequestHeadersTotalSize can be set to 1000M. If set to 1GB, the api will be started failed.
+            options.Limits.MaxRequestHeadersTotalSize = 900 * 1024 * 1024;//900MB 按照字节为单位计算的
+        });
+
+        // 当托管在IIS/IIS Express下时，也要调整IIS转发到Kestrel的请求大小限制
+        Configure<IISServerOptions>(options =>
+        {
+            // 这里通常不需要额外配置，因为IIS的限制主要在web.config中设置
+            options.MaxRequestBodySize = long.MaxValue; // 设置为long.MaxValue会绕过默认限制，允许最大的请求大小
+        });
+
+        // 如果需要在应用层控制上传大小，可以使用IFormFile中间件
+        Configure<FormOptions>(options =>
+        {
+            options.MultipartBodyLengthLimit = long.MaxValue; // 设置允许的最大多部件表单数据大小
         });
     }
 
@@ -1002,11 +1025,10 @@ public class NetWebModule : AbpModule
             {
                 Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、CorsOptions.AddPolicy配置跨域AddPolicy Name：{CommonConsts.AppName},CorsOrigins:{configuration["App:CorsOrigins"]}....这里是ConfigureServices中的 {options.GetType().Name}_AddPolicy_{builder.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
                 builder
-                    .WithOrigins(
-                        configuration["App:CorsOrigins"]
-                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                            .Select(o => o.RemovePostFix("/"))
-                            .ToArray())
+                    .WithOrigins(configuration["App:CorsOrigins"]?
+                        .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                        .Select(o => o.RemovePostFix("/"))
+                        .ToArray() ?? Array.Empty<string>())
                     .WithAbpExposedHeaders()
                     .SetIsOriginAllowedToAllowWildcardSubdomains()
                     .AllowAnyHeader()
@@ -1114,7 +1136,7 @@ public class NetWebModule : AbpModule
         base.OnPreApplicationInitialization(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End OnPreApplicationInitialization ....");
     }
-    
+
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
@@ -1157,7 +1179,7 @@ public class NetWebModule : AbpModule
         //}
         #endregion
         app.UseForwardedHeaders();
-        
+
         #region 全局异常处理 可在业务系统没有捕获到框架的最外层捕获全局异常
         //应尽早在管道中调用异常处理委托，这样就能捕获在后续管道发生的异常
         //先把异常处理的中间件写在最前面，这样方可捕获稍后调用中发生的任何异常。

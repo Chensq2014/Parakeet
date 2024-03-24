@@ -425,41 +425,41 @@ namespace Parakeet.Net.Emails
             return result;
         }
 
-        /// <summary>
-        /// 设置发信地址的通知地址 UpdateMailAddressMsgCallBackUrlWithOptions
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public ResponseWrapper<object> UpdateMailAddressMsgCallBackUrl(UpdateMailAddressMsgCallBackUrlRequest input)
-        {
-            var result = new ResponseWrapper<object>();
-            var client = GetAlibabaDmClient();
-            var runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions
-            {
-                ReadTimeout = 60000,
-                ConnectTimeout = 10000,
-                IgnoreSSL = true,//忽略https证书错误
-                Autoretry = true,//自动重试
-                MaxAttempts = 3  //最大重试次数
-            };
-            try
-            {
-                var response = client.UpdateMailAddressMsgCallBackUrlWithOptions(input, runtime);
-                Console.WriteLine(response?.StatusCode == 200
-                    ? $"response.StatusCode:{response.StatusCode}"
-                    : $"response.StatusCode:{response?.StatusCode}_response.Body.RequestId:{response?.Body.RequestId}");
-                result.Code = response?.StatusCode ?? 0;
-                result.Data = response;
-            }
-            catch (TeaException error)
-            {
-                result.Message = error.Message;
-                result.Data = error;
-                AlibabaCloud.TeaUtil.Common.AssertAsString(error.Message);
-            }
+        ///// <summary>
+        ///// 设置发信地址的通知地址 UpdateMailAddressMsgCallBackUrlWithOptions
+        ///// </summary>
+        ///// <param name="input"></param>
+        ///// <returns></returns>
+        //public ResponseWrapper<object> UpdateMailAddressMsgCallBackUrl(UpdateMailAddressMsgCallBackUrlRequest input)
+        //{
+        //    var result = new ResponseWrapper<object>();
+        //    var client = GetAlibabaDmClient();
+        //    var runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions
+        //    {
+        //        ReadTimeout = 60000,
+        //        ConnectTimeout = 10000,
+        //        IgnoreSSL = true,//忽略https证书错误
+        //        Autoretry = true,//自动重试
+        //        MaxAttempts = 3  //最大重试次数
+        //    };
+        //    try
+        //    {
+        //        var response = client.UpdateMailAddressMsgCallBackUrlWithOptions(input, runtime);
+        //        Console.WriteLine(response?.StatusCode == 200
+        //            ? $"response.StatusCode:{response.StatusCode}"
+        //            : $"response.StatusCode:{response?.StatusCode}_response.Body.RequestId:{response?.Body.RequestId}");
+        //        result.Code = response?.StatusCode ?? 0;
+        //        result.Data = response;
+        //    }
+        //    catch (TeaException error)
+        //    {
+        //        result.Message = error.Message;
+        //        result.Data = error;
+        //        AlibabaCloud.TeaUtil.Common.AssertAsString(error.Message);
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// 查询无效地址 QueryInvalidAddressWithOptions

@@ -79,6 +79,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
+using Exceptionless;
 using Grpc.Core;
 using Grpc.Net.ClientFactory;
 using Microsoft.Extensions.Logging;
@@ -1113,8 +1114,7 @@ public class NetWebModule : AbpModule
         base.OnPreApplicationInitialization(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End OnPreApplicationInitialization ....");
     }
-
-
+    
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
@@ -1122,9 +1122,20 @@ public class NetWebModule : AbpModule
 
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
-        ////这种方式过时了(应在不重载的情况下调用UseExceptionless)，
-        ////先配置ExceptionlessClient 依赖注入容器IServiceCollection AddExceptionless时设置appKey，url 
-        //app.UseExceptionless("Gum3CWHNe4uKf7CYGT1CIBEKRx17FreeOywYTIDr");
+        var configuration = context.GetConfiguration();
+
+
+        #region 向header写入一个相关性Id
+        //添加一个中间件,检查并确定给response header返回一个correlationId（相关性Id）
+        //request: request没有header,则返回一个Guid.NewGuid().ToString("N")，
+        //若有取Headers【X-Correlation-Id】，若非空则返回，否则生成一个，给header设置一个头，则返回此头
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、添加一个中间件,检查并确定给response header返回一个correlationId（相关性Id） request: request没有header,则返回一个Guid.NewGuid().ToString(N) 若有取Headers【X-Correlation-Id】，若非空则返回，否则生成一个，给header设置一个头，则返回此头....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        #endregion
+        app.UseCorrelationId();
+
+        //这种方式过时了(应在不重载的情况下调用UseExceptionless)，
+        //先配置ExceptionlessClient 依赖注入容器IServiceCollection AddExceptionless时设置appKey，url 
+        app.UseExceptionless("Gum3CWHNe4uKf7CYGT1CIBEKRx17FreeOywYTIDr");
 
         #region ForwardedHeader中间件允许 请求中的Header参数通过Nginx等中间代理
 
@@ -1146,7 +1157,7 @@ public class NetWebModule : AbpModule
         //}
         #endregion
         app.UseForwardedHeaders();
-
+        
         #region 全局异常处理 可在业务系统没有捕获到框架的最外层捕获全局异常
         //应尽早在管道中调用异常处理委托，这样就能捕获在后续管道发生的异常
         //先把异常处理的中间件写在最前面，这样方可捕获稍后调用中发生的任何异常。
@@ -1213,14 +1224,6 @@ public class NetWebModule : AbpModule
         #endregion
         app.UseAbpRequestLocalization();
 
-        #region 向header写入一个相关性Id
-        //添加一个中间件,检查并确定给response header返回一个correlationId（相关性Id）
-        //request: request没有header,则返回一个Guid.NewGuid().ToString("N")，
-        //若有取Headers【X-Correlation-Id】，若非空则返回，否则生成一个，给header设置一个头，则返回此头
-        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、添加一个中间件,检查并确定给response header返回一个correlationId（相关性Id） request: request没有header,则返回一个Guid.NewGuid().ToString(N) 若有取Headers【X-Correlation-Id】，若非空则返回，否则生成一个，给header设置一个头，则返回此头....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-        #endregion
-        app.UseCorrelationId();
-
         #region HTTP 严格传输安全协议 (HSTS) 中间件
         //HTTP 严格传输安全协议 (HSTS) 中间件 (UseHsts) 添加 Strict-Transport-Security 标头
         #endregion
@@ -1243,7 +1246,7 @@ public class NetWebModule : AbpModule
 
         //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         #endregion
-        //app.UseSession();
+        app.UseSession();
 
         ////自定义Use中间件逻辑
         //app.Use(next =>
@@ -1504,4 +1507,24 @@ public class NetWebModule : AbpModule
                 .SeedAsync();
         });
     }
+
+
+    public override void OnPostApplicationInitialization(ApplicationInitializationContext context)
+    {
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} Start OnPostApplicationInitialization ....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        base.OnPostApplicationInitialization(context);
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End OnPostApplicationInitialization ....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+    }
+
+    public override void OnApplicationShutdown(ApplicationShutdownContext context)
+    {
+        Log.Warning($"{{0}}", $"............................................................................................................................");
+        Log.Warning($"{{0}}", $"..............................................OnApplicationShutdown 反序最先执行............................................");
+        Log.Warning($"{{0}}", $"............................................................................................................................");
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} Start OnApplicationShutdown ....线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        base.OnApplicationShutdown(context);
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End OnApplicationShutdown ....线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+    }
+
+
 }

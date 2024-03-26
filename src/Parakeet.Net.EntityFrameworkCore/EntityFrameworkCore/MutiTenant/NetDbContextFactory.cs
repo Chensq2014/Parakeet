@@ -15,7 +15,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             var configuration = BuildConfiguration();
             //UseSqlServer UseNpgsql  UseMySql
             var builder = new DbContextOptionsBuilder<NetDbContext>()
-                .UseNpgsql(configuration.GetConnectionString(CommonConsts.MutiTenantConnectionStringName));
+                .UseNpgsql(configuration.GetConnectionString(CommonConsts.MultiTenantConnectionStringName));
                 //.UseLoggerFactory(new SerilogLoggerFactory());
                 ////这会使所有查询都不被跟踪。 仍可添加 AsTracking() 来进行特定查询跟踪。
                 //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);

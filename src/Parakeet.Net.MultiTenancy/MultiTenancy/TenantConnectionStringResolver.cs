@@ -40,7 +40,7 @@ namespace Parakeet.Net.MultiTenancy
 
         public override async Task<string> ResolveAsync(string connectionStringName = null)
         {
-            if (TenentId == null || (connectionStringName?.Equals(CommonConsts.MutiTenantConnectionStringName) == true))
+            if (TenentId == null || (connectionStringName?.Equals(CommonConsts.MultiTenantConnectionStringName) == true))
             {
                 //No current tenant, fallback to default logic
                 return await base.ResolveAsync(connectionStringName);

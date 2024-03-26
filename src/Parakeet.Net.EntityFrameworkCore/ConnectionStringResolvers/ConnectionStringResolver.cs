@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using Common.Helpers;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
+using System.Linq;
 
 namespace Parakeet.Net.EntityFrameworkCore
 {
@@ -28,7 +31,20 @@ namespace Parakeet.Net.EntityFrameworkCore
             //    var connectionString = tenant.TenantDbConnectionStrings.First(m => m.IsMaster && m.Year == currentYear).Value;
             //    return connectionString;
             //}
-            return await base.ResolveAsync(connectionStringName);
+            var connectionStringNames = new List<string>
+            {
+                "Default",
+                "MultiTenant",
+                "MySql",
+                "PgSql",
+                "SqlServer",
+                "Write",
+                "Read"
+            };
+            var connectionStringValue = await base.ResolveAsync(connectionStringName);
+            return connectionStringNames.Contains(connectionStringName)
+                ? EncodingEncryptHelper.DEncrypt(connectionStringValue)
+                : connectionStringValue;
         }
     }
 }

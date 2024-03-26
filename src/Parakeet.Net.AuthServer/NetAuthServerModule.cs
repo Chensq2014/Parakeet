@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Common;
+using Common.Helpers;
 using Localization.Resources.AbpUi;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
@@ -62,7 +63,7 @@ public class NetAuthServerModule : AbpModule
         {
             builder.AddValidation(options =>
             {
-                options.AddAudiences("Net");
+                options.AddAudiences("parakeet");
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });
@@ -139,19 +140,19 @@ public class NetAuthServerModule : AbpModule
 
         Configure<AbpDistributedCacheOptions>(options =>
         {
-            options.KeyPrefix = "Net:";
+            options.KeyPrefix = "net:";
         });
 
-        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Net");
+        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
-            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Net-Protection-Keys");
+            var redis = ConnectionMultiplexer.Connect(EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!));
+            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         }
 
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
+            var connection = ConnectionMultiplexer.Connect(EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!));
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
 

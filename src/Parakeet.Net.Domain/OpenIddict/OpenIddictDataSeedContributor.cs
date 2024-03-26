@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Common.Helpers;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
@@ -58,10 +59,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
     private async Task CreateScopesAsync()
     {
-        if (await _openIddictScopeRepository.FindByNameAsync("Net") == null)
+        if (await _openIddictScopeRepository.FindByNameAsync("parakeet") == null)
         {
             await _scopeManager.CreateAsync(new OpenIddictScopeDescriptor {
-                Name = "Net", DisplayName = "Net API", Resources = { "Net" }
+                Name = "parakeet", DisplayName = "Parakeet API", Resources = { "parakeet" }
             });
         }
     }
@@ -74,25 +75,25 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             OpenIddictConstants.Permissions.Scopes.Phone,
             OpenIddictConstants.Permissions.Scopes.Profile,
             OpenIddictConstants.Permissions.Scopes.Roles,
-            "Net"
+            "parakeet"
         };
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
         //Web Client
-        var webClientId = configurationSection["Net_Web:ClientId"];
+        var webClientId = configurationSection["Parakeet_Web:ClientId"];
         if (!webClientId.IsNullOrWhiteSpace())
         {
-            var webClientRootUrl = configurationSection["Net_Web:RootUrl"]!.EnsureEndsWith('/');
+            var webClientRootUrl = configurationSection["Parakeet_Web:RootUrl"]!.EnsureEndsWith('/');
 
-            /* Net_Web client is only needed if you created a tiered
+            /* Parakeet_Web client is only needed if you created a tiered
              * solution. Otherwise, you can delete this client. */
             await CreateApplicationAsync(
                 name: webClientId!,
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Web Application",
-                secret: configurationSection["Net_Web:ClientSecret"] ?? "1q2w3e*",
+                secret: EncodingEncryptHelper.DEncrypt(configurationSection["Parakeet_Web:ClientSecret"] ?? "1q2w3e*"),
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode, OpenIddictConstants.GrantTypes.Implicit

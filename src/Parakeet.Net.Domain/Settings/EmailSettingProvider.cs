@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Emailing;
+﻿using Common.Helpers;
+using Volo.Abp.Emailing;
 using Volo.Abp.Settings;
 
 namespace Parakeet.Net.Settings;
@@ -22,7 +23,7 @@ public class EmailSettingProvider : SettingDefinitionProvider
         //context.Add(new SettingDefinition("Smtp.Host", section?.GetSection("SmtpHost")?.Value??"127.0.0.1"),
         //    new SettingDefinition("Smtp.Port", section?.GetSection("Port")?.Value),
         //    new SettingDefinition("Smtp.UserName",section?.GetSection("UserName")?.Value),
-        //    new SettingDefinition("Smtp.Password",section?.GetSection("License")?.Value),
+        //    new SettingDefinition("Smtp.Password",EncodingEncryptHelper.DEncrypt(section?.GetSection("License")?.Value)),
         //    new SettingDefinition("Smtp.EnableSsl", "true") 
         #endregion
 
@@ -42,7 +43,7 @@ public class EmailSettingProvider : SettingDefinitionProvider
             new SettingDefinition(EmailSettingNames.Smtp.Host, "smtp.qq.com"),
             new SettingDefinition(EmailSettingNames.Smtp.Port, "547"),
             new SettingDefinition(EmailSettingNames.Smtp.UserName, "chensq0523@foxmail.com"),
-            new SettingDefinition(EmailSettingNames.Smtp.Password, "cqcxtfqmunlrddbc"),//,isEncrypted: false
+            new SettingDefinition(EmailSettingNames.Smtp.Password, EncodingEncryptHelper.DEncrypt("fafgdyewfleufjeofmfifhfiefedefeh")),//,isEncrypted: false
             new SettingDefinition(EmailSettingNames.Smtp.Domain),
             new SettingDefinition(EmailSettingNames.Smtp.EnableSsl, "true"),
             new SettingDefinition(EmailSettingNames.Smtp.UseDefaultCredentials, "false"),
@@ -65,7 +66,7 @@ public class EmailSettingProvider : SettingDefinitionProvider
         //    "Abp.Mailing.Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
         //    "Abp.Mailing.Smtp.Port": "587", //"465", //
         //    "Abp.Mailing.Smtp.UserName": "chensq0523@foxmail.com", //"chenshuangquan@xywgzs1.onexmail.com",
-        //    "Abp.Mailing.Smtp.Password": "",
+        //    "Abp.Mailing.Smtp.Password": "fafgdyewfleufjeofmfifhfiefedefeh",
         //    "Abp.Mailing.Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
         //    "Abp.Mailing.Smtp.UseDefaultCredentials": "false"
         //},

@@ -7,12 +7,12 @@ using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.EntityFrameworkCore;
 
-public class PgSqlMutiTenantSchemaMigrator
+public class PgSqlMultiTenantSchemaMigrator
     : INetDbSchemaMigrator, ITransientDependency
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public PgSqlMutiTenantSchemaMigrator(
+    public PgSqlMultiTenantSchemaMigrator(
         IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;

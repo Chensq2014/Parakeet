@@ -79,6 +79,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
+using Common.Helpers;
 using Exceptionless;
 using Grpc.Core;
 using Grpc.Net.ClientFactory;
@@ -641,7 +642,7 @@ public class NetWebModule : AbpModule
                 options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
 
                 options.ClientId = configuration["AuthServer:ClientId"];
-                options.ClientSecret = configuration["AuthServer:ClientSecret"];
+                options.ClientSecret = EncodingEncryptHelper.DEncrypt(configuration["AuthServer:ClientSecret"]);
 
                 options.UsePkce = true;
                 options.SaveTokens = true;

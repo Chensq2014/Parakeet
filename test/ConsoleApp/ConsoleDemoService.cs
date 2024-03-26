@@ -30,14 +30,14 @@ public class ConsoleDemoService : ITransientDependency
 
             var node = "ConnectionStrings";
             Console.WriteLine($"\"{node}\":{{");
-            var dbKey = "MutiTenant";
+            var dbKey = "MultiTenant";
             var key = $"{node}:{dbKey}";
             var conn = _configuration[key];
             var encryptStr = EncodingEncryptHelper.Encrypt(conn);
             //var dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
             //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
             //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
 
             dbKey = "MySql";
             key = $"{node}:{dbKey}";
@@ -82,8 +82,8 @@ public class ConsoleDemoService : ITransientDependency
             //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
             //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
             //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\"");
-            Console.WriteLine($"}}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
+            Console.WriteLine($"}},");
 
 
             #endregion
@@ -115,7 +115,7 @@ public class ConsoleDemoService : ITransientDependency
             Console.WriteLine($"    \"InstanceName\": \"parakeet\",");
             Console.WriteLine($"    \"ConnectionStrings\": \"localhost\",");
             Console.WriteLine($"    \"DatabaseId\": 1");
-            Console.WriteLine($"}}");
+            Console.WriteLine($"}},");
 
             #endregion
 
@@ -125,7 +125,7 @@ public class ConsoleDemoService : ITransientDependency
             Console.WriteLine($"\"{node}\":{{");
             Console.WriteLine($"    \"Authority\": \"https://localhost:44331\",");
             Console.WriteLine($"    \"RequireHttpsMetadata\": true,");
-            Console.WriteLine($"    \"ClientId\": \"Net_Web\",");
+            Console.WriteLine($"    \"ClientId\": \"Parakeet_Web\",");
 
             dbKey = "ClientSecret";
             key = $"{node}:{dbKey}";
@@ -137,7 +137,7 @@ public class ConsoleDemoService : ITransientDependency
             Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
 
             Console.WriteLine($"    \"IsContainerized\": false");
-            Console.WriteLine($"}}");
+            Console.WriteLine($"}},");
 
             #endregion
 
@@ -172,7 +172,7 @@ public class ConsoleDemoService : ITransientDependency
             Console.WriteLine($"      \"Abp.Mailing.Smtp.EnableSsl\": \"false\", //\"true\",//587端口在emailsender配置中不允许ssl加密  465才可以");
             Console.WriteLine($"      \"Abp.Mailing.Smtp.UseDefaultCredentials\": \"false\"");
 
-            Console.WriteLine($"}}");
+            Console.WriteLine($"}},");
 
             #endregion
         }

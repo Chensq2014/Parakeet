@@ -1,0 +1,63 @@
+{
+  "App": {
+    "SelfUrl": "https://localhost:23517"
+  },
+  "RemoteServices": {
+    "Default": {
+      "BaseUrl": "https://localhost:23517/"
+    }
+  },
+  "ConnectionStrings": {
+    "MultiTenant": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkeufhesekfgddfmereafhfgfbdffefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
+    "MySql": "fqeueneuewfgdjenfgexewfcejeoeweydhfdfiezfddmcvcscrcnddfqfqfjdcfedzetcmeffhffeadmeferfpevetecfletdieodwfheyfietetficucscucwddfjexesdffgfdfdfiddfeflesdfdnfffbfhctcucvcwcxcydd",
+    "PgSql": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkdbcycxcjdhfjfkedeneyfbdofefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
+    "SqlServer": "ekeueneuewfgdjenfgexewfcejeoeweydhereufbekexepfeescufeeyfpeyegeueaficbdbcyczckfsekeudmfnescqfiflevcpcacvdedfcxcydd",
+    "Write": "ekeueneuewfgdjcddgeyewfkecebeeexexdefjeifbewezeqesexcudbdddfckfkeeescmfqetdgelfuefdhdadacycjdbcydg",
+    "Read": "ekeueneuewfgdjcddgeyewfkecebeeexexdefjeifbewezeqesexcudbdddfdheudwesckfsfbevcmfqecdfflfrevcscxcucycgceczdm"
+  },
+  "Redis": {
+    "Configuration": "fjfedydzfdewfheuflcuezeveheaeyeqfmdleufbekexepfeescuct",
+    "CsRedisConfiguration": "fjfedydzfdewfheufldidfcxcmcmcdeiexeteufcevfpdmemfheeeqeyfqfccmcwbvfedwfqflfoekfpefdhcvfkfjegeyexfpcpejeufr",
+    "InstanceName": "parakeet",
+    "ConnectionStrings": "localhost",
+    "DatabaseId": 1
+  },
+  "AuthServer": {
+    "Authority": "https://localhost:5000",
+    "RequireHttpsMetadata": true,
+    "ClientId": "Parakeet_Web",
+    "ClientSecret": "dcfgcbevcyetcq",
+    "IsContainerized": false
+  },
+  "Settings": {
+    "DefaultFromAddress": "chensq0523@foxmail.com", //"chenshuangquan@xywgzs1.onexmail.com",
+    "DefaultFromDisplayName": "Chensq",
+    "Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
+    "Smtp.Port": "587", //"465", //
+    "Smtp.UserName": "chensq0523@foxmail.com",
+    "Smtp.Password": "fafgdyewfleufjeofmfifhfiefedefeh",
+    "Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
+    "Smtp.UseDefaultCredentials": "fasle",
+    "Abp.Mailing.DefaultFromAddress": "chensq0523@foxmail.com",
+    "Abp.Mailing.DefaultFromDisplayName": "Chensq",
+    "Abp.Mailing.Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
+    "Abp.Mailing.Smtp.Port": "587", //"465", //
+    "Abp.Mailing.Smtp.UserName": "chensq0523@foxmail.com", //"chenshuangquan@xywgzs1.onexmail.com",
+    "Abp.Mailing.Smtp.Password": "fafgdyewfleufjeofmfifhfiefedefeh",
+    "Abp.Mailing.Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
+    "Abp.Mailing.Smtp.UseDefaultCredentials": "false"
+  },
+  "AzureAd": {
+    "Instance": "https://login.microsoftonline.com/",
+    "TenantId": "your-tenant-id",
+    "ClientId": "38ba712f-135c-4ca7-a3d6-01c9ef6f624f",
+    "Scope": "openid profile email",
+    "CallbackPath": "/signin-oidc"
+  },
+  "StringEncryption": {
+    "DefaultPassPhrase": "jeZ0QD8WhjH8DOMr"
+  },
+  "GuidConfig": {
+    "DefaultSequentialGuidType": 0 //"SequentialAsString"
+  }
+}

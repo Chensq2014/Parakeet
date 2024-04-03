@@ -95,6 +95,7 @@ using Newtonsoft.Json.Serialization;
 using Parakeet.Net.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Identity.Web;
 
 namespace Parakeet.Net.Web;
 
@@ -625,10 +626,16 @@ public class NetWebModule : AbpModule
         //});
         #endregion
 
+
+        #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
+
+        //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
+
         context.Services.AddAuthentication(options =>
-        {
-            options.DefaultScheme = "Cookies";
-            options.DefaultChallengeScheme = "oidc";
+            {
+                options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//
+                options.DefaultChallengeScheme = "oidc";
+                options.DefaultSignInScheme = "oidc";
         })
             .AddCookie("Cookies", options =>
             {
@@ -652,7 +659,8 @@ public class NetWebModule : AbpModule
                 options.Scope.Add("email");
                 options.Scope.Add("phone");
                 options.Scope.Add("parakeet");
-            });
+            })
+            .AddMicrosoftIdentityWebApp(context.Services.GetConfiguration());
         /*
         * This configuration is used when the AuthServer is running on the internal network such as docker or k8s.
         * Configuring the redirecting URLs for internal network and the web
@@ -701,6 +709,10 @@ public class NetWebModule : AbpModule
         {
             options.IsDynamicClaimsEnabled = true;
         });
+
+
+
+        #endregion
     }
 
 

@@ -660,7 +660,7 @@ public class NetWebModule : AbpModule
                 options.Scope.Add("phone");
                 options.Scope.Add("parakeet");
             })
-            .AddMicrosoftIdentityWebApp(context.Services.GetConfiguration());
+            .AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(),"AzureAd", OpenIdConnectDefaults.AuthenticationScheme);
         /*
         * This configuration is used when the AuthServer is running on the internal network such as docker or k8s.
         * Configuring the redirecting URLs for internal network and the web

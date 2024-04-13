@@ -166,6 +166,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parakeet.Net.Consumer.Stand
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parakeet.Net.Consumer.Standard.RegisterModule", "src\MQRunners\Consumers\Modules\Standard\Parakeet.Net.Consumer.Standard.Register\Parakeet.Net.Consumer.Standard.RegisterModule.csproj", "{4871276C-7DD5-46CC-9CD3-776B7B832099}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Nacos", "..\Common\Core\Common.Nacos\Common.Nacos.csproj", "{EE7465EB-854E-4DF5-AED5-AF56D98161A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -396,6 +398,10 @@ Global
 		{4871276C-7DD5-46CC-9CD3-776B7B832099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4871276C-7DD5-46CC-9CD3-776B7B832099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4871276C-7DD5-46CC-9CD3-776B7B832099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE7465EB-854E-4DF5-AED5-AF56D98161A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7465EB-854E-4DF5-AED5-AF56D98161A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7465EB-854E-4DF5-AED5-AF56D98161A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7465EB-854E-4DF5-AED5-AF56D98161A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -479,6 +485,7 @@ Global
 		{61920D6F-E63E-4858-8503-1EBBB862DDE4} = {7464353E-2E3A-4426-A4DB-AD024BA9F8DC}
 		{1BF48D08-50B1-46BB-AC09-5C94A1F0238D} = {7464353E-2E3A-4426-A4DB-AD024BA9F8DC}
 		{4871276C-7DD5-46CC-9CD3-776B7B832099} = {7464353E-2E3A-4426-A4DB-AD024BA9F8DC}
+		{EE7465EB-854E-4DF5-AED5-AF56D98161A1} = {22018BCE-F76E-476E-9255-A072D12B11DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

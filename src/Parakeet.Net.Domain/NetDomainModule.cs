@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Common;
 using Common.CacheMudule;
+using Common.Nacos;
 using Common.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

@@ -636,7 +636,7 @@ public class NetWebModule : AbpModule
                 options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//
                 options.DefaultChallengeScheme = "oidc";
                 options.DefaultSignInScheme = "oidc";
-        })
+            })
             .AddCookie("Cookies", options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(365);
@@ -712,7 +712,7 @@ public class NetWebModule : AbpModule
 
 
 
-#endregion
+        #endregion
     }
 
 
@@ -1132,7 +1132,7 @@ public class NetWebModule : AbpModule
         });
     }
 
-#endregion
+    #endregion
 
 
 

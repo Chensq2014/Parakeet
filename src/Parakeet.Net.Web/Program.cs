@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Common;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -21,7 +23,14 @@ public class Program
         {
             Log.Information("Starting web host.");
             var builder = WebApplication.CreateBuilder(args);
-            builder.Host.AddAppSettingsSecretsJson()
+            builder.Host
+                .AddAppSettingsSecretsJson()
+                .UseNacosConfig(CommonConsts.NacosConfigSectionName,null, x => x.AddSerilog(Log.Logger))
+                //.ConfigureAppConfiguration((context, builder) =>
+                //{
+                //    var c = builder.Build();
+                //    builder.AddNacosV2Configuration(c.GetSection("NacosConfig"), logAction: x => x.AddSerilog(Log.Logger));
+                //})
                 .UseAutofac()
                 .UseSerilog((context, config) =>
                 {

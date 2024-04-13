@@ -7,6 +7,15 @@
       "BaseUrl": "https://localhost:23517/"
     }
   },
+  "AzureAd": {
+    "Instance": "https://login.microsoftonline.com/",
+    "TenantId": "760ef7de-daf0-4590-b9fb-0efa23bdc841",
+    "ClientId": "98efee59-628f-498a-a893-63ad9c03f680", // from app registration
+    "RedirectUri": "https://localhost:23517/", //290668617qq.onmicrosoft.com
+    "ClientSecret": "Enter_the_Client_Secret_Here",
+    "Scope": "User.Read profile email",
+    "CallbackPath": "/signin-oidc"
+  },
   "ConnectionStrings": {
     "MultiTenant": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkeufhesekfgddfmereafhfgfbdffefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
     "MySql": "fqeueneuewfgdjenfgexewfcejeoeweydhfdfiezfddmcvcscrcnddfqfqfjdcfedzetcmeffhffeadmeferfpevetecfletdieodwfheyfietetficucscucwddfjexesdffgfdfdfiddfeflesdfdnfffbfhctcucvcwcxcydd",
@@ -47,17 +56,33 @@
     "Abp.Mailing.Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
     "Abp.Mailing.Smtp.UseDefaultCredentials": "false"
   },
-  "AzureAd": {
-    "Instance": "https://login.microsoftonline.com/",
-    "TenantId": "your-tenant-id",
-    "ClientId": "38ba712f-135c-4ca7-a3d6-01c9ef6f624f",
-    "Scope": "openid profile email",
-    "CallbackPath": "/signin-oidc"
-  },
   "StringEncryption": {
     "DefaultPassPhrase": "jeZ0QD8WhjH8DOMr"
   },
   "GuidConfig": {
     "DefaultSequentialGuidType": 0 //"SequentialAsString"
+  },
+  "NacosConfig": {
+    "Listeners": [
+      {
+        "Optional": false,
+        "DataId": "develop",
+        "Group": "DEFAULT_GROUP"
+      },
+      {
+        "Optional": false,
+        "DataId": "demo",
+        "Group": "DEFAULT_GROUP"
+      }
+    ],
+    "Namespace": "csharp-demo", // Please set the value of Namespace ID !!!!!!!!
+    "ServerAddresses": [ "http://localhost:8848/" ],
+    "UserName": "test2",
+    "Password": "123456",
+    "AccessKey": "",
+    "SecretKey": "",
+    "EndPoint": "acm.aliyun.com",
+    "ConfigFilterAssemblies": [ "YouPrefix.AssemblyName" ],
+    "ConfigFilterExtInfo": "some ext infomation"
   }
 }

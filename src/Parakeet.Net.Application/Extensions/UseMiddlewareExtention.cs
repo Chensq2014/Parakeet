@@ -3,7 +3,7 @@ using Common.Dtos;
 using Parakeet.Net.Middleware;
 using System;
 
-namespace Parakeet.Net.Extensions
+namespace Common.Extensions
 {
     /// <summary>
     /// use中间件扩展

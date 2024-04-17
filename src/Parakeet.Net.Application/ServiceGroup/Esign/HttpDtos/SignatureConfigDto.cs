@@ -1,4 +1,4 @@
-﻿//using Parakeet.Net.Enums.External;
+﻿//using Common.Enums.External;
 //using WebApiClient.DataAnnotations;
 
 //namespace Parakeet.Net.ServiceGroup.Esign.HttpDtos

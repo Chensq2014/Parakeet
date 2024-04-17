@@ -7,7 +7,7 @@ using Parakeet.Net.Middleware;
 using Parakeet.Net.Options;
 using System;
 
-namespace Parakeet.Net.Extensions
+namespace Common.Extensions
 {
     /// <summary>
     /// 服务注册扩展

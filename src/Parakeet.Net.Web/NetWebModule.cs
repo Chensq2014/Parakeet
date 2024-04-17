@@ -92,7 +92,7 @@ using Parakeet.Net.ServiceGroup;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Parakeet.Net.Extensions;
+using Common.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Identity.Web;

@@ -19,5 +19,17 @@
   <ItemGroup>
     <ProjectReference Include="..\Parakeet.Net.Application.Tests\Parakeet.Net.Application.Tests.csproj" />
   </ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="Protos\CustomMath.proto" GrpcServices="Client" />
+		<Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
+	</ItemGroup>
 
+
+	<ItemGroup>
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.33.1" />
+		<PackageReference Include="Google.Protobuf" Version="3.21.2" />
+		<PackageReference Include="Grpc" Version="2.32.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.33.1" PrivateAssets="All" />
+	</ItemGroup>
 </Project>

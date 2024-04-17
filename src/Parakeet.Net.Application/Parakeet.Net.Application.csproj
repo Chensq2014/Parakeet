@@ -10,7 +10,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
 		<ProjectReference Include="..\..\..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
-		<ProjectReference Include="..\Grpc\GrpcClients\Parakeet.NetCore.RoClient\Parakeet.Net.ROClient.csproj" />
+		<ProjectReference Include="..\Grpc\GrpcClients\Parakeet.Net.RoClient\Parakeet.Net.ROClient.csproj" />
 		<ProjectReference Include="..\Parakeet.Net.Domain\Parakeet.Net.Domain.csproj" />
 		<ProjectReference Include="..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
 		<ProjectReference Include="..\Parakeet.Net.MultiTenancy\Parakeet.Net.MultiTenancy.csproj" />

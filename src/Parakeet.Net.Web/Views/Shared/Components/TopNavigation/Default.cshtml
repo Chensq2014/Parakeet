@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.Users
+@{
+    //var authorizationService = (IAuthorizationService)ViewData["Authority"];
+}
+<ul class="nav navbar-top-links navbar-right pull-right">
+    <li><a class="right-side-toggle" href="#"><span class="ti-palette"></span></a></li>
+    <li class="dropdown">
+        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="~/images/avatar.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">@User.Claims.FirstOrDefault(c => c.Type == "name")?.Value</b><span class="caret"></span> </a>
+        <ul class="dropdown-menu dropdown-user animated flipInY">
+            <li>
+                @if (User.Identity != null)
+                {
+                    <div class="dw-user-box">
+                        <div class="u-img"><img src="~/images/avatar.png" alt="user" /></div>
+                        <div class="u-text m-t-15">
+                            <h4>@User?.Identity?.Name</h4>
+                            <p class="text-muted m-t-5">@User?.Claims?.FirstOrDefault(c => c.Type == "email")?.Value</p>
+                        </div>
+                    </div>
+                }
+            </li>
+            <li role="separator" class="divider"></li>
+            @if (User?.Identity?.Name is null)
+            {
+                <li>
+                    <a href="/account/login"><i class="ti-lock"></i> 登录</a>
+                </li>
+            }
+            else
+            {
+                <li><a href="~/Account/Manage"><i class="ti-user"></i> 个人资料</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/account/logout"><i class="fa fa-power-off"></i> 注销</a></li>
+            }
+        </ul>
+        <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+</ul>

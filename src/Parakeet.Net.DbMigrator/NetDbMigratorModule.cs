@@ -16,6 +16,6 @@ public class NetDbMigratorModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "Net:"; });
+        Configure<AbpDistributedCacheOptions>(options => { options.KeyPrefix = "net:"; });
     }
 }

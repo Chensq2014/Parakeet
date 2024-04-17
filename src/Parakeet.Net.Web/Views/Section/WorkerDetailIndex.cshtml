@@ -1,0 +1,500 @@
+﻿<div style="margin-top: 20px;">
+    <div id="grid-sectionWorkerDetails" class="show-grid"></div>
+</div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        $(function() {
+            
+            window.params = {
+                startDate: null,
+                endDate: null,
+                laborType: null,
+                positionName: null,
+                sectionWorkerId: null,
+                workerTypeId: null,
+                workerId: null
+            };
+
+            //dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=LaborType', window.params.laborType);
+            var laborTypeSelects = syncGet('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=laborType');
+            laborTypeSelects.unshift({ itemKey: null, itemDescription:'全部'});
+            var laborTypeConfig = {
+                elementAttr: {
+                    id: 'laborTypeId'
+                    //class:'laborType'
+                },
+                displayExpr: 'itemDescription',
+                valueExpr: 'itemKey',
+                searchPlaceholder: '请选择...',
+                dataSource: laborTypeSelects,
+                value: window.params.laborType,
+                closeOnOutsideClick: true,
+                onValueChanged: function (e) {
+                    window.params.laborType = e.value;
+                    laborTypeConfig.value = e.value;
+                    initSectionWorkerDetailPivotGrid();
+                }
+            };
+
+            var workerSelects = syncGet('/api/parakeet/worker/workerSelectList');
+            workerSelects.unshift({ text: null, value: '全部' });
+            var workerConfig = {
+                elementAttr: {
+                    id: 'workerId'
+                    //class:'laborType'
+                },
+                displayExpr: 'value',
+                valueExpr: 'text',
+                searchPlaceholder: '请选择...',
+                dataSource: workerSelects,
+                value: window.params.workerId,
+                closeOnOutsideClick: true,
+                onValueChanged: function (e) {
+                    window.params.workerId = e.value;
+                    workerConfig.value = e.value;
+                    initSectionWorkerDetailPivotGrid();
+                }
+            };
+
+            var workerTypeSelects = syncGet('/api/parakeet/workerType/workerTypeSelectList');
+            workerTypeSelects.unshift({ text: null, value: '全部' });
+            var workerTypeConfig = {
+                elementAttr: {
+                    id: 'workerTypeId'
+                    //class:'workerTypeId'
+                },
+                displayExpr: 'value',
+                valueExpr: 'text',
+                searchPlaceholder: '请选择...',
+                dataSource: workerTypeSelects,
+                value: window.params.workerTypeId,
+                closeOnOutsideClick: true,
+                onValueChanged: function (e) {
+                    window.params.workerTypeId = e.value;
+                    workerTypeConfig.value = e.value;
+                    initSectionWorkerDetailPivotGrid();
+                }
+            };
+
+            var sectionWorkerSelects = syncGet('/api/parakeet/sectionWorker/sectionWorkerSelectList');
+            sectionWorkerSelects.unshift({ text: null, value: '全部' });
+            var sectionWorkerConfig = {
+                elementAttr: {
+                    id: 'sectionWorkerId'
+                    //class:'sectionWorkerId'
+                },
+                displayExpr: 'value',
+                valueExpr: 'text',
+                searchPlaceholder: '请选择...',
+                dataSource: sectionWorkerSelects,
+                value: window.params.sectionWorkerId,
+                closeOnOutsideClick: true,
+                onValueChanged: function (e) {
+                    window.params.sectionWorkerId = e.value;
+                    sectionWorkerConfig.value = e.value;
+                    initSectionWorkerDetailPivotGrid();
+                }
+            };
+
+            initSectionWorkerDetailPivotGrid();
+
+            function initSectionWorkerDetailPivotGrid() {
+
+                syncPost('/api/parakeet/sectionWorkerDetail/pivotGrid',
+                    {
+                        startDate: window.params.startDate,
+                        endDate: window.params.endDate,
+                        positionName: window.params.positionName,
+                        sectionWorkerId: window.params.sectionWorkerId,
+                        workerTypeId: window.params.workerTypeId,
+                        workerId: window.params.workerId,
+                        laborType: window.params.laborType
+                    },
+                    function(array) {
+
+                        var config = dxConfig.pivotGrid(array);
+                        config.gridId = 'grid-sectionWorkerDetails';
+                        config.gridSelector = '#' + config.gridId;
+                        config.export.fileName = '项目地块用工汇总' + new Date().toLocaleDateString();
+                        config.showColumnTotals = true;
+                        config.dataSource.fields = [
+                            {
+                                caption: '项目',
+                                dataField: 'projectName', //dataField: 'SectionId',
+                                width: 120,
+                                allowSorting: true,
+                                expanded: false, //默认展开行/列
+                                showTotals: true, //是否显示合计行/列,默认显示
+                                //wordWrapEnabled: true,
+                                //sortOrder: 'asc',
+                                //selector: function (row) {
+                                //    return row.sectionId + '-' + row.sectionName;
+                                //},
+                                //customizeText: function (e) {
+                                //    var str = e.value.split('-');
+                                //    return str[1];//自定义界面显示：row.sectionName，达到排序与显示分离
+                                //},
+                                //使用了selector之后，sortingMethod就自动失效，不用selecor/特殊情况下写sortingMethod自定义排序
+                                //sortingMethod: function (a, b) {
+                                //    var index1 = parseInt(a.value.split('-')[0]);
+                                //    var index2 = parseInt(b.value.split('-')[0]);
+                                //    return index1 > index2;
+                                //}
+                                area: 'row'
+                            },
+                            {
+                                caption: '地块',
+                                dataField: 'sectionName', //dataField: 'SectionId',
+                                width: 120,
+                                allowSorting: true,
+                                expanded: false, //默认展开行/列
+                                showTotals: true, //是否显示合计行/列,默认显示
+                                //wordWrapEnabled: true,
+                                //sortOrder: 'asc',
+                                //selector: function (row) {
+                                //    return row.sectionId + '-' + row.sectionName;
+                                //},
+                                //customizeText: function (e) {
+                                //    var str = e.value.split('-');
+                                //    return str[1];//自定义界面显示：row.sectionName，达到排序与显示分离
+                                //},
+                                //使用了selector之后，sortingMethod就自动失效，不用selecor/特殊情况下写sortingMethod自定义排序
+                                //sortingMethod: function (a, b) {
+                                //    var index1 = parseInt(a.value.split('-')[0]);
+                                //    var index2 = parseInt(b.value.split('-')[0]);
+                                //    return index1 > index2;
+                                //}
+                                area: 'row'
+                            },
+                            {
+                                caption: '地块工人名',
+                                dataField: 'sectionWorkerName', //dataField: 'SectionId',
+                                width: 120,
+                                allowSorting: true,
+                                expanded: false, //默认展开行/列
+                                showTotals: true, //是否显示合计行/列,默认显示
+                                //wordWrapEnabled: true,
+                                //sortOrder: 'asc',
+                                //selector: function (row) {
+                                //    return row.sectionId + '-' + row.sectionName;
+                                //},
+                                //customizeText: function (e) {
+                                //    var str = e.value.split('-');
+                                //    return str[1];//自定义界面显示：row.sectionName，达到排序与显示分离
+                                //},
+                                //使用了selector之后，sortingMethod就自动失效，不用selecor/特殊情况下写sortingMethod自定义排序
+                                //sortingMethod: function (a, b) {
+                                //    var index1 = parseInt(a.value.split('-')[0]);
+                                //    var index2 = parseInt(b.value.split('-')[0]);
+                                //    return index1 > index2;
+                                //}
+                                area: 'row'
+                            },
+                            {
+                                caption: '工人名',
+                                dataField: 'workerName', //dataField: 'SectionId',
+                                width: 120,
+                                allowSorting: true,
+                                expanded: false, //默认展开行/列
+                                showTotals: true, //是否显示合计行/列,默认显示
+                                //wordWrapEnabled: true,
+                                //sortOrder: 'asc',
+                                //selector: function (row) {
+                                //    return row.sectionId + '-' + row.sectionName;
+                                //},
+                                //customizeText: function (e) {
+                                //    var str = e.value.split('-');
+                                //    return str[1];//自定义界面显示：row.sectionName，达到排序与显示分离
+                                //},
+                                //使用了selector之后，sortingMethod就自动失效，不用selecor/特殊情况下写sortingMethod自定义排序
+                                //sortingMethod: function (a, b) {
+                                //    var index1 = parseInt(a.value.split('-')[0]);
+                                //    var index2 = parseInt(b.value.split('-')[0]);
+                                //    return index1 > index2;
+                                //}
+                                area: 'row'
+                            },
+                            {
+                                caption: '工种',
+                                dataField: 'WorkerTypeName',
+                                width: 120,
+                                expanded: true,
+                                showTotals: true,
+                                area: 'row'
+                            },
+                            {
+                                caption: '劳务类型',
+                                dataField: 'laborTypeName',
+                                width: 120,
+                                expanded: true,
+                                showTotals: true,
+                                area: 'row'
+                            },
+                            {
+                                dataField: 'startDate',
+                                dataType: 'date',
+                                groupInterval: 'year', //日期 年
+                                area: 'column'
+                            },
+                            {
+                                dataField: 'startDate',
+                                dataType: 'date',
+                                groupInterval: 'month', //日期 月
+                                area: 'column'
+                            },
+                            {
+                                caption: '单价(元)',
+                                dataField: 'unitPrice',
+                                dataType: 'number',
+                                summaryType: 'sum',
+                                //showTotals: false,
+                                format: { type: 'fixedPoint', precision: 2 },
+                                area: 'data'
+                            },
+                            {
+                                caption: '单价(元)',
+                                dataField: 'unitPrice',
+                                dataType: 'number',
+                                summaryType: 'sum',
+                                //showTotals: false,
+                                format: { type: 'fixedPoint', precision: 2 },
+                                area: 'data'
+                            },
+                            {
+                                caption: '利润(元)',
+                                dataField: 'unitProfit',
+                                dataType: 'number',
+                                summaryType: 'sum',
+                                //showTotals: false,
+                                format: { type: 'fixedPoint', precision: 2 },
+                                area: 'data'
+                            },
+                            {
+                                caption: '数量',
+                                dataField: 'amount',
+                                dataType: 'number',
+                                summaryType: 'sum',
+                                //showTotals: false,
+                                format: { type: 'fixedPoint', precision: 2 },
+                                area: 'data'
+                            },
+                            {
+                                caption: '金额',
+                                dataField: 'total',
+                                dataType: 'number',
+                                summaryType: 'sum',
+                                cssClass: 'orange',
+                                format: { type: 'fixedPoint', precision: 2 },
+                                area: 'data'
+                            }
+                        ];
+                        config.scrolling = {
+                            mode: 'standard',
+                            useNative: true
+                        };
+                        config.exceptRatio = 0;
+                        config.onToolbarPreparing = function(items) {
+                            //items.push({
+                            //    widget: 'dxCustomHtml',
+                            //    options: {
+                            //        template: function (container) {
+                            //            var html = $('<div class="dx-field-label">预计毛利率</div>' +
+                            //                '<div class="dx-field-value">' +
+                            //                '   <div class="expect-ratio"></div>' +
+                            //                '</div>');
+                            //            return html;
+                            //        }
+                            //    },
+                            //    location: 'before'
+                            //});
+                            items.push({
+                                widget: 'dxCustomLable',
+                                options: {
+                                    template: function(container) {
+                                        var html = $(
+                                            '<div class="dx-field-label" style="width: 2100%;">&nbsp;&nbsp;地块工人</div>');
+                                        return html;
+                                    }
+                                },
+                                location: 'before'
+                            });
+                            items.push({
+                                widget: 'dxSelectBox',
+                                options: sectionWorkerConfig,
+                                location: 'before'
+                            });
+
+                            items.push({
+                                widget: 'dxCustomLable',
+                                options: {
+                                    template: function(container) {
+                                        var html = $(
+                                            '<div class="dx-field-label" style="width: 2100%;">&nbsp;&nbsp;劳务类型</div>');
+                                        return html;
+                                    }
+                                }, //window.endDateBoxConfig,
+                                location: 'before'
+                            });
+                            items.push({
+                                widget: 'dxSelectBox',
+                                options: laborTypeConfig,
+                                //options: {
+                                //    template: function(container) {
+                                //        var html = $('<div class="dx-field-label">&nbsp;&nbsp;收费类型</div>' +
+                                //            '<div class="dx-field-value">' +
+                                //            '   <div class="laborType"></div>' +
+                                //            '</div>');
+                                //        return html;
+                                //    }
+                                //}, //window.endDateBoxConfig,
+                                location: 'before'
+                            });
+                            
+                            items.push({
+                                widget: 'dxCustomLable',
+                                options: {
+                                    template: function(container) {
+                                        var html = $(
+                                            '<div class="dx-field-label" style="width: 2100%;">&nbsp;&nbsp;工人</div>');
+                                        return html;
+                                    }
+                                },
+                                location: 'before'
+                            });
+                            items.push({
+                                widget: 'dxSelectBox',
+                                options: workerConfig,
+                                location: 'before'
+                            });
+                            
+                            items.push({
+                                widget: 'dxCustomLable',
+                                options: {
+                                    template: function(container) {
+                                        var html = $(
+                                            '<div class="dx-field-label" style="width: 2100%;">&nbsp;&nbsp;工种</div>');
+                                        return html;
+                                    }
+                                },
+                                location: 'before'
+                            });
+                            items.push({
+                                widget: 'dxSelectBox',
+                                options: workerTypeConfig,
+                                location: 'before'
+                            });
+                            
+                            items.push({
+                                widget: 'dxCustomHtml',
+                                //options: window.dateConfig,
+                                options: {
+                                    template: function(container) {
+                                        var html = $('<div class="dx-field-label">&nbsp;&nbsp;开始日期</div>' +
+                                            '<div class="dx-field-value">' +
+                                            '   <div class="startDate"></div>' +
+                                            '</div>');
+                                        return html;
+                                    }
+                                }, //window.startDateBoxConfig,
+                                location: 'before'
+                            });
+
+                            items.push({
+                                widget: 'dxCustomHtml',
+                                options: {
+                                    template: function(container) {
+                                        var html = $('<div class="dx-field-label">&nbsp;&nbsp;结束日期</div>' +
+                                            '<div class="dx-field-value">' +
+                                            '   <div class="endDate"></div>' +
+                                            '</div>');
+                                        return html;
+                                    }
+                                }, //window.endDateBoxConfig,
+                                location: 'before'
+                            });
+
+                            items.push({
+                                widget: 'dxButton',
+                                options: {
+                                    text: "刷新重置",
+                                    onClick: function() {
+                                        window.params = {
+                                            startDate: null,
+                                            endDate: null,
+                                            laborType: null,
+                                            positionName: null,
+                                            sectionWorkerId: null,
+                                            workerTypeId: null,
+                                            workerId: null
+                                        };
+                                        initSectionWorkerDetailPivotGrid();
+                                    }
+                                },
+                                location: 'after'
+                            });
+                        };
+                        config.onContentReady = function(e) {
+                            //if (!window.ratioConfig.value) window.ratioConfig.value = e.component._options.exceptRatio;
+                            //$('.expect-ratio').dxNumberBox(window.ratioConfig);
+                            $('.startDate').dxDateBox({
+                                type: 'date', //'datetime'
+                                pickerType: 'calendar', //'rollers',//
+                                value: window.params.startDate,
+                                //placeholder: '请选择开始日期',
+                                maxZoomLevel: 'year',
+                                max: window.params.endDate,
+                                //displayFormat: function (value) { return T(value, __MonthFormat); },
+                                onValueChanged: function(e) {
+                                    if (e.value) {
+                                        //$('.endDate').dxDateBox('instance').option('min', e.value);
+                                        //var range = {
+                                        //    startDate: e.value,
+                                        //    endDate: $('.endDate').dxDateBox('instance').option('value')
+                                        //};
+                                        //接着刷新grid
+                                        window.params.startDate = e.value;
+                                        initSectionWorkerDetailPivotGrid();
+                                    }
+                                }
+                            });
+
+                            $('.endDate').dxDateBox({
+                                type: 'date',
+                                pickerType: 'calendar',
+                                value: window.params.endDate,
+                                //placeholder: '请选择结束日期',
+                                maxZoomLevel: 'year',
+                                min: window.params.startDate,
+                                //displayFormat: function (value) { return T(value, __MonthFormat); },
+                                onValueChanged: function(e) {
+                                    if (e.value) {
+                                        ////$('.startDate').dxDateBox('instance')._options.max = e.value;
+                                        //$('.startDate').dxDateBox('instance').option('max', e.value);
+                                        //var range = {
+                                        //    startDate: $('.startDate').dxDateBox('instance').option('value'),
+                                        //    endDate: e.value
+                                        //};
+                                        //接着刷新grid
+                                        window.params.endDate = e.value;
+                                        initSectionWorkerDetailPivotGrid();
+                                    }
+                                }
+                            });
+                        };
+                        config = pivotGridSugar(config);
+                        var parent = $(config.gridSelector).parent().html('');
+                        $('<div id="' + config.gridId + '">').dxPivotGrid(config).appendTo(parent);
+
+                        //config.component = $(config.gridSelector).dxPivotGrid('instance');
+                    });
+            }
+
+
+        });
+
+
+    </script>
+}
+

@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="鹦鹉工作室">
+    <meta name="author" content="parakeet">
+
+    <title>小鹦鹉工作室</title>
+    <link href="~/favicon.gif" rel="shortcut icon" type="image/x-icon" asp-append-version="true" />
+    <!-- Bootstrap 3.3.7 CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <!-- Bootstrap v4.3.1 CSS -->
+    <!--link href="~/css/devextreme/bootstrap.min.css" rel="stylesheet" asp-append-version="true" /-->
+    <!-- 谷歌字体 CSS -->
+    <link rel="stylesheet" href="~/css/site.min.css" />
+
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="~/plugins/rs-plugin/css/settings.css" media="screen" asp-append-version="true" />
+
+    <!-- Custom CSS -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" asp-append-version="true">
+    <link href="~/css/ionicons.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/responsive.css" rel="stylesheet" asp-append-version="true">
+
+    <!-- COLORS -->
+    <link rel="stylesheet" id="color" href="~/css/default.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true">
+    @RenderSection("styles", required: false)
+    <script src="~/js/modernizr.js" asp-append-version="true"></script>
+</head>
+
+<body>
+    <div id="wrap">
+
+        <!-- header -->
+        <header class="header-normal">
+            <div class="sticky">
+                <div class="container">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="/Home"><img class="img-responsive" width="70" src="~/images/logo-parakeet17.png" alt=""><span>小鹦鹉工作室</span></a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="navbar webimenu">
+                        <!-- MENU BUTTON RESPONSIVE -->
+                        <div class="menu-toggle"> <i class="fa fa-bars"> </i> </div>
+                        <!-- NAV -->
+
+                        <ul class="nav ownmenu">
+                            <li class="active">
+                                <a href="~/home">主页</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/areaTenant/areaTreeListIndex">区域管理</a> </li>
+                                    <li> <a href="~/api/parakeet/areaTenant">区域连接管理</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/project/index"> 项目简介 </a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/organization/index">组织架构</a> </li>
+                                    <li> <a href="~/api/parakeet/project/index">项目简介</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/need/index">用户需求</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/organization/index">门户网站</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">系统定制</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">公众号</a> </li>
+                                    <li> <a href="~/api/parakeet/need/create">小程序</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/author/index">关于作者</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/author/index">简历</a> </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="~/api/parakeet/need/create">联系我们</a>
+                                <ul class="dropdown animated-3s fadeIn">
+                                    <li> <a href="~/api/parakeet/need/create">联系我们</a> </li>
+                                    <li> <a href="~/api/parakeet/project/tiku">下载题库</a> </li>
+                                </ul>
+                            </li>
+
+                            @Html.Partial("_LoginPartial")
+                            <li><img class="parakeet" width="60" src="~/images/parakeet.png" alt="" /></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <div id="content">
+            @RenderBody()
+        </div>
+        <!--======= FOOTER =========-->
+        <footer>
+            <div class="container">
+
+                <!-- FOOTER -->
+                <div class="footer-info">
+                    <div class="row">
+
+                        <!-- keep in touch -->
+                        <div class="col-md-4">
+                            <div class="padding-right-50">
+                                @*<img src="~/images/logo.png" class="margin-bottom-30" alt="">*@
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at purus varius odio tempus cursus. Donec quis nibh luctus, posuere velit vitae, commodo dui. Nullam eu blandit orci. Pellentesque sit amet enim sapien. Fusce nec mauris pellentesque, lacinia quam eu, molestie elit.</p>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="links">
+                                <li><a href="#.">Home </a></li>
+                                <li><a href="#.">My Account </a></li>
+                                <li><a href="#.">Term & Condition </a></li>
+                                <li><a href="#.">Privacy Policy </a></li>
+                                <li><a href="#.">Help Center</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- INSTAGRAM  -->
+                        <div class="col-md-3">
+                            <h6>iNSTAGRAM with us</h6>
+                            <div class="flicker-img">
+                                <ul>
+                                    <li><a href="#."><img src="~/images/flicker-img-5.jpg" alt=""> </a></li>
+                                    <li><a href="#."><img src="~/images/flicker-img-6.jpg" alt=""> </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- keep in touch -->
+                        <div class="col-md-3">
+                            <h6>newsletter</h6>
+                            <div class="news-letter">
+                                <p>Subscribe Our Newsletter get the Important News. The Amazing Offers & Inside Scoops:</p>
+                                <form class="subscribe">
+                                    <input type="email" placeholder="Email address">
+                                    <button type="submit"><i class="fa fa-envelope"></i></button>
+                                </form>
+
+                                <!-- Social Icons -->
+                                <div class="social_icons"> <a href="#."><i class="fa fa-behance"></i></a> <a href="#."><i class="fa fa-facebook"></i></a> <a href="#."><i class="fa fa-twitter"></i></a> <a href="#."><i class="fa fa-dribbble"></i></a> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--======= RIGHTS =========-->
+        <div class="rights">
+            <div class="container">
+                <p>Copyright &copy; @($"{DateTime.Now.Year}") All rights reserved <a href="https://www.parakeet.vip/" title="博文科技" target="_blank">博文科技</a></p>
+                <div class="scroll"> <a href="#wrap" class="go-up"><i class="lnr lnr-arrow-up"></i></a> </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScripts -->
+    <script src="~/js/jquery.min.js"></script>
+    <!-- bootstrap v3.3.7-->
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- bootstrap v4.3.1-->
+    <!--script-- src="~/js/devextreme/bootstrap.min.js"></!--script-->
+    <!--script src="~/plugins/jquery/dist/jquery.min.js"></script-->
+    <!--script src="~/plugins/bootstrap/dist/js/bootstrap.min.js"></script-->
+
+    <script src="~/js/own-menu.js"></script>
+    <script src="~/js/jquery.lighter.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/color-switcher.js"></script>
+    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+    <script type="text/javascript" src="~/plugins/rs-plugin/js/jquery.tp.t.min.js"></script>
+    <script type="text/javascript" src="~/plugins/rs-plugin/js/jquery.tp.min.js"></script>
+    <script src="~/js/main.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using Common.Helpers;
 using Common.Interfaces;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Authentication;
@@ -184,5 +185,18 @@ public class AccountController : ChallengeAccountController
         //return _personalCacheAppService.GetValidCodeImage();
     }
     #endregion
+
+
+
+
+    /// <summary>
+    /// 必须AzureAd登录后才能进入  测试api
+    /// </summary>
+    /// <returns></returns>
+    [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
+    public IActionResult AzureLogin()
+    {
+        return View();
+    }
 
 }

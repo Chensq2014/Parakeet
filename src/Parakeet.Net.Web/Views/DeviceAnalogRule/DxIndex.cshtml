@@ -1,0 +1,160 @@
+﻿
+<div id="grid-deviceAnalogRule" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        $(function () {
+
+            initDeviceAnalogRuleGrid();
+
+            function initDeviceAnalogRuleGrid() {
+                var periods = [
+                    { 'text': '1分钟', 'value': '0.00:01:00' },
+                    { 'text': '2分钟', 'value': '0.00:02:00' },
+                    { 'text': '3分钟', 'value': '0.00:03:00' },
+                    { 'text': '5分钟', 'value': '0.00:05:00' },
+                    { 'text': '10分钟', 'value': '0.00:10:00' },
+                    { 'text': '30分钟', 'value': '0.00:30:00' },
+                    { 'text': '1小时', 'value': '0.01:00:00' },
+                    { 'text': '2小时', 'value': '0.02:00:00' },
+                    { 'text': '5小时', 'value': '0.05:00:00' },
+                    { 'text': '12小时', 'value': '0.12:00:00' },
+                    { 'text': '1天', 'value': '1.00:00:00' },
+                    { 'text': '2天', 'value': '2.00:00:00' },
+                    { 'text': '5天', 'value': '5.00:00:00' },
+                    { 'text': '10天', 'value': '10.00:00:00' },
+                    { 'text': '30天', 'value': '30.00:00:00' }
+                ];
+                var config = dxConfig.editGrid('/api/parakeet/deviceAnalogRule');
+                config.gridId = 'grid-deviceAnalogRule';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = true;
+                config.editing.allowUpdating = true;
+                //config.searchPanel.visible = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    //{
+                    //    dataField: 'deviceId',
+                    //    caption: '设备Id',
+                    //    allowEditing: false,
+                    //    visible: false //, dataType: 'Guid'
+                    //},
+                    {
+                        dataField: 'deviceName',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: false,
+                        allowHeaderFiltering: false,
+                        caption: '设备名称'
+                    },
+                    {
+                        dataField: 'fakeNo',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: false,
+                        allowHeaderFiltering: false,
+                        caption: '设备编码'
+                    },
+                    {
+                        dataField: 'period',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        //allowEditing: false,//可提供下拉框选择
+                        lookup: dxConfig.selectBox(periods),
+                        caption: '频率'
+                    },
+                    //{
+                    //    dataField: 'locationAreaId',
+                    //    alignment: 'center',
+                    //    allowFiltering: false,
+                    //    allowHeaderFiltering: false,
+                    //    //allowEditing: false,
+                    //    caption: '区域',
+                    //    lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?level=1'),
+                    //    validationRules: [{ type: "required", message: "区域必填项" }]
+                    //},
+                    {
+                        dataField: 'lastSendTime',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '最后一次发送数据时间'
+                    },
+                    {
+                        dataField: 'isEnabled',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '启用/禁用'//可提供选择或者点击开关
+                    },
+                    {
+                        dataField: 'remark',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '备注'
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+
+                };
+                config.onToolbarPreparing = function (e) {
+                    //var items = e.toolbarOptions.items;
+                    //$.each(items,
+                    //    function (index, item) {
+                    //        if (item.name === 'addRowButton') {
+                    //            //var addFunc = item.options.onClick;
+                    //            item.options.onClick = null;
+                    //            item.options.onClick = function (f) {
+                    //                //f.event.stopPropagation();
+                    //                //跳转到联系我们页面
+                    //                window.location = '/api/parakeet/deviceAnalogRule/create';
+                    //            }
+                    //        }
+                    //    });
+                    //items.push({
+                    //    widget: 'dxButton',
+                    //    options: {
+                    //        text: '查看更多',
+                    //        onClick: function (f) {
+                    //            f.event.stopPropagation();
+                    //            e.component.beginUpdate();
+                    //            var visible = !e.component.columnOption('phone', 'visible');
+                    //            e.component.columnOption('phone', 'visible', visible);
+                    //            e.component.columnOption('qNumber', 'visible', visible);
+                    //            e.component.columnOption('email', 'visible', visible);
+                    //            e.component.columnOption('readTime', 'visible', visible);
+                    //            if (visible) {
+                    //                f.component.option('text', '隐藏');
+                    //            } else {
+                    //                f.component.option('text', '查看更多');
+                    //            }
+                    //            e.component.endUpdate();
+                    //        }
+                    //    },
+                    //    location: 'after'
+                    //});
+                };
+
+
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+
+            }
+
+        });
+
+
+    </script>
+}

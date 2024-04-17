@@ -1,0 +1,504 @@
+﻿@using Parakeet.Net.Enums
+@using Parakeet.Net.Extensions
+@using Parakeet.Net.Dtos
+@model Parakeet.Net.Dtos.NeedDto;
+
+@{
+    var formId = Guid.NewGuid().ToString();
+}
+@section styles
+{
+    <style>
+        .block {
+            display: block;
+        }
+
+        form label.error {
+            display: none;
+        }
+
+        /*批量上传文件区域样式*/
+        .upload-container {
+            /*width: 600px;*/
+            height: 400px;
+            border: 1px solid lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+        }
+
+        .drag-container {
+            float: left;
+            margin-right: 80px;
+            padding: 0;
+            width: 100%;
+        }
+
+        .thumb {
+            height: 100px;
+            max-width: 100px;
+            border: 1px solid #000;
+            margin: 10px 5px 0 0;
+        }
+
+        /*tilevView*/
+        .dx-tile-content {
+            height: 100%;
+        }
+
+            .dx-tile-content .image {
+                height: 100%;
+                width: 100%;
+                /*background-position: center;
+            background-size: cover;*/
+                display: block;
+            }
+
+        /*隐藏useBotton的上传按钮*/
+        #fileUploader .dx-fileuploader-upload-button {
+            display: none;
+        }
+    </style>
+}
+
+<div class="container">
+
+    <form action="@Url.Action("Create", "Need")" method="post" class="form-horizontal" role="form" id="needForm" data-guid="@formId" enctype="multipart/form-data">
+        <div class="form-body">
+            @Html.Hidden("UploadGuid", formId)
+            @Html.Hidden("Id", formId)
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 col-lg-4 col-xl-4 control-label text-right" for="Name"><span class="required">*</span>怎么称呼</label>
+
+                <div class="col-xs-12 col-md-4 col-lg-4 col-xl-4">
+                    @Html.TextBoxFor(m => m.Name, new
+                    {
+                        @class = "form-control",
+                        placeholder = "请填写姓名",
+                        data_val = "true",
+                        data_val_required = "名称不能为空！"
+                    })
+                    <span data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-4 col-xl-4">
+                    <fieldset id="sex-option">
+                        <div class="radio-list">
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(m => m.Sex, Sex.Male.ToString(), new
+                                {
+                                    placeholder = "请选择性别",
+                                    data_val = "true",
+                                    data_val_required = "请选择性别！"
+                                })
+                                @Sex.Male.DisplayName()
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(m => m.Sex, Sex.Female.ToString(), new
+                                {
+                                    placeholder = "请选择性别",
+                                    data_val = "true",
+                                    data_val_required = "请选择性别！"
+                                })
+                                @Sex.Female.DisplayName()
+                            </label>
+                        </div>
+                        <span data-valmsg-for="Sex" data-valmsg-replace="true"></span>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 control-label text-right" for="Phone"><span class="required">*</span>您的电话</label>
+                <div class="col-xs-12 col-md-7">
+                    @Html.TextBoxFor(m => m.Phone, new
+                    {
+                        @class = "form-control", // input-mask
+                        placeholder = "请填写以便我们与你取得联系",
+                        data_val = "true",
+                        data_val_required = "请输入电话号码！"
+                        //data_inputmask = "'mask': '9', 'repeat': 11, 'greedy' : false"
+                    })
+                    <span data-valmsg-for="Phone" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 control-label text-right required" for="Requirements"><span class="required">*</span>您的需求</label>
+                <div class="col-md-7">
+                    @Html.TextAreaFor(m => m.Requirements, 5, 20, new
+                    {
+                        @class = "form-control",
+                        placeholder = "请您简单说明需要什么样的软件系统来解决什么问题",
+                        data_val = "true",
+                        data_val_required = "请简单描述您的需求！"
+                    })
+                    <span data-valmsg-for="Requirements" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 control-label text-right" for="QNumber">能否留下你的QQ号码？</label>
+                <div class="col-xs-12 col-md-7">
+                    @Html.TextBoxFor(m => m.QNumber, new { @class = "form-control input-mask", placeholder = "请输入QQ", data_inputmask = "'mask': '9', 'repeat': 15, 'greedy' : false" })
+                    <span data-valmsg-for="QNumber" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 control-label text-right" for="Email">能否留下你的电子邮箱地址？</label>
+                <div class="col-xs-12 col-md-7">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "输入邮件地址我还可以给你发邮件哟😊(例:xxx@qq.com)", type = "email" })
+                        <span data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                        @*<div class="input-group-append">
+                                <span class="input-group-text">@@qq.com</span>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 control-label text-right" for="fine-uploader-manual-trigger">你也可以上传部分资料来阐述你的需求</label>
+                <div class="col-xs-12 col-md-7">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="upload-container">
+                                <div class="gallery-view"> </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="upload-container">
+                                <div class="tile-view"> </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-12">
+                            @*<input type="file" id="files" name="files" multiple="multiple" accept=".png,.jpg,.bmp,.gif" style="display: none;"/><div id="btn-upload" class="custom-upload-btn" style="display: none;"></div>*@
+
+                            <div id="btn-upload"></div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <div>
+                                <div class="option" id="accept-option"></div>
+                            </div>
+                            <div class="drag-container">
+                                <div data-options="dxItem: {ratio: 1}">
+                                    <div id="fileUploader"></div>
+                                </div>
+                                <div data-options="dxItem: {ratio: 1}">
+                                    <h5>文件预览:</h5>
+                                    <video style="display: none" id="myMedia" controls></video>
+                                    <div id="list"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xs-12 col-md-4 control-label text-right required" for="validat-Code"><span class="required">*</span>请录入你看到的验证码</label>
+                <div class="col-xs-12 col-md-4">
+                    @Html.TextBox("Code", "", new
+                    {
+                        @class = "form-control",
+                        placeholder = "请录入验证码！",
+                        data_val = "true",
+                        data_val_required = "请输入验证码！"
+                    })
+                    <span data-valmsg-for="Code" data-valmsg-replace="true"></span>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <img id="validat-Code" style="cursor: pointer;" src="@Url.Action("VerifyCode", "Account")" alt="验证码" height="45" />
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <div class="row">
+                <div class="col-xs-12 col-md-4 offset-md-4 float-right">
+                    <button type="submit" id="btnSave" class="btn btn-primary"><i class="fa fa-floppy-o"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section scripts{
+
+    <!--支持form的ajax提交 包含上传文件-->
+    <!--abp-script src="/plugins/jquery-form/jquery.form.js"></abp-script>-->
+    <script>
+        $(function() {
+            //默认gallery展示 隐藏域
+            initGallery($('.gallery-view'), window.commonFiles ? window.commonFiles : []);
+            initTileView($('.tile-view'), window.commonFiles ? window.commonFiles : []);
+
+            // 与drag drop 相关的事件，需要使用e.preventDefault()来阻止拖拽的
+            // 默认行为  因为浏览器会默认打开拖放到页面上的资源  （图片文档 音频等）
+
+            $.each($('.upload-container'),
+                function(cIndex, container) {
+                    //var container = document.querySelector('.upload-container');
+                    container.ondragover = function(e) { e.preventDefault(); };
+                    container.ondrop = function(e) {
+                        e.preventDefault();
+                        //获取拖动的文件信息 得到额是一个数组
+                        updateFiles(e.dataTransfer.files);
+                        //var files = e.dataTransfer.files;
+                    };
+                });
+
+            $('.drag-container').dxBox({
+                direction: 'row',
+                width: '100%',
+                height: 375
+            });
+
+            //设置上传文件类型 如果是图片允许批量上传，其它文件只允许单文件上传
+            $('#accept-option').dxSelectBox({
+                dataSource: [
+                    { name: 'Images', value: 'image/*' },
+                    { name: 'Videos', value: 'video/*' },
+                    { name: 'Audio', value: 'audio/*' }
+                ],
+                valueExpr: 'value',
+                displayExpr: 'name',
+                value: 'image/*',
+                width: 200,
+                onValueChanged: function(e) {
+                    $('#fileUploader').dxFileUploader('instance')
+                        .option({ accept: e.value, multiple: e.value === 'image/*' });
+                    $('#fileUploader').dxFileUploader('instance').reset();
+                }
+            });
+
+            ////html5 input 标签上传多个文件
+            //$('#files').on('change',
+            //    function(e) {
+            //        updateFiles(e.target.files);
+            //    });
+
+            var config = dxConfig.fileUploader({
+                name: 'uploadFiles', //useForm方式会让input name="uploadFiles" 的formData数据传递给后端
+                uploadUrl: '', //
+                uploadMode: 'useForm', //'useButtons',//'instantly', //
+                selectButtonText: '选择文件', //'选择文件...',
+                //allowedFileExtensions: ['.jpg', '.jpeg', '.gif', '.png'],
+                accept: 'image/*',
+                //width: '100%',
+                //height: 400,
+                value: [],
+                multiple: true,
+                onUploaded: function(e) {
+                    //e.component e.file e.jQueryEvent e.event e.request
+                    //debugger; //useForm的方式可以进来吗？不可以
+                    sucNotify('上传成功');
+                    hideLoading();
+                },
+                onValueChanged: function(e) {
+                    //已选择的文件名称
+                    //e.component e.value//Newly selected files.  e.previousValue
+                    //e.value[0].name = 'project11.jpg';//改文件名 加时间戳
+                    //e.component.option('selectButtonText', e.value[0].name);
+                    var files = e.value;
+                    window.commonFiles = e.value;
+                    $('#myMedia').hide();
+                    $('#list').html('');
+                    if (e.component.option('accept') === 'image/*') {
+                        $.each(files,
+                            function(fIndex, file) {
+                                previewImages(file);
+                            });
+                        //使用gallary显示
+                        if ($.isFunction(initGallery) && $('.gallery-view').length) {
+                            initGallery($('.gallery-view'), getImages(files));
+                        }
+                        //使用tileView显示
+                        if ($.isFunction(initTileView) && $('.tile-view').length) {
+                            initTileView($('.tile-view'), getImages(files));
+                        }
+                    } else {
+                        //展示第一个媒体文件的src
+                        if (files.length) previewMedia('myMedia', files[0]);
+                    }
+                }
+            });
+            //上传文件1 btn-upload 自定义dxUploader
+            config.component = $('#btn-upload')
+                .dxFileUploader(config)
+                .dxFileUploader('instance');
+
+            //上传文件2
+            var uploaderConfig = $.extend(true,
+                {},
+                config,
+                {
+                    name: 'uploadFile',
+                    selectButtonText: '选择文件',
+                    readyToUploadMessage: '',
+                    uploadMode: 'useButtons', // 'useForm', //'instantly', //
+                    showFileList: true
+                });
+            //dxUploader默认
+            uploaderConfig.component = $('#fileUploader').dxFileUploader(uploaderConfig).dxFileUploader('instance');
+
+            validateForm();
+            $('#btnSave').on('click',
+                function (e) {
+                    e.preventDefault();
+                    if (!$('#needForm').validate().form()) {
+                        return;
+                    }
+                    ////第一种方法：ajax 传递FormData 含上传文件提交
+                    //var need = {};
+                    //$('#needForm').find(':input').serializeArray().map(function(x) { need[x.name] = x.value; });
+                    //need.UploadFiles = [];
+                    var needForm = new FormData(document.getElementById('needForm'));
+                    if (window.commonFiles&&window.commonFiles.length > 5) {
+                        errNotify('上传文件数量不能超过5个，单个文件大小不能超过4MB.');
+                        return;
+                    }
+                    $.each(window.commonFiles,
+                        function(fIndex, file) {
+                            needForm.append('files' + fIndex, file);
+                        });
+                    $.ajax({
+                        type: 'Post',
+                        url: '@Url.Action("Create", "Need")',
+                        //dataType: 'json',
+                        //contentType: 'application/json: charset=utf-8',
+                        contentType: false, //含文件的提交 设置为false
+                        processData: false,
+                        data: needForm,
+                        //data: JSON.stringify({
+                        //    Model: need,
+                        //    UploadGuid: $('#UploadGuid').val(),
+                        //    //SaveFileNames: saveFileNames.val(),
+                        //    Files: need.UploadFiles,
+                        //    Code: $('#Code').val()
+                        //}),
+                        beforeSend: function(xhr) {
+                            //validateForm();
+                            $('#btnSave').attr('disabled', true);
+                            showLoading();
+                        },
+                        success: function(res) {
+                            if (res.status) {
+                                sucNotify(res.msg);
+                                if (res.url) {
+                                    setTimeout(function() {
+                                            window.location.href = res.url; //后台返回的url地址
+                                        },
+                                        2000);
+                                }
+                            } else {
+                                errNotify(res.msg);
+                            }
+                        },
+                        error: function(res) {
+                            errNotify(res.msg);
+                        },
+                        complete: function(res) {
+                            hideLoading();
+                            $("#validat-Code").trigger('click');
+                            $('#btnSave').removeAttr('disabled');
+                        }
+                    });
+
+
+                    ////第二种方法：ajaxSubmit
+
+                    ////ajaxSubmit options
+                    //$('#needForm').ajaxSubmit({
+                    //    target: '#needForm',//target	指明页面中由服务器响应进行更新的元素。元素的值可能被指定为一个jQuery选择器字符串、一个jquery对象、一个DOM元素
+                    //    //url: '/Need/Create',//url	指定提交表单数据的URL。	默认值：表单的action属性值
+                    //    type: 'Post',//type	指定提交表单数据的方法（method）：“GET”或“POST”
+                    //    dataType: 'json',//dataType	返回的数据类型：null、"xml"、"script"、"json"其中之一
+                    //    resetForm: true,//resetForm	表示如果表单提交成功是否进行重置。	默认值：null
+                    //    clearForm: true,//表示如果表单提交成功是否清除表单数据。
+                    //    beforeSubmit: validateForm,//beforeSubmit	表单提交前被调用的回调函数。如果回调函数返回false表单将不被提交。回调函数带三个调用参数：数组形式的表单数据，jQuery表单对象，以及传入ajaxForm/ajaxSubmit中的Options对象
+                    //    success: function (data) {
+                    //        //success 表单成功提交后调用的回调函数。然后dataType选项值决定传回responseText还是responseXML的值。
+                    //        if (data.Status) {
+                    //            sucNotify(data.Msg);
+                    //            if (data.redirectUrl) {
+                    //                window.location.href = data.redirectUrl; //后台返回的url地址
+                    //            }
+                    //        } else {
+                    //            errNotify(data.Msg);
+                    //        }
+                    //    },
+                    //    //error: function(data) {
+                    //    //    errNotify(data.Msg);
+                    //    //},
+                    //    //complete: function() {
+                    //    //    hideLoading();
+                    //    //    $("#validat-Code").trigger('click');
+                    //    //    $('#btnSave').removeAttr('disabled');
+                    //    //}
+                    //});
+
+                    //return false; // 阻止表单自动提交事件
+
+                });
+
+            //切换验证码
+            $('#validat-Code').on('click',
+                function(e) {
+                    this.src = '@Url.Action("VerifyCode", "Account")?time=' + (new Date()).getTime();
+                });
+        });
+
+
+        function validateForm(formData, $form, options) {
+            return $('#needForm')
+                .validate({
+                    rules: {
+                        Name: {
+                            required: true
+                        },
+                        Sex: {
+                            required: true,
+                        },
+                        Phone: {
+                            required: true,
+                            isTel: true
+                        },
+                        Requirements: {
+                            required: true
+                        },
+                        QNumber: {
+                            required: false,
+                            isQQ: true
+                        }
+                    }
+                });
+        }
+
+        function updateFiles(files) {
+            var arryFiles = getFiles(files);
+            //调用隐藏的dxUploader控件 btn-upload/fileUploader
+            var uploader = $('#btn-upload').dxFileUploader('instance');
+            //uploader.beginUpdate();
+            uploader.option('value',arryFiles); //Array.from(files)//uploader._options.value = files;//value为fileList只读属性，赋值无效
+            //uploader.endUpdate();
+            var fileUploader = $('#fileUploader').dxFileUploader('instance');
+            fileUploader.option('value', arryFiles); //Array.from(files)//fileUploader._options.value = files;
+            window.commonFiles = files;
+        }
+
+        function getFiles(files) {
+            var array = [];
+            $.each(files,
+                function(fIndex, file) {
+                    array.push(file);
+                });
+            return array;
+        }
+    </script>
+} 

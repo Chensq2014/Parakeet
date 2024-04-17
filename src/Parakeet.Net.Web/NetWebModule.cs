@@ -143,8 +143,8 @@ public class NetWebModule : AbpModule
         ConfigureBundles();//mvc前端配置压缩的资源bundles
         ConfigureCache(context);//配置缓存和Redis 在domain模块已配置
         ConfigureFilters(context);//mvc的全局filter统一配置 AddMvc
-        ConfigureDataProtection(context, configuration, hostingEnvironment);
-        ConfigureDistributedLocking(context, configuration);
+        ConfigureDataProtection(context);
+        ConfigureDistributedLocking(context);
         ConfigureUrls(configuration);
         ConfigureAuthentication(context);//配置鉴权
         ConfigureAuthorization(context);//配置授权
@@ -675,7 +675,7 @@ public class NetWebModule : AbpModule
                 {
                         configuration["AuthServer:MetaAddress"]!.EnsureEndsWith('/'),
                         configuration["AuthServer:Authority"]!.EnsureEndsWith('/')
-                    };
+                 };
 
                 options.MetadataAddress = configuration["AuthServer:MetaAddress"]!.EnsureEndsWith('/') +
                                         ".well-known/openid-configuration";
@@ -914,11 +914,10 @@ public class NetWebModule : AbpModule
                 //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
     }
-    private void ConfigureDataProtection(
-        ServiceConfigurationContext context,
-        IConfiguration configuration,
-        IWebHostEnvironment hostingEnvironment)
+    private void ConfigureDataProtection(ServiceConfigurationContext context)
     {
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+        var configuration = context.Services.GetConfiguration();
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
@@ -927,10 +926,9 @@ public class NetWebModule : AbpModule
         }
     }
 
-    private void ConfigureDistributedLocking(
-        ServiceConfigurationContext context,
-        IConfiguration configuration)
+    private void ConfigureDistributedLocking(ServiceConfigurationContext context)
     {
+        var configuration = context.Services.GetConfiguration();
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
             var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);

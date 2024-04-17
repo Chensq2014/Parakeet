@@ -1,0 +1,169 @@
+﻿@model Volo.Abp.Account.Web.Areas.Account.Controllers.Models.UserLoginInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>用户登录</title>
+    <link href="~/favicon.gif" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/login.min.css" type="text/css" rel="stylesheet">
+    <script src="~/js/modernizr.js"></script>
+</head>
+
+<body>
+    <div class="container login-wrap">
+        <h2 class="mg-b20 text-center">小鹦鹉工作室</h2>
+        <div class="col-sm-8 col-md-5 center-auto pd-sm-50 pd-xs-20 main_content">
+            <p class="text-center font16">登录</p>
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group mg-t20">
+                        <i class="icon-user icon_font"></i>
+                        @Html.TextBoxFor(m => m.UserNameOrEmailAddress, new
+                           {
+                               @class = "login_input",
+                               required = "required",
+                               //type = "email",
+                               data_val = "true",
+                               data_val_required = "请输入用户名或邮箱！",
+                               data_val_minlength = "至少4位",
+                               placeholder = "请输入用户名或邮箱"
+                           })
+                        @Html.ValidationMessageFor(m => m.UserNameOrEmailAddress)
+                        @*<span data-valmsg-for="Account" data-valmsg-replace="true"></span>*@
+                    </div>
+                    <div class="form-group mg-t20">
+                        <i class="icon-lock icon_font"></i>
+                        @Html.PasswordFor(m => m.Password, new
+                           {
+                               @class = "login_input",
+                               required = "required",
+                               data_val = "true",
+                               data_val_required = "请输入密码6-20位！",
+                               data_val_minlength = "密码至少6位",
+                               data_val_maxlength = "密码最多20位",
+                               placeholder = "请输入密码6-20位"
+                           })
+                        @Html.ValidationMessageFor(m => m.Password)
+
+                    </div>
+                    <div class="form-group">
+                        <div col-sm-12>
+                            @Html.TextBox("verify", "", new
+                            {
+                                @class = "login_input_code",
+                                required = "required",
+                                data_val = "true",
+                                data_val_required = "请输入验证码！",
+                                placeholder = "请输入验证码"
+                            })
+                            <span class="pull-right">
+                                <img class="verify-code" onclick="refresh(this)" src="@Url.Action("VerifyCode", "Account")" alt="验证码图片" title="点击刷新" height="45" />
+                                @*@Html.Image("/Account/VerifyCode", "验证码图片", "点击刷新", new
+                                    {
+                                        @class = "img verify-code",
+                                        onclick = "refresh(this)",
+                                        id = "verify-code",
+                                        height ="30"
+                                    },"img")*@
+                                @*@Html.Image("/Account/Verify", "验证码图片", "点击刷新", new { onclick = "refresh(this)", height="30" }, "img")*@
+                            </span>
+                        </div>
+                        <span data-valmsg-for="verify" data-valmsg-replace="true"></span>
+                        <div class="col-sm-12">
+                            @Html.ValidationMessage("failed")
+                        </div>
+                    </div>
+
+                    <div class="checkbox mg-b25">
+                        <label>
+                            <input type="checkbox" name="rememberMe" />记住我的登录信息
+                        </label>
+                    </div>
+                    <button type="submit" value="登录" class="login_btn">登 录</button>
+                }
+            </section>
+        </div><!--row end-->
+
+    </div><!--container end-->
+
+    <script src="~/js/devextreme/jquery.min.js"></script>
+    <script src="~/js/devextreme/bootstrap.min.js"></script>
+
+    <!-- jquery-validation SCRIPTS  -->
+    <partial name="_ValidationScriptsPartial" />
+    <script asp-append-version="true">
+        function refresh(obj) {
+            $(obj).attr('src', '/Account/VerifyCode?random=' + Math.random());
+        }
+        $(function () {
+            //$('#loginForm').validate();
+            $('#loginForm')
+                .validate({
+                    rules: {
+                        Account: {
+                            required: true,
+                            minlength: 4
+                        },
+                        Password: {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 20
+                        },
+                        Verify: {
+                            required: true
+                        }
+                    }
+                    //messages: {
+                    //    Account: {
+                    //        required: '请输入电话号码',
+                    //    },
+                    //    Password: {
+                    //        required: '请输入密码6-20位！',
+                    //        maxlength: '密码至少6位！',
+                    //        minlength: '密码不能超出20位！'
+                    //    },
+                    //    Verify: {
+                    //        required: '请输入验证码'
+                    //    }
+                    //}
+                    //errorPlacement: function (label, element) {
+                    //    label.appendTo(element.parent());
+                    //}
+                    //errorPlacement: function(label, element) {
+                    //    label.css('color', 'red');
+                    //    var type = $(element).attr('type');
+                    //    if (type === 'radio' || type === 'email') {
+                    //        label.appendTo(element.parent().parent());
+                    //    } else {
+                    //        label.appendTo(element.parent());
+                    //    }
+                    //}
+                    //highlight: function(element, errorClass) {
+                    //    $(element).addClass(errorClass);//.append('<span data-valmsg-for="cus" data-valmsg-replace="true">');
+                    //}
+                });
+
+            $('.login_btn').click(function (e) {
+                if (!$('#loginForm').validate().form()) {
+                    e.preventDefault();
+                    return;
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>
+

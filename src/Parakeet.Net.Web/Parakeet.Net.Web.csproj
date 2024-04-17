@@ -66,6 +66,74 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include="Views\Account\AuthorizeSchemes.cshtml" />
+	  <None Include="Views\Account\Index.cshtml" />
+	  <None Include="Views\Account\Login.cshtml" />
+	  <None Include="Views\Account\Login1.cshtml" />
+	  <None Include="Views\Account\Temp.cshtml" />
+	  <None Include="Views\AreaTenant\AreaTreeListIndex.cshtml" />
+	  <None Include="Views\AreaTenant\Index.cshtml" />
+	  <None Include="Views\AreaTenant\TenantConnectStringIndex.cshtml" />
+	  <None Include="Views\Authentication\Index.cshtml" />
+	  <None Include="Views\Authorization\Index.cshtml" />
+	  <None Include="Views\Authorization\Info.cshtml" />
+	  <None Include="Views\Authorization\InfoAdmin.cshtml" />
+	  <None Include="Views\Authorization\InfoAdminPolicy.cshtml" />
+	  <None Include="Views\Authorization\InfoAdminUser.cshtml" />
+	  <None Include="Views\Authorization\InfoCustomScheme.cshtml" />
+	  <None Include="Views\Authorization\InfoDoubleEmail.cshtml" />
+	  <None Include="Views\Authorization\InfoQQEmail.cshtml" />
+	  <None Include="Views\Authorization\InfoUser.cshtml" />
+	  <None Include="Views\Authorization\InfoUserPolicy.cshtml" />
+	  <None Include="Views\Author\Index.cshtml" />
+	  <None Include="Views\Author\profile.cshtml" />
+	  <None Include="Views\DeviceAnalogRule\Add.cshtml" />
+	  <None Include="Views\DeviceAnalogRule\DxIndex.cshtml" />
+	  <None Include="Views\DeviceAnalogRule\Index.cshtml" />
+	  <None Include="Views\Device\Index.cshtml" />
+	  <None Include="Views\Grpc\Index.cshtml" />
+	  <None Include="Views\Home\Crawler.cshtml" />
+	  <None Include="Views\Home\Error.cshtml" />
+	  <None Include="Views\Home\Form.cshtml" />
+	  <None Include="Views\Home\Index.cshtml" />
+	  <None Include="Views\Home\Index0.cshtml" />
+	  <None Include="Views\Home\Localization.cshtml" />
+	  <None Include="Views\Home\Privacy.cshtml" />
+	  <None Include="Views\Home\Temp.cshtml" />
+	  <None Include="Views\Home\Test.cshtml" />
+	  <None Include="Views\Manager\Index.cshtml" />
+	  <None Include="Views\Need\Add.cshtml" />
+	  <None Include="Views\Need\Create.cshtml" />
+	  <None Include="Views\Need\Index.cshtml" />
+	  <None Include="Views\Organization\Index.cshtml" />
+	  <None Include="Views\Product\Index.cshtml" />
+	  <None Include="Views\Project\Index.cshtml" />
+	  <None Include="Views\Project\ProjectMap.cshtml" />
+	  <None Include="Views\Section\Index.cshtml" />
+	  <None Include="Views\Section\ProductIndex.cshtml" />
+	  <None Include="Views\Section\Worker.cshtml" />
+	  <None Include="Views\Section\WorkerDetailIndex.cshtml" />
+	  <None Include="Views\Section\WorkerIndex.cshtml" />
+	  <None Include="Views\Section\WorkerType.cshtml" />
+	  <None Include="Views\Shared\Components\MenuNavigation\Default.cshtml" />
+	  <None Include="Views\Shared\Components\TopNavigation\Default.cshtml" />
+	  <None Include="Views\Shared\Error.cshtml" />
+	  <None Include="Views\Shared\_bundleScript.cshtml" />
+	  <None Include="Views\Shared\_bundleStyle.cshtml" />
+	  <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
+	  <None Include="Views\Shared\_DevExtremeLayout.cshtml" />
+	  <None Include="Views\Shared\_Layout.cshtml" />
+	  <None Include="Views\Shared\_LayoutDefault.cshtml" />
+	  <None Include="Views\Shared\_LayoutHome.cshtml" />
+	  <None Include="Views\Shared\_LoginPartial.cshtml" />
+	  <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+	  <None Include="Views\Supplier\Index.cshtml" />
+	  <None Include="Views\Threshold\Index.cshtml" />
+	  <None Include="Views\WorkerType\Index.cshtml" />
+	  <None Include="Views\Worker\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="Pages\**\*.js">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

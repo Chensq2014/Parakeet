@@ -1,0 +1,292 @@
+﻿@model Parakeet.Net.Dtos.DeviceAnalogRuleDto
+@{
+    ViewData["Title"] = Model.Id == Guid.Empty ? "新增规则" : "编辑规则";
+}
+
+@section styles{
+    <link href="~/lib/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/bootstrap-switch/css/bootstrap3/bootstrap-switch.css" rel="stylesheet" />
+}
+
+<div class="row bg-title">
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <ol class="breadcrumb">
+            <li>
+                <a href="~/deviceAnalogRule-list">设备模拟数据规则列表</a>
+            </li>
+            <li class="active">@ViewData["Title"]</li>
+        </ol>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <a href="~/deviceAnalogRule-list" class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">返回</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="white-box" id="add-rule">
+            <form class="form-horizontal form-material" data-toggle="validator" action="~/api/ops/deviceAnalogRule/orUpdate" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model?.Id" />
+                <div class="form-group">
+                    <label for="deviceId" class="col-sm-3 control-label">设备类型<span class="font-red">*</span></label>
+                    <div class="col-sm-9">
+                        <select name="type" id="type" class="form-control" v-model="type" @@change="typeChanged">
+                            <option v-for="(type,index) in types" :key="type.itemKey" :value="type.itemKey">{{type.itemDescriptionOrName}}</option>
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="deviceId" class="col-sm-3 control-label">项目过滤<span class="font-red">*</span></label>
+                    <div class="col-sm-9">
+                        <select name="projectId" id="projectId" class="form-control" v-model="projectId" @@change="projectChanged">
+                            <option v-for="(project,index) in projects" :key="project.id" :value="project.id">{{project.name}}</option>
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="deviceId" class="col-sm-3 control-label">挑选设备<span class="font-red">*</span></label>
+                    <div class="col-sm-9">
+                        <select name="deviceId" id="deviceId" class="form-control" v-model="deviceId" required>
+                            <option v-for="(device,index) in devices" :key="device.id" :value="device.id">{{device.name}}【{{device.fakeNo}}】</option>
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="period" class="col-sm-3 control-label">频率<span class="font-red">*</span></label>
+                    <div class="col-sm-9">
+                        <select name="period" id="period" class="form-control" v-model="period" required>
+                            <option v-for="(period,index) in periods" :key="period.name" :value="period.interval">{{period.name}}</option>
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastSendTime" class="col-sm-3 control-label">最后发送<span class="font-red"></span></label>
+                    <div class="col-sm-9">
+                        <div class="checkbox checkbox-info checkbox-circle">
+                            <input type="datetime" id="lastSendTime" name="lastSendTime" readonly="readonly" v-model="lastSendTime" class="form-control" placeholder="最后一次发送数据时间" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="remark" class="col-sm-3 control-label">备注信息</label>
+                    <div class="col-sm-9">
+                        <textarea id="remark" name="remark" v-model="remark" rows="5" cols="60"></textarea>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="isEnabled" class="col-sm-3 control-label">是否启用<span class="font-red"></span></label>
+                    <div class="col-sm-9">
+                        <div class="checkbox checkbox-info checkbox-circle">
+                            <input id="isEnabled" name="isEnabled" type="checkbox" v-model="isEnabled" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-b-0">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button id="btnSubmit" type="submit" class="btn btn-info waves-effect waves-light m-t-10">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <!-- jQuery -->
+    <!--<script src="~/lib/jquery/dist/jquery.min.js"></script>-->
+    <!-- Bootstrap Core JavaScript -->
+    <!--<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>-->
+
+    <!-- Menu Plugin JavaScript -->
+    <script src="~/lib/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--Style Switcher -->
+    <script src="~/lib/styleswitcher/jQuery.style.switcher.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="~/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/js/waves.js"></script>
+    <!--Validator-->
+    <script src="~/js/validator.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/js/custom.js"></script>
+
+    <script src="~/lib/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- Sweet-Alert  -->
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/vue/vue.min.js"></script>
+    <script>
+        var addRule = new Vue({
+            el: "#add-rule",
+            data: {
+                projects: [],
+                devices: [],
+                types: [],
+                deviceId: '@Model.DeviceId',
+                projectId: '@Model?.Device?.ProjectId',
+                type: '@Model?.Device?.Type',
+                periods: [
+                    { 'name': '1分钟', 'interval': '0.00:01:00' },
+                    { 'name': '2分钟', 'interval': '0.00:02:00' },
+                    { 'name': '3分钟', 'interval': '0.00:03:00' },
+                    { 'name': '5分钟', 'interval': '0.00:05:00' },
+                    { 'name': '10分钟', 'interval': '0.00:10:00'  },
+                    { 'name': '30分钟', 'interval': '0.00:30:00' },
+                    { 'name': '1小时', 'interval': '0.01:00:00' },
+                    { 'name': '2小时', 'interval': '0.02:00:00' },
+                    { 'name': '5小时', 'interval': '0.05:00:00' },
+                    { 'name': '12小时', 'interval': '0.12:00:00' },
+                    { 'name': '1天', 'interval': '1.00:00:00' },
+                    { 'name': '2天', 'interval': '2.00:00:00' },
+                    { 'name': '5天', 'interval': '5.00:00:00' },
+                    { 'name': '10天', 'interval': '10.00:00:00' },
+                    { 'name': '30天', 'interval': '30.00:00:00' }
+                ],
+                period: '@(Model?.Period.Days < 1 ?$"0.{Model?.Period}":$"{Model.Period}")',
+                lastSendTime: '@Model?.LastSendTime.ToString("yyyy/MM/dd HH:mm:ss")',
+                isEnabled: '@Model?.IsEnabled'==='True',
+                id:'@Model?.Id',
+                remark: '@Model?.Remark'
+            },
+            created() {
+                this.getDeviceTypes();
+            },
+            methods: {
+                getDeviceTypes() {
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        url: '/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=DeviceType',
+                        contentType: 'application/x-www-form-urlencoded',
+                        //data: { type: 'DeviceType' },
+                        success: function(d) {
+                            if (d.length) {
+                                addRule.types = d;
+                                addRule.type = addRule.type ? addRule.type : addRule.types[0].itemKey;
+                                addRule.getProjects();
+                            }
+                        }
+                    });
+                },
+                getProjects() {
+                    var projectId = null;
+                    if (addRule) {
+                        projectId = addRule.projectId;
+                    }
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        url: '/api/parakeet/project/projectFilterList',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: { id: projectId },
+                        success: function(d) {
+                            if (d.length) {
+                                addRule.projects = d;
+                                addRule.projectId = projectId ? projectId : addRule.projects[0].id;
+                                addRule.projectChanged();
+                            }
+                        }
+                    });
+                },
+                getDevices(pType, pProjectId, callBack) {
+                    var projects = addRule.projects.filter(project => project.id == pProjectId);
+                    if (projects.length) {
+                        addRule.devices =
+                            pType ? projects[0].devices.filter(device => device.type == pType) : projects[0].devices;
+                    }
+                    //$.ajax({
+                    //    type: 'get',
+                    //    dataType: 'json',
+                    //    url: '/api/ops/device',
+                    //    contentType: 'application/x-www-form-urlencoded',
+                    //    data: {
+                    //        projectId: pProjectId,
+                    //        deviceType: pType
+                    //    },
+                    //    success: function(d) {
+                    //        callBack(d.items);
+                    //    }
+                    //});
+                    callBack(addRule.devices);
+                },
+
+                projectChanged() {
+                    this.getDevices(addRule.type,
+                        addRule.projectId,
+                        function(res) {
+                            //addRule.devices = res;
+                        });
+                },
+                typeChanged() {
+                    this.getDevices(addRule.type,
+                        addRule.projectId,
+                        function(res) {
+                            //addRule.devices = res;
+                        });
+                }
+            }
+        });
+        $(function () {
+
+            $('#isEnabled').bootstrapSwitch({
+                onText: "启用",
+                offText: "禁用",
+                onColor: "success",
+                offColor: "danger",
+                size: "small",
+                //onInit: function (event) {
+                //    $('#isMaster').val(editTenantConnectString.isMaster);
+                //},
+                onSwitchChange: function(event, state) {
+                    addRule.isEnabled = state;
+                    $('#isEnabled').val(state);
+                }
+            });
+            $('form').validator().on('submit', function (event) {
+
+                if (!event.isDefaultPrevented()) {
+                    $.ajax({
+                        type: 'post',
+                        dataType: 'json',
+                        url: $(this).attr("action"),
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({
+                            id: addRule.id,
+                            deviceId: addRule.deviceId,
+                            period: addRule.period,
+                            lastSendTime: addRule.lastSendTime,
+                            isEnabled: addRule.isEnabled,
+                            remark: addRule.remark
+                        }),
+                        success: function (d) {
+                            swal("成功!", "保存成功.", "success");
+                            setTimeout(function () {
+                                window.location.href = "/deviceAnalogRule-list";
+                            }, 2000);
+                        },
+                        error: function (d) {
+                            swal("失败!", "保存失败." + d, "error");
+                        }
+                    });
+
+                } else {
+                    console.log(event);
+                }
+
+                return false;
+            });
+        });
+    </script>
+
+}

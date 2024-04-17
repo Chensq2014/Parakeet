@@ -1,0 +1,160 @@
+﻿
+<div id="grid-worker" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        $(function () {
+
+            initWorkerGrid();
+
+            function initWorkerGrid() {
+                var config = dxConfig.editGrid('/api/parakeet/worker');
+                config.genderSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=GenderType');
+                config.gridId = 'grid-worker';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = true;
+                config.editing.allowUpdating = true;
+                //config.searchPanel.visible = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '姓名',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'pattern', pattern: /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9\u4e00-\u9fa5_]*$/i, message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/worker/checkField', message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/worker/checkFields', fields: ['LocationAreaId'], message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'idCard',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '身份证号',
+                        validationRules: [
+                            { type: 'required', message: '身份证号为必填项' },
+                            // { type: 'pattern', pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, message: '身份证号验证失败' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/worker/checkField', message: '身份证号重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/worker/checkFields', fields: ['LocationAreaId'], message: '身份证号重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'gender',
+                        caption: '性别',
+                        minWidth: 50,
+                        allowEditing: true,
+                        lookup: config.genderSelects
+                    },
+                    {
+                        dataField: 'nation',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '民族',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'pattern', pattern: /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9\u4e00-\u9fa5_]*$/i, 
+                                message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头' }
+                        ]
+                    },
+                    {
+                        dataField: 'birthday',
+                        width: 120,
+                        dataType: 'date', //allowSetTimeRange:false,
+                        caption: "出生日期",
+                        validationRules: [{ type: "required", message: "出生日期必填项" }],
+                        cellTemplate: function(ele, info) {
+                            info.data.birthday = T(info.data.birthday, "yyyy/MM/dd");
+                            $(ele).append(info.data.birthday);
+                        }
+                    },
+                    {
+                        dataField: 'address',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '地址'
+                    },
+                    {
+                        dataField: 'issuedBy',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '发证机关'
+                    },
+                    {
+                        dataField: 'termValidityStart',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '证件有效期起'
+                    },
+                    {
+                        dataField: 'termValidityEnd',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '证件有效期止'
+                    },
+                    {
+                        dataField: 'phoneNumber',
+                        alignment: 'center',
+                        visible: true,
+                        caption: '电话',
+                        allowEditing: true,
+                        allowFiltering: true,
+                        allowHeaderFiltering: false,
+                        allowSearch: true,
+                        validationRules: [
+                           { type: 'required', message: '电话为必填项' },
+                           {
+                               type: 'pattern',
+                               message: '请输入正确的电话号码',
+                               pattern: /^((0\d{2,3}-\d{7,8})|(1[3456789]\d{9}))$/i
+                           }
+                        ]
+                        // customizeText: function (cellInfo) {
+                        //     return '******';
+                        // }
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+
+                };
+                config.onToolbarPreparing = function (e) {
+                   
+                };
+                
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+            }
+
+        });
+
+
+    </script>
+}

@@ -7,7 +7,7 @@ using Parakeet.Net.Permissions;
 namespace Parakeet.Net.Controllers
 {
     [Authorize(SupplierPermissions.Supplier.Default)]
-    public class SupplierController : BaseEntityController<Supplier>
+    public class SupplierController : BaseParakeetEntityController<Supplier>
     {
         private readonly IAuthorizationService _authorizationService;
         public SupplierController(ISupplierAppService baseService, IAuthorizationService authorizationService) : base(baseService)

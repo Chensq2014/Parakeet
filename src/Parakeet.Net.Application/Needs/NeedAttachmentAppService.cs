@@ -12,11 +12,11 @@ namespace Parakeet.Net.Needs
     /// <summary>
     /// 需求附件服务
     /// </summary>
-    public class NeedAttachmentAppService : BaseNetAppService<NeedAttachment>, INeedAttachmentAppService
+    public class NeedAttachmentAppService : BaseParakeetAppService<NeedAttachment>, INeedAttachmentAppService
     {
-        //private readonly INetRepository<NeedAttachment> _needAttachmentRepository;
+        //private readonly IParakeetRepository<NeedAttachment> _needAttachmentRepository;
         public NeedAttachmentAppService(
-            INetRepository<NeedAttachment> baseRepository) : base(baseRepository)
+            IParakeetRepository<NeedAttachment> baseRepository) : base(baseRepository)
         {
             //_needAttachmentRepository = baseRepository;
         }

@@ -15,9 +15,9 @@ namespace Parakeet.Net.Thresholds
     /// <summary>
     /// 阈值管理
     /// </summary>
-    public class ThresholdAppService : BaseNetAppService<Threshold>, IThresholdAppService
+    public class ThresholdAppService : BaseParakeetAppService<Threshold>, IThresholdAppService
     {
-        public ThresholdAppService(INetRepository<Threshold> baseRepository) : base(baseRepository)
+        public ThresholdAppService(IParakeetRepository<Threshold> baseRepository) : base(baseRepository)
         {
         }
 

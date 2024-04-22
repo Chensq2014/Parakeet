@@ -8,7 +8,7 @@ using Parakeet.Net.Permissions;
 namespace Parakeet.Net.Web.Controllers
 {
     [Authorize(ThresholdPermissions.Threshold.Default)]
-    public class ThresholdController : BaseEntityController<Threshold>
+    public class ThresholdController : BaseParakeetEntityController<Threshold>
     {
         private readonly IAuthorizationService _authorizationService;
         public ThresholdController(IThresholdAppService baseService, IAuthorizationService authorizationService) : base(baseService)

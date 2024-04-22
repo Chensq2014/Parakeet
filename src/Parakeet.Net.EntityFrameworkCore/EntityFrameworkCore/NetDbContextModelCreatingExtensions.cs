@@ -32,7 +32,7 @@ namespace Parakeet.Net.EntityFrameworkCore
         /// <param name="builder"></param>
         /// <param name="isMigrationDbContext">是否忽略导航属性User映射</param>
         /// <param name="optionsAction"></param>
-        public static void ConfigureTenant(this ModelBuilder builder, bool isMigrationDbContext = false,
+        public static void ConfigureMain(this ModelBuilder builder, bool isMigrationDbContext = false,
             Action<CustomerModelBuilderConfigurationOptions> optionsAction = null)
         {
             Check.NotNull(builder, nameof(builder));
@@ -172,12 +172,11 @@ namespace Parakeet.Net.EntityFrameworkCore
                 x.ConfigureFullAuditedAggregateRoot();
                 x.ToTable(options.TablePrefix + $"{nameof(AreaTenant)}s", options.Schema);
             });
-            builder.Entity<TenantDbConnectionString>(x =>
+            builder.Entity<AreaTenantDbConnectionString>(x =>
             {
                 //x.ConfigureFullAuditedAggregateRoot();//子表非领域根
-                x.ToTable(options.TablePrefix + $"{nameof(TenantDbConnectionString)}s", options.Schema);
+                x.ToTable(options.TablePrefix + $"{nameof(AreaTenantDbConnectionString)}s", options.Schema);
             });
-
             builder.Entity<Device>(x =>
             {
                 x.ConfigureFullAuditedAggregateRoot();
@@ -231,7 +230,6 @@ namespace Parakeet.Net.EntityFrameworkCore
                 x.ConfigureFullAuditedAggregateRoot();
                 x.ToTable(options.TablePrefix + $"{nameof(Mediator)}s", options.Schema);
             });
-
             builder.Entity<Common.Entities.License>(x =>
             {
                 x.ConfigureFullAuditedAggregateRoot();
@@ -293,9 +291,29 @@ namespace Parakeet.Net.EntityFrameworkCore
 
             var options = new CustomerModelBuilderConfigurationOptions();
             optionsAction?.Invoke(options);
-            
+
             #region 实体映射代码
-            
+
+            builder.Entity<EnvironmentRecord>(x =>
+            {
+                x.ConfigureFullAuditedAggregateRoot();
+                x.ToTable(options.TablePrefix + $"{nameof(EnvironmentRecord)}s", options.Schema);
+            });
+            builder.Entity<CraneBasic>(x =>
+            {
+                x.ConfigureFullAuditedAggregateRoot();
+                x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s", options.Schema);
+            });
+            builder.Entity<CraneRecord>(x =>
+            {
+                x.ConfigureFullAuditedAggregateRoot();
+                x.ToTable(options.TablePrefix + $"{nameof(CraneRecord)}s", options.Schema);
+            });
+            builder.Entity<CraneAlarm>(x =>
+            {
+                x.ConfigureFullAuditedAggregateRoot();
+                x.ToTable(options.TablePrefix + $"{nameof(CraneAlarm)}s", options.Schema);
+            });
             #endregion
 
             BuilderExtention(builder);

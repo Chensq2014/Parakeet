@@ -10,7 +10,7 @@ namespace Parakeet.Net.Web.Controllers
     /// </summary>
     //[ApiExplorerSettings(GroupName = "V2")]
     [Route("/api/parakeet/section/[action]")]
-    public class SectionController : BaseEntityController<Section>
+    public class SectionController : BaseParakeetEntityController<Section>
     {
         public SectionController(ISectionAppService baseService) : base(baseService)
         {

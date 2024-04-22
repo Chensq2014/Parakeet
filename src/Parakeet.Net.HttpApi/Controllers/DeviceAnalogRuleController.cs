@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Parakeet.Net.Controllers
 {
     [Authorize(DeviceAnalogRulePermissions.DeviceAnalogRule.Default)]
-    public class DeviceAnalogRuleController : BaseEntityController<DeviceAnalogRule>
+    public class DeviceAnalogRuleController : BaseParakeetEntityController<DeviceAnalogRule>
     {
         private readonly IAuthorizationService _authorizationService;
         //private readonly IDeviceAnalogRuleAppService _deviceAnalogRuleAppService;

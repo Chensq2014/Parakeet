@@ -16,9 +16,9 @@ namespace Parakeet.Net.SecurePolicies
     /// <summary>
     /// 安全策略服务
     /// </summary>
-    public class SecurePolicyAppService : BaseNetAppService<SecurePolicy>, ISecurePolicyAppService
+    public class SecurePolicyAppService : BaseParakeetAppService<SecurePolicy>, ISecurePolicyAppService
     {
-        public SecurePolicyAppService(INetRepository<SecurePolicy, Guid> baseRepository) : base(baseRepository)
+        public SecurePolicyAppService(IParakeetRepository<SecurePolicy, Guid> baseRepository) : base(baseRepository)
         {
         }
 

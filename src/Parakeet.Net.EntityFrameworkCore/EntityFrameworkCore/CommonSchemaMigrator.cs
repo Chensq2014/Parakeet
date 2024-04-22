@@ -7,12 +7,15 @@ using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.EntityFrameworkCore;
 
-public class PgSqlMultiTenantSchemaMigrator
+/// <summary>
+/// 生成数据库时使用
+/// </summary>
+public class CommonSchemaMigrator
     : INetDbSchemaMigrator, ITransientDependency
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public PgSqlMultiTenantSchemaMigrator(
+    public CommonSchemaMigrator(
         IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -27,7 +30,10 @@ public class PgSqlMultiTenantSchemaMigrator
          */
 
         await _serviceProvider
-            .GetRequiredService<NetDbContext>()
+            .GetRequiredService<ParakeetDbContext>()//公共数据库
+            //.GetRequiredService<PgSqlMigrationsDbContext>()//租户-PgSql数据库
+            //.GetRequiredService<MySqlMigrationsDbContext>()//租户-MySql数据库
+            //.GetRequiredService<SqlServerMigrationsDbContext>()//租户-SqlServer数据库
             .Database
             .MigrateAsync();
     }

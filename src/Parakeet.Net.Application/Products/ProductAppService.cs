@@ -15,10 +15,10 @@ namespace Parakeet.Net.Products
     /// <summary>
     /// 产品服务
     /// </summary>
-    public class ProductAppService : BaseNetAppService<Product>, IProductAppService
+    public class ProductAppService : BaseParakeetAppService<Product>, IProductAppService
     {
-        private readonly INetRepository<Product> _productRepository;
-        public ProductAppService(INetRepository<Product> productRepository) : base(productRepository)
+        private readonly IParakeetRepository<Product> _productRepository;
+        public ProductAppService(IParakeetRepository<Product> productRepository) : base(productRepository)
         {
             _productRepository = productRepository;
         }

@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             var configuration = BuildConfiguration();
             //UseSqlServer UseNpgsql  UseMySql
             var builder = new DbContextOptionsBuilder<MySqlMigrationsDbContext>()
-                .UseMySql(configuration.GetConnectionString(CommonConsts.MySqlConnectionStringName) ?? string.Empty,
+                .UseMySql(EncodingEncryptHelper.DEncrypt(configuration.GetConnectionString(CommonConsts.MySqlConnectionStringName)) ?? string.Empty,
                     new MySqlServerVersion(new Version(8, 0, 31)), 
                     sqlOption =>
                     {

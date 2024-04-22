@@ -18,15 +18,13 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
 namespace Parakeet.Net.EntityFrameworkCore
 {
-    /* This DbContext is only used for database migrations.
-     * It is not used on runtime. See NetCoreDbContext for the runtime DbContext.
-     * It is a unified model that includes configuration for
-     * all used modules and your application.
-     */
+    /// <summary>
+    /// 公共数据库
+    /// </summary>
     [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName(CommonConsts.MultiTenantConnectionStringName)]
-    public class NetDbContext : AbpDbContext<NetDbContext>,
+    public class ParakeetDbContext : AbpDbContext<ParakeetDbContext>,
         IIdentityDbContext,
         ITenantManagementDbContext
     {
@@ -59,9 +57,9 @@ namespace Parakeet.Net.EntityFrameworkCore
         #endregion
 
 
-        public NetDbContext(DbContextOptions<NetDbContext> options) : base(options)
+        public ParakeetDbContext(DbContextOptions<ParakeetDbContext> options) : base(options)
         {
-            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(NetDbContext)} DbContextOptions.............");
+            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} DbContextOptions.............");
         }
 
 
@@ -79,7 +77,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             {
                 Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、MultiTenant使用的SqlServer");
             }
-            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(NetDbContext)} OnModelCreating start.............");
+            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating start.............");
 
 
             base.OnModelCreating(builder);
@@ -96,10 +94,10 @@ namespace Parakeet.Net.EntityFrameworkCore
             builder.ConfigureFeatureManagement();
             builder.ConfigureTenantManagement();
 
-            builder.ConfigureTenant(true);
+            builder.ConfigureMain(true);
             #endregion
 
-            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(NetDbContext)} OnModelCreating end.............");
+            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating end.............");
         }
     }
 }

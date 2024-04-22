@@ -24,12 +24,12 @@ namespace Parakeet.Net.DeviceAnalogRules
     /// 设备规则服务
     /// </summary>
     //[Authorize]
-    public class DeviceAnalogRuleAppService : BaseNetAppService<DeviceAnalogRule>, IDeviceAnalogRuleAppService//CustomerAppService,
+    public class DeviceAnalogRuleAppService : BaseParakeetAppService<DeviceAnalogRule>, IDeviceAnalogRuleAppService//CustomerAppService,
     {
-        private readonly INetRepository<DeviceAnalogRule> _deviceAnalogRuleRepository;
+        private readonly IParakeetRepository<DeviceAnalogRule> _deviceAnalogRuleRepository;
         private readonly IAuthorizationService _authorizationService;
 
-        public DeviceAnalogRuleAppService(INetRepository<DeviceAnalogRule> deviceAnalogRuleRepository,
+        public DeviceAnalogRuleAppService(IParakeetRepository<DeviceAnalogRule> deviceAnalogRuleRepository,
             IAuthorizationService authorizationService) : base(deviceAnalogRuleRepository)
         {
             _deviceAnalogRuleRepository = deviceAnalogRuleRepository;

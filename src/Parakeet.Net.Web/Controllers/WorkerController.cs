@@ -7,7 +7,7 @@ namespace Parakeet.Net.Web.Controllers
 {
     [Route("/api/parakeet/[controller]/[action]")]
     //[Authorize(WorkerPermissions.Worker.Default)]
-    public class WorkerController : BaseEntityController<Worker>
+    public class WorkerController : BaseParakeetEntityController<Worker>
     {
         //private readonly IAuthorizationService _authorizationService;
         public WorkerController(IWorkerAppService baseService) : base(baseService)

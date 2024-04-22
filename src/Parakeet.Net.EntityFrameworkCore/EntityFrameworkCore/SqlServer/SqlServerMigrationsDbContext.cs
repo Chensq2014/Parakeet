@@ -40,21 +40,6 @@ namespace Parakeet.Net.EntityFrameworkCore
             builder.Configure(true);
             base.OnModelCreating(builder);
 
-            #region Include modules to your migration db context
-
-            /* Include modules to your migration db context */
-
-            //builder.ConfigurePermissionManagement();
-            //builder.ConfigureSettingManagement();
-            //builder.ConfigureBackgroundJobs();
-            //builder.ConfigureAuditLogging();
-            //builder.ConfigureIdentity();
-            //builder.ConfigureOpenIddict();
-            //builder.ConfigureFeatureManagement();
-            //builder.ConfigureTenantManagement();
-
-            #endregion
-
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(SqlServerMigrationsDbContext)} OnModelCreating end.............");
         }
     }

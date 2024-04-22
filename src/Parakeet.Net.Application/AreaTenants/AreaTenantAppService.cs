@@ -16,13 +16,13 @@ namespace Parakeet.Net.AreaTenants
     /// <summary>
     /// 区域租户及租户连接字符串管理
     /// </summary>
-    public class AreaTenantAppService : BaseNetAppService<AreaTenant>, IAreaTenantAppService
+    public class AreaTenantAppService : BaseParakeetAppService<AreaTenant>, IAreaTenantAppService
     {
-        private readonly INetRepository<AreaTenant> _areaTenantRepository;
-        private readonly IRepository<TenantDbConnectionString, Guid> _tenantDbConnectionString;
+        private readonly IParakeetRepository<AreaTenant> _areaTenantRepository;
+        private readonly IRepository<AreaTenantDbConnectionString, Guid> _tenantDbConnectionString;
 
-        public AreaTenantAppService(INetRepository<AreaTenant> areaTenantRepository,
-            IRepository<TenantDbConnectionString, Guid> tenantDbConnectionString) : base(areaTenantRepository)
+        public AreaTenantAppService(IParakeetRepository<AreaTenant> areaTenantRepository,
+            IRepository<AreaTenantDbConnectionString, Guid> tenantDbConnectionString) : base(areaTenantRepository)
         {
             _areaTenantRepository = areaTenantRepository;
             _tenantDbConnectionString = tenantDbConnectionString;
@@ -79,7 +79,7 @@ namespace Parakeet.Net.AreaTenants
         public async Task<Guid> InsertTenantDbConnectionString()
         {
             var formData = ContextAccessor.HttpContext?.Request.Form["values"];
-            var entity = Newtonsoft.Json.JsonConvert.DeserializeObject<TenantDbConnectionString>(formData);
+            var entity = Newtonsoft.Json.JsonConvert.DeserializeObject<AreaTenantDbConnectionString>(formData);
             await _tenantDbConnectionString.InsertAsync(entity);
             return entity.Id;
         }

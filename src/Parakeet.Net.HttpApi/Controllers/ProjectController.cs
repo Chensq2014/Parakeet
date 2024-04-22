@@ -18,7 +18,7 @@ namespace Parakeet.Net.Controllers
     //[ApiExplorerSettings(GroupName = "V3")]
     //[CustomRoute(VersionType.V2)]
     [Route("/api/parakeet/project/[action]")]
-    public class ProjectController : BaseEntityController<Project>
+    public class ProjectController : BaseParakeetEntityController<Project>
     {
         private readonly IWebHostEnvironment _environment;
         private readonly IProjectAppService _projectAppService;

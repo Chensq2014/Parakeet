@@ -94,7 +94,9 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //context.Services.AddDefaultRepository(typeof(INetCoreRepository<,>), 
         //    EntityHelper.FindPrimaryKeyType(typeof(NetRepositoryBase<,>)));
 
-        //vnext版本直接这样在容器里直接注册 
+        //直接这样在容器里直接注册 
+        context.Services.TryAddTransient(typeof(IParakeetRepository<>), typeof(ParakeetRepositoryBase<>));
+        context.Services.TryAddTransient(typeof(IParakeetRepository<,>), typeof(ParakeetRepositoryBase<,>));
         context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
         context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
 
@@ -115,8 +117,19 @@ public class NetEntityFrameworkCoreModule : AbpModule
 
         #region 注册DbContext  配置AbpDbContextOptions
 
-        //告诉容器 构造NetDbContext 时把options当作参数传递给构造函数
-        
+        //公共库dbContext
+        //告诉容器 构造ParakeetDbContext 时把options当作参数传递给构造函数
+
+        context.Services.AddAbpDbContext<ParakeetDbContext>(options =>
+        {
+            Log.Error($"{{0}}",
+                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(ParakeetDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            /* Remove "includeAllEntities: true" to create
+             * default repositories only for aggregate roots */
+            options.AddDefaultRepositories(includeAllEntities: true);
+        });
+
+        //租户运行时Context
         context.Services.AddAbpDbContext<NetDbContext>(options =>
         {
             Log.Error($"{{0}}",

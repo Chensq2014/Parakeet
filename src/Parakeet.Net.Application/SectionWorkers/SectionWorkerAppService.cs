@@ -16,10 +16,10 @@ namespace Parakeet.Net.SectionWorkers
     /// <summary>
     /// 区域工人服务
     /// </summary>
-    public class SectionWorkerAppService : BaseNetAppService<SectionWorker>, ISectionWorkerAppService
+    public class SectionWorkerAppService : BaseParakeetAppService<SectionWorker>, ISectionWorkerAppService
     {
-        private readonly INetRepository<SectionWorker> _sectionWorkerRepository;
-        public SectionWorkerAppService(INetRepository<SectionWorker> sectionWorkerRepository) : base(sectionWorkerRepository)
+        private readonly IParakeetRepository<SectionWorker> _sectionWorkerRepository;
+        public SectionWorkerAppService(IParakeetRepository<SectionWorker> sectionWorkerRepository) : base(sectionWorkerRepository)
         {
             _sectionWorkerRepository = sectionWorkerRepository;
         }

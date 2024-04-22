@@ -25,13 +25,13 @@ namespace Parakeet.Net.Organizations
     /// </summary>
     //[ApiExplorerSettings(GroupName = "V2")]
     [Description("组织机构")]
-    public class OrganizationAppService : BaseNetAppService<Organization>, IOrganizationAppService
+    public class OrganizationAppService : BaseParakeetAppService<Organization>, IOrganizationAppService
     {
-        private readonly INetRepository<Organization> _organizationRepository;
+        private readonly IParakeetRepository<Organization> _organizationRepository;
         private readonly IOrganizationManager _organizationManager;
         public OrganizationAppService(
             IOrganizationManager organizationManager,
-            INetRepository<Organization> baseRepository) : base(baseRepository)
+            IParakeetRepository<Organization> baseRepository) : base(baseRepository)
         {
             _organizationRepository = baseRepository;
             _organizationManager = organizationManager;

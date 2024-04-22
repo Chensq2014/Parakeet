@@ -32,11 +32,11 @@ namespace Parakeet.Net.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public abstract class NetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<NetDbContext, TEntity, TPrimaryKey>
-        , INetRepository<TEntity, TPrimaryKey>
-        where TEntity : EntityBase<TPrimaryKey>
+    public abstract class ParakeetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<ParakeetDbContext, TEntity, TPrimaryKey>
+        , IParakeetRepository<TEntity, TPrimaryKey>
+        where TEntity : BaseEntity<TPrimaryKey>
     {
-        protected NetRepositoryBase(IDbContextProvider<NetDbContext> dbContextProvider)
+        protected ParakeetRepositoryBase(IDbContextProvider<ParakeetDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
 
@@ -93,14 +93,14 @@ namespace Parakeet.Net.Repositories
 
     /// <summary>
     /// Base class for custom repositories of the application.
-    /// This is a shortcut of <see cref="NetRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="Guid"/> primary key.
+    /// This is a shortcut of <see cref="ParakeetRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="Guid"/> primary key.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
 
     //[Dependency(ReplaceServices = true)]
-    public class NetRepositoryBase<TEntity> : NetRepositoryBase<TEntity, Guid>
-        , INetRepository<TEntity>//IRepository<TEntity>//
-        where TEntity : EntityBase
+    public class ParakeetRepositoryBase<TEntity> : ParakeetRepositoryBase<TEntity, Guid>
+        , IParakeetRepository<TEntity>//IRepository<TEntity>//
+        where TEntity : BaseEntity
     {
         /// <summary>
         /// 缓存
@@ -111,10 +111,10 @@ namespace Parakeet.Net.Repositories
         /// IServiceProvider负责提供实例 (IServiceCollection(context.Services)负责注册)
         /// </summary>
         //private readonly IServiceProvider _serviceProvider;
-        public NetRepositoryBase(
+        public ParakeetRepositoryBase(
             //IServiceProvider serviceProvider,
             ICacheService cacheTypePropertyService,
-            IDbContextProvider<NetDbContext> dbContextProvider)
+            IDbContextProvider<ParakeetDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
             _cacheTypePropertyService = cacheTypePropertyService;
@@ -432,7 +432,7 @@ namespace Parakeet.Net.Repositories
         /// <param name="input"></param>
         /// <returns></returns>
 
-        public async Task<TEntity> SqlQuery<TEntity>(InputIdDto input) where TEntity : EntityBase, new()
+        public async Task<TEntity> SqlQuery<TEntity>(InputIdDto input) where TEntity : BaseEntity, new()
         {
             var type = typeof(TEntity);
             var tableName = type.GetCustomAttribute<TableAttribute>()?.Name ?? type.Name;
@@ -470,7 +470,7 @@ namespace Parakeet.Net.Repositories
         /// <param name="input"></param>
         /// <returns></returns>
 
-        public async Task<IList<TEntity>> SqlQueryList<TEntity>(InputIdsDto input) where TEntity : EntityBase, new()
+        public async Task<IList<TEntity>> SqlQueryList<TEntity>(InputIdsDto input) where TEntity : BaseEntity, new()
         {
             var type = typeof(TEntity);
             var tableName = type.GetCustomAttribute<TableAttribute>()?.Name ?? type.Name;
@@ -510,7 +510,7 @@ namespace Parakeet.Net.Repositories
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public async Task<IList<TEntity>> SqlQueryByCondition<TEntity>(Expression<Func<TEntity, bool>> func) where TEntity : EntityBase, new()
+        public async Task<IList<TEntity>> SqlQueryByCondition<TEntity>(Expression<Func<TEntity, bool>> func) where TEntity : BaseEntity, new()
         {
             var type = typeof(TEntity);
             var propInfos = await _cacheTypePropertyService.GetCachePropertyInfos(type);

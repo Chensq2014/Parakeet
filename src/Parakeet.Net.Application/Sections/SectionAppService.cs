@@ -10,10 +10,10 @@ namespace Parakeet.Net.Sections
     /// <summary>
     /// 小区区域服务
     /// </summary>
-    public class SectionAppService : BaseNetAppService<Section>, ISectionAppService
+    public class SectionAppService : BaseParakeetAppService<Section>, ISectionAppService
     {
-        private readonly INetRepository<Section> _sectionRepository;
-        public SectionAppService(INetRepository<Section> sectionRepository) : base(sectionRepository)
+        private readonly IParakeetRepository<Section> _sectionRepository;
+        public SectionAppService(IParakeetRepository<Section> sectionRepository) : base(sectionRepository)
         {
             _sectionRepository = sectionRepository;
         }

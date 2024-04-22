@@ -8,7 +8,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Parakeet.Net.EntityFrameworkCore
 {
     /* This DbContext is only used for database migrations.
-     * It is not used on runtime. See NetCoreDbContext for the runtime DbContext.
+     * It is not used on runtime. See ParakeetDbContext for the runtime DbContext.
      * It is a unified model that includes configuration for
      * all used modules and your application.
      */
@@ -40,19 +40,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             base.OnModelCreating(builder);
             builder.Configure(true);
 
-            #region Include modules to your migration db context
-            /* Include modules to your migration db context */
 
-            //builder.ConfigurePermissionManagement();
-            //builder.ConfigureSettingManagement();
-            //builder.ConfigureBackgroundJobs();
-            //builder.ConfigureAuditLogging();
-            //builder.ConfigureIdentity();
-            //builder.ConfigureOpenIddict();
-            //builder.ConfigureFeatureManagement();
-            //builder.ConfigureTenantManagement();
-
-            #endregion
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} OnModelCreating end.............");
         }
     }

@@ -10,10 +10,10 @@ namespace Parakeet.Net.WorkerTypes
     /// <summary>
     /// 工种服务
     /// </summary>
-    public class WorkerTypeAppService : BaseNetAppService<WorkerType>, IWorkerTypeAppService
+    public class WorkerTypeAppService : BaseParakeetAppService<WorkerType>, IWorkerTypeAppService
     {
-        private readonly INetRepository<WorkerType> _workerTypeRepository;
-        public WorkerTypeAppService(INetRepository<WorkerType> workerTypeRepository) : base(workerTypeRepository)
+        private readonly IParakeetRepository<WorkerType> _workerTypeRepository;
+        public WorkerTypeAppService(IParakeetRepository<WorkerType> workerTypeRepository) : base(workerTypeRepository)
         {
             _workerTypeRepository = workerTypeRepository;
         }

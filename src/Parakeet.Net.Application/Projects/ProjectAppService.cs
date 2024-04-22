@@ -22,14 +22,14 @@ namespace Parakeet.Net.Projects
     /// <summary>
     /// 项目服务
     /// </summary>
-    public class ProjectAppService : BaseNetAppService<Project>, IProjectAppService
+    public class ProjectAppService : BaseParakeetAppService<Project>, IProjectAppService
     {
         private readonly IWebHostEnvironment _environment;
-        private readonly INetRepository<ProjectAttachment> _projectAttachmentRepository;
+        private readonly IParakeetRepository<ProjectAttachment> _projectAttachmentRepository;
         public ProjectAppService(
-            INetRepository<Project> baseRepository,
+            IParakeetRepository<Project> baseRepository,
             IWebHostEnvironment environment,
-            INetRepository<ProjectAttachment> projectAttachmentRepository) : base(baseRepository)
+            IParakeetRepository<ProjectAttachment> projectAttachmentRepository) : base(baseRepository)
         {
             _projectAttachmentRepository = projectAttachmentRepository;
             _environment = environment;

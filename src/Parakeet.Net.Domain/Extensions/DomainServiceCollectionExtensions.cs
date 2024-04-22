@@ -109,10 +109,10 @@ namespace Common.Extensions
             });
             codeFirst.ConfigEntity<Mediator>(x => { x.Name(GetTableName<Mediator>()); });
 
-            codeFirst.ConfigEntity<TenantDbConnectionString>(x =>
+            codeFirst.ConfigEntity<AreaTenantDbConnectionString>(x =>
             {
                 x.Navigate(y => y.AreaTenant, "AreaTenantId");
-                x.Name(GetTableName<TenantDbConnectionString>());
+                x.Name(GetTableName<AreaTenantDbConnectionString>());
             });
             codeFirst.ConfigEntity<License>(x =>
             {

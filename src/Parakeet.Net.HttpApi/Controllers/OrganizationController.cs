@@ -8,7 +8,7 @@ namespace Parakeet.Net.Controllers
     /// 组织机构
     /// </summary>
     [Route("/api/parakeet/organization/[action]")]
-    public class OrganizationController : BaseEntityController<Organization>
+    public class OrganizationController : BaseParakeetEntityController<Organization>
     {
         private readonly IOrganizationAppService _organizationService;
         public OrganizationController(IOrganizationAppService baseService) : base(baseService)

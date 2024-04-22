@@ -27,11 +27,11 @@ namespace Parakeet.Net
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
-    public abstract class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
+    public abstract class BaseParakeetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseParakeetAppService<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
         //where TPrimaryKey : struct
     {
-        public INetRepository<TEntity, TPrimaryKey> Repository;
-        protected BaseNetAppService(INetRepository<TEntity, TPrimaryKey> repository)
+        public IParakeetRepository<TEntity, TPrimaryKey> Repository;
+        protected BaseParakeetAppService(IParakeetRepository<TEntity, TPrimaryKey> repository)
         {
             Repository = repository;
         }
@@ -43,7 +43,7 @@ namespace Parakeet.Net
         /// </summary>
         /// <returns></returns>
         [RemoteService(IsEnabled = true, IsMetadataEnabled = false)]
-        public INetRepository<TEntity, TPrimaryKey> GetBaseRepository()
+        public IParakeetRepository<TEntity, TPrimaryKey> GetBaseRepository()
         {
             return Repository;
         }
@@ -507,12 +507,12 @@ namespace Parakeet.Net
     /// 基类Appservices 
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
-    public class BaseNetAppService<TEntity> : BaseNetAppService<TEntity, Guid>
-        , IBaseNetAppService<TEntity>
+    public class BaseParakeetAppService<TEntity> : BaseParakeetAppService<TEntity, Guid>
+        , IBaseParakeetAppService<TEntity>
         where TEntity : BaseEntity
     {
-        public BaseNetAppService(
-            INetRepository<TEntity, Guid> baseRepository) : base(baseRepository)
+        public BaseParakeetAppService(
+            IParakeetRepository<TEntity, Guid> baseRepository) : base(baseRepository)
         {
         }
     }

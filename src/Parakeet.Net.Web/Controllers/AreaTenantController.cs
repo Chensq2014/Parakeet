@@ -11,7 +11,7 @@ namespace Parakeet.Net.Web.Controllers
     /// 区域租户管理
     /// </summary>
     [Route("/api/parakeet/areaTenant/[action]")]
-    public class AreaTenantController : BaseEntityController<AreaTenant>
+    public class AreaTenantController : BaseParakeetEntityController<AreaTenant>
     {
 
         public AreaTenantController(IAreaTenantAppService baseService) : base(baseService)

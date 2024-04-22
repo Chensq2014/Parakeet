@@ -11,7 +11,7 @@ namespace Parakeet.Net.AreaTenants
             CreateMap<AreaTenant, AreaTenantListDto>()
                 .ForMember(m => m.LocationAreaName, 
                     opt => opt.MapFrom(n=>$"{n.LocationArea.Parent.Name}【{n.LocationArea.Name}】"));
-            CreateMap<TenantDbConnectionString, TenantDbConnectionStringDto>()
+            CreateMap<AreaTenantDbConnectionString, TenantDbConnectionStringDto>()
                 .ForMember(m => m.AreaTenantName, 
                     opt => opt.MapFrom(n=>$"{n.AreaTenant.DisplayName}【{n.AreaTenant.Name}】"));
         }

@@ -27,10 +27,10 @@ namespace Parakeet.Net.Needs
     /// <summary>
     /// 需求服务
     /// </summary>
-    public class NeedAppService : BaseNetAppService<Need>, INeedAppService
+    public class NeedAppService : BaseParakeetAppService<Need>, INeedAppService
     {
-        private readonly INetRepository<Need> _needRepository;
-        private readonly INetRepository<NeedAttachment> _needAttachmentRepository;
+        private readonly IParakeetRepository<Need> _needRepository;
+        private readonly IParakeetRepository<NeedAttachment> _needAttachmentRepository;
         private readonly IPersonalCacheAppService _personalCacheAppService;
         private readonly ISettingProvider _settingProvider;
         private readonly IEmailSender _emailSender;
@@ -38,10 +38,10 @@ namespace Parakeet.Net.Needs
 
         public NeedAppService(
             //IWebHostEnvironment env, 
-            INetRepository<NeedAttachment> needAttachmentRepository,
+            IParakeetRepository<NeedAttachment> needAttachmentRepository,
             IPersonalCacheAppService personalCacheAppService,
             IWebHostEnvironment environment,
-            INetRepository<Need> baseRepository,
+            IParakeetRepository<Need> baseRepository,
             IEmailSender emailSender,
             ISettingProvider settingProvider) : base(baseRepository)
         {

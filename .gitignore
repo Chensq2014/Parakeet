@@ -266,3 +266,5 @@ paket-files/
 **/*.rsa
 /deploy/docker-compose-parakeet.yml
 /deploy/parakeet.env
+/src/Parakeet.Net.EntityFrameworkCore/Migrations/ParakeetMigrations/20240421121819_Init.cs
+/src/Parakeet.Net.EntityFrameworkCore/Migrations/ParakeetMigrations/ParakeetDbContextModelSnapshot.cs

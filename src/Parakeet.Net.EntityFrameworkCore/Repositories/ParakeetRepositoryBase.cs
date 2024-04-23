@@ -34,7 +34,7 @@ namespace Parakeet.Net.Repositories
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
     public abstract class ParakeetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<ParakeetDbContext, TEntity, TPrimaryKey>
         , IParakeetRepository<TEntity, TPrimaryKey>
-        where TEntity : BaseEntity<TPrimaryKey>
+        where TEntity : EntityBase<TPrimaryKey>
     {
         protected ParakeetRepositoryBase(IDbContextProvider<ParakeetDbContext> dbContextProvider)
             : base(dbContextProvider)
@@ -100,7 +100,7 @@ namespace Parakeet.Net.Repositories
     //[Dependency(ReplaceServices = true)]
     public class ParakeetRepositoryBase<TEntity> : ParakeetRepositoryBase<TEntity, Guid>
         , IParakeetRepository<TEntity>//IRepository<TEntity>//
-        where TEntity : BaseEntity
+        where TEntity : EntityBase
     {
         /// <summary>
         /// 缓存
@@ -192,8 +192,8 @@ namespace Parakeet.Net.Repositories
             var sqlParameterRows = new Dictionary<string, SqlParameter[]>();//每行sql都准备为一个单独的sqlparameter
             var parameterIndex = 0;//单行sqlparameter 参数标识不重复
             var sqlParameters = new List<SqlParameter>();
-            //typeof(BaseEntity).IsAssignableFrom(type))//type.IsDefined(typeof(TableAttribute), true))
-            if (type.IsAssignableTo(typeof(BaseEntity)))
+            //typeof(EntityBase).IsAssignableFrom(type))//type.IsDefined(typeof(TableAttribute), true))
+            if (type.IsAssignableTo(typeof(EntityBase)))
             {
                 SqlInsertRow(propInfos, entity, sqlParameters, tableName, propNames, sqlParameterRows, sql, ref parameterIndex);
 
@@ -240,8 +240,8 @@ namespace Parakeet.Net.Repositories
         //    var sqlParameterRows = new Dictionary<string, SqlParameter[]>();//每行sql都准备为一个单独的sqlparameter
         //    var parameterIndex = 0;//单行sqlparameter 参数标识不重复
         //    var sqlParameters = new List<SqlParameter>();
-        //    //typeof(BaseEntity).IsAssignableFrom(type))//type.IsDefined(typeof(TableAttribute), true))
-        //    if (type.IsAssignableTo(typeof(BaseEntity)))
+        //    //typeof(EntityBase).IsAssignableFrom(type))//type.IsDefined(typeof(TableAttribute), true))
+        //    if (type.IsAssignableTo(typeof(EntityBase)))
         //    {
         //        SqlInsertRow(propInfos, entity, sqlParameters, tableName, propNames, sqlParameterRows, sql, ref parameterIndex);
 
@@ -432,7 +432,7 @@ namespace Parakeet.Net.Repositories
         /// <param name="input"></param>
         /// <returns></returns>
 
-        public async Task<TEntity> SqlQuery<TEntity>(InputIdDto input) where TEntity : BaseEntity, new()
+        public async Task<TEntity> SqlQuery<TEntity>(InputIdDto input) where TEntity : EntityBase, new()
         {
             var type = typeof(TEntity);
             var tableName = type.GetCustomAttribute<TableAttribute>()?.Name ?? type.Name;
@@ -470,7 +470,7 @@ namespace Parakeet.Net.Repositories
         /// <param name="input"></param>
         /// <returns></returns>
 
-        public async Task<IList<TEntity>> SqlQueryList<TEntity>(InputIdsDto input) where TEntity : BaseEntity, new()
+        public async Task<IList<TEntity>> SqlQueryList<TEntity>(InputIdsDto input) where TEntity : EntityBase, new()
         {
             var type = typeof(TEntity);
             var tableName = type.GetCustomAttribute<TableAttribute>()?.Name ?? type.Name;
@@ -510,7 +510,7 @@ namespace Parakeet.Net.Repositories
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public async Task<IList<TEntity>> SqlQueryByCondition<TEntity>(Expression<Func<TEntity, bool>> func) where TEntity : BaseEntity, new()
+        public async Task<IList<TEntity>> SqlQueryByCondition<TEntity>(Expression<Func<TEntity, bool>> func) where TEntity : EntityBase, new()
         {
             var type = typeof(TEntity);
             var propInfos = await _cacheTypePropertyService.GetCachePropertyInfos(type);

@@ -27,7 +27,7 @@ namespace Parakeet.Net
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
-    public abstract class BaseParakeetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseParakeetAppService<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
+    public abstract class BaseParakeetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseParakeetAppService<TEntity, TPrimaryKey> where TEntity : EntityBase<TPrimaryKey>
         //where TPrimaryKey : struct
     {
         public IParakeetRepository<TEntity, TPrimaryKey> Repository;
@@ -509,7 +509,7 @@ namespace Parakeet.Net
     /// <typeparam name="TEntity">实体类</typeparam>
     public class BaseParakeetAppService<TEntity> : BaseParakeetAppService<TEntity, Guid>
         , IBaseParakeetAppService<TEntity>
-        where TEntity : BaseEntity
+        where TEntity : EntityBase
     {
         public BaseParakeetAppService(
             IParakeetRepository<TEntity, Guid> baseRepository) : base(baseRepository)

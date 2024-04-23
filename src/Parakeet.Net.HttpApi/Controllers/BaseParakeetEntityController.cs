@@ -9,7 +9,7 @@ namespace Parakeet.Net.Controllers
     /// </summary>
     /// <typeparam name="TEntity">实体</typeparam>
     ///  <typeparam name="TPrimaryKey">实体主键类型</typeparam>
-    public abstract class BaseParakeetEntityController<TEntity, TPrimaryKey> : NetController where TEntity : BaseEntity<TPrimaryKey> where TPrimaryKey : struct
+    public abstract class BaseParakeetEntityController<TEntity, TPrimaryKey> : NetController where TEntity : EntityBase<TPrimaryKey> where TPrimaryKey : struct
     {
         public IBaseParakeetAppService<TEntity, TPrimaryKey> BaseService;
 
@@ -211,7 +211,7 @@ namespace Parakeet.Net.Controllers
         #endregion
     }
 
-    public abstract class BaseParakeetEntityController<TEntity> : BaseParakeetEntityController<TEntity, Guid> where TEntity : BaseEntity
+    public abstract class BaseParakeetEntityController<TEntity> : BaseParakeetEntityController<TEntity, Guid> where TEntity : EntityBase
     {
         protected BaseParakeetEntityController(IBaseParakeetAppService<TEntity, Guid> baseService) : base(baseService)
         {

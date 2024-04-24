@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Entities;
 using Common.Storage;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -20,7 +21,13 @@ namespace Parakeet.Net.EntityFrameworkCore
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} DbContextOptions.............");
         }
 
+        #region 租户公共数据结构
+        //public DbSet<EnvironmentRecord> EnvironmentRecords { get; set; }
+        //public DbSet<CraneAlarm> CraneAlarms { get; set; }
+        //public DbSet<CraneRecord> CraneRecords { get; set; }
+        //public DbSet<CraneBasic> CraneBasics { get; set; }
 
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -37,9 +44,9 @@ namespace Parakeet.Net.EntityFrameworkCore
                 Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、使用的SqlServer");
             }
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} OnModelCreating start.............");
-            base.OnModelCreating(builder);
-            builder.Configure(true);
 
+            builder.Configure(true);
+            base.OnModelCreating(builder);
 
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} OnModelCreating end.............");
         }

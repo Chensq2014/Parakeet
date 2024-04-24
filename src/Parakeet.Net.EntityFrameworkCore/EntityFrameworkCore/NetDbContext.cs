@@ -54,8 +54,8 @@ namespace Parakeet.Net.EntityFrameworkCore
             Serilog.Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(NetDbContext)} OnModelCreating start.............");
 
 
-            base.OnModelCreating(builder);
             builder.Configure(true);
+            base.OnModelCreating(builder);
 
             Serilog.Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(NetDbContext)} OnModelCreating end.............");
         }

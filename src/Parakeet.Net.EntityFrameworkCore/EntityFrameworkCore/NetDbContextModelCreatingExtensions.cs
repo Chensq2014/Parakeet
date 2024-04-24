@@ -296,23 +296,23 @@ namespace Parakeet.Net.EntityFrameworkCore
 
             builder.Entity<EnvironmentRecord>(x =>
             {
+                x.ToTable(options.TablePrefix + $"{nameof(EnvironmentRecord)}s");
                 x.ConfigureFullAuditedAggregateRoot();
-                x.ToTable(options.TablePrefix + $"{nameof(EnvironmentRecord)}s", options.Schema);
             });
             builder.Entity<CraneBasic>(x =>
             {
+                x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s"); 
                 x.ConfigureFullAuditedAggregateRoot();
-                x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s", options.Schema);
             });
             builder.Entity<CraneRecord>(x =>
             {
+                x.ToTable(options.TablePrefix + $"{nameof(CraneRecord)}s");
                 x.ConfigureFullAuditedAggregateRoot();
-                x.ToTable(options.TablePrefix + $"{nameof(CraneRecord)}s", options.Schema);
             });
             builder.Entity<CraneAlarm>(x =>
             {
+                x.ToTable(options.TablePrefix + $"{nameof(CraneAlarm)}s");
                 x.ConfigureFullAuditedAggregateRoot();
-                x.ToTable(options.TablePrefix + $"{nameof(CraneAlarm)}s", options.Schema);
             });
             #endregion
 

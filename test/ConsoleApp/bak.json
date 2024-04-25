@@ -35,7 +35,7 @@
     "Authority": "https://localhost:5000",
     "RequireHttpsMetadata": true,
     "ClientId": "Parakeet_Web",
-    "ClientSecret": "dcfgcbevcyetcq",
+    "ClientSecret": "dcfgcbevcydncq",
     "IsContainerized": false
   },
   "Settings": {

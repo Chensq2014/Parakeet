@@ -46,7 +46,7 @@ namespace Parakeet.Net.EntityFrameworkCore
 
             builder.Entity<AppUser>(b =>
             {
-                Log.Logger.Information($"AbpIdentityDbProperties.DbTablePrefix：{AbpIdentityDbProperties.DbTablePrefix}");
+                //Log.Logger.Information($"AbpIdentityDbProperties.DbTablePrefix：{AbpIdentityDbProperties.DbTablePrefix}");
                 //b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "AbpUsers"); //Sharing the same table "AbpUsers" with the IdentityUser
                 b.ConfigureByConvention();
                 b.ConfigureAbpUser();

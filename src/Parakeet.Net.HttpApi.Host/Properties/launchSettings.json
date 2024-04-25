@@ -3,8 +3,8 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44356",
-      "sslPort": 44356
+      "applicationUrl": "https://localhost:23518",
+      "sslPort": 23518
     }
   },
   "profiles": {
@@ -18,7 +18,7 @@
     "Parakeet.Net.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44356",
+      "applicationUrl": "https://localhost:23518",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

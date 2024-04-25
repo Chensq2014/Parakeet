@@ -146,13 +146,15 @@ public class NetAuthServerModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!));
+            //EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!)
+            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         }
 
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            var connection = ConnectionMultiplexer.Connect(EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!));
+            //EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!)
+            var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
 

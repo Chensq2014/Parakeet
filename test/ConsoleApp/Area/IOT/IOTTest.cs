@@ -407,8 +407,8 @@ namespace ConsoleApp.Area.IOT
         public static async Task<string> GetIotOpsToken()
         {
             //https://ops.spdyun.cn
-            return await HttpClientPool.GetIotOpsToken("https://localhost:5001/connect/token", "admin", "1q2w3E*",
-                "DataCenterWebApp", "1q2w3E*","password", "email openid profile role phone address DataCenter");
+            return await HttpClientPool.GetIotOpsToken("https://localhost:5001/connect/token", "admin", "1q2w3e*",
+                "DataCenterWebApp", "1q2w3e*","password", "email openid profile role phone address DataCenter");
         }
 
         /// <summary>

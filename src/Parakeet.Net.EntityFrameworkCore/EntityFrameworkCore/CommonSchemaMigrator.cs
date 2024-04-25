@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Nacos.V2.Naming.Dtos;
 using Parakeet.Net.Data;
 using Volo.Abp.DependencyInjection;
 
@@ -30,8 +31,8 @@ public class CommonSchemaMigrator
          */
 
         await _serviceProvider
-            //.GetRequiredService<ParakeetDbContext>()//公共数据库
-            .GetRequiredService<PgSqlMigrationsDbContext>()//租户-PgSql数据库
+            .GetRequiredService<ParakeetDbContext>()//公共数据库
+            //.GetRequiredService<PgSqlMigrationsDbContext>()//租户-PgSql数据库
             //.GetRequiredService<MySqlMigrationsDbContext>()//租户-MySql数据库
             //.GetRequiredService<SqlServerMigrationsDbContext>()//租户-SqlServer数据库
             .Database

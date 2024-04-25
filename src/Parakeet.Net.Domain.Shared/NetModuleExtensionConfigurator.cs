@@ -88,6 +88,7 @@ public static class NetModuleExtensionConfigurator
                         "IdCardNo", //property name
                         property =>
                         {
+                            Log.Debug($"{{0}}", $"{CacheKeys.LogCount++}、NetModuleExtensionConfigurator 配置User.IdCardNo 委托....");
                             property.DisplayName = new FixedLocalizableString($"身份证号");
                             //property.DisplayName = LocalizableString.Create<NetResource>("IdCardNo");
                             //property.Attributes.Add(new RequiredAttribute());

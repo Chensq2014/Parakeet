@@ -2,6 +2,7 @@
 using Common.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Parakeet.Net.Data;
 using Parakeet.Net.Repositories;
 using Serilog;
 using System;

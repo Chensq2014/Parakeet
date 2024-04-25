@@ -93,7 +93,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Web Application",
-                secret: EncodingEncryptHelper.DEncrypt(configurationSection["Parakeet_Web:ClientSecret"] ?? EncodingEncryptHelper.Encrypt("1q2w3e*")),
+                secret: EncodingEncryptHelper.DEncrypt(configurationSection["Parakeet_Web:ClientSecret"] ?? EncodingEncryptHelper.Encrypt("1q2w3E*")),
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode, OpenIddictConstants.GrantTypes.Implicit

@@ -33,7 +33,7 @@ namespace Parakeet.Net.Extentions
                 new Client
                 {
                     ClientId = "Parakeet_Server",//客户端惟一标识
-                    ClientSecrets = new [] { new Secret("1q2w3e*".Sha256()) },//客户端密码，进行了加密
+                    ClientSecrets = new [] { new Secret("1q2w3E*".Sha256()) },//客户端密码，进行了加密
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     //授权方式，客户端认证，只要ClientId+ClientSecrets
                     AllowedScopes = new [] { "parakeet" },//允许访问的资源

@@ -159,7 +159,7 @@ public class NetWebModule : AbpModule
         ConfigSession(context);
         ConfigureCors(context); //配置跨域
         ConfigureHsts(context);
-        ConfigureHttpPolly(context);
+        ConfigureHttpPolly(context);//HttpClient请求Policy配置
         ConfigureCompressServices(context);
         ConfigureLocalizationServices();
         ConfigureAbpAntiForgerys();
@@ -271,10 +271,6 @@ public class NetWebModule : AbpModule
 
         //ConfigurePlugins(context);
 
-
-        #region HttpClient请求Policy配置
-        ConfigureHttpPolly(context);
-        #endregion
 
         #region 标准中间件注册option套路
 
@@ -921,7 +917,8 @@ public class NetWebModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
+            var redisConnection = EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!);
+            var redis = ConnectionMultiplexer.Connect(redisConnection);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         }
     }
@@ -931,7 +928,8 @@ public class NetWebModule : AbpModule
         var configuration = context.Services.GetConfiguration();
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
+            var redisConnection = EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!);
+            var connection = ConnectionMultiplexer.Connect(redisConnection);
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
     }

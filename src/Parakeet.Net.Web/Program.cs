@@ -14,7 +14,7 @@ namespace Parakeet.Net.Web;
 
 public class Program
 {
-    public async static Task<int> Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         Log.Logger = SerialLogConfig(new LoggerConfiguration())
             .CreateLogger();

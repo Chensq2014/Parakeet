@@ -1,12 +1,11 @@
-﻿using System.Threading;
-using Common;
+﻿using Common;
 using Common.CacheMudule;
-using Common.Nacos;
 using Common.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Parakeet.Net.Settings;
 using Serilog;
+using System.Threading;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Emailing;

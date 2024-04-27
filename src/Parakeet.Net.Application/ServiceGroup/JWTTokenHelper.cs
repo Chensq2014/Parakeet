@@ -32,7 +32,7 @@ namespace Parakeet.Net.ServiceGroup
                 {"Name","Chensq" },
                 {"Password","123456" }
             };
-            string url = "http://localhost:50000/api/Authentication/Login?name=Chensq&password=123456";
+            string url = "https://localhost:5000/api/Authentication/Login?name=Chensq&password=123456";
             HttpClientHandler handler = new HttpClientHandler();
             using (var http = new HttpClient(handler))
             {

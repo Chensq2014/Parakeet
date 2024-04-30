@@ -96,6 +96,7 @@ using Common.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Identity.Web;
+using Parakeet.Net.Web.Extentions;
 
 namespace Parakeet.Net.Web;
 
@@ -493,14 +494,7 @@ public class NetWebModule : AbpModule
         Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureAuthentication...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         var configuration = context.Services.GetConfiguration();
 
-        #region 客户端模式
 
-        //context.Services.AddIdentityServer() //定义处理规则
-        //    .AddDeveloperSigningCredential() //默认的开发者证书--临时证书--生产环境为了保证token不失效，证书是不变的
-        //    .AddInMemoryClients(ClientInitConfig.GetClients())
-        //    .AddInMemoryApiResources(ClientInitConfig.GetApiResources());
-
-        #endregion
 
         #region 客户端 密码模式 注意 如果要给第三方使用token 就不要再AddCookie()【如果AddCookie 第三方Header里面就必须传递cookie】
 
@@ -626,86 +620,13 @@ public class NetWebModule : AbpModule
         #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
 
         //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
+        context.AddCommonAuthentication();
 
-        context.Services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//
-                options.DefaultChallengeScheme = "oidc";
-                options.DefaultSignInScheme = "oidc";
-            })
-            .AddCookie("Cookies", options =>
-            {
-                options.ExpireTimeSpan = TimeSpan.FromDays(365);
-                options.CheckTokenExpiration();
-            })
-            .AddAbpOpenIdConnect("oidc", options =>
-            {
-                options.Authority = configuration["AuthServer:Authority"];
-                options.RequireHttpsMetadata = configuration.GetValue<bool>("AuthServer:RequireHttpsMetadata");
-                options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
-
-                options.ClientId = configuration["AuthServer:ClientId"];
-                options.ClientSecret = EncodingEncryptHelper.DEncrypt(configuration["AuthServer:ClientSecret"]);
-
-                options.UsePkce = true;
-                options.SaveTokens = true;
-                options.GetClaimsFromUserInfoEndpoint = true;
-
-                options.Scope.Add("roles");
-                options.Scope.Add("email");
-                options.Scope.Add("phone");
-                options.Scope.Add("parakeet");
-            })
-            .AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(), CommonConsts.AzureAdSectionName, OpenIdConnectDefaults.AuthenticationScheme);
-        /*
-        * This configuration is used when the AuthServer is running on the internal network such as docker or k8s.
-        * Configuring the redirecting URLs for internal network and the web
-        * The login and the logout URLs are configured to redirect to the AuthServer real DNS for browser.
-        * The token acquired and validated from the the internal network AuthServer URL.
-        */
-        if (configuration.GetValue<bool>("AuthServer:IsContainerized"))
-        {
-            context.Services.Configure<OpenIdConnectOptions>("oidc", options =>
-            {
-                options.TokenValidationParameters.ValidIssuers = new[]
-                {
-                        configuration["AuthServer:MetaAddress"]!.EnsureEndsWith('/'),
-                        configuration["AuthServer:Authority"]!.EnsureEndsWith('/')
-                 };
-
-                options.MetadataAddress = configuration["AuthServer:MetaAddress"]!.EnsureEndsWith('/') +
-                                        ".well-known/openid-configuration";
-
-                var previousOnRedirectToIdentityProvider = options.Events.OnRedirectToIdentityProvider;
-                options.Events.OnRedirectToIdentityProvider = async ctx =>
-                {
-                    // Intercept the redirection so the browser navigates to the right URL in your host
-                    ctx.ProtocolMessage.IssuerAddress = configuration["AuthServer:Authority"]!.EnsureEndsWith('/') + "connect/authorize";
-
-                    if (previousOnRedirectToIdentityProvider != null)
-                    {
-                        await previousOnRedirectToIdentityProvider(ctx);
-                    }
-                };
-                var previousOnRedirectToIdentityProviderForSignOut = options.Events.OnRedirectToIdentityProviderForSignOut;
-                options.Events.OnRedirectToIdentityProviderForSignOut = async ctx =>
-                {
-                    // Intercept the redirection for signout so the browser navigates to the right URL in your host
-                    ctx.ProtocolMessage.IssuerAddress = configuration["AuthServer:Authority"]!.EnsureEndsWith('/') + "connect/logout";
-
-                    if (previousOnRedirectToIdentityProviderForSignOut != null)
-                    {
-                        await previousOnRedirectToIdentityProviderForSignOut(ctx);
-                    }
-                };
-            });
-        }
 
         context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
         {
             options.IsDynamicClaimsEnabled = true;
         });
-
 
 
         #endregion

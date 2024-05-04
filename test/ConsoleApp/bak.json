@@ -32,7 +32,7 @@
     "DatabaseId": 1
   },
   "AuthServer": {
-    "Authority": "https://localhost:5000",
+    "Authority": "https://localhost:50000",
     "RequireHttpsMetadata": true,
     "ClientId": "Parakeet_Web",
     "ClientSecret": "dcfgcbevcydncq",

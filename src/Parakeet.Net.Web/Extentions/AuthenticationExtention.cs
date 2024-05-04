@@ -157,11 +157,13 @@ namespace Parakeet.Net.Web.Extentions
             #endregion
         }
 
+
+
         private static Task OnJwtBearerMessageReceived(Microsoft.AspNetCore.Authentication.JwtBearer.MessageReceivedContext context)
         {
             if (string.IsNullOrEmpty(context.Token))
             {
-                var token = context.HttpContext.Request.Query["accessToken"].FirstOrDefault();
+                var token = context.HttpContext.Request.Query[CommonConsts.AccessTokenName].FirstOrDefault();
                 if (string.IsNullOrEmpty(token))
                 {
                     context.Token = token;
@@ -169,7 +171,7 @@ namespace Parakeet.Net.Web.Extentions
                 else
                 {
 
-                    context.Token = context.HttpContext.Request.Cookies["accessToken"];
+                    context.Token = context.HttpContext.Request.Cookies[CommonConsts.AccessTokenName];
                 }
             }
             return Task.CompletedTask;

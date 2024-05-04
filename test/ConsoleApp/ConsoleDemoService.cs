@@ -145,7 +145,7 @@ public class ConsoleDemoService : ITransientDependency
 
             node = "AuthServer";
             Console.WriteLine($"\"{node}\":{{");
-            Console.WriteLine($"    \"Authority\": \"https://localhost:5000\",");
+            Console.WriteLine($"    \"Authority\": \"https://localhost:50000\",");
             Console.WriteLine($"    \"RequireHttpsMetadata\": true,");
             Console.WriteLine($"    \"ClientId\": \"Parakeet_Web\",");
 

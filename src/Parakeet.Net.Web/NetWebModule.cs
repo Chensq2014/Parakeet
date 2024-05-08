@@ -97,6 +97,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Identity.Web;
 using Parakeet.Net.Web.Extentions;
+using Parakeet.Net.Permissions;
 
 namespace Parakeet.Net.Web;
 
@@ -195,6 +196,7 @@ public class NetWebModule : AbpModule
         context.Services.AddRazorPages(options =>
         {
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、AddRazorPages (参数委托)配置{nameof(RazorPagesOptions)},【MVC流程日志：1、ConfigreServices最后的流程AddRazorPages，开始MVC资源及配置】AddRazorPages-->AddMvcCore/-->ApplicationPartManager(一次性加载当前及关联的所有终结点(Action/Controller)所在程序集dll，准备好控制器提供器，完成MVC处理动作初始化，包括Controller-Action,为中间件UseRouting 匹配路由做准备)...ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+            options.Conventions.AuthorizePage("/Need/Index",NeedPermissions.Needs.Default);
 
         })//支持Razor 的Pages view模式
           //.AddNewtonsoftJson(options =>
@@ -1327,9 +1329,9 @@ public class NetWebModule : AbpModule
             RequestPath = "/MyImages"
         });
 
-        #region 多租户 放在NetMultiTenancyModule里面
+        #region 多租户 放在启动模块
 
-        ////多租户 放在NetMultiTenancyModule模块里面
+        ////多租户 放在启动模块
         //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、多租户....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
 
         //if (CommonConsts.MultiTenancyEnabled)

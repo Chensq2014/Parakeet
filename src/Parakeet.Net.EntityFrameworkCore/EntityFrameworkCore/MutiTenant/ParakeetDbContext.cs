@@ -10,6 +10,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace Parakeet.Net.EntityFrameworkCore
     /// <summary>
     /// 公共数据库
     /// </summary>
+    [IgnoreMultiTenancy]
     [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName(CommonConsts.MultiTenantConnectionStringName)]

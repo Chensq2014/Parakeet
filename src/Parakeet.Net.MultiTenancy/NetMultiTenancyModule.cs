@@ -55,11 +55,13 @@ public class NetMultiTenancyModule : AbpModule
     {
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetMultiTenancyModule)} Start OnApplicationInitialization ....");
         var app = context.GetApplicationBuilder();
-        if (CommonConsts.MultiTenancyEnabled)
-        {
-            //app.UseCustomMultiTenancy();
-            app.UseMultiTenancy();
-        }
+
+        ////多租户 放在启动模块
+        //if (CommonConsts.MultiTenancyEnabled)
+        //{
+        //    //app.UseCustomMultiTenancy();
+        //    app.UseMultiTenancy();
+        //}
         base.OnApplicationInitialization(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetMultiTenancyModule)} End OnApplicationInitialization ....");
     }

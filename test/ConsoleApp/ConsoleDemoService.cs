@@ -52,7 +52,7 @@ public class ConsoleDemoService : ITransientDependency
 
             var node = "ConnectionStrings";
             Console.WriteLine($"\"{node}\":{{");
-            var dbKey = "MultiTenant";
+            var dbKey = "Portal";
             var key = $"{node}:{dbKey}";
             var conn = _configuration[key];
             var encryptStr = EncodingEncryptHelper.Encrypt(conn);

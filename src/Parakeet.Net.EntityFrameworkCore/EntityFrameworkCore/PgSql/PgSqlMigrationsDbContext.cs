@@ -21,14 +21,6 @@ namespace Parakeet.Net.EntityFrameworkCore
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PgSqlMigrationsDbContext)} DbContextOptions.............");
         }
 
-        #region 租户公共数据结构
-        //public DbSet<EnvironmentRecord> EnvironmentRecords { get; set; }
-        //public DbSet<CraneAlarm> CraneAlarms { get; set; }
-        //public DbSet<CraneRecord> CraneRecords { get; set; }
-        //public DbSet<CraneBasic> CraneBasics { get; set; }
-
-        #endregion
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             if (builder.IsUsingPostgreSql())

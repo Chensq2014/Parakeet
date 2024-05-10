@@ -11,7 +11,7 @@ namespace Parakeet.Net;
 
 [DependsOn(
     typeof(NetDomainModule),
-    //typeof(AbpMultiTenancyModule),
+    typeof(AbpMultiTenancyModule),
     typeof(AbpAspNetCoreMultiTenancyModule)
 )]
 public class NetMultiTenancyModule : AbpModule

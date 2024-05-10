@@ -3,11 +3,13 @@ using Common.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using OpenIddict.Validation.AspNetCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +24,9 @@ namespace Parakeet.Net.Web.Extentions
             //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
             var configuration = context.Services.GetConfiguration();
 
-            context.Services.AddAuthentication(options =>
+            context.Services
+                .ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)
+                .AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//替换为你的默认认证方案名称
                 options.DefaultChallengeScheme = "oidc";

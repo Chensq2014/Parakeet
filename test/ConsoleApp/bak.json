@@ -17,7 +17,7 @@
     "CallbackPath": "/signin-oidc"
   },
   "ConnectionStrings": {
-    "MultiTenant": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkeufhesekfgddfmereafhfgfbdffefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
+    "Portal": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfelfmfkfldwfjcqflfoezfjekewdffheneofjfefpetfhddfeflesdfctcucvcwcxcydd",
     "MySql": "fqeueneuewfgdjenfgexewfcejeoeweydhfdfiezfddmcvcscrcnddfqfqfjdcfedzetcmeffhffeadmeferfpevetecfletdieodwfheyfietetficucscucwddfjexesdffgfdfdfiddfeflesdfdnfffbfhctcucvcwcxcydd",
     "PgSql": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkdbcycxcjdhfjfkedeneyfbdofefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
     "SqlServer": "ekeueneuewfgdjenfgexewfcejeoeweydhereufbekexepfeescufeeyfpeyegeueaficbdbcyczckfsekeudmfnescqfiflevcpcacvdedfcxcydd",

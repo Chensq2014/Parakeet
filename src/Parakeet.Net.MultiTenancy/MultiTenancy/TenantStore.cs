@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Common;
+using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.Caching;
@@ -19,7 +20,7 @@ namespace Parakeet.Net.MultiTenancy
         private IDistributedCache<TenantConfiguration> _tenantCache;
         public TenantStore(IOptionsMonitor<AbpDefaultTenantStoreOptions> options,
             IDistributedCache<TenantConfiguration> tenantCache, ITenantRepository tenantRepository
-            //ITenantManager tenantManager
+            //,ITenantManager tenantManager
             ) //: base(options)
         {
             _tenantCache = tenantCache;
@@ -51,7 +52,7 @@ namespace Parakeet.Net.MultiTenancy
                 var tenantConfiguration = tenant != null
                     ? new TenantConfiguration(tenant.Id, tenant.Name)
                     : null;
-                tenantConfiguration?.ConnectionStrings.TryAdd(tenantConfiguration.ConnectionStrings.Default,tenant.FindDefaultConnectionString());
+                object value = tenantConfiguration?.ConnectionStrings.TryAdd(tenantConfiguration.ConnectionStrings.Default?? CommonConsts.DefaultConnectStringName, tenant.FindDefaultConnectionString());
                 return tenantConfiguration;
             });
             return tenantConfiguration;

@@ -69,15 +69,15 @@ namespace Parakeet.Net.EntityFrameworkCore
         {
             if (builder.IsUsingPostgreSql())
             {
-                Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、MultiTenant使用的PostGreSql");
+                Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、Portal(MultiTenant)使用的PostGreSql");
             }
             if (builder.IsUsingMySQL())
             {
-                Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、MultiTenant使用的MySQL");
+                Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、Portal(MultiTenant)使用的MySQL");
             }
             if (builder.IsUsingSqlServer())
             {
-                Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、MultiTenant使用的SqlServer");
+                Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、Portal(MultiTenant)使用的SqlServer");
             }
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating start.............");
 

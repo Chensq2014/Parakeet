@@ -1,34 +1,67 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using Common;
 using Common.Dtos;
 using Common.Enums;
 using Common.EnumServices;
 using Common.Extensions;
+using Common.Helpers;
 using Common.Storage;
+using Exceptionless;
+using Grpc.Core;
+using Grpc.Net.ClientFactory;
+using Localization.Resources.AbpUi;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.ResponseCaching;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Parakeet.Net.Localization;
-using Parakeet.Net.Web.Menus;
-using StackExchange.Redis;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Validation.AspNetCore;
+using Parakeet.Net.Aop;
+using Parakeet.Net.EntityFrameworkCore;
+using Parakeet.Net.Extentions;
+using Parakeet.Net.GrpcLessonServer;
+using Parakeet.Net.GrpcService;
+using Parakeet.Net.Localization;
+using Parakeet.Net.Permissions;
+using Parakeet.Net.ServiceGroup;
+using Parakeet.Net.Web.Extentions;
+using Parakeet.Net.Web.Menus;
 using Serilog;
+using StackExchange.Redis;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Threading;
 using Volo.Abp;
+using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
+using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.AspNetCore.Mvc.Client;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
@@ -39,65 +72,24 @@ using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
+using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
 using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Http.Client.Web;
 using Volo.Abp.Identity.Web;
+using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement.Web;
+using Volo.Abp.OpenIddict;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.Web;
-using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
-using Volo.Abp.UI.Navigation;
-using Volo.Abp.VirtualFileSystem;
-using Volo.Abp.AspNetCore.Mvc.AntiForgery;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Nest;
-using System.Net.Http;
-using Microsoft.AspNetCore.ResponseCompression;
-using Localization.Resources.AbpUi;
-using Volo.Abp.Localization;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.Extensions.FileProviders;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Volo.Abp.Data;
 using Volo.Abp.Threading;
-using System.Linq;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.ResponseCaching;
-using Polly;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.HttpOverrides;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Unicode;
-using Common.Helpers;
-using Exceptionless;
-using Grpc.Core;
-using Grpc.Net.ClientFactory;
-using Microsoft.Extensions.Logging;
-using Parakeet.Net.Aop;
-using Parakeet.Net.Extentions;
-using Parakeet.Net.GrpcLessonServer;
-using Parakeet.Net.GrpcService;
-using Parakeet.Net.ServiceGroup;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Common.Extensions;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Identity.Web;
-using Parakeet.Net.Web.Extentions;
-using Parakeet.Net.Permissions;
+using Volo.Abp.UI.Navigation;
+using Volo.Abp.UI.Navigation.Urls;
+using Volo.Abp.VirtualFileSystem;
+
 
 namespace Parakeet.Net.Web;
 
@@ -105,6 +97,8 @@ namespace Parakeet.Net.Web;
     typeof(NetHttpApiClientModule),
     typeof(NetHttpApiModule),
     typeof(NetApplicationModule),
+    typeof(NetEntityFrameworkCoreModule),
+    typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
     typeof(AbpAspNetCoreMvcClientModule),
     typeof(AbpHttpClientWebModule),
@@ -123,6 +117,8 @@ public class NetWebModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+        var hostingEnvironment = context.Services.GetHostingEnvironment();
+        var configuration = context.Services.GetConfiguration();
         context.Services.PreConfigure<AbpMvcDataAnnotationsLocalizationOptions>(options =>
         {
             options.AddAssemblyResource(
@@ -134,6 +130,29 @@ public class NetWebModule : AbpModule
                 typeof(NetWebModule).Assembly
             );
         });
+
+        PreConfigure<OpenIddictBuilder>(builder =>
+        {
+            builder.AddValidation(options =>
+            {
+                options.AddAudiences("parakeet");
+                options.UseLocalServer();
+                options.UseAspNetCore();
+            });
+        });
+
+        if (!hostingEnvironment.IsDevelopment())
+        {
+            PreConfigure<AbpOpenIddictAspNetCoreOptions>(options =>
+            {
+                options.AddDevelopmentEncryptionAndSigningCertificate = false;
+            });
+
+            PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
+            {
+                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "8796a983-4391-4ec2-8641-e985e497be07");
+            });
+        }
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -622,8 +641,8 @@ public class NetWebModule : AbpModule
         #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
 
         //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
+        //context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
         context.AddCommonAuthentication();
-
 
         context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
         {
@@ -1284,6 +1303,8 @@ public class NetWebModule : AbpModule
         #endregion
         app.UseAuthentication();
 
+        app.UseAbpOpenIddictValidation();
+
         #region //使用jwt格式的token 中间件
         //使用jwt格式的token 中间件
 
@@ -1331,13 +1352,13 @@ public class NetWebModule : AbpModule
 
         #region 多租户 放在启动模块
 
-        ////多租户 放在启动模块
-        //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、多租户....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //多租户 放在启动模块
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、多租户....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
 
-        //if (CommonConsts.MultiTenancyEnabled)
-        //{
-        //    app.UseMultiTenancy();
-        //}
+        if (CommonConsts.MultiTenancyEnabled)
+        {
+            app.UseMultiTenancy();
+        }
         #endregion
 
 
@@ -1352,6 +1373,7 @@ public class NetWebModule : AbpModule
         //app.UseSecurePolicy();
         //app.UseInheritedMiddleware();
 
+        app.UseUnitOfWork();
         app.UseDynamicClaims();
 
         #region 用于授权用户访问安全资源的授权中间件

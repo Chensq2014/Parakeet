@@ -34,7 +34,7 @@
 //            var connectionStringNames = new List<string>
 //            {
 //                "Default",
-//                "MultiTenant",
+//                "Portal",
 //                "MySql",
 //                "PgSql",
 //                "SqlServer",

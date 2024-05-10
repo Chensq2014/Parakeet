@@ -40,7 +40,7 @@ namespace Parakeet.Net.MultiTenancy
             var connectionStringNames = new List<string>
                 {
                     "Default",
-                    "MultiTenant",
+                    "Portal",
                     "MySql",
                     "PgSql",
                     "SqlServer",
@@ -107,7 +107,8 @@ namespace Parakeet.Net.MultiTenancy
                 return EncodingEncryptHelper.DEncrypt(tenantDefaultConnectionString);
             }
 
-            return EncodingEncryptHelper.DEncrypt(await base.ResolveAsync(connectionStringName));
+            return await base.ResolveAsync(connectionStringName);
+            //return EncodingEncryptHelper.DEncrypt(await base.ResolveAsync(connectionStringName));
         }
 
 

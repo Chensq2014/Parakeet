@@ -304,7 +304,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             });
             builder.Entity<CraneBasic>(x =>
             {
-                x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s"); 
+                x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s");
                 x.ConfigureFullAuditedAggregateRoot();
             });
             builder.Entity<CraneRecord>(x =>

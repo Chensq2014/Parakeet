@@ -37,8 +37,8 @@ namespace Parakeet.Net.EntityFrameworkCore
             }
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(SqlServerMigrationsDbContext)} OnModelCreating start.............");
 
-            base.OnModelCreating(builder);
             builder.Configure(true);
+            base.OnModelCreating(builder);
 
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(SqlServerMigrationsDbContext)} OnModelCreating end.............");
         }

@@ -81,9 +81,6 @@ namespace Parakeet.Net.EntityFrameworkCore
             }
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating start.............");
 
-
-            base.OnModelCreating(builder);
-
             #region Include modules to your migration db context
             /* Include modules to your migration db context */
 
@@ -98,6 +95,8 @@ namespace Parakeet.Net.EntityFrameworkCore
 
             builder.ConfigureMain(true);
             #endregion
+
+            base.OnModelCreating(builder);
 
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating end.............");
         }

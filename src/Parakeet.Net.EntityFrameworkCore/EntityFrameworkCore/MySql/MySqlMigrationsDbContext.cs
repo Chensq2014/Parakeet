@@ -60,8 +60,8 @@ namespace Parakeet.Net.EntityFrameworkCore
 
             #endregion
 
-            base.OnModelCreating(builder);
             builder.Configure(true);
+            base.OnModelCreating(builder);
             
             Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(MySqlMigrationsDbContext)} OnModelCreating end.............");
         }

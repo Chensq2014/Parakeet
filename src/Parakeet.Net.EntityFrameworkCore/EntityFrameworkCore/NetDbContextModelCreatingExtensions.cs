@@ -296,25 +296,25 @@ namespace Parakeet.Net.EntityFrameworkCore
             optionsAction?.Invoke(options);
 
             #region 实体映射代码
-
+            //options.TablePrefix = "d_";//当前这四个属于device
             builder.Entity<EnvironmentRecord>(x =>
             {
-                x.ToTable(options.TablePrefix + $"{nameof(EnvironmentRecord)}s");
+                //x.ToTable(options.TablePrefix + $"{nameof(EnvironmentRecord)}s");
                 x.ConfigureFullAuditedAggregateRoot();
             });
             builder.Entity<CraneBasic>(x =>
             {
-                x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s");
+                //x.ToTable(options.TablePrefix + $"{nameof(CraneBasic)}s");
                 x.ConfigureFullAuditedAggregateRoot();
             });
             builder.Entity<CraneRecord>(x =>
             {
-                x.ToTable(options.TablePrefix + $"{nameof(CraneRecord)}s");
+                //x.ToTable(options.TablePrefix + $"{nameof(CraneRecord)}s", "device");
                 x.ConfigureFullAuditedAggregateRoot();
             });
             builder.Entity<CraneAlarm>(x =>
             {
-                x.ToTable(options.TablePrefix + $"{nameof(CraneAlarm)}s");
+                //x.ToTable(options.TablePrefix + $"{nameof(CraneAlarm)}s");
                 x.ConfigureFullAuditedAggregateRoot();
             });
             #endregion

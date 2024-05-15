@@ -17,6 +17,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Parakeet.Net.Aop;
 
 namespace Parakeet.Net;
 
@@ -37,14 +38,10 @@ public class NetApplicationModule : AbpModule
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetApplicationModule)} Start PreConfigureServices ....3");
-        ////// 将用户自定义拦截器加入待依赖注入注册拦截器集合中，最终由autofac自动调用注册方法
-        //context.Services.OnRegistred(CacheLockInterceptorRegistrar.Register);//autofac dll文件引用bug 待解决
+        // 将用户自定义拦截器加入待依赖注入注册拦截器集合中，最终由autofac自动调用注册方法
+        //context.Services.OnRegistered(CacheLockInterceptorRegistrar.RegisterIfNeed);//autofac dll文件引用bug 待解决
         ////context.Services.AddTransient(typeof(CastleAbpInterceptorAdapter<CacheLockInterceptor>));//是否可用
         ////context.Services.AddTransient(typeof(CacheLockInterceptor));//是否需要添加到容器,框架默认应该有处理?
-
-        ////不需要注册 IBaseNetAppService
-        //context.Services.TryAddTransient(typeof(IBaseNetAppService<>), typeof(BaseNetAppService<>));
-        //context.Services.TryAddTransient(typeof(IBaseNetAppService<,>), typeof(BaseNetAppService<,>));
 
         //IEmailSender默认已经注入 配置文件中需要用到AbpMailKitOptions 这个节点
         //context.Services.TryAddTransient(typeof(IEmailSender),typeof(MailKitSmtpEmailSender));

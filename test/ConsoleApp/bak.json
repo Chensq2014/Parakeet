@@ -17,8 +17,9 @@
     "CallbackPath": "/signin-oidc"
   },
   "ConnectionStrings": {
+    "Default": "ekeueneuewfgdjenfgexewfcejeoeweydhereufbekexepfeescufefmfpfrdwfbckfjeefbdjfkdwdmerfnezdlcwchczcwdacick",
     "Portal": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfelfmfkfldwfjcqflfoezfjekewdffheneofjfefpetfhddfeflesdfctcucvcwcxcydd",
-    "MySql": "fqeueneuewfgdjenfgexewfcejeoeweydhfdfiezfddmcvcscrcnddfqfqfjdcfedzetcmeffhffeadmeferfpevetecfletdieodwfheyfietetficucscucwddfjexesdffgfdfdfiddfeflesdfdnfffbfhctcucvcwcxcydd",
+    "MySql": "fqeueneuewfgdjenfgexewfcejeoeweydhfdfiezfddmcvcscrcnddfqfqfjdcfedzetcmeffhffeadmeferfpevetecfletdieodwfheyfietetficucscucwddfjexesdffgfdfdfiddfeflesdfctcucvcwcxcydd",
     "PgSql": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkdbcycxcjdhfjfkedeneyfbdofefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
     "SqlServer": "ekeueneuewfgdjenfgexewfcejeoeweydhereufbekexepfeescufeeyfpeyegeueaficbdbcyczckfsekeudmfnescqfiflevcpcacvdedfcxcydd",
     "Write": "ekeueneuewfgdjcddgeyewfkecebeeexexdefjeifbewezeqesexcudbdddfckfkeeescmfqetdgelfuefdhdadacycjdbcydg",

@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
@@ -17,7 +12,8 @@ namespace Parakeet.Net.MultiTenancy
     [Dependency(ReplaceServices = true)]
     public class MultiTenantConfigurationProvider : TenantConfigurationProvider
     {
-        public MultiTenantConfigurationProvider(ITenantResolver tenantResolver, ITenantStore tenantStore, ITenantResolveResultAccessor tenantResolveResultAccessor,IStringLocalizer<AbpMultiTenancyResource> stringLocalizer) : base(tenantResolver, tenantStore, tenantResolveResultAccessor,stringLocalizer)
+        public MultiTenantConfigurationProvider(ITenantResolver tenantResolver, ITenantStore tenantStore, ITenantResolveResultAccessor tenantResolveResultAccessor,IStringLocalizer<AbpMultiTenancyResource> stringLocalizer, ITenantNormalizer tenantNormalizer) 
+            : base(tenantResolver, tenantStore, tenantResolveResultAccessor,stringLocalizer, tenantNormalizer)
         {
         }
 

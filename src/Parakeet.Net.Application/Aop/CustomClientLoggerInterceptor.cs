@@ -7,6 +7,9 @@ using System;
 
 namespace Parakeet.Net.Aop
 {
+    /// <summary>
+    /// grpc 客户端拦截器 
+    /// </summary>
     public class CustomClientLoggerInterceptor : Interceptor
     {
         private readonly Lazy<ILogger<CustomClientLoggerInterceptor>> _logger;

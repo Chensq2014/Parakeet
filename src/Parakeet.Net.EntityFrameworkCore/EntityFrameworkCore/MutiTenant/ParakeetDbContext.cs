@@ -25,7 +25,7 @@ namespace Parakeet.Net.EntityFrameworkCore
     [IgnoreMultiTenancy]
     [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
-    [ConnectionStringName(CommonConsts.MultiTenantConnectionStringName)]
+    [ConnectionStringName(CommonConsts.PortalConnectionStringName)]
     public class ParakeetDbContext : AbpDbContext<ParakeetDbContext>,
         IIdentityDbContext,
         ITenantManagementDbContext

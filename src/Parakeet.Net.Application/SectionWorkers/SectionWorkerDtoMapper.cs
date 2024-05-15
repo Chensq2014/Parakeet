@@ -18,7 +18,16 @@ namespace Parakeet.Net.SectionWorkers
                 .Ignore(x => x.ProfitTotal)
                 .Ignore(x => x.Total);
 
-            CreateMap<SectionWorkerDto, SectionWorker>();
+            CreateMap<SectionWorkerDto, SectionWorker>()
+                .Ignore(x => x.IsDeleted)
+                .Ignore(x => x.DeleterId)
+                .Ignore(x => x.DeletionTime)
+                .Ignore(x => x.LastModifierId)
+                .Ignore(x => x.LastModificationTime)
+                .Ignore(x => x.CreatorId)
+                .Ignore(x => x.CreationTime)
+                .Ignore(x => x.ExtraProperties)
+                .Ignore(x => x.ConcurrencyStamp);
 
         }
     }

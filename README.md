@@ -56,13 +56,13 @@ dotnet tool update -g Volo.Abp.Cli
 
 abp new Parakeet.Net -dbms PostgreSQL --tiered -csf  --version 6.0.2
 
-abp new DataProcess -t app-nolayers -csf --version 6.0.2
+abp new Parakeet.Net -t app-nolayers -csf --version 6.0.2
 
-abp new DataProcess -t module -csf --version 6.0.2
+abp new Parakeet.Net -t module -csf --version 6.0.2
 
-abp new DataProcess-t module --no-ui -csf --version 6.0.2
+abp new Parakeet.Net -t module --no-ui -csf --version 6.0.2
 
-abp new DataProcess -t app-nolayers --theme basic -csf --version 6.0.2
+abp new Parakeet.Net -t app-nolayers --theme basic -csf --version 6.0.2
 
 
 

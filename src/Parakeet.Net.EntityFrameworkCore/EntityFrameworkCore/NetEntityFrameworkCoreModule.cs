@@ -95,11 +95,11 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //context.Services.AddDefaultRepository(typeof(INetCoreRepository<,>), 
         //    EntityHelper.FindPrimaryKeyType(typeof(NetRepositoryBase<,>)));
 
-        //直接这样在容器里直接注册 
-        context.Services.TryAddTransient(typeof(IParakeetRepository<>), typeof(ParakeetRepositoryBase<>));
-        context.Services.TryAddTransient(typeof(IParakeetRepository<,>), typeof(ParakeetRepositoryBase<,>));
-        context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
-        context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
+        ////直接这样在容器里直接注册 
+        //context.Services.TryAddTransient(typeof(IParakeetRepository<>), typeof(ParakeetRepositoryBase<>));
+        //context.Services.TryAddTransient(typeof(IParakeetRepository<,>), typeof(ParakeetRepositoryBase<,>));
+        //context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
+        //context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
 
         //// 添加自定义指定类型仓储 为什么dbcontext不直接scope注册呢？同一次请求并发？
         //context.Services.AddAbpDbContext<NetDbContext>(options =>

@@ -1,9 +1,11 @@
 using Common;
+using Common.CacheMudule;
 using Common.Dtos;
 using Common.Enums;
 using Common.EnumServices;
 using Common.Extensions;
 using Common.Helpers;
+using Common.Nacos;
 using Common.Storage;
 using Exceptionless;
 using Grpc.Core;
@@ -74,6 +76,7 @@ using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
+using Volo.Abp.FeatureManagement;
 using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Http.Client.Web;
 using Volo.Abp.Identity.Web;
@@ -81,6 +84,7 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.OpenIddict;
+using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
@@ -97,21 +101,31 @@ namespace Parakeet.Net.Web;
     typeof(NetHttpApiClientModule),
     typeof(NetHttpApiModule),
     typeof(NetApplicationModule),
+    typeof(NetApplicationContractsModule),
+    typeof(NetDomainModule),
+    typeof(NetDomainSharedModule),
     typeof(NetEntityFrameworkCoreModule),
+    typeof(CommonModule),
+    typeof(CommonEntityModule),
+    typeof(CommonSharedModule),
+    typeof(NacosModule),
+    typeof(NetCacheMudule),
+    typeof(AbpAutofacModule),
+    typeof(AbpIdentityWebModule),
+    typeof(AbpSettingManagementWebModule),
     typeof(AbpAccountWebOpenIddictModule),
+    typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
+    typeof(AbpTenantManagementWebModule),
+    typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
     typeof(AbpAspNetCoreMvcClientModule),
     typeof(AbpHttpClientWebModule),
-    typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
-    typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpDistributedLockingModule),
-    typeof(AbpSettingManagementWebModule),
     typeof(AbpHttpClientIdentityModelWebModule),
-    typeof(AbpIdentityWebModule),
-    typeof(AbpTenantManagementWebModule),
-    typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpFeatureManagementWebModule),
+    typeof(AbpPermissionManagementWebModule)
     )]
 public class NetWebModule : AbpModule
 {
@@ -185,7 +199,7 @@ public class NetWebModule : AbpModule
         ConfigureLocalizationServices();
         ConfigureAbpAntiForgerys();
         ConfigureFileUploadOptions();
-
+        
         if (!hostingEnvironment.IsDevelopment())
         {
             //https 需要增加443端口
@@ -641,14 +655,13 @@ public class NetWebModule : AbpModule
         #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
 
         //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
-        //context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-        context.AddCommonAuthentication();
+        context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+        //context.AddCommonAuthentication();
 
         context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
         {
             options.IsDynamicClaimsEnabled = true;
         });
-
 
         #endregion
     }
@@ -819,38 +832,47 @@ public class NetWebModule : AbpModule
             Type = SecuritySchemeType.ApiKey
         };
         var configuration = context.Services.GetConfiguration();
-        context.Services.AddAbpSwaggerGenWithOAuth(
-            configuration["AuthServer:Authority"]!,
-            new Dictionary<string, string>
-            {
-                {"parakeet", "Parakeet API"}
-            },
+        //context.Services.AddAbpSwaggerGenWithOAuth(
+        //    configuration["AuthServer:Authority"]!,
+        //    new Dictionary<string, string>
+        //    {
+        //        {"parakeet", "Parakeet API"}
+        //    },
+        //    options =>
+        //    {
+        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
+        //        options.DocInclusionPredicate((docName, description) => true);
+        //        options.CustomSchemaIds(type => type.FullName);
+
+        //        options.IncludeXmlCommentFiles()
+        //            .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
+        //        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        //        {
+        //            {
+        //                new OpenApiSecurityScheme
+        //                {
+        //                    Reference = new OpenApiReference
+        //                    {
+        //                        Type = ReferenceType.SecurityScheme,
+        //                        Id = "bearerAuth"
+        //                    }
+        //                },
+        //                new List<string>()
+        //            }
+        //        });
+
+        //        ////api起冲突时默认使用第一个
+        //        //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+        //    });
+
+        context.Services.AddAbpSwaggerGen(
             options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
-
-                options.IncludeXmlCommentFiles()
-                    .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "bearerAuth"
-                            }
-                        },
-                        new List<string>()
-                    }
-                });
-
-                ////api起冲突时默认使用第一个
-                //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-            });
+            }
+        );
     }
     private void ConfigureDataProtection(ServiceConfigurationContext context)
     {
@@ -859,7 +881,7 @@ public class NetWebModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redisConnection = EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!);
+            var redisConnection = configuration["Redis:Configuration"]!;
             var redis = ConnectionMultiplexer.Connect(redisConnection);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         }
@@ -870,7 +892,7 @@ public class NetWebModule : AbpModule
         var configuration = context.Services.GetConfiguration();
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            var redisConnection = EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!);
+            var redisConnection = configuration["Redis:Configuration"]!;
             var connection = ConnectionMultiplexer.Connect(redisConnection);
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
@@ -901,7 +923,7 @@ public class NetWebModule : AbpModule
             options.Limits.MaxRequestBodySize = null; // 设置为null则不限制大小，也可设置为具体的大小（如5GB）
 
             //单位：字节 From testing, the MaxRequestHeadersTotalSize can be set to 1000M. If set to 1GB, the api will be started failed.
-            options.Limits.MaxRequestHeadersTotalSize = 900 * 1024 * 1024;//900MB 按照字节为单位计算的
+            //options.Limits.MaxRequestHeadersTotalSize = 2000 * 1024 * 1024;//2000MB 按照字节为单位计算的
         });
 
         // 当托管在IIS/IIS Express下时，也要调整IIS转发到Kestrel的请求大小限制
@@ -1106,9 +1128,9 @@ public class NetWebModule : AbpModule
         #endregion
         app.UseCorrelationId();
 
-        //这种方式过时了(应在不重载的情况下调用UseExceptionless)，
-        //先配置ExceptionlessClient 依赖注入容器IServiceCollection AddExceptionless时设置appKey，url 
-        app.UseExceptionless("Gum3CWHNe4uKf7CYGT1CIBEKRx17FreeOywYTIDr");
+        ////这种方式过时了(应在不重载的情况下调用UseExceptionless)，
+        ////先配置ExceptionlessClient 依赖注入容器IServiceCollection AddExceptionless时设置appKey，url 
+        //app.UseExceptionless("Gum3CWHNe4uKf7CYGT1CIBEKRx17FreeOywYTIDr");
 
         #region ForwardedHeader中间件允许 请求中的Header参数通过Nginx等中间代理
 
@@ -1501,6 +1523,5 @@ public class NetWebModule : AbpModule
         base.OnApplicationShutdown(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End OnApplicationShutdown ....线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
     }
-
 
 }

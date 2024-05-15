@@ -20,10 +20,10 @@ namespace Parakeet.Net.Aop
         /// </summary>
         public ICurrentUser CurrentUser { get; set; }
 
-        /// <summary>
-        /// 方法上的用户自定义锁定属性,使用此属性的方法会进行lock
-        /// </summary>
-        public UserCacheLockAttribute LockAttribute { get; set; }
+        ///// <summary>
+        ///// 方法上的用户自定义锁定属性,使用此属性的方法会进行lock
+        ///// </summary>
+        //public UserCacheLockAttribute LockAttribute { get; set; }
 
         /// <summary>
         /// 自定义业务锁
@@ -34,9 +34,10 @@ namespace Parakeet.Net.Aop
         /// 拦截器构造函数依赖注入自定义锁
         /// </summary>
         /// <param name="lock"></param>
-        public CacheLockInterceptor(ILock @lock)
+        public CacheLockInterceptor(ILock @lock, ICurrentUser currentUser)
         {
             _lock = @lock;
+            CurrentUser = currentUser;
         }
 
         /// <summary>
@@ -44,11 +45,12 @@ namespace Parakeet.Net.Aop
         /// </summary>
         /// <param name="invocation"></param>
         /// <returns></returns>
+
         public override async Task InterceptAsync(IAbpMethodInvocation invocation)
         {
-            LockAttribute = invocation.Method.GetCustomAttribute<UserCacheLockAttribute>();
-            var operationName = LockAttribute?.OperationName ?? invocation.Method.Name;
-            using (new UserLock(_lock, CurrentUser?.Id, operationName, LockAttribute?.Expiration).CheckLock())
+            var lockAttribute = invocation.Method.GetCustomAttribute<UserCacheLockAttribute>();
+            var operationName = lockAttribute?.OperationName ?? invocation.Method.Name;
+            using (new UserLock(_lock, CurrentUser?.Id, operationName, lockAttribute?.Expiration).CheckLock())
             {
                 await invocation.ProceedAsync();
             }

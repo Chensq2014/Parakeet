@@ -52,7 +52,7 @@ public class ConsoleDemoService : ITransientDependency
 
             var node = "ConnectionStrings";
             Console.WriteLine($"\"{node}\":{{");
-            var dbKey = "Portal";
+            var dbKey = "Default";
             var key = $"{node}:{dbKey}";
             var conn = _configuration[key];
             var encryptStr = EncodingEncryptHelper.Encrypt(conn);
@@ -60,6 +60,15 @@ public class ConsoleDemoService : ITransientDependency
             //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
             //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
             Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
+
+            dbKey = "Portal";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
 
             dbKey = "MySql";
             key = $"{node}:{dbKey}";

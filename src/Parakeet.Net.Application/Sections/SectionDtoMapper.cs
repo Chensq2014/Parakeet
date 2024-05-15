@@ -21,6 +21,7 @@ namespace Parakeet.Net.Sections
                 .Ignore(x => x.WorkerTotal);
 
             CreateMap<SectionDto, Section>()
+                .Ignore(x => x.Project)
                 .Ignore(x => x.IsDeleted)
                 .Ignore(x => x.DeleterId)
                 .Ignore(x => x.DeletionTime)

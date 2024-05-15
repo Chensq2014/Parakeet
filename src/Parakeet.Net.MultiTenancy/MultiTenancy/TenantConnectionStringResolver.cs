@@ -37,24 +37,42 @@ namespace Parakeet.Net.MultiTenancy
 
         public override async Task<string> ResolveAsync(string connectionStringName = null)
         {
-            var connectionStringNames = new List<string>
-                {
-                    "Default",
-                    "Portal",
-                    "MySql",
-                    "PgSql",
-                    "SqlServer",
-                    "Write",
-                    "Read"
-                };
-            if (TenentId == null || (connectionStringName?.Equals(CommonConsts.MultiTenantConnectionStringName) == true))
+
+            #region 加密
+            //var connectionStringNames = new List<string>
+            //    {
+            //        "Default",
+            //        "Portal",
+            //        "MySql",
+            //        "PgSql",
+            //        "SqlServer",
+            //        "Write",
+            //        "Read"
+            //    };
+            //var multitenantConnectStringNames = new List<string>
+            //{
+            //    "AbpFeatureManagement",
+            //    "AbpSettingManagement",
+            //    "AbpPermissionManagement",
+            //    "AbpBackgroundJobs",
+            //    "AbpOpenIddict",
+            //    "AbpAuditLogging"
+            //};
+            //if (multitenantConnectStringNames.Contains(connectionStringName))
+            //{
+            //    connectionStringName = CommonConsts.PortalConnectionStringName;
+            //}//connectionStringNames.AddRange(multitenantConnectStringNames);
+            #endregion
+
+            if (TenentId == null || (connectionStringName?.Equals(CommonConsts.PortalConnectionStringName) == true))
             {
                 //No current tenant, fallback to default logic
-                var connectionStringValue = await base.ResolveAsync(connectionStringName);
-                return connectionStringNames.Contains(connectionStringName)
-                    ? EncodingEncryptHelper.DEncrypt(connectionStringValue)
-                    : connectionStringValue;
-                //return EncodingEncryptHelper.DEncrypt(await base.ResolveAsync(connectionStringName));
+                //var connectionStringValue = await base.ResolveAsync(connectionStringName);
+                //return connectionStringNames.Contains(connectionStringName)
+                //    ? EncodingEncryptHelper.DEncrypt(connectionStringValue)
+                //    : connectionStringValue;
+
+                return await base.ResolveAsync(connectionStringName);
             }
 
             var tenant = await FindTenantConfigurationAsync(TenentId.Value);
@@ -62,11 +80,7 @@ namespace Parakeet.Net.MultiTenancy
             if (tenant == null || tenant.ConnectionStrings.IsNullOrEmpty())
             {
                 //Tenant has not defined any connection string, fallback to default logic
-                var connectionStringValue = await base.ResolveAsync(connectionStringName);
-                return connectionStringNames.Contains(connectionStringName)
-                    ? EncodingEncryptHelper.DEncrypt(connectionStringValue)
-                    : connectionStringValue;
-                //return EncodingEncryptHelper.DEncrypt(await base.ResolveAsync(connectionStringName));
+                return await base.ResolveAsync(connectionStringName);
             }
 
             var tenantDefaultConnectionString = tenant.ConnectionStrings.Default;
@@ -76,9 +90,9 @@ namespace Parakeet.Net.MultiTenancy
                 connectionStringName == ConnectionStrings.DefaultConnectionStringName)
             {
                 //Return tenant's default or global default
-                return EncodingEncryptHelper.DEncrypt(!tenantDefaultConnectionString.IsNullOrWhiteSpace()
+                return !tenantDefaultConnectionString.IsNullOrWhiteSpace()
                     ? tenantDefaultConnectionString
-                    : Options.ConnectionStrings.Default);
+                    : Options.ConnectionStrings.Default;
             }
 
             //Requesting specific connection string...
@@ -86,7 +100,7 @@ namespace Parakeet.Net.MultiTenancy
             if (!connString.IsNullOrWhiteSpace())
             {
                 //Found for the tenant
-                return EncodingEncryptHelper.DEncrypt(connString);
+                return connString;
             }
 
             //Fallback to the mapped database for the specific connection string
@@ -97,18 +111,16 @@ namespace Parakeet.Net.MultiTenancy
                 if (!connString.IsNullOrWhiteSpace())
                 {
                     //Found for the tenant
-                    return EncodingEncryptHelper.DEncrypt(connString);
+                    return connString;
                 }
             }
 
             //Fallback to tenant's default connection string if available
             if (!tenantDefaultConnectionString.IsNullOrWhiteSpace())
             {
-                return EncodingEncryptHelper.DEncrypt(tenantDefaultConnectionString);
+                return tenantDefaultConnectionString;
             }
-
             return await base.ResolveAsync(connectionStringName);
-            //return EncodingEncryptHelper.DEncrypt(await base.ResolveAsync(connectionStringName));
         }
 
 

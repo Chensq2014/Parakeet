@@ -102,6 +102,7 @@ namespace Parakeet.Net.Devices
             CreateMap<DeviceKeySecret, DeviceKeySecretDto>();
             CreateMap<DeviceMediator, DeviceMediatorDto>();
             CreateMap<DeviceWorker, DeviceWorkerDto>()
+                .Ignore(m => m.RecordTime)
                 .Ignore(m => m.AreaTenant)
                 .Ignore(m => m.LocationArea);
         }

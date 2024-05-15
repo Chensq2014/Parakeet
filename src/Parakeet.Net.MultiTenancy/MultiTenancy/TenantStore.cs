@@ -1,6 +1,8 @@
 ﻿using Common;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Caching;
 using Volo.Abp.DependencyInjection;
@@ -52,7 +54,7 @@ namespace Parakeet.Net.MultiTenancy
                 var tenantConfiguration = tenant != null
                     ? new TenantConfiguration(tenant.Id, tenant.Name)
                     : null;
-                object value = tenantConfiguration?.ConnectionStrings.TryAdd(tenantConfiguration.ConnectionStrings.Default?? CommonConsts.DefaultConnectStringName, tenant.FindDefaultConnectionString());
+                object value = tenantConfiguration?.ConnectionStrings.TryAdd(tenantConfiguration.ConnectionStrings.Default ?? CommonConsts.DefaultConnectStringName, tenant.FindDefaultConnectionString());
                 return tenantConfiguration;
             });
             return tenantConfiguration;
@@ -66,6 +68,16 @@ namespace Parakeet.Net.MultiTenancy
         public TenantConfiguration Find(Guid id)
         {
             return AsyncHelper.RunSync(async () => await FindAsync(id));
+        }
+
+        public async Task<IReadOnlyList<TenantConfiguration>> GetListAsync(bool includeDetails)
+        {
+            var tenants = await _tenantRepository.GetListAsync();
+            return (IReadOnlyList<TenantConfiguration>)tenants.Select(x => new TenantConfiguration
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Parakeet.Net.Aop
 {
+    /// <summary>
+    /// grpc 服务端拦截器 
+    /// </summary>
     public class CustomServerLoggerInterceptor : Interceptor
     {
         private readonly ILogger<CustomServerLoggerInterceptor> _logger;

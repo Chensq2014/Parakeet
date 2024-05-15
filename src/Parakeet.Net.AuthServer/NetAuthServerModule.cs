@@ -48,6 +48,7 @@ namespace Parakeet.Net;
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAccountApplicationModule),
     typeof(AbpAccountHttpApiModule),
+    typeof(NetMultiTenancyModule),
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(NetEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule)
@@ -146,14 +147,12 @@ public class NetAuthServerModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Parakeet");
         if (!hostingEnvironment.IsDevelopment())
         {
-            //EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!)
             var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Parakeet-Protection-Keys");
         }
 
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            //EncodingEncryptHelper.DEncrypt(configuration["Redis:Configuration"]!)
             var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });

@@ -13,7 +13,7 @@ namespace Parakeet.Net.Aop
         /// 把拦截器注入到
         /// </summary>
         /// <param name="context"></param>
-        public static void Register(IOnServiceRegistredContext context)
+        public static void RegisterIfNeed(IOnServiceRegistredContext context)
         {
             if (ShouldIntercept(context.ImplementationType))
             {

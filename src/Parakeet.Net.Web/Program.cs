@@ -25,12 +25,12 @@ public class Program
             var builder = WebApplication.CreateBuilder(args);
             builder.Host
                 .AddAppSettingsSecretsJson()
-                .UseNacosConfig(CommonConsts.NacosConfigSectionName,null, x => x.AddSerilog(Log.Logger))
-                //.ConfigureAppConfiguration((context, builder) =>
-                //{
-                //    var c = builder.Build();
-                //    builder.AddNacosV2Configuration(c.GetSection("NacosConfig"), logAction: x => x.AddSerilog(Log.Logger));
-                //})
+                //.UseNacosConfig(CommonConsts.NacosConfigSectionName, null, x => x.AddSerilog(Log.Logger))
+                ////.ConfigureAppConfiguration((context, builder) =>
+                ////{
+                ////    var c = builder.Build();
+                ////    builder.AddNacosV2Configuration(c.GetSection(CommonConsts.NacosConfigSectionName), logAction: x => x.AddSerilog(Log.Logger));
+                ////})
                 .UseAutofac()
                 .UseSerilog((context, config) =>
                 {

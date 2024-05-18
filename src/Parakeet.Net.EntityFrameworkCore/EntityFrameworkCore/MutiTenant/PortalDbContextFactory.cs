@@ -9,20 +9,20 @@ namespace Parakeet.Net.EntityFrameworkCore
 {
     /* This class is needed for EF Core console commands
      * (like Add-Migration and Update-Database commands) */
-    public class ParakeetDbContextFactory : IDesignTimeDbContextFactory<ParakeetDbContext>
+    public class PortalDbContextFactory : IDesignTimeDbContextFactory<PortalDbContext>
     {
-        public ParakeetDbContext CreateDbContext(string[] args)
+        public PortalDbContext CreateDbContext(string[] args)
         {
             var configuration = BuildConfiguration();
             //UseSqlServer UseNpgsql  UseMySql
-            var builder = new DbContextOptionsBuilder<ParakeetDbContext>()
+            var builder = new DbContextOptionsBuilder<PortalDbContext>()
                 .UseNpgsql(configuration.GetConnectionString(CommonConsts.PortalConnectionStringName));
                 //.UseNpgsql(EncodingEncryptHelper.DEncrypt(configuration.GetConnectionString(CommonConsts.PortalConnectionStringName)));
                 //.UseLoggerFactory(new SerilogLoggerFactory());
                 ////这会使所有查询都不被跟踪。 仍可添加 AsTracking() 来进行特定查询跟踪。
                 //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-            return new ParakeetDbContext(builder.Options);
+            return new PortalDbContext(builder.Options);
         }
 
         /// <summary>

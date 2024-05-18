@@ -13,10 +13,10 @@
 //    /// <summary>
 //    /// 房间服务
 //    /// </summary>
-//    public class HouseAppService : BaseParakeetAppService<House>, IHouseAppService
+//    public class HouseAppService : BaseNetAppService<House>, IHouseAppService
 //    {
-//        private readonly IParakeetRepository<House> _houseRepository;
-//        public HouseAppService(IParakeetRepository<House> houseRepository) : base(houseRepository)
+//        private readonly INetRepository<House> _houseRepository;
+//        public HouseAppService(INetRepository<House> houseRepository) : base(houseRepository)
 //        {
 //            _houseRepository = houseRepository;
 //        }

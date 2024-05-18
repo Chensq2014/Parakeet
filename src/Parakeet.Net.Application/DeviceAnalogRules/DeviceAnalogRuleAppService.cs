@@ -24,12 +24,12 @@
 //    /// 设备规则服务
 //    /// </summary>
 //    //[Authorize]
-//    public class DeviceAnalogRuleAppService : BaseParakeetAppService<DeviceAnalogRule>, IDeviceAnalogRuleAppService//CustomerAppService,
+//    public class DeviceAnalogRuleAppService : BaseNetAppService<DeviceAnalogRule>, IDeviceAnalogRuleAppService//CustomerAppService,
 //    {
-//        private readonly IParakeetRepository<DeviceAnalogRule> _deviceAnalogRuleRepository;
+//        private readonly INetRepository<DeviceAnalogRule> _deviceAnalogRuleRepository;
 //        private readonly IAuthorizationService _authorizationService;
 
-//        public DeviceAnalogRuleAppService(IParakeetRepository<DeviceAnalogRule> deviceAnalogRuleRepository,
+//        public DeviceAnalogRuleAppService(INetRepository<DeviceAnalogRule> deviceAnalogRuleRepository,
 //            IAuthorizationService authorizationService) : base(deviceAnalogRuleRepository)
 //        {
 //            _deviceAnalogRuleRepository = deviceAnalogRuleRepository;

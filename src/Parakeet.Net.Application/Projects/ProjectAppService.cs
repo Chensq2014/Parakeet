@@ -22,14 +22,14 @@
 //    /// <summary>
 //    /// 项目服务
 //    /// </summary>
-//    public class ProjectAppService : BaseParakeetAppService<Project>, IProjectAppService
+//    public class ProjectAppService : BaseNetAppService<Project>, IProjectAppService
 //    {
 //        private readonly IWebHostEnvironment _environment;
-//        private readonly IParakeetRepository<ProjectAttachment> _projectAttachmentRepository;
+//        private readonly INetRepository<ProjectAttachment> _projectAttachmentRepository;
 //        public ProjectAppService(
-//            IParakeetRepository<Project> baseRepository,
+//            INetRepository<Project> baseRepository,
 //            IWebHostEnvironment environment,
-//            IParakeetRepository<ProjectAttachment> projectAttachmentRepository) : base(baseRepository)
+//            INetRepository<ProjectAttachment> projectAttachmentRepository) : base(baseRepository)
 //        {
 //            _projectAttachmentRepository = projectAttachmentRepository;
 //            _environment = environment;

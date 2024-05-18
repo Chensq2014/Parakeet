@@ -7,7 +7,7 @@
 //namespace Parakeet.Net.Controllers
 //{
 //    [Authorize(ThresholdPermissions.Threshold.Default)]
-//    public class ThresholdController : BaseParakeetEntityController<Threshold>
+//    public class ThresholdController : BaseNetEntityController<Threshold>
 //    {
 //        private readonly IAuthorizationService _authorizationService;
 //        public ThresholdController(IThresholdAppService baseService, IAuthorizationService authorizationService) : base(baseService)

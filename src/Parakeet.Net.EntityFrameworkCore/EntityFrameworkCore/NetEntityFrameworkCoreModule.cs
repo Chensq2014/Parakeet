@@ -2,7 +2,6 @@
 using Common.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Parakeet.Net.Data;
 using Parakeet.Net.Repositories;
 using Serilog;
 using System;
@@ -95,11 +94,9 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //context.Services.AddDefaultRepository(typeof(INetCoreRepository<,>), 
         //    EntityHelper.FindPrimaryKeyType(typeof(NetRepositoryBase<,>)));
 
-        ////直接这样在容器里直接注册 
-        //context.Services.TryAddTransient(typeof(IParakeetRepository<>), typeof(ParakeetRepositoryBase<>));
-        //context.Services.TryAddTransient(typeof(IParakeetRepository<,>), typeof(ParakeetRepositoryBase<,>));
-        //context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
-        //context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
+        //直接这样在容器里直接注册
+        context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
+        context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
 
         //// 添加自定义指定类型仓储 为什么dbcontext不直接scope注册呢？同一次请求并发？
         //context.Services.AddAbpDbContext<NetDbContext>(options =>
@@ -121,10 +118,10 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //公共库dbContext
         //告诉容器 构造ParakeetDbContext 时把options当作参数传递给构造函数
 
-        context.Services.AddAbpDbContext<ParakeetDbContext>(options =>
+        context.Services.AddAbpDbContext<PortalDbContext>(options =>
         {
             Log.Error($"{{0}}",
-                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(ParakeetDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+                $"{CacheKeys.LogCount++}、AddAbpDbContex配置{nameof(IAbpDbContextRegistrationOptionsBuilder)}告诉容器 构造{nameof(PortalDbContext)} 时把options当作参数传递给构造函数....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             /* Remove "includeAllEntities: true" to create
              * default repositories only for aggregate roots */
             options.AddDefaultRepositories(includeAllEntities: true);

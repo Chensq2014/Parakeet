@@ -23,6 +23,7 @@
 //using System.Threading;
 //using System.Threading.Tasks;
 //using Volo.Abp.MultiTenancy;
+//using Common.CustomAttributes;
 
 //namespace Parakeet.Net.Test
 //{
@@ -80,7 +81,7 @@
 
 //            //_serviceProvider = serviceProvider;
 //            _passwordHasher = passwordHasher;
-//            _eventBusContainer = eventBusContainer; 
+//            _eventBusContainer = eventBusContainer;
 //            _currentTenant = currentTenant;
 //        }
 

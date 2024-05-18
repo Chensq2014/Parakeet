@@ -27,7 +27,7 @@ namespace Parakeet.Net
     /// </summary>
     /// <typeparam name="TEntity">实体类</typeparam>
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
-    public abstract class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : EntityBase<TPrimaryKey>
+    public class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : EntityBase<TPrimaryKey>
     {
         public INetRepository<TEntity, TPrimaryKey> Repository;
         protected BaseNetAppService(INetRepository<TEntity, TPrimaryKey> repository)

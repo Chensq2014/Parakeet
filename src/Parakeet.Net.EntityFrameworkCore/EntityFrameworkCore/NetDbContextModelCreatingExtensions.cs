@@ -383,7 +383,7 @@ namespace Parakeet.Net.EntityFrameworkCore
         {
             properties = (properties ?? builder.Model.GetEntityTypes()
                              .Select(m => m.ClrType)
-                             .Where(n => n.IsAssignableTo(typeof(BaseEntity)) && !n.IsAssignableTo(typeof(BaseAttachmentEntity)) && !n.IsAssignableTo(typeof(ValueObject)))
+                             .Where(n => n.IsAssignableTo(typeof(EntityBase)) && !n.IsAssignableTo(typeof(BaseAttachmentEntity)) && !n.IsAssignableTo(typeof(ValueObject)))
                              .SelectMany(x => x.GetProperties()))
                 .Where(m => !m.IsCollectible && !m.GetMethod.IsVirtual
                        && m.GetCustomAttribute<NotSetAttribute>() == null && m.GetCustomAttribute<DescriptionAttribute>() != null)
@@ -429,7 +429,7 @@ namespace Parakeet.Net.EntityFrameworkCore
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="typeBuilder"></param>
-        private static void MapEntityProertyComment<T>(EntityTypeBuilder<T> typeBuilder) where T : BaseEntity
+        private static void MapEntityProertyComment<T>(EntityTypeBuilder<T> typeBuilder) where T : EntityBase
         {
             var properties = typeBuilder.Metadata.ClrType.GetProperties()
                 .Where(m => !m.IsCollectible && !m.GetMethod.IsVirtual && m.GetCustomAttribute<NotSetAttribute>() == null && m.GetCustomAttribute<DescriptionAttribute>() != null)

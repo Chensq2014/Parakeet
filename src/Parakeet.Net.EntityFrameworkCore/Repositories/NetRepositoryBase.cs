@@ -32,7 +32,7 @@ namespace Parakeet.Net.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public abstract class NetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<NetDbContext, TEntity, TPrimaryKey>
+    public class NetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<NetDbContext, TEntity, TPrimaryKey>
         , INetRepository<TEntity, TPrimaryKey>
         where TEntity : EntityBase<TPrimaryKey>
     {
@@ -192,8 +192,8 @@ namespace Parakeet.Net.Repositories
             var sqlParameterRows = new Dictionary<string, SqlParameter[]>();//每行sql都准备为一个单独的sqlparameter
             var parameterIndex = 0;//单行sqlparameter 参数标识不重复
             var sqlParameters = new List<SqlParameter>();
-            //typeof(BaseEntity).IsAssignableFrom(type))//type.IsDefined(typeof(TableAttribute), true))
-            if (type.IsAssignableTo(typeof(BaseEntity)))
+            //typeof(EntityBase).IsAssignableFrom(type))//type.IsDefined(typeof(TableAttribute), true))
+            if (type.IsAssignableTo(typeof(EntityBase)))
             {
                 SqlInsertRow(propInfos, entity, sqlParameters, tableName, propNames, sqlParameterRows, sql, ref parameterIndex);
 

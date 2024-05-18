@@ -26,7 +26,7 @@ namespace Parakeet.Net.EntityFrameworkCore
     [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName(CommonConsts.PortalConnectionStringName)]
-    public class ParakeetDbContext : AbpDbContext<ParakeetDbContext>,
+    public class PortalDbContext : AbpDbContext<PortalDbContext>,
         IIdentityDbContext,
         ITenantManagementDbContext
     {
@@ -59,9 +59,9 @@ namespace Parakeet.Net.EntityFrameworkCore
         #endregion
 
 
-        public ParakeetDbContext(DbContextOptions<ParakeetDbContext> options) : base(options)
+        public PortalDbContext(DbContextOptions<PortalDbContext> options) : base(options)
         {
-            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} DbContextOptions.............");
+            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PortalDbContext)} DbContextOptions.............");
         }
 
 
@@ -79,7 +79,10 @@ namespace Parakeet.Net.EntityFrameworkCore
             {
                 Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、Portal(MultiTenant)使用的SqlServer");
             }
-            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating start.............");
+            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PortalDbContext)} OnModelCreating start.............");
+
+
+            base.OnModelCreating(builder);
 
             #region Include modules to your migration db context
             /* Include modules to your migration db context */
@@ -96,9 +99,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             builder.ConfigureMain(true);
             #endregion
 
-            base.OnModelCreating(builder);
-
-            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(ParakeetDbContext)} OnModelCreating end.............");
+            Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、This is {nameof(PortalDbContext)} OnModelCreating end.............");
         }
     }
 }

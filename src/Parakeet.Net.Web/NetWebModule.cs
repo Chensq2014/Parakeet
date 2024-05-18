@@ -98,18 +98,19 @@ using Volo.Abp.VirtualFileSystem;
 namespace Parakeet.Net.Web;
 
 [DependsOn(
-    typeof(NetHttpApiClientModule),
     typeof(NetHttpApiModule),
     typeof(NetApplicationModule),
-    typeof(NetApplicationContractsModule),
-    typeof(NetDomainModule),
-    typeof(NetDomainSharedModule),
     typeof(NetEntityFrameworkCoreModule),
+    typeof(NetMultiTenancyModule),
+
     typeof(CommonModule),
     typeof(CommonEntityModule),
     typeof(CommonSharedModule),
     typeof(NacosModule),
     typeof(NetCacheMudule),
+    typeof(NetDomainModule),
+    typeof(NetDomainSharedModule),
+
     typeof(AbpAutofacModule),
     typeof(AbpIdentityWebModule),
     typeof(AbpSettingManagementWebModule),
@@ -117,15 +118,7 @@ namespace Parakeet.Net.Web;
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule),
-    typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
-    typeof(AbpAspNetCoreMvcClientModule),
-    typeof(AbpHttpClientWebModule),
-    typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpDistributedLockingModule),
-    typeof(AbpHttpClientIdentityModelWebModule),
-    typeof(AbpFeatureManagementWebModule),
-    typeof(AbpPermissionManagementWebModule)
+    typeof(AbpSwashbuckleModule)
     )]
 public class NetWebModule : AbpModule
 {
@@ -655,14 +648,7 @@ public class NetWebModule : AbpModule
         #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
 
         //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
-        context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-        //context.AddCommonAuthentication();
-
-        context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
-        {
-            options.IsDynamicClaimsEnabled = true;
-        });
-
+        context.AddCommonAuthentication();
         #endregion
     }
 
@@ -832,47 +818,38 @@ public class NetWebModule : AbpModule
             Type = SecuritySchemeType.ApiKey
         };
         var configuration = context.Services.GetConfiguration();
-        //context.Services.AddAbpSwaggerGenWithOAuth(
-        //    configuration["AuthServer:Authority"]!,
-        //    new Dictionary<string, string>
-        //    {
-        //        {"parakeet", "Parakeet API"}
-        //    },
-        //    options =>
-        //    {
-        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
-        //        options.DocInclusionPredicate((docName, description) => true);
-        //        options.CustomSchemaIds(type => type.FullName);
-
-        //        options.IncludeXmlCommentFiles()
-        //            .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
-        //        options.AddSecurityRequirement(new OpenApiSecurityRequirement
-        //        {
-        //            {
-        //                new OpenApiSecurityScheme
-        //                {
-        //                    Reference = new OpenApiReference
-        //                    {
-        //                        Type = ReferenceType.SecurityScheme,
-        //                        Id = "bearerAuth"
-        //                    }
-        //                },
-        //                new List<string>()
-        //            }
-        //        });
-
-        //        ////api起冲突时默认使用第一个
-        //        //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-        //    });
-
-        context.Services.AddAbpSwaggerGen(
+        context.Services.AddAbpSwaggerGenWithOAuth(
+            configuration["AuthServer:Authority"]!,
+            new Dictionary<string, string>
+            {
+                {"parakeet", "Parakeet API"}
+            },
             options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
-            }
-        );
+
+                options.IncludeXmlCommentFiles()
+                    .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "bearerAuth"
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
+
+                ////api起冲突时默认使用第一个
+                //options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
     }
     private void ConfigureDataProtection(ServiceConfigurationContext context)
     {

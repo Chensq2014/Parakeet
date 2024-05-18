@@ -12,7 +12,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Parakeet.Net;
 
 [DependsOn(
-    typeof(CommonSharedModule),
+    //typeof(CommonSharedModule),
     typeof(NetApplicationContractsModule),
     typeof(AbpAccountHttpApiClientModule),
     typeof(AbpIdentityHttpApiClientModule),

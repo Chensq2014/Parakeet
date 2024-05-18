@@ -10,7 +10,7 @@
 //    /// 区域租户管理
 //    /// </summary>
 //    [Route("/api/parakeet/areaTenant/[action]")]
-//    public class AreaTenantController : BaseParakeetEntityController<AreaTenant>
+//    public class AreaTenantController : BaseNetEntityController<AreaTenant>
 //    {
 
 //        public AreaTenantController(IAreaTenantAppService baseService) : base(baseService)

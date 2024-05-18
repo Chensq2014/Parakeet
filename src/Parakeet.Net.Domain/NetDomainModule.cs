@@ -79,12 +79,12 @@ public class NetDomainModule : AbpModule
         {
             Log.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpSettingOptions)} ....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             //优先级顺序6-1   回退系统从底部 (用户) 到 (自定义) 方向起用用. 6最后执行，所以同配置的6优先
-            options.ValueProviders.Add<CustomSettingValueProvider>();//自定义设置值提供程序 6
-            options.ValueProviders.Add<DefaultValueSettingValueProvider>();//从设置定义的默认值中获取值 5
-            options.ValueProviders.Add<ConfigurationSettingValueProvider>();//从IConfiguration服务中获取值 4 定义了配置文件Settings:节点
-            options.ValueProviders.Add<GlobalSettingValueProvider>();//获取设置的全局(系统范围)值. 3
-            options.ValueProviders.Add<TenantSettingValueProvider>();//获取当前租户的设置值 2
-            options.ValueProviders.Add<UserSettingValueProvider>();//获取当前用户的设置值 1
+            options.ValueProviders.TryAdd<CustomSettingValueProvider>();//自定义设置值提供程序 6
+            options.ValueProviders.TryAdd<DefaultValueSettingValueProvider>();//从设置定义的默认值中获取值 5
+            options.ValueProviders.TryAdd<ConfigurationSettingValueProvider>();//从IConfiguration服务中获取值 4 定义了配置文件Settings:节点
+            options.ValueProviders.TryAdd<GlobalSettingValueProvider>();//获取设置的全局(系统范围)值. 3
+            options.ValueProviders.TryAdd<TenantSettingValueProvider>();//获取当前租户的设置值 2
+            options.ValueProviders.TryAdd<UserSettingValueProvider>();//获取当前用户的设置值 1
 
             ////可以不用写 系统自动发现define
             //options.DefinitionProviders.Add<EmailSettingProvider>();

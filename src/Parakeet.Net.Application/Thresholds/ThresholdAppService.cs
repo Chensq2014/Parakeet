@@ -15,9 +15,9 @@
 //    /// <summary>
 //    /// 阈值管理
 //    /// </summary>
-//    public class ThresholdAppService : BaseParakeetAppService<Threshold>, IThresholdAppService
+//    public class ThresholdAppService : BaseNetAppService<Threshold>, IThresholdAppService
 //    {
-//        public ThresholdAppService(IParakeetRepository<Threshold> baseRepository) : base(baseRepository)
+//        public ThresholdAppService(INetRepository<Threshold> baseRepository) : base(baseRepository)
 //        {
 //        }
 

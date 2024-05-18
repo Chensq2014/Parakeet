@@ -37,7 +37,7 @@
 //        //它在内部 序列化/反序列化 缓存对象. 默认使用 JSON 序列化
 //        private readonly IDistributedCache<List<LocationAreaDto>> _cacheManager;
 //        //private readonly IRepository<LocationArea> _locationAreaRepository;
-//        private readonly IParakeetRepository<LocationArea> _locationAreaRepository;
+//        private readonly INetRepository<LocationArea> _locationAreaRepository;
 //        //private readonly IUserManager _userManager;
 //        private RecordConfig _recordConfig;
 //        //private readonly IWebHostEnvironment _env;
@@ -47,7 +47,7 @@
 //            //IOptions<RecordConfig> recordConfig,
 //            IDistributedCache<List<LocationAreaDto>> cacheManager,
 //            //IRepository<LocationArea> locationAreaRepository,
-//            IParakeetRepository<LocationArea> locationAreaRepository,
+//            INetRepository<LocationArea> locationAreaRepository,
 //            ISettingProvider settingProvider,
 //            LocationAreaExceler locationAreaExceler)//, IWebHostEnvironment env
 //        {

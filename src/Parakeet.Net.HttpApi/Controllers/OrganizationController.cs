@@ -8,7 +8,7 @@
 //    /// 组织机构
 //    /// </summary>
 //    [Route("/api/parakeet/organization/[action]")]
-//    public class OrganizationController : BaseParakeetEntityController<Organization>
+//    public class OrganizationController : BaseNetEntityController<Organization>
 //    {
 //        private readonly IOrganizationAppService _organizationService;
 //        public OrganizationController(IOrganizationAppService baseService) : base(baseService)

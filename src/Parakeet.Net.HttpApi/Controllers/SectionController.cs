@@ -9,7 +9,7 @@
 //    /// </summary>
 //    //[ApiExplorerSettings(GroupName = "V2")]
 //    [Route("/api/parakeet/section/[action]")]
-//    public class SectionController : BaseParakeetEntityController<Section>
+//    public class SectionController : BaseNetEntityController<Section>
 //    {
 //        public SectionController(ISectionAppService baseService) : base(baseService)
 //        {

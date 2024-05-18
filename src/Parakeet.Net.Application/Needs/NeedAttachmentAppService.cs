@@ -12,11 +12,11 @@
 //    /// <summary>
 //    /// 需求附件服务
 //    /// </summary>
-//    public class NeedAttachmentAppService : BaseParakeetAppService<NeedAttachment>, INeedAttachmentAppService
+//    public class NeedAttachmentAppService : BaseNetAppService<NeedAttachment>, INeedAttachmentAppService
 //    {
-//        //private readonly IParakeetRepository<NeedAttachment> _needAttachmentRepository;
+//        //private readonly INetRepository<NeedAttachment> _needAttachmentRepository;
 //        public NeedAttachmentAppService(
-//            IParakeetRepository<NeedAttachment> baseRepository) : base(baseRepository)
+//            INetRepository<NeedAttachment> baseRepository) : base(baseRepository)
 //        {
 //            //_needAttachmentRepository = baseRepository;
 //        }

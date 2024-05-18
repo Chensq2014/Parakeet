@@ -50,7 +50,7 @@ public class NetDbMigrationService : ITransientDependency
         Logger.LogInformation("Started database migrations...");
 
         await MigrateDatabaseSchemaAsync();
-        await SeedDataAsync();//启用多租户且portal库里添加了多租户数据时，这句需要注释 内部会抛异常
+        await SeedDataAsync();
 
         Logger.LogInformation($"Successfully completed host database migrations.");
 

@@ -16,12 +16,12 @@
 //    /// <summary>
 //    /// 区域租户及租户连接字符串管理
 //    /// </summary>
-//    public class AreaTenantAppService : BaseParakeetAppService<AreaTenant>, IAreaTenantAppService
+//    public class AreaTenantAppService : BaseNetAppService<AreaTenant>, IAreaTenantAppService
 //    {
-//        private readonly IParakeetRepository<AreaTenant> _areaTenantRepository;
+//        private readonly INetRepository<AreaTenant> _areaTenantRepository;
 //        private readonly IRepository<AreaTenantDbConnectionString, Guid> _tenantDbConnectionString;
 
-//        public AreaTenantAppService(IParakeetRepository<AreaTenant> areaTenantRepository,
+//        public AreaTenantAppService(INetRepository<AreaTenant> areaTenantRepository,
 //            IRepository<AreaTenantDbConnectionString, Guid> tenantDbConnectionString) : base(areaTenantRepository)
 //        {
 //            _areaTenantRepository = areaTenantRepository;

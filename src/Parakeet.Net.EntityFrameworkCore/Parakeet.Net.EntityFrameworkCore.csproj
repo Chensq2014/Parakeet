@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Migrations\ParakeetDbMigrations\" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,7 @@
 //    [ApiExplorerSettings(GroupName = "V1")]
 //    [Route("/api/parakeet/need/[action]")]
 //    //[Authorize]//默认策略 [Authorize(Scheme="CustomPolicy")]//自定义策略   [Authorize(Roles="admin,Custom")] 角色鉴权
-//    public class NeedController : BaseParakeetEntityController<Need>
+//    public class NeedController : BaseNetEntityController<Need>
 //    {
 //        private readonly IWebHostEnvironment _environment;
 //        private readonly INeedAppService _needAppService;

@@ -15,10 +15,10 @@
 //    /// <summary>
 //    /// 产品服务
 //    /// </summary>
-//    public class ProductAppService : BaseParakeetAppService<Product>, IProductAppService
+//    public class ProductAppService : BaseNetAppService<Product>, IProductAppService
 //    {
-//        private readonly IParakeetRepository<Product> _productRepository;
-//        public ProductAppService(IParakeetRepository<Product> productRepository) : base(productRepository)
+//        private readonly INetRepository<Product> _productRepository;
+//        public ProductAppService(INetRepository<Product> productRepository) : base(productRepository)
 //        {
 //            _productRepository = productRepository;
 //        }

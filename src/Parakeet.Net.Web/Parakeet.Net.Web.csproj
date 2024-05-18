@@ -103,8 +103,8 @@
 	  <None Include="Views\Home\Crawler.cshtml" />
 	  <None Include="Views\Home\Error.cshtml" />
 	  <None Include="Views\Home\Form.cshtml" />
+	  <None Include="Views\Home\Index00.cshtml" />
 	  <None Include="Views\Home\Index.cshtml" />
-	  <None Include="Views\Home\Index0.cshtml" />
 	  <None Include="Views\Home\Localization.cshtml" />
 	  <None Include="Views\Home\Privacy.cshtml" />
 	  <None Include="Views\Home\Temp.cshtml" />

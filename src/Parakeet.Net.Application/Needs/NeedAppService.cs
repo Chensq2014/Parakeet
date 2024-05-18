@@ -27,10 +27,10 @@
 //    /// <summary>
 //    /// 需求服务
 //    /// </summary>
-//    public class NeedAppService : BaseParakeetAppService<Need>, INeedAppService
+//    public class NeedAppService : BaseNetAppService<Need>, INeedAppService
 //    {
-//        private readonly IParakeetRepository<Need> _needRepository;
-//        private readonly IParakeetRepository<NeedAttachment> _needAttachmentRepository;
+//        private readonly INetRepository<Need> _needRepository;
+//        private readonly INetRepository<NeedAttachment> _needAttachmentRepository;
 //        private readonly IPersonalCacheAppService _personalCacheAppService;
 //        private readonly ISettingProvider _settingProvider;
 //        private readonly IEmailSender _emailSender;
@@ -38,10 +38,10 @@
 
 //        public NeedAppService(
 //            //IWebHostEnvironment env, 
-//            IParakeetRepository<NeedAttachment> needAttachmentRepository,
+//            INetRepository<NeedAttachment> needAttachmentRepository,
 //            IPersonalCacheAppService personalCacheAppService,
 //            IWebHostEnvironment environment,
-//            IParakeetRepository<Need> baseRepository,
+//            INetRepository<Need> baseRepository,
 //            IEmailSender emailSender,
 //            ISettingProvider settingProvider) : base(baseRepository)
 //        {

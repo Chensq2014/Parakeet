@@ -14,7 +14,7 @@ using Volo.Abp.TenantManagement;
 namespace Parakeet.Net;
 
 [DependsOn(
-    typeof(CommonModule),
+    //typeof(CommonModule),
     typeof(NetApplicationContractsModule),
     typeof(AbpAccountHttpApiModule),
     typeof(AbpIdentityHttpApiModule),

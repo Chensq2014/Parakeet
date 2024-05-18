@@ -19,9 +19,9 @@
 //    /// <summary>
 //    /// 供应商服务
 //    /// </summary>
-//    public class SupplierAppService : BaseParakeetAppService<Supplier>, ISupplierAppService
+//    public class SupplierAppService : BaseNetAppService<Supplier>, ISupplierAppService
 //    {
-//        public SupplierAppService(IParakeetRepository<Supplier> baseRepository) : base(baseRepository)
+//        public SupplierAppService(INetRepository<Supplier> baseRepository) : base(baseRepository)
 //        {
 //        }
 

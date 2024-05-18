@@ -16,9 +16,9 @@
 //    /// <summary>
 //    /// 安全策略服务
 //    /// </summary>
-//    public class SecurePolicyAppService : BaseParakeetAppService<SecurePolicy>, ISecurePolicyAppService
+//    public class SecurePolicyAppService : BaseNetAppService<SecurePolicy>, ISecurePolicyAppService
 //    {
-//        public SecurePolicyAppService(IParakeetRepository<SecurePolicy, Guid> baseRepository) : base(baseRepository)
+//        public SecurePolicyAppService(INetRepository<SecurePolicy, Guid> baseRepository) : base(baseRepository)
 //        {
 //        }
 

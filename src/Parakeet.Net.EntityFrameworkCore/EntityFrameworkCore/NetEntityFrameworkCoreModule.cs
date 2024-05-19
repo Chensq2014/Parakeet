@@ -9,6 +9,8 @@ using System.Threading;
 using Volo.Abp;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
+using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
@@ -95,10 +97,12 @@ public class NetEntityFrameworkCoreModule : AbpModule
         //    EntityHelper.FindPrimaryKeyType(typeof(NetRepositoryBase<,>)));
 
         //直接这样在容器里直接注册
+        context.Services.TryAddTransient(typeof(IPortalRepository<>), typeof(PortalRepositoryBase<>));
+        context.Services.TryAddTransient(typeof(IPortalRepository<,>), typeof(PortalRepositoryBase<,>));
         context.Services.TryAddTransient(typeof(INetRepository<>), typeof(NetRepositoryBase<>));
         context.Services.TryAddTransient(typeof(INetRepository<,>), typeof(NetRepositoryBase<,>));
 
-        //// 添加自定义指定类型仓储 为什么dbcontext不直接scope注册呢？同一次请求并发？
+        //// 添加自定义指定类型仓储
         //context.Services.AddAbpDbContext<NetDbContext>(options =>
         //{
         //    options.AddDefaultRepositories();

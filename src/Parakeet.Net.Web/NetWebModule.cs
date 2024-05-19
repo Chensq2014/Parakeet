@@ -755,11 +755,11 @@ public class NetWebModule : AbpModule
             options.MenuContributors.Add(new NetMenuContributor(configuration));
         });
 
-        Configure<AbpToolbarOptions>(options =>
-        {
-            Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpToolbarOptions)} NetToolbarContributor:{nameof(NetToolbarContributor)}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-            options.Contributors.Add(new NetToolbarContributor());
-        });
+        //Configure<AbpToolbarOptions>(options =>
+        //{
+        //    Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpToolbarOptions)} NetToolbarContributor:{nameof(NetToolbarContributor)}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //    options.Contributors.Add(new NetToolbarContributor());
+        //});
     }
 
 
@@ -825,7 +825,7 @@ public class NetWebModule : AbpModule
             },
             options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Parakeet API", Version = "v1" });
+                options.SwaggerDoc("V1", new OpenApiInfo { Title = "Parakeet API", Version = "V1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
 
@@ -1259,7 +1259,24 @@ public class NetWebModule : AbpModule
 
         #endregion
 
-        
+        #region 静态文件中间件
+        //静态文件中间件如果放caching与compress之后 表示以允许缓存压缩的静态文件
+        //等同于 使用 wwwroot 文件夹中的物理(静态)(js, css, image ...)文件
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、静态文件 等同于 使用 wwwroot 文件夹中的物理(静态)(js, css, image ...)文件 此中间件如果放caching与compress之后 表示以允许缓存压缩的静态文件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        #endregion
+        app.UseStaticFiles();
+        //app.UseStaticFiles(new StaticFileOptions//提供静态文件StaticFileOptions.FileProvider
+        //{
+        //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
+        //    RequestPath = "/StaticFiles",
+        //    OnPrepareResponse = ctx =>
+        //    {
+        //        // using Microsoft.AspNetCore.Http;
+        //        ctx.Context.Response.Headers.Append(
+        //            "Cache-Control", $"public, max-age=604800");
+        //    }
+        //});
+
         #region 用于路由请求的路由中间件
 
         //请求进入时：根据(app.UseEndPoint组装中间件时写入的路由规则)完成路由匹配，找到EndPoint(请求时才会完成路由匹配找EndPoint)
@@ -1322,22 +1339,22 @@ public class NetWebModule : AbpModule
         app.UseResponseCompression();//压缩
         #endregion
 
-        #region 静态文件中间件
-        //静态文件中间件如果放caching与compress之后 表示以允许缓存压缩的静态文件
-        //等同于 使用 wwwroot 文件夹中的物理(静态)(js, css, image ...)文件
-        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、静态文件 等同于 使用 wwwroot 文件夹中的物理(静态)(js, css, image ...)文件 此中间件如果放caching与compress之后 表示以允许缓存压缩的静态文件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-        #endregion
-        app.UseStaticFiles(new StaticFileOptions//提供静态文件StaticFileOptions.FileProvider
-        {
-            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
-            RequestPath = "/StaticFiles",
-            OnPrepareResponse = ctx =>
-            {
-                // using Microsoft.AspNetCore.Http;
-                ctx.Context.Response.Headers.Append(
-                    "Cache-Control", $"public, max-age=604800");
-            }
-        });
+        //#region 静态文件中间件
+        ////静态文件中间件如果放caching与compress之后 表示以允许缓存压缩的静态文件
+        ////等同于 使用 wwwroot 文件夹中的物理(静态)(js, css, image ...)文件
+        //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、静态文件 等同于 使用 wwwroot 文件夹中的物理(静态)(js, css, image ...)文件 此中间件如果放caching与compress之后 表示以允许缓存压缩的静态文件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        //#endregion
+        //app.UseStaticFiles(new StaticFileOptions//提供静态文件StaticFileOptions.FileProvider
+        //{
+        //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
+        //    RequestPath = "/StaticFiles",
+        //    OnPrepareResponse = ctx =>
+        //    {
+        //        // using Microsoft.AspNetCore.Http;
+        //        ctx.Context.Response.Headers.Append(
+        //            "Cache-Control", $"public, max-age=604800");
+        //    }
+        //});
 
         #region 启用静态文件url地址浏览
         //启用静态文件url地址浏览
@@ -1413,7 +1430,8 @@ public class NetWebModule : AbpModule
                 .ForEach(v =>
                 {
                     //configuration["App:SwaggerEndpoint"]="/swagger/v1/swagger.json";
-                    options.SwaggerEndpoint(string.Format(context.GetConfiguration()["App:SwaggerEndpoint"] ?? @$"/swagger/{v.ItemDescription}/swagger.json", v.ItemDescription), $"小鹦鹉工作室 NetCore API {v.ItemDescription}");
+                    var swagerJson = string.Format(context.GetConfiguration()["App:SwaggerEndpoint"] ?? @$"/swagger/{v.ItemDescription}/swagger.json", v.ItemDescription);
+                    options.SwaggerEndpoint(swagerJson, $"小鹦鹉工作室 NetCore API {v.ItemDescription}");
                 });
             //typeof(VersionType).GetEnumNames().ToList().ForEach(v =>
             //{

@@ -29,8 +29,8 @@ namespace Parakeet.Net
     /// <typeparam name="TPrimaryKey">实体类主键类型</typeparam>
     public class BaseNetAppService<TEntity, TPrimaryKey> : CustomerAppService, IBaseNetAppService<TEntity, TPrimaryKey> where TEntity : EntityBase<TPrimaryKey>
     {
-        public INetRepository<TEntity, TPrimaryKey> Repository;
-        protected BaseNetAppService(INetRepository<TEntity, TPrimaryKey> repository)
+        public IPortalRepository<TEntity, TPrimaryKey> Repository;
+        protected BaseNetAppService(IPortalRepository<TEntity, TPrimaryKey> repository)
         {
             Repository = repository;
         }
@@ -42,7 +42,7 @@ namespace Parakeet.Net
         /// </summary>
         /// <returns></returns>
         [RemoteService(IsEnabled = true, IsMetadataEnabled = false)]
-        public INetRepository<TEntity, TPrimaryKey> GetBaseRepository()
+        public IPortalRepository<TEntity, TPrimaryKey> GetBaseRepository()
         {
             return Repository;
         }
@@ -511,7 +511,7 @@ namespace Parakeet.Net
         where TEntity : EntityBase
     {
         public BaseNetAppService(
-            INetRepository<TEntity, Guid> baseRepository) : base(baseRepository)
+            IPortalRepository<TEntity, Guid> baseRepository) : base(baseRepository)
         {
         }
     }

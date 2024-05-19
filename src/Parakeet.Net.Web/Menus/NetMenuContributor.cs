@@ -143,8 +143,8 @@ public class NetMenuContributor : IMenuContributor
                 context.Menu.AddItem(
                     new ApplicationMenuItem("Menu:Organization", l["Menu:Organization"], "/api/parakeet/organization/index")
                         .AddItem(new ApplicationMenuItem("Menu:Organization:Index", l["Menu:Organization:Index"], url: "/api/parakeet/organization/index"))
-                        .AddItem(new ApplicationMenuItem("Menu:Area:Index", l["Menu:Area:Index"], url: "/api/parakeet/areaTenant/areaTreeListIndex"))
-                        .AddItem(new ApplicationMenuItem("Menu:AreaTenant:Index", l["Menu:AreaTenant:Index"], url: "/api/parakeet/areaTenant/index"))
+                        //.AddItem(new ApplicationMenuItem("Menu:Area:Index", l["Menu:Area:Index"], url: "/api/parakeet/areaTenant/areaTreeListIndex"))
+                        //.AddItem(new ApplicationMenuItem("Menu:AreaTenant:Index", l["Menu:AreaTenant:Index"], url: "/api/parakeet/areaTenant/index"))
                 );
             }
         }

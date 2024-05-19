@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -32,11 +33,11 @@ namespace Parakeet.Net.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public class NetRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<NetDbContext, TEntity, TPrimaryKey>
-        , INetRepository<TEntity, TPrimaryKey>
+    public class PortalRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepository<PortalDbContext, TEntity, TPrimaryKey>
+        , IPortalRepository<TEntity, TPrimaryKey>
         where TEntity : EntityBase<TPrimaryKey>
     {
-        protected NetRepositoryBase(IDbContextProvider<NetDbContext> dbContextProvider)
+        protected PortalRepositoryBase(IDbContextProvider<PortalDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
 
@@ -93,13 +94,13 @@ namespace Parakeet.Net.Repositories
 
     /// <summary>
     /// Base class for custom repositories of the application.
-    /// This is a shortcut of <see cref="NetRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="Guid"/> primary key.
+    /// This is a shortcut of <see cref="PortalRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="Guid"/> primary key.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
 
     //[Dependency(ReplaceServices = true)]
-    public class NetRepositoryBase<TEntity> : NetRepositoryBase<TEntity, Guid>
-        , INetRepository<TEntity>//IRepository<TEntity>//
+    public class PortalRepositoryBase<TEntity> : PortalRepositoryBase<TEntity, Guid>
+        , IPortalRepository<TEntity>//IRepository<TEntity>//
         where TEntity : EntityBase
     {
         /// <summary>
@@ -111,10 +112,10 @@ namespace Parakeet.Net.Repositories
         /// IServiceProvider负责提供实例 (IServiceCollection(context.Services)负责注册)
         /// </summary>
         //private readonly IServiceProvider _serviceProvider;
-        public NetRepositoryBase(
+        public PortalRepositoryBase(
             //IServiceProvider serviceProvider,
             ICacheService cacheTypePropertyService,
-            IDbContextProvider<NetDbContext> dbContextProvider)
+            IDbContextProvider<PortalDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
             _cacheTypePropertyService = cacheTypePropertyService;
@@ -224,7 +225,7 @@ namespace Parakeet.Net.Repositories
             return false;
         }
 
-
+         
         ///// <summary>
         ///// 测试多个数据库sql插入
         ///// </summary>
@@ -304,7 +305,7 @@ namespace Parakeet.Net.Repositories
                 var columnParameter = new SqlParameter($"@{prop.Name}_{parameterIndex.ToString()}", columValue);
                 if (prop.Name.EndsWith("Id"))
                 {
-                    columValue = columValue.Replace("'", "");
+                    columValue = columValue.Replace("'","");
                     if (columValue.HasValue())
                     {
                         //columnParameter.SqlDbType = SqlDbType.UniqueIdentifier;
@@ -582,7 +583,7 @@ namespace Parakeet.Net.Repositories
                     var commandList = new List<SqlCommand>();
                     foreach (var keyValue in sqlParametersDic)
                     {
-                        var command = new SqlCommand(keyValue.Key, conn) { Transaction = transaction };
+                        var command = new SqlCommand(keyValue.Key, conn){ Transaction = transaction };
                         command.Parameters.AddRange(keyValue.Value);
                         commandList.Add(command);
                         Log.Logger.Information($"添加commandList：{command.CommandText}");
@@ -682,7 +683,7 @@ namespace Parakeet.Net.Repositories
                 var transaction = conn.BeginTransaction();
                 try
                 {
-                    var command = new SqlCommand(sqlParameterPair.Key, conn) { Transaction = transaction };
+                    var command = new SqlCommand(sqlParameterPair.Key, conn){ Transaction = transaction };
                     command.Parameters.AddRange(sqlParameterPair.Value);
                     var list = func(command);
                     await transaction.CommitAsync();

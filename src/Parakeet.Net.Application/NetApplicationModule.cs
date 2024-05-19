@@ -18,6 +18,8 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 using Parakeet.Net.Aop;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Common.Interfaces;
 
 namespace Parakeet.Net;
 
@@ -106,6 +108,13 @@ public class NetApplicationModule : AbpModule
         ////调用处 _serviceProvider.Resolve<IReverseCommand>(typeof(AddPersonCommand).FullName);//HandlerType 实现类里唯一可自定义
         ////  var command = _serviceProvider.Resolve<IReverseCommand>($"{area}_{device.Supplier.Code}_{request.Command}");
         ////  await command.Execute(device, request.Body);
+        #endregion
+
+        #region 泛型接口注册
+
+        //context.Services.TryAddTransient(typeof(IBaseNetAppService<>), typeof(BaseNetAppService<>));
+        //context.Services.TryAddTransient(typeof(IBaseNetAppService<,>), typeof(BaseNetAppService<,>));
+
         #endregion
 
         #region 测试

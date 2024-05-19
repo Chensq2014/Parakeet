@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Parakeet.Net.Web.Controllers
 {
+    [AllowAnonymous]
+    [Route("[controller]/[action]")]
     public class HomeController : AbpController
     {
         /// <summary>
@@ -16,8 +19,8 @@ namespace Parakeet.Net.Web.Controllers
         //[CustomIocFilterFactory(typeof(CustomExceptionFilterAttribute))]//IFilterFactory 就是filter工厂，任何环节都可以用工厂代替实例，filter里面就有serviceProvider,既可依赖注入
         //[DisableAuditing]
         [ResponseCache(Duration = 600)]//缓存600s
+        [HttpGet]
         public IActionResult Index()
-        
         {
             #region Asp.net 6/5大对象
             //HttpContext:http请求的上下文，任何一个环节其实都是需要httpcontext，需要的参数信息，处理的中间结果，最终的结果，都是放在httpcontext，是一个贯穿始终的对象
@@ -60,6 +63,7 @@ namespace Parakeet.Net.Web.Controllers
         /// 默认错误页
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult Error()
         {
             return View();

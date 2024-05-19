@@ -11,7 +11,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
 		<ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
-		<ProjectReference Include="..\Parakeet.Net.Domain\Parakeet.Net.Domain.csproj" />
+		<ProjectReference Include="..\Parakeet.Net.Application\Parakeet.Net.Application.csproj" />
 		<ProjectReference Include="..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
 	</ItemGroup>
 

@@ -178,6 +178,7 @@ namespace Parakeet.Net.EntityFrameworkCore
             builder.Entity<AreaTenantDbConnectionString>(x =>
             {
                 //x.ConfigureFullAuditedAggregateRoot();//子表非领域根
+                
                 x.ToTable(options.TablePrefix + $"{nameof(AreaTenantDbConnectionString)}s", options.Schema);
             });
             builder.Entity<Device>(x =>

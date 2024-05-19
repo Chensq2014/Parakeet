@@ -8,6 +8,7 @@ using Common.Entities;
 using Common.Enums;
 using Common.Extensions;
 using Volo.Abp.Domain.Repositories;
+using Common.Interfaces;
 
 namespace Parakeet.Net.Services
 {
@@ -16,8 +17,8 @@ namespace Parakeet.Net.Services
     /// </summary>
     public class OrganizationManager : NetDomainServiceBase, IOrganizationManager
     {
-        private readonly IRepository<Organization> _organizationRepository;
-        public OrganizationManager(IRepository<Organization> organizationRepository)
+        private readonly IPortalRepository<Organization> _organizationRepository;
+        public OrganizationManager(IPortalRepository<Organization> organizationRepository)
         {
             _organizationRepository = organizationRepository;
         }

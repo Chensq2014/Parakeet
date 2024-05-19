@@ -84,8 +84,8 @@ public class Program
             //// 将配置传给 Serilog 的提供程序 已在webBuilder.UseSerilog中使用配置文件替换
             //.ReadFrom.Configuration(Configuration)
 #if DEBUG
-            .MinimumLevel.Debug()
-            //.MinimumLevel.Error()
+            //.MinimumLevel.Debug()
+            .MinimumLevel.Error()
 #else
                 //.MinimumLevel.Information()
                 //.MinimumLevel.Error()

@@ -8,11 +8,11 @@ namespace Parakeet.NetCore.Web.ViewComponents
 {
     public class TopNavigationViewComponent : ViewComponent
     {
-        private IConfiguration configuration;
+        private IConfiguration _configuration;
         private IAuthorizationService _authorizationService;
         public TopNavigationViewComponent(IConfiguration configuration, IAuthorizationService authorizationService)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
             _authorizationService = authorizationService;
         }
 

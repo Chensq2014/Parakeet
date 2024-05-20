@@ -1,0 +1,458 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ARchGL.IOT.RoClient</name>
+    </assembly>
+    <members>
+        <member name="P:ARchGL.IOT.RoClient.Models.FaceModel.FaceId">
+            <summary>
+            图片唯一标识ID[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FaceModel.Image">
+            <summary>
+            Base64图片[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.TerminalId">
+            <summary>
+            终端传感器编号
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Sensor">
+            <summary>
+            传感器类型
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.PointNumber">
+            <summary>
+            测点编号
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.BasePoint">
+            <summary>
+            基准点
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Distance">
+            <summary>
+            与基准点的距离
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Length">
+            <summary>
+            传感器长度
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Deep">
+            <summary>
+            传感器深度
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Range">
+            <summary>
+            量程(设备最大测量值)
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Span">
+            <summary>
+            跨度
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.Coefficient">
+            <summary>
+            系数
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalBasic.InitialValue">
+            <summary>
+            初始读数(多个因素逗号隔开)
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.Sequence">
+            <summary>
+            必填项且是递增的
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.Type">
+            <summary>
+            指令类型
+            0x01:IP设置
+            0x02:缓存周期
+            0x03:校时
+            0x04:数据上报频率
+            0X05:设备工作模式
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.IP">
+            <summary>
+            IP设置
+            </summary>
+            <example>192.168.0.1: 0XC0 0XA8 0X00 0X01</example>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.CacheCycle">
+            <summary>
+            缓存周期（单位分钟）
+            </summary>
+            <example>360分钟: 0X01 0X68</example>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.Time">
+            <summary>
+            校时(14字节ASCII码)
+            </summary>
+            <example>20200715102315</example>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.Frequency">
+            <summary>
+            数据上报频率（单位秒）
+            </summary>
+            <example>360s：0X01 0X68</example>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting.WorkingMode">
+            <summary>
+            设备工作模式
+            </summary>
+            <example>（模式一）0X01</example>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.PersonnelId">
+            <summary>
+            人员唯一标识Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.PersonnelCode">
+            <summary>
+            人员编号
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.Name">
+            <summary>
+            名字[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.Type">
+            <summary>
+            人员类型
+            1：白名单，2：黑名单，3：访客，4：陌生人
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.IdCard">
+            <summary>
+            身份证号码[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.IcCard">
+            <summary>
+            Ic卡号
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonAddedModel.Faces">
+            <summary>
+            人脸[必填]
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonDeletedModel.PersonnelIds">
+            <summary>
+            目前只支持每次删除一个人员
+            用人员id（PersonId）标识[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.PersonnelId">
+            <summary>
+            注册人员PersonnelId
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.IdCard">
+            <summary>
+            身份证号
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.IcCard">
+            <summary>
+            IC卡
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.Gender">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.Nation">
+            <summary>
+            名族
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.Birthday">
+            <summary>
+            出生日期（yyyy-MM-dd）
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.Address">
+            <summary>
+            住址
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.IssuedBy">
+            <summary>
+            发证机关
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.TermValidityStart">
+            <summary>
+            证件有效期起
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.TermValidityEnd">
+            <summary>
+            证件有效期止
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.IdPhoto">
+            <summary>
+            身份证照片（base64）
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.Photo">
+            <summary>
+            现场人员可见光照片（base64）
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.InfraredPhoto">
+            <summary>
+            现场人员红外照片（base64）
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.IdPhotoUrl">
+            <summary>
+            身份证照片Url
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.PhotoUrl">
+            <summary>
+            现场人员可见光照片Url
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.InfraredPhotoUrl">
+            <summary>
+            现场人员红外照片Url
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.PhoneNumber">
+            <summary>
+            联系电话
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.PersonnelType">
+            <summary>
+            注册人员类型 1采集劳务人员，2采集岗位人员
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.Models.PersonRegisterModel.RegisterType">
+            <summary>
+            采集注册类型（3：人脸采集）
+            </summary>
+        </member>
+        <member name="T:ARchGL.IOT.RoClient.ReverseControlCommandClient">
+            <summary>
+            设备反控客户端
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.ReverseControlCommandClient.AppId">
+            <summary>
+            从服务端获取的AppId默认....  上端赋值
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.ReverseControlCommandClient.AppKey">
+            <summary>
+            从服务端获取的AppKey默认....  上端赋值
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.ReverseControlCommandClient.AppSecret">
+            <summary>
+            从服务端获取AppSecret 默认....  上端赋值
+            </summary>
+        </member>
+        <member name="P:ARchGL.IOT.RoClient.ReverseControlCommandClient.ServerUrl">
+            <summary>
+            服务端地址 默认"https://localhost:5003" 上端可赋值(配置文件)
+            </summary>
+        </member>
+        <member name="F:ARchGL.IOT.RoClient.ReverseControlCommandClient.jsonSettings">
+            <summary>
+            驼峰序列化
+            </summary>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonsAddCommandAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{ARchGL.IOT.RoClient.Models.PersonAddedModel})">
+            <summary>
+            多设备 批量下发人员
+            </summary>
+            <param name="serialNos">设备编码集合</param>
+            <param name="models">待下发人员集合</param>
+            <returns>返回批量下发结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonsAddCommandAsync(System.Collections.Generic.List{System.String},ARchGL.IOT.RoClient.Models.PersonAddedModel)">
+            <summary>
+            多设备 批量下发单个人员
+            </summary>
+            <param name="serialNos">设备编码集合</param>
+            <param name="model">待下发人员</param>
+            <returns>返回批量下发结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonsAddCommandAsync(System.String,System.Collections.Generic.List{ARchGL.IOT.RoClient.Models.PersonAddedModel})">
+            <summary>
+            单设备 批量下发多个人员
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="models">待下发人员集合</param>
+            <returns>返回批量下发结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonAddCommandAsync(System.String,ARchGL.IOT.RoClient.Models.PersonAddedModel)">
+            <summary>
+            单设备单独下发单个人员
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">待下发人员</param>
+            <returns>返回下发结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonDeleteCommandAsync(System.String,ARchGL.IOT.RoClient.Models.PersonDeletedModel)">
+            <summary>
+            删除人员(支持删除多条)
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">待删除人员信息</param>
+            <returns>返回删除人员结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonRegisterCommandAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{ARchGL.IOT.RoClient.Models.PersonRegisterModel})">
+            <summary>
+            多设备批量人员注册
+            </summary>
+            <param name="serialNos">设备编码</param>
+            <param name="models">待注册人员集合</param>
+            <returns>返回注册人员结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonRegisterCommandAsync(System.Collections.Generic.List{System.String},ARchGL.IOT.RoClient.Models.PersonRegisterModel)">
+            <summary>
+            多设备批量注册单个人员
+            </summary>
+            <param name="serialNos">设备编码</param>
+            <param name="model">待注册人员</param>
+            <returns>返回注册人员结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonRegisterCommandAsync(System.String,System.Collections.Generic.List{ARchGL.IOT.RoClient.Models.PersonRegisterModel})">
+            <summary>
+            单设备批量人员注册
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="models">待注册人员集合</param>
+            <returns>返回批量注册人员结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecutePersonRegisterCommandAsync(System.String,ARchGL.IOT.RoClient.Models.PersonRegisterModel)">
+            <summary>
+            单设备单人员注册
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">待注册人员信息</param>
+            <returns>返回注册人员结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecuteFPTerminalSettingCommandAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting})">
+            <summary>
+            批量执行基坑终端设置命令
+            </summary>
+            <param name="serialNos">设备编码集合</param>
+            <param name="models">模型集合</param>
+            <returns>返回批量执行结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.ExecuteFPTerminalSettingCommandAsync(System.String,ARchGL.IOT.RoClient.Models.FoundationpitTerminalSetting)">
+            <summary>
+            执行基坑终端设置命令
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">模型</param>
+            <returns>返回执行结果</returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.CreateAuthenticatedChannel(System.String)">
+            <summary>
+            构建含有 Authorization token的 Channel
+            </summary>
+            <param name="address"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.GetCallCredentials">
+            <summary>
+            获取Credentials
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ARchGL.IOT.RoClient.ReverseControlCommandClient.GenerateToken(System.String,System.String,System.String,System.Int64)">
+            <summary>
+            生成token
+            </summary>
+            <param name="appId"></param>
+            <param name="appKey"></param>
+            <param name="appSecret"></param>
+            <param name="unixTimeStamp"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ARchGL.IOT.Protos.ReverseReflection">
+            <summary>Holder for reflection information generated from Reverse.proto</summary>
+        </member>
+        <member name="P:ARchGL.IOT.Protos.ReverseReflection.Descriptor">
+            <summary>File descriptor for Reverse.proto</summary>
+        </member>
+        <member name="F:ARchGL.IOT.Protos.ReverseRequest.SerialNoFieldNumber">
+            <summary>Field number for the "SerialNo" field.</summary>
+        </member>
+        <member name="F:ARchGL.IOT.Protos.ReverseRequest.CommandFieldNumber">
+            <summary>Field number for the "Command" field.</summary>
+        </member>
+        <member name="F:ARchGL.IOT.Protos.ReverseRequest.BodyFieldNumber">
+            <summary>Field number for the "Body" field.</summary>
+        </member>
+        <member name="F:ARchGL.IOT.Protos.ReverseReply.SuccessFieldNumber">
+            <summary>Field number for the "Success" field.</summary>
+        </member>
+        <member name="F:ARchGL.IOT.Protos.ReverseReply.MessageFieldNumber">
+            <summary>Field number for the "Message" field.</summary>
+        </member>
+        <member name="P:ARchGL.IOT.Protos.ReverseCommand.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:ARchGL.IOT.Protos.ReverseCommand.ReverseCommandClient">
+            <summary>Client for ReverseCommand</summary>
+        </member>
+        <member name="M:ARchGL.IOT.Protos.ReverseCommand.ReverseCommandClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for ReverseCommand</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:ARchGL.IOT.Protos.ReverseCommand.ReverseCommandClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for ReverseCommand that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:ARchGL.IOT.Protos.ReverseCommand.ReverseCommandClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:ARchGL.IOT.Protos.ReverseCommand.ReverseCommandClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:ARchGL.IOT.Protos.ReverseCommand.ReverseCommandClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+    </members>
+</doc>

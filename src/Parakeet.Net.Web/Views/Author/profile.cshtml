@@ -1,0 +1,22 @@
+﻿
+<div id="profile">
+
+</div>
+
+@section scripts
+{
+    <script src="~/plugins/pdf/showpdf.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+
+        $(function () {
+            var options = {
+                height: '800px',
+                pdfOpenParams: { view: 'FitV', page: '0' },
+                name: 'mans',
+                fallbackLink: '<p>您的浏览器暂不支持此pdf，请更新浏览器</p>'
+            };
+            PDFObject.embed('/api/parakeet/author/profile', "#profile", options);
+        });
+
+    </script>
+}

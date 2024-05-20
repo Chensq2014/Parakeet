@@ -1,0 +1,164 @@
+﻿
+<div id="grid-threshold" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        $(function () {
+
+            initThresholdGrid();
+
+            function initThresholdGrid() {
+                var config = dxConfig.editGrid('/api/parakeet/threshold');
+                config.deviceTypes = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=DeviceType');
+                config.gridId = 'grid-threshold';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = true;
+                config.editing.allowUpdating = true;
+                //config.searchPanel.visible = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '名称',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/threshold/check-field', message: '名称重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/threshold/check-fields', fields: ['LocationAreaId'], message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'deviceType',
+                        caption: '设备类型',
+                        minWidth: 50,
+                        allowEditing: true,
+                        lookup: config.deviceTypes,
+                        validationRules: [{ type: 'required', message: '设备类型为必填项' }]
+                    },
+                    {
+                        dataField: 'minAlarmValue',
+                        alignment: 'center',
+                        caption: '报警最小值',
+                        dataType: 'number',
+                        allowExporting: false,
+                        allowHeaderFiltering: false,
+                        editorOptions: { min: 0, max: __Max },
+                        valueFormat: { type: 'fixedPoint', precision: 2 }, //'count',
+                        allowEditing: true
+                    },
+                    {
+                        dataField: 'maxAlarmValue',
+                        alignment: 'center',
+                        caption: '报警最大值',
+                        dataType: 'number',
+                        allowExporting: false,
+                        allowHeaderFiltering: false,
+                        editorOptions: { min: 0, max: __Max },
+                        valueFormat: { type: 'fixedPoint', precision: 2 }, //'count',
+                        allowEditing: true
+                    },
+                    {
+                        dataField: 'minWarningValue',
+                        alignment: 'center',
+                        caption: '预警最小值',
+                        dataType: 'number',
+                        allowExporting: false,
+                        allowHeaderFiltering: false,
+                        editorOptions: { min: 0, max: __Max },
+                        //format: { type: 'fixedPoint', precision: 4 },
+                        valueFormat: { type: 'fixedPoint', precision: 2 }, //'count',
+                        allowEditing: true
+                    },
+                    {
+                        dataField: 'maxWarningValue',
+                        alignment: 'center',
+                        caption: '预警最大值',
+                        dataType: 'number',
+                        allowExporting: false,
+                        allowHeaderFiltering: false,
+                        editorOptions: { min: 0, max: __Max },
+                        valueFormat: { type: 'fixedPoint', precision: 2 }, //'count',
+                        allowEditing: true
+                    },
+                    {
+                        dataField: 'factor',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        allowEditing: true,
+                        caption: '因素'
+                    },
+                    {
+                        dataField: 'version',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '版本号'
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+
+                };
+                config.onToolbarPreparing = function (e) {
+                    //var items = e.toolbarOptions.items;
+                    //$.each(items,
+                    //    function (index, item) {
+                    //        if (item.name === 'addRowButton') {
+                    //            //var addFunc = item.options.onClick;
+                    //            item.options.onClick = null;
+                    //            item.options.onClick = function (f) {
+                    //                //f.event.stopPropagation();
+                    //                //跳转到联系我们页面
+                    //                window.location = '/api/parakeet/threshold/create';
+                    //            }
+                    //        }
+                    //    });
+                    //items.push({
+                    //    widget: 'dxButton',
+                    //    options: {
+                    //        text: '查看更多',
+                    //        onClick: function (f) {
+                    //            f.event.stopPropagation();
+                    //            e.component.beginUpdate();
+                    //            var visible = !e.component.columnOption('phone', 'visible');
+                    //            e.component.columnOption('phone', 'visible', visible);
+                    //            e.component.columnOption('qNumber', 'visible', visible);
+                    //            e.component.columnOption('email', 'visible', visible);
+                    //            e.component.columnOption('readTime', 'visible', visible);
+                    //            if (visible) {
+                    //                f.component.option('text', '隐藏');
+                    //            } else {
+                    //                f.component.option('text', '查看更多');
+                    //            }
+                    //            e.component.endUpdate();
+                    //        }
+                    //    },
+                    //    location: 'after'
+                    //});
+                };
+
+
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+
+            }
+
+        });
+
+
+    </script>
+}

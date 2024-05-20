@@ -1,0 +1,89 @@
+{
+  "App": {
+    "SelfUrl": "https://localhost:23517"
+  },
+  "RemoteServices": {
+    "Default": {
+      "BaseUrl": "https://localhost:23517/"
+    }
+  },
+  "AzureAd": {
+    "Instance": "https://login.microsoftonline.com/",
+    "TenantId": "760ef7de-daf0-4590-b9fb-0efa23bdc841",
+    "ClientId": "98efee59-628f-498a-a893-63ad9c03f680", // from app registration
+    "RedirectUri": "https://localhost:23517/", //290668617qq.onmicrosoft.com
+    "ClientSecret": "Enter_the_Client_Secret_Here",
+    "Scope": "User.Read profile email",
+    "CallbackPath": "/signin-oidc"
+  },
+  "ConnectionStrings": {
+    "Default": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfelfmfkfldwfjcqflfoezfjekewdffheneofjfefpetfhddfeflesdfctcucvcwcxcydd",
+    "Portal": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfelfmfkfldwfjcqflfoezfjekewdffheneofjefpetfhddfeflesdfctcucvcwcxcydd",
+    "MySql": "fqeueneuewfgdjenfgexewfcejeoeweydhfdfiezfddmcvcscrcnddfqfqfjdcfedzetcmeffhffeadmeferfpevetecfletdieodwfheyfietetficucscucwddfjexesdffgfdfdfiddfeflesdfctcucvcwcxcydd",
+    "PgSql": "fffeeoesdifafheeesfgfdffeuetcseufhfffncycsddcvcrdcehepfreyezdwfieadfeleyfkesegfcegfkdbcycxcjdhfjfkedeneyfbdofefdfhfievfgetfhddfeflesdfctcucvcwcxcydd",
+    "SqlServer": "ekeueneuewfgdjenfgexewfcejeoeweydhereufbekexepfeescufeeyfpeyegeueaficbdbcyczckfsekeudmfnescqfiflevcpccvdedfcxcydd",
+    "Write": "ekeueneuewfgdjcddgeyewfkecebeeexexdefjeifbewezeqesexcudbdddfckfkeeescmfqetdgelfuefdhdadacycjdbcydg",
+    "Read": "ekeueneuewfgdjcddgeyewfkecebeeexexdefjeifbewezeqesexcudbdddfdheudwesckfsfbevcmfqecdfflfrevcscxcucycgceczdm"
+  },
+  "Redis": {
+    "Configuration": "fjfedydzfdewfheuflcuezeveheaeyeqfmdleufbekexepfeescuct",
+    "CsRedisConfiguration": "fjfedydzfdewfheufldidfcxcmcmcdeiexeteufcevfpdmemfheeeqeyfqfccmcwbvfedwfqflfoekfpefdhcvfkfjegeyexfpcpejeufr",
+    "InstanceName": "parakeet",
+    "ConnectionStrings": "localhost",
+    "DatabaseId": 1
+  },
+  "AuthServer": {
+    "Authority": "https://localhost:50000",
+    "RequireHttpsMetadata": true,
+    "ClientId": "Parakeet_Web",
+    "ClientSecret": "dcfgcbevcydncq",
+    "IsContainerized": false
+  },
+  "Settings": {
+    "DefaultFromAddress": "chensq0523@foxmail.com", //"chenshuangquan@xywgzs1.onexmail.com",
+    "DefaultFromDisplayName": "Chensq",
+    "Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
+    "Smtp.Port": "587", //"465", //
+    "Smtp.UserName": "chensq0523@foxmail.com",
+    "Smtp.Password": "fafgdyewfleufjeofmfifhfiefedefeh",
+    "Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
+    "Smtp.UseDefaultCredentials": "fasle",
+    "Abp.Mailing.DefaultFromAddress": "chensq0523@foxmail.com",
+    "Abp.Mailing.DefaultFromDisplayName": "Chensq",
+    "Abp.Mailing.Smtp.Host": "smtp.qq.com", //"smtp.exmail.qq.com", //
+    "Abp.Mailing.Smtp.Port": "587", //"465", //
+    "Abp.Mailing.Smtp.UserName": "chensq0523@foxmail.com", //"chenshuangquan@xywgzs1.onexmail.com",
+    "Abp.Mailing.Smtp.Password": "fafgdyewfleufjeofmfifhfiefedefeh",
+    "Abp.Mailing.Smtp.EnableSsl": "false", //"true",//587端口在emailsender配置中不允许ssl加密  465才可以
+    "Abp.Mailing.Smtp.UseDefaultCredentials": "false"
+  },
+  "StringEncryption": {
+    "DefaultPassPhrase": "jeZ0QD8WhjH8DOMr"
+  },
+  "GuidConfig": {
+    "DefaultSequentialGuidType": 0 //"SequentialAsString"
+  },
+  "NacosConfig": {
+    "Listeners": [
+      {
+        "Optional": false,
+        "DataId": "develop",
+        "Group": "DEFAULT_GROUP"
+      },
+      {
+        "Optional": false,
+        "DataId": "demo",
+        "Group": "DEFAULT_GROUP"
+      }
+    ],
+    "Namespace": "csharp-demo", // Please set the value of Namespace ID !!!!!!!!
+    "ServerAddresses": [ "http://localhost:8848/" ],
+    "UserName": "test2",
+    "Password": "123456",
+    "AccessKey": "",
+    "SecretKey": "",
+    "EndPoint": "acm.aliyun.com",
+    "ConfigFilterAssemblies": [ "YouPrefix.AssemblyName" ],
+    "ConfigFilterExtInfo": "some ext infomation"
+  }
+}

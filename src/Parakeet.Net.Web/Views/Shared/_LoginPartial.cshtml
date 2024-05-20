@@ -1,0 +1,35 @@
+﻿@inherits Parakeet.Net.Web.Pages.NetPage
+@{
+    //string userString = base.Context.Session.GetString("CurrentUser");
+    //var currentUser = !string.IsNullOrWhiteSpace(userString) ? Newtonsoft.Json.JsonConvert.DeserializeObject<AppUser>(userString) : null;
+}
+
+@if (CurrentUser.IsAuthenticated)
+{
+    <li>
+        @Html.ActionLink($"你好{CurrentUser.UserName}!", "Index", "Home", routeValues: null, htmlAttributes: new { title = CurrentUser?.UserName })
+        <ul class="dropdown animated-3s fadeIn">
+            <li>@Html.ActionLink("注销", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    </li>
+
+    @*using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("你好 " + currentUser.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = currentUser.Name })
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
+                </ul>
+        }*@
+}
+else
+{
+    <li>@Html.ActionLink("登录", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    @*<li><a abp-button="Primary" href="/Account/Login" class="px-4"><i class="fa fa-sign-in"></i> @L["Login"]</a></li>*@
+    @*<ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("登录", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>*@
+}

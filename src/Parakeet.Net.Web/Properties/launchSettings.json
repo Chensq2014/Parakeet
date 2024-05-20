@@ -1,0 +1,39 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false, 
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "https://localhost:60000",
+      "sslPort": 60000
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Parakeet.Net.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:60000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AppName": "parakeet",
+        "SelfUrl": "https://localhost:60000",
+        "GUID_TYPE": "0",
+        "DATABASE_TYPE": "3",
+        "DATABASE_CONNECTION_STRING": "host=localhost;port=5432;database=parakeet2024;userid=postgres;pwd=123456;",
+        "CSREDISCONFIGURATIONBASE": "localhost:6379,password=,prefix=net",
+        "STACKREDISCONN": "127.0.0.1:6379",
+        "NACOS_URL": "http://localhost:8848",
+        "NACOS_ENABLE": "0",
+        "NACOS_ENVIRONMENT_VARIABLES_DATA_ID": "EnvironmentVariables",
+        "LOG_SEQ_URL": "http://localhost:9999",
+        "LOG_MINIMUM_LEVEL": "Information"
+      }
+    }
+  }
+}

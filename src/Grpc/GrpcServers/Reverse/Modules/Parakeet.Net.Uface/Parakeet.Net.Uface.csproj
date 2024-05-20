@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\..\..\..\..\..\Common\Config\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<RootNamespace>Parakeet.Net.Uface</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>..\..\Parakeet.Net.ROServer\bin\Debug\net8.0\Plugins</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Parakeet.Net.GrpcEFCore\Parakeet.Net.GrpcEFCore.csproj" />
+	</ItemGroup>
+
+</Project>

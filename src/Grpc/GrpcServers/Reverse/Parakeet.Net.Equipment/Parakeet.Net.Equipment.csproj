@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\..\..\..\..\Common\Config\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<RootNamespace>Parakeet.Net.Equipment</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Dtos\**" />
+		<Compile Remove="Extensions\**" />
+		<EmbeddedResource Remove="Dtos\**" />
+		<EmbeddedResource Remove="Extensions\**" />
+		<None Remove="Dtos\**" />
+		<None Remove="Extensions\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp" Version="8.1.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\..\..\Common\Common.Entities\Common.Entities.csproj" />
+		<ProjectReference Include="..\..\..\..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
+		<ProjectReference Include="..\..\..\..\..\..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
+	</ItemGroup>
+
+</Project>

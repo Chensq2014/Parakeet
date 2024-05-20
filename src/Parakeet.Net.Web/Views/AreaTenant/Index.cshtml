@@ -1,0 +1,200 @@
+﻿
+<div id="grid-areaTenant" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        $(function() {
+
+            initAreaTenantGrid();
+
+            function initAreaTenantGrid() {
+                var config = dxConfig.editGrid('/api/parakeet/area-tenant');
+                config.gridId = 'grid-areaTenant';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = true;
+                config.editing.allowUpdating = true;
+                //config.searchPanel.visible = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '名称'
+                    },
+                    {
+                        dataField: 'displayName',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '显示名'
+                    },
+                    {
+                        dataField: 'locationAreaName',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        allowEditing: false,
+                        caption: '区域名'
+                    },
+                    {
+                        dataField: 'locationAreaId',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        //allowEditing: false,
+                        caption: '区域',
+                        lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?level=1'),
+                        validationRules: [{ type: "required", message: "区域必填项" }]
+                    },
+                    {
+                        dataField: 'areaCode',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '区域码'
+                    },
+                    {
+                        dataField: 'remark',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowHeaderFiltering: false,
+                        caption: '备注'
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+
+                };
+                config.onToolbarPreparing = function (e) {
+                    //var items = e.toolbarOptions.items;
+                    //$.each(items,
+                    //    function (index, item) {
+                    //        if (item.name === 'addRowButton') {
+                    //            //var addFunc = item.options.onClick;
+                    //            item.options.onClick = null;
+                    //            item.options.onClick = function (f) {
+                    //                //f.event.stopPropagation();
+                    //                //跳转到联系我们页面
+                    //                window.location = '/api/parakeet/areaTenant/create';
+                    //            }
+                    //        }
+                    //    });
+                    //items.push({
+                    //    widget: 'dxButton',
+                    //    options: {
+                    //        text: '查看更多',
+                    //        onClick: function (f) {
+                    //            f.event.stopPropagation();
+                    //            e.component.beginUpdate();
+                    //            var visible = !e.component.columnOption('phone', 'visible');
+                    //            e.component.columnOption('phone', 'visible', visible);
+                    //            e.component.columnOption('qNumber', 'visible', visible);
+                    //            e.component.columnOption('email', 'visible', visible);
+                    //            e.component.columnOption('readTime', 'visible', visible);
+                    //            if (visible) {
+                    //                f.component.option('text', '隐藏');
+                    //            } else {
+                    //                f.component.option('text', '查看更多');
+                    //            }
+                    //            e.component.endUpdate();
+                    //        }
+                    //    },
+                    //    location: 'after'
+                    //});
+                };
+
+                config.masterDetail = {
+                    enabled: true,
+                    template: function (container, info) {
+                        var detailConfig = getTenantConnectionDetailConfig(info.data.id);
+                        $("<div class='tenant-master-grid' id='grid-master-" + info.data.id + "'>").dxDataGrid(detailConfig)
+                            .appendTo(container);
+                    }
+                };
+
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+
+            }
+
+            function getTenantConnectionDetailConfig(tenantId) {
+                var getUrl = '/api/parakeet/area-tenant/tenant-db-connection-string?id=' + tenantId;
+                var config = dxConfig.editGrid(getUrl);
+                config.dataSource = DevExpress.data.AspNet.createStore({
+                    key: 'id',
+                    loadUrl: getUrl,
+                    insertUrl: '/api/parakeet/area-tenant/tenant-db-connection-string',
+                    updateUrl: '/api/parakeet/area-tenant/tenant-db-connection-string',
+                    deleteUrl: '/api/parakeet/area-tenant/tenant-db-connection-string'
+                });
+                config.editing.allowAdding = true;
+                config.editing.allowUpdating = true;
+                config.editing.allowDeleting = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'areaTenantName',
+                        alignment: 'center',
+                        caption: '区域名称',
+                        allowHeaderFiltering: false,
+                        allowEditing: false
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        caption: '连接名称',
+                        allowHeaderFiltering: false,
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' }
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            //{ type: 'fieldUnique', checkUrl: '/api/parakeet/need/check-field', message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'isMaster',
+                        alignment: 'center',
+                        allowHeaderFiltering: false,
+                        caption: '是否主库'
+                    },
+                    {
+                        dataField: 'value',
+                        alignment: 'center',
+                        caption: '连接字符串',
+                        allowHeaderFiltering: false,
+                        validationRules: [
+                            { type: 'required', message: '连接字符串必填项' }
+                        ]
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    e.data.areaTenantId = tenantId;
+                };
+                config.onContentReady = function (e) {
+                    //
+                };
+                gridSugar(config);
+                return config;
+            }
+
+        });
+
+
+    </script>
+}
+

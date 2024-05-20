@@ -33,7 +33,7 @@
 
             function initProductPivotGrid() {
 
-                syncPost('/api/parakeet/product/pivotGrid', {}, function (array) {
+                syncPost('/api/parakeet/product/pivot-grid', {}, function (array) {
                     var config = dxConfig.pivotGrid(array);
                     config.gridId = 'grid-products';
                     config.gridSelector = '#' + config.gridId;

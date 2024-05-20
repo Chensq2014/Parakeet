@@ -42,7 +42,7 @@
 
             function initProjectGrid() {
                 var config = dxConfig.editGrid('/api/parakeet/project');
-                config.organizations = dxConfig.selectBox('/api/parakeet/Organization/ParentSelectList?id=');
+                config.organizations = dxConfig.selectBox('/api/parakeet/Organization/parent-select-list?id=');
                 config.gridId = 'grid-project';
                 config.gridSelector = '#' + config.gridId;
                 config.editing.allowAdding = true;
@@ -62,7 +62,7 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/project/checkField', message: '名称重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/project/check-field', message: '名称重复' }
                         ]
                     },
                     {
@@ -101,7 +101,7 @@
                         allowHeaderFiltering: false,
                         //allowEditing: false,
                         caption: '区域',
-                        lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?cancelValid=true'),
+                        lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?cancelValid=true'),
                         validationRules: [{ type: "required", message: "区域必填项" }]
                     },
                     {
@@ -168,7 +168,7 @@
                     //&& e.parentType === 'filterRow'
                     if (e.dataField === 'locationAreaId') {
                         e.editorName = 'dxDropDownBox';
-                        var dropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/locationArea/locationAreaTree?cancelValid=true');
+                        var dropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/location-area/location-area-tree?cancelValid=true');
                         dropDownBoxConfig.width = '100%';
                         //dropDownBoxConfig.valueExpr = 'id';
                         //dropDownBoxConfig.displayExpr = 'name';
@@ -191,7 +191,7 @@
                     }
                     if (e.dataField === 'organizationId') {
                         e.editorName = 'dxDropDownBox';
-                        //var organizDropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/organization/rootTrees?cancelValid=true');
+                        //var organizDropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/organization/root-Trees?cancelValid=true');
                         var organizDropDownBoxConfig = dxConfig.dropDownBox('/api/parakeet/organization/get');
                         //organizDropDownBoxConfig.width = '100%';
                         organizDropDownBoxConfig.placeholder = e.lookup.valueMap[e.value];
@@ -217,7 +217,7 @@
             function getOrganizations() {
 
                 //var organizations = dxConfig.setStore('/api/parakeet/organization');//syncGet('/api/parakeet/organization');
-                var organizationTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=OrganizationType');
+                var organizationTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=OrganizationType');
                 //var treeList = dxConfig.treeList('/api/parakeet/organization');
                 var treeList = {
                     dataSource: dxConfig.setStore('/api/parakeet/organization'),//organizations,
@@ -288,7 +288,7 @@
                 //            $.ajax({
                 //                type: 'get',
                 //                dataType: 'json',
-                //                url: '/api/parakeet/locationArea/locationAreas',
+                //                url: '/api/parakeet/location-area/location-areas',
                 //                contentType: 'application/x-www-form-urlencoded',
                 //                data: { parentCode: pCode },
                 //                success: function (res) {

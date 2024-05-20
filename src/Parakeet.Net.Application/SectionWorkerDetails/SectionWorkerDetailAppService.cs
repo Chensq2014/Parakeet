@@ -55,7 +55,7 @@ namespace Parakeet.Net.SectionWorkerDetails
         /// <returns></returns>
         public async Task<List<SectionWorkerDetailDto>> PivotGrid([FromBody] SectionWorkerDetailPivotGridInputDto input)
         {
-            var result = await (await GetAll())
+            var result = await (await GetAll()).AsNoTracking()
                 .WhereIf(input.StartDate.HasValue, m => m.CreationTime >= input.StartDate)
                 .WhereIf(input.EndDate.HasValue, m => m.CreationTime <= input.EndDate)
                 .WhereIf(input.PositionName.HasValue(), m => m.PositionName == input.PositionName)

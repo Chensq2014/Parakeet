@@ -10,7 +10,7 @@
 
             function initThresholdGrid() {
                 var config = dxConfig.editGrid('/api/parakeet/threshold');
-                config.deviceTypes = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=DeviceType');
+                config.deviceTypes = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=DeviceType');
                 config.gridId = 'grid-threshold';
                 config.gridSelector = '#' + config.gridId;
                 config.editing.allowAdding = true;
@@ -34,8 +34,8 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/threshold/checkField', message: '名称重复' }
-                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/threshold/checkFields', fields: ['LocationAreaId'], message: '名称重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/threshold/check-field', message: '名称重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/threshold/check-fields', fields: ['LocationAreaId'], message: '名称重复' }
                         ]
                     },
                     {

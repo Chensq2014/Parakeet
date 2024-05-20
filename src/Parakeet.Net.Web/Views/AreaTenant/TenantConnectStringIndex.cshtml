@@ -15,13 +15,13 @@
 
             function initTenantConnectStrringGrid() {
                 var tenantId = '@Model.Id';
-                var config = dxConfig.editGrid('/api/parakeet/areaTenant/tenantDbConnectionString?id=' + tenantId);
+                var config = dxConfig.editGrid('/api/parakeet/area-tenant/tenant-db-connection-string?id=' + tenantId);
                 config.dataSource = DevExpress.data.AspNet.createStore({
                     key: 'id',
-                    loadUrl: '/api/parakeet/areaTenant/tenantDbConnectionString?id=' +tenantId,
-                    insertUrl: '/api/parakeet/areaTenant/tenantDbConnectionString',
-                    updateUrl: '/api/parakeet/areaTenant/tenantDbConnectionString',
-                    deleteUrl: '/api/parakeet/areaTenant/tenantDbConnectionString'
+                    loadUrl: '/api/parakeet/area-tenant/tenant-db-connection-string?id=' +tenantId,
+                    insertUrl: '/api/parakeet/area-tenant/tenant-db-connection-string',
+                    updateUrl: '/api/parakeet/area-tenant/tenant-db-connection-string',
+                    deleteUrl: '/api/parakeet/area-tenant/tenant-db-connection-string'
                 });
                 config.gridId = 'grid-connectString';
                 config.gridSelector = '#' + config.gridId;
@@ -48,7 +48,7 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' }
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            //{ type: 'fieldUnique', checkUrl: '/api/parakeet/need/checkField', message: '名称重复' }
+                            //{ type: 'fieldUnique', checkUrl: '/api/parakeet/need/check-field', message: '名称重复' }
                         ]
                     },
                     {

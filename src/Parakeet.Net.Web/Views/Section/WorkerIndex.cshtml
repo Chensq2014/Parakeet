@@ -6,7 +6,7 @@
 
         $(function() {
 
-            var laborTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=LaborType');
+            var laborTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?Name=LaborType');
             initSectionGrid();
 
             function initSectionGrid() {
@@ -53,8 +53,8 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '房号避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/section/checkField', message: '名称重复' }
-                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/sectionWorker/checkFields', fields: ['SectionId'], message: '小区名重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/section/check-field', message: '名称重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/sectionWorker/check-fields', fields: ['SectionId'], message: '小区名重复' }
                         ]
                     },
                     {
@@ -65,7 +65,7 @@
                         allowGrouping: true,
                         //allowEditing: false,
                         caption: '区域',
-                        lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?cancelValid=true'),
+                        lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?cancelValid=true'),
                         validationRules: [{ type: "required", message: "区域必填项" }]
                     },
                     {
@@ -76,7 +76,7 @@
                         allowGrouping: true,
                         //allowEditing: false,
                         caption: '项目',
-                        lookup: dxConfig.selectBoxTvExchange('/api/parakeet/project/projectSelectList'),
+                        lookup: dxConfig.selectBoxTvExchange('/api/parakeet/project/project-select-list'),
                         validationRules: [{ type: "required", message: "项目必填项" }]
                     },
                     {
@@ -214,7 +214,7 @@
                     if (e.dataField === 'locationAreaId') {
                         e.editorName = 'dxDropDownBox';
                         var dropDownBoxConfig =
-                            dxConfig.dropDownBox('/api/parakeet/locationArea/locationAreaTree?cancelValid=true');
+                            dxConfig.dropDownBox('/api/parakeet/location-area/location-area-tree?cancelValid=true');
                         dropDownBoxConfig.width = '100%';
                         //dropDownBoxConfig.valueExpr = 'id';
                         //dropDownBoxConfig.displayExpr = 'name';
@@ -298,14 +298,14 @@
             }
 
             function getSectionWorkerConfig(sectionId) {
-                var getUrl = '/api/parakeet/sectionWorker/get?id=' + sectionId;
+                var getUrl = '/api/parakeet/section-Worker/get?id=' + sectionId;
                 var config = dxConfig.editGrid(getUrl);
                 config.dataSource = DevExpress.data.AspNet.createStore({
                     key: 'id',
                     loadUrl: getUrl,
-                    insertUrl: '/api/parakeet/sectionWorker/insert',
-                    updateUrl: '/api/parakeet/sectionWorker/update',
-                    deleteUrl: '/api/parakeet/sectionWorker/delete'
+                    insertUrl: '/api/parakeet/section-Worker/insert',
+                    updateUrl: '/api/parakeet/section-Worker/update',
+                    deleteUrl: '/api/parakeet/section-Worker/delete'
                 });
                 config.editing.allowAdding = true;
                 config.editing.allowUpdating = true;
@@ -345,7 +345,7 @@
                         allowGrouping: true,
                         //allowEditing: false,
                         caption: '工人',
-                        lookup: dxConfig.selectBoxTvExchange('/api/parakeet/worker/workerSelectList'),
+                        lookup: dxConfig.selectBoxTvExchange('/api/parakeet/worker/worker-Select-List'),
                         validationRules: [{ type: "required", message: "工人必填项" }]
                     },
                     {
@@ -356,7 +356,7 @@
                         allowGrouping: true,
                         //allowEditing: false,
                         caption: '工种',
-                        lookup: dxConfig.selectBoxTvExchange('/api/parakeet/workerType/workerTypeSelectList'),
+                        lookup: dxConfig.selectBoxTvExchange('/api/parakeet/worker-Type/worker-Type-SelectList'),
                         validationRules: [{ type: "required", message: "工种必填项" }]
                     },
                     {
@@ -505,14 +505,14 @@
             }
 
             function getWorkerDetailConfig(sectionWorkerId) {
-                var getUrl = '/api/parakeet/sectionWorkerDetail/get?id=' + sectionWorkerId;
+                var getUrl = '/api/parakeet/section-Worker-Detail/get?id=' + sectionWorkerId;
                 var config = dxConfig.editGrid(getUrl);
                 config.dataSource = DevExpress.data.AspNet.createStore({
                     key: 'id',
                     loadUrl: getUrl,
-                    insertUrl: '/api/parakeet/sectionWorkerDetail/insert',
-                    updateUrl: '/api/parakeet/sectionWorkerDetail/update',
-                    deleteUrl: '/api/parakeet/sectionWorkerDetail/delete'
+                    insertUrl: '/api/parakeet/section-Worker-Detail/insert',
+                    updateUrl: '/api/parakeet/section-Worker-Detail/update',
+                    deleteUrl: '/api/parakeet/section-Worker-Detail/delete'
                 });
                 config.editing.allowAdding = true;
                 config.editing.allowUpdating = true;
@@ -535,7 +535,7 @@
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
                             {
                                 type: 'fieldsUnique',
-                                checkUrl: '/api/parakeet/sectionWorkerDetail/checkFields',
+                                checkUrl: '/api/parakeet/section-Worker-Detail/check-fields',
                                 fields: ["SectionWorkerId"],
                                 message: '名称重复'
                             }

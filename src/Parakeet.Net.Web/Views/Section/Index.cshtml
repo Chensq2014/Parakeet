@@ -6,7 +6,7 @@
 
     $(function() {
 
-        var chargeTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=ChargeType');
+        var chargeTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?Name=ChargeType');
         initSectionGrid();
 
         function initSectionGrid() {
@@ -53,8 +53,8 @@
                     validationRules: [
                         { type: 'required', message: '名称为必填项' },
                         //{ type: 'pattern', pattern: '^[^0-9]+$', message: '房号避免使用纯数字' },
-                        { type: 'fieldUnique', checkUrl: '/api/parakeet/section/checkField', message: '名称重复' }
-                        //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/house/checkFields', fields: ['SectionId'], message: '小区名重复' }
+                        { type: 'fieldUnique', checkUrl: '/api/parakeet/section/check-field', message: '名称重复' }
+                        //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/house/check-fields', fields: ['SectionId'], message: '小区名重复' }
                     ]
                 },
                 {
@@ -65,7 +65,7 @@
                     allowGrouping: true,
                     //allowEditing: false,
                     caption: '区域',
-                    lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?cancelValid=true'),
+                    lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?cancelValid=true'),
                     validationRules: [{ type: "required", message: "区域必填项" }]
                 },
                 {
@@ -76,7 +76,7 @@
                     allowGrouping: true,
                     //allowEditing: false,
                     caption: '项目',
-                    lookup: dxConfig.selectBoxTvExchange('/api/parakeet/project/projectSelectList'),
+                    lookup: dxConfig.selectBoxTvExchange('/api/parakeet/project/project-select-list'),
                     validationRules: [{ type: "required", message: "项目必填项" }]
                 },
                 {
@@ -156,7 +156,7 @@
                 if (e.dataField === 'locationAreaId') {
                     e.editorName = 'dxDropDownBox';
                     var dropDownBoxConfig =
-                        dxConfig.dropDownBox('/api/parakeet/locationArea/locationAreaTree?cancelValid=true');
+                        dxConfig.dropDownBox('/api/parakeet/location-area/location-area-tree?cancelValid=true');
                     dropDownBoxConfig.width = '100%';
                     //dropDownBoxConfig.valueExpr = 'id';
                     //dropDownBoxConfig.displayExpr = 'name';
@@ -261,10 +261,10 @@
                     validationRules: [
                         { type: 'required', message: '房号为必填项' },
                         //{ type: 'pattern', pattern: '^[^0-9]+$', message: '房号避免使用纯数字' },
-                        //{ type: 'fieldUnique', checkUrl: '/api/parakeet/house/checkField', message: '房号重复' },
+                        //{ type: 'fieldUnique', checkUrl: '/api/parakeet/house/check-field', message: '房号重复' },
                         {
                             type: 'fieldsUnique',
-                            checkUrl: '/api/parakeet/house/checkFields',
+                            checkUrl: '/api/parakeet/house/check-fields',
                             fields: ['SectionId'],
                             message: '房号重复'
                         }
@@ -396,7 +396,7 @@
                         //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
                         {
                             type: 'fieldsUnique',
-                            checkUrl: '/api/parakeet/product/checkFields',
+                            checkUrl: '/api/parakeet/product/check-fields',
                             fields: ["HouseId"],
                             message: '名称重复'
                         }
@@ -413,7 +413,7 @@
                         { type: 'required', message: '收费项目为必填项' },
                         {
                             type: 'fieldsUnique',
-                            checkUrl: '/api/parakeet/product/checkFields',
+                            checkUrl: '/api/parakeet/product/check-fields',
                             fields: ["HouseId"],
                             message: '收费项目重复'
                         }

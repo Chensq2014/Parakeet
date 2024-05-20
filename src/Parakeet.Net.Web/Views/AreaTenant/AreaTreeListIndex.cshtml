@@ -5,16 +5,16 @@
     <script type='text/javascript'>
 
         function initAreaTreeGrid() {
-            var config = dxConfig.treeList('/api/parakeet/locationArea/areaTreeList');
+            var config = dxConfig.treeList('/api/parakeet/location-area/area-tree-list');
             config.dataSource = DevExpress.data.AspNet.createStore({
                 key: 'id',
-                loadUrl: '/api/parakeet/locationArea/areaTreeList',
-                insertUrl: '/api/parakeet/locationArea/areaTreeList',
-                updateUrl: '/api/parakeet/locationArea/areaTreeList',
-                deleteUrl: '/api/parakeet/locationArea/areaTreeList'
+                loadUrl: '/api/parakeet/location-area/area-tree-list',
+                insertUrl: '/api/parakeet/location-area/area-tree-list',
+                updateUrl: '/api/parakeet/location-area/area-tree-list',
+                deleteUrl: '/api/parakeet/location-area/area-tree-list'
             });
-            config.levelSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=DeepLevelType');
-            var areaParents = syncGet('/api/parakeet/locationArea/ParentSelectList?id=');
+            config.levelSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=DeepLevelType');
+            var areaParents = syncGet('/api/parakeet/locationArea/parent-select-list?id=');
             config.areaParentSelects = dxConfig.selectBox(areaParents);
             //config.refreshFunc = arguments.callee; //initAreaTreeGrid 函数本身
             config.gridId = 'grid-area-treeList';
@@ -46,7 +46,7 @@
                         },
                         {
                             type: 'fieldsUnique',
-                            checkUrl: '/api/parakeet/locationArea/CheckFields',
+                            checkUrl: '/api/parakeet/location-area/check-fields',
                             message: '同级节点名称重复',
                             fields: ['ParentId']
                         }
@@ -63,7 +63,7 @@
                             pattern: /^[0-9]*$/i,
                             message: '编码只能由数字构成'
                         },
-                        { type: 'fieldUnique', checkUrl: '/api/parakeet/locationArea/CheckField', message: '编码重复' }
+                        { type: 'fieldUnique', checkUrl: '/api/parakeet/location-area/check-field', message: '编码重复' }
                     ]
                 },
                 //{
@@ -95,7 +95,7 @@
 
             //config.onEditingStart = function (e) {
             //    if (e.column.dataField === 'parentId') {
-            //        e.column.lookup.dataSource = syncGet('/api/parakeet/locationArea/parentSelectList?id=' + e.data.id);//, { id: e.data.id }
+            //        e.column.lookup.dataSource = syncGet('/api/parakeet/locationArea/parent-select-list?id=' + e.data.id);//, { id: e.data.id }
             //        //if (!e.data.parentId) {
             //        //    e.cancel = true;
             //        //} else {

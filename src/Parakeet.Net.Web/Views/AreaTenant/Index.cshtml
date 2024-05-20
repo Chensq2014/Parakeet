@@ -9,7 +9,7 @@
             initAreaTenantGrid();
 
             function initAreaTenantGrid() {
-                var config = dxConfig.editGrid('/api/parakeet/areaTenant');
+                var config = dxConfig.editGrid('/api/parakeet/area-tenant');
                 config.gridId = 'grid-areaTenant';
                 config.gridSelector = '#' + config.gridId;
                 config.editing.allowAdding = true;
@@ -52,7 +52,7 @@
                         allowHeaderFiltering: false,
                         //allowEditing: false,
                         caption: '区域',
-                        lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?level=1'),
+                        lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?level=1'),
                         validationRules: [{ type: "required", message: "区域必填项" }]
                     },
                     {
@@ -129,14 +129,14 @@
             }
 
             function getTenantConnectionDetailConfig(tenantId) {
-                var getUrl = '/api/parakeet/areaTenant/tenantDbConnectionString?id=' + tenantId;
+                var getUrl = '/api/parakeet/area-tenant/tenant-db-connection-string?id=' + tenantId;
                 var config = dxConfig.editGrid(getUrl);
                 config.dataSource = DevExpress.data.AspNet.createStore({
                     key: 'id',
                     loadUrl: getUrl,
-                    insertUrl: '/api/parakeet/areaTenant/tenantDbConnectionString',
-                    updateUrl: '/api/parakeet/areaTenant/tenantDbConnectionString',
-                    deleteUrl: '/api/parakeet/areaTenant/tenantDbConnectionString'
+                    insertUrl: '/api/parakeet/area-tenant/tenant-db-connection-string',
+                    updateUrl: '/api/parakeet/area-tenant/tenant-db-connection-string',
+                    deleteUrl: '/api/parakeet/area-tenant/tenant-db-connection-string'
                 });
                 config.editing.allowAdding = true;
                 config.editing.allowUpdating = true;
@@ -163,7 +163,7 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' }
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            //{ type: 'fieldUnique', checkUrl: '/api/parakeet/need/checkField', message: '名称重复' }
+                            //{ type: 'fieldUnique', checkUrl: '/api/parakeet/need/check-field', message: '名称重复' }
                         ]
                     },
                     {

@@ -72,8 +72,8 @@
                 chargeType: null
             };
 
-            //dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=ChargeType', window.params.chargeType);
-            var chargeTypeSelects = syncGet('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=chargeType');
+            //dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?Name=ChargeType', window.params.chargeType);
+            var chargeTypeSelects = syncGet('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=chargeType');
             chargeTypeSelects.unshift({ itemKey: null, itemDescription:'全部'});
             var chargeTypeConfig = {
                 elementAttr: {
@@ -97,7 +97,7 @@
 
             function initProductPivotGrid() {
 
-                syncPost('/api/parakeet/product/pivotGrid',
+                syncPost('/api/parakeet/product/pivot-grid',
                     {
                         startDate: window.params.startDate,
                         endDate: window.params.endDate,

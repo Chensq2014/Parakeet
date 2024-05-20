@@ -17,8 +17,8 @@
                 workerId: null
             };
 
-            //dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=LaborType', window.params.laborType);
-            var laborTypeSelects = syncGet('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=laborType');
+            //dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?Name=LaborType', window.params.laborType);
+            var laborTypeSelects = syncGet('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=laborType');
             laborTypeSelects.unshift({ itemKey: null, itemDescription:'全部'});
             var laborTypeConfig = {
                 elementAttr: {
@@ -38,7 +38,7 @@
                 }
             };
 
-            var workerSelects = syncGet('/api/parakeet/worker/workerSelectList');
+            var workerSelects = syncGet('/api/parakeet/worker/worker-select-list');
             workerSelects.unshift({ text: null, value: '全部' });
             var workerConfig = {
                 elementAttr: {
@@ -58,7 +58,7 @@
                 }
             };
 
-            var workerTypeSelects = syncGet('/api/parakeet/workerType/workerTypeSelectList');
+            var workerTypeSelects = syncGet('/api/parakeet/workerType/worker-type-select-list');
             workerTypeSelects.unshift({ text: null, value: '全部' });
             var workerTypeConfig = {
                 elementAttr: {
@@ -78,7 +78,7 @@
                 }
             };
 
-            var sectionWorkerSelects = syncGet('/api/parakeet/sectionWorker/sectionWorkerSelectList');
+            var sectionWorkerSelects = syncGet('/api/parakeet/section-worker/section-worker-select-list');
             sectionWorkerSelects.unshift({ text: null, value: '全部' });
             var sectionWorkerConfig = {
                 elementAttr: {
@@ -102,7 +102,7 @@
 
             function initSectionWorkerDetailPivotGrid() {
 
-                syncPost('/api/parakeet/sectionWorkerDetail/pivotGrid',
+                syncPost('/api/parakeet/section-worker-detail/pivot-grid',
                     {
                         startDate: window.params.startDate,
                         endDate: window.params.endDate,

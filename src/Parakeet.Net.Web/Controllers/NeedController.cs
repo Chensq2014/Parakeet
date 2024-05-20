@@ -3,6 +3,7 @@ using Common.Entities;
 using Common.Extensions;
 using Common.Interfaces;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -107,7 +108,7 @@ namespace Parakeet.Net.Controllers
             memoryStream.Seek(0, SeekOrigin.Begin);
             //文件名必须编码，否则会有特殊字符(如中文)无法在此下载。
             string encodeFilename = HttpUtility.UrlEncode(Path.GetFileName(path), Encoding.GetEncoding("UTF-8"));
-            base.Response.Headers.Add("Content-Disposition", "attachment; filename=" + encodeFilename);
+            base.Response.Headers.Append("Content-Disposition", "attachment; filename=" + encodeFilename);
             return new FileStreamResult(memoryStream, "application/octet-stream");
         }
 
@@ -161,6 +162,7 @@ namespace Parakeet.Net.Controllers
             //如果能进入，代表别人已经看了
             //统计input.Id 已经看了多少次
             var need = await _needAppService.GetByPrimaryKey(input);
+            need.IsRead = true;
             need.ReadTime = DateTime.Now;
             Log.Logger.Information($"{need.Name}{need.ReadTime}读取邮件");
         }

@@ -167,7 +167,7 @@
                     $.ajax({
                         type: 'get',
                         dataType: 'json',
-                        url: '/api/parakeet/enum/enumTypeItemKeyNameDescriptions?Name=DeviceType',
+                        url: '/api/parakeet/enum/enum-type-item-key-name-descriptions?Name=DeviceType',
                         contentType: 'application/x-www-form-urlencoded',
                         //data: { type: 'DeviceType' },
                         success: function(d) {
@@ -187,7 +187,7 @@
                     $.ajax({
                         type: 'get',
                         dataType: 'json',
-                        url: '/api/parakeet/project/projectFilterList',
+                        url: '/api/parakeet/project/project-filter-list',
                         contentType: 'application/x-www-form-urlencoded',
                         data: { id: projectId },
                         success: function(d) {

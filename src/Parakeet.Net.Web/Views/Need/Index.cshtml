@@ -114,7 +114,7 @@
                     validationRules: [
                         { type: 'required', message: '名称为必填项' },
                         //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                        { type: 'fieldUnique', checkUrl: '/api/parakeet/need/checkField', message: '名称重复' }
+                        { type: 'fieldUnique', checkUrl: '/api/parakeet/need/check-field', message: '名称重复' }
                     ]
                 }, {
                     dataField: 'phone',

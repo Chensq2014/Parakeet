@@ -3,6 +3,10 @@ using Common.Entities;
 using Common.Interfaces;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Parakeet.Net.WorkerTypes
@@ -33,5 +37,19 @@ namespace Parakeet.Net.WorkerTypes
 
 
         #endregion
+
+        /// <summary>
+        /// 获取工种下拉列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<List<KeyValueDto<Guid, string>>> GetWorkerTypeSelectList(InputIdNullDto input)
+        {
+            var projects = await (await GetAll()).AsNoTracking()
+                .WhereIf(input.Id.HasValue, x => x.Id == input.Id)
+                .Select(m => new KeyValueDto<Guid, string>(m.Id, m.Name))
+                .ToListAsync();
+            return projects;
+        }
     }
 }

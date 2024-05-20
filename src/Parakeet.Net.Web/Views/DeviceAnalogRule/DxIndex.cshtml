@@ -1,5 +1,5 @@
 ﻿
-<div id="grid-deviceAnalogRule" class="show-grid"></div>
+<div id="grid-device-analog-rule" class="show-grid"></div>
 @section scripts
 {
     <script type='text/javascript'>
@@ -26,8 +26,8 @@
                     { 'text': '10天', 'value': '10.00:00:00' },
                     { 'text': '30天', 'value': '30.00:00:00' }
                 ];
-                var config = dxConfig.editGrid('/api/parakeet/deviceAnalogRule');
-                config.gridId = 'grid-deviceAnalogRule';
+                var config = dxConfig.editGrid('/api/parakeet/device-analog-rule');
+                config.gridId = 'grid-device-analog-rule';
                 config.gridSelector = '#' + config.gridId;
                 config.editing.allowAdding = true;
                 config.editing.allowDeleting = true;
@@ -78,7 +78,7 @@
                     //    allowHeaderFiltering: false,
                     //    //allowEditing: false,
                     //    caption: '区域',
-                    //    lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?level=1'),
+                    //    lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?level=1'),
                     //    validationRules: [{ type: "required", message: "区域必填项" }]
                     //},
                     {
@@ -119,7 +119,7 @@
                     //            item.options.onClick = function (f) {
                     //                //f.event.stopPropagation();
                     //                //跳转到联系我们页面
-                    //                window.location = '/api/parakeet/deviceAnalogRule/create';
+                    //                window.location = '/api/parakeet/device-analog-rule/create';
                     //            }
                     //        }
                     //    });

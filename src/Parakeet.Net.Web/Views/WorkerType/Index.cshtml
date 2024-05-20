@@ -32,8 +32,8 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/workerType/checkField', message: '名称重复' }
-                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/workerType/checkFields', fields: ['LocationAreaId'], message: '名称重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/workerType/check-field', message: '名称重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/workerType/check-fields', fields: ['LocationAreaId'], message: '名称重复' }
                         ]
                     },
                     {
@@ -46,8 +46,8 @@
                         validationRules: [
                             { type: 'required', message: '编码为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '编码避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/workerType/checkField', message: '编码重复' }
-                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/workerType/checkFields', fields: ['LocationAreaId'], message: '编码重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/workerType/check-field', message: '编码重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/workerType/check-fields', fields: ['LocationAreaId'], message: '编码重复' }
                         ]
                     }
                 ];

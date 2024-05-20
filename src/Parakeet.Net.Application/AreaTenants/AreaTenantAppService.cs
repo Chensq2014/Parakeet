@@ -19,7 +19,7 @@ namespace Parakeet.Net.AreaTenants
     public class AreaTenantAppService : BaseNetAppService<AreaTenant>, IAreaTenantAppService
     {
         private readonly IPortalRepository<AreaTenant> _areaTenantRepository;
-        private readonly IRepository<AreaTenantDbConnectionString, Guid> _tenantDbConnectionString;
+        private readonly IRepository<AreaTenantDbConnectionString, Guid> _tenantDbConnectionString;//新版本没有为非聚合根 注册自定义repository
 
         public AreaTenantAppService(IPortalRepository<AreaTenant> areaTenantRepository,
             IRepository<AreaTenantDbConnectionString, Guid> tenantDbConnectionString) : base(areaTenantRepository)

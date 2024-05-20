@@ -41,7 +41,7 @@
 
             function initDeviceGrid() {
                 var config = dxConfig.editGrid('/api/parakeet/device');
-                config.projects = dxConfig.selectBox('/api/parakeet/project/projectSelectList?id=');
+                config.projects = dxConfig.selectBox('/api/parakeet/project/project-select-list?id=');
                 config.gridId = 'grid-device';
                 config.gridSelector = '#' + config.gridId;
                 config.editing.allowAdding = true;
@@ -61,7 +61,7 @@
                         validationRules: [
                             { type: 'required', message: '名称为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/checkField', message: '名称重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/check-field', message: '名称重复' }
                         ]
                     },
                     {
@@ -71,7 +71,7 @@
                         validationRules: [
                             { type: 'required', message: '序列号为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/checkField', message: '序列号重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/check-field', message: '序列号重复' }
                         ]
                     },
                     {
@@ -81,7 +81,7 @@
                         validationRules: [
                             { type: 'required', message: '编码为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '编码避免使用纯数字' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/checkField', message: '编码重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/device/check-field', message: '编码重复' }
                         ]
                     },
                     {
@@ -91,7 +91,7 @@
                         allowHeaderFiltering: false,
                         //allowEditing: false,
                         caption: '区域',
-                        lookup: dxConfig.selectBox('/api/parakeet/locationArea/locationAreaSelectBox?level=1'),
+                        lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?level=1'),
                         validationRules: [{ type: "required", message: "区域必填项" }]
                     },
                     {
@@ -154,7 +154,7 @@
         //            $.ajax({
         //                type: 'get',
         //                dataType: 'json',
-        //                url: '/api/parakeet/locationArea/locationAreas',
+        //                url: '/api/parakeet/location-area/location-areas',
         //                contentType: 'application/x-www-form-urlencoded',
         //                data: { parentCode: pCode },
         //                success: function (res) {

@@ -7,6 +7,7 @@ using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,7 +55,7 @@ namespace Parakeet.Net.SectionWorkers
         /// <returns></returns>
         public async Task<List<SectionWorkerDto>> PivotGrid([FromBody] SectionWorkerPivotGridInputDto input)
         {
-            var result = await (await GetAll())
+            var result = await (await GetAll()).AsNoTracking()
                 .WhereIf(input.StartDate.HasValue, m => m.CreationTime >= input.StartDate)
                 .WhereIf(input.EndDate.HasValue, m => m.CreationTime <= input.EndDate)
                 .WhereIf(input.WorkerId.HasValue, m => m.WorkerId == input.WorkerId)
@@ -66,5 +67,20 @@ namespace Parakeet.Net.SectionWorkers
         }
 
         #endregion
+
+
+        /// <summary>
+        /// 获取地块工人下拉列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<List<KeyValueDto<Guid, string>>> GetSectionWorkerSelectList(InputIdNullDto input)
+        {
+            var projects = await (await GetAll())
+                .WhereIf(input.Id.HasValue, x => x.Id == input.Id)
+                .Select(m => new KeyValueDto<Guid, string>(m.Id, m.Name))
+                .ToListAsync();
+            return projects;
+        }
     }
 }

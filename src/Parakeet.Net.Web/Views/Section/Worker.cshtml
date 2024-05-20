@@ -10,7 +10,7 @@
 
             function initWorkerGrid() {
                 var config = dxConfig.editGrid('/api/parakeet/worker');
-                config.genderSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enumTypeItemKeyNameDescriptions?name=GenderType');
+                config.genderSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=GenderType');
                 config.gridId = 'grid-worker';
                 config.gridSelector = '#' + config.gridId;
                 config.editing.allowAdding = true;
@@ -35,8 +35,8 @@
                             { type: 'required', message: '名称为必填项' },
                             //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
                             { type: 'pattern', pattern: /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9\u4e00-\u9fa5_]*$/i, message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/worker/checkField', message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头' }
-                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/worker/checkFields', fields: ['LocationAreaId'], message: '名称重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/worker/check-field', message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/worker/check-fields', fields: ['LocationAreaId'], message: '名称重复' }
                         ]
                     },
                     {
@@ -49,8 +49,8 @@
                         validationRules: [
                             { type: 'required', message: '身份证号为必填项' },
                             // { type: 'pattern', pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, message: '身份证号验证失败' },
-                            { type: 'fieldUnique', checkUrl: '/api/parakeet/worker/checkField', message: '身份证号重复' }
-                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/worker/checkFields', fields: ['LocationAreaId'], message: '身份证号重复' }
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/worker/check-field', message: '身份证号重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/worker/check-fields', fields: ['LocationAreaId'], message: '身份证号重复' }
                         ]
                     },
                     {

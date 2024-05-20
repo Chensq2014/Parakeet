@@ -53,7 +53,7 @@ namespace Parakeet.Net.Products
         /// <returns></returns>
         public async Task<List<ProductListDto>> PivotGrid([FromBody] ProductPivotGridInputDto input)
         {
-            var result = await (await GetAll())
+            var result = await (await GetAll()).AsNoTracking()
                 .WhereIf(input.StartDate.HasValue, m => m.CreationTime >= input.StartDate)
                 .WhereIf(input.EndDate.HasValue, m => m.CreationTime <= input.EndDate)
                 .WhereIf(input.ChargeType.HasValue, m => m.ChargeType == input.ChargeType)

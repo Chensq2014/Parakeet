@@ -373,6 +373,11 @@ public class NetWebModule : AbpModule
                     bundle.AddFiles(
                         "/css/devextreme/dx.common.css",
                         "/css/devextreme/dx.light.css",
+                        "/css/font-awesome.min.css",
+                        "/css/ionicons.min.css",
+                        "/css/responsive.css",
+                        //"/css/main.css",
+                        //"/css/style.css",
                         "/css/default.css",
                         "/css/site.min.css",
                         "/global-styles.css"

@@ -1,5 +1,6 @@
 ﻿using Common.CustomAttributes;
 using System;
+using System.Linq;
 using Volo.Abp.DependencyInjection;
 
 namespace Parakeet.Net.Aop
@@ -26,6 +27,10 @@ namespace Parakeet.Net.Aop
             // 判断类型是否使用了 UserCacheLock 特性，使用了则应用审计日志拦截器。
             //Console.WriteLine(type.FullName);
             if (type.IsDefined(typeof(UserCacheLockAttribute), true))
+            {
+                return true;
+            }
+            if (type.GetMethods().Any(m => m.IsDefined(typeof(UserCacheLockAttribute), true)))
             {
                 return true;
             }

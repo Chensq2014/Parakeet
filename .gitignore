@@ -257,13 +257,8 @@ paket-files/
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
 **/appsettings.json
-**/appsettings.Development.json
-**/appsettings.Test.json
-**/appsettings.Staging.json
-**/appsettings.Production.json
+**/appsettings.*.json
 **/*.crt
 **/*.key
 **/*.rsa
-/deploy/docker-compose-parakeet.yml
-/deploy/parakeet.env
-**/Migrations/*
+/deploy/*

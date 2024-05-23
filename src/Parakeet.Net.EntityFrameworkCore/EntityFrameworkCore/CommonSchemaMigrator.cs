@@ -31,7 +31,7 @@ public class CommonSchemaMigrator
          */
 
         await _serviceProvider
-            .GetRequiredService<PortalDbContext>()//公共数据库
+            //.GetRequiredService<PortalDbContext>()//公共数据库
             //.GetRequiredService<PgSqlMigrationsDbContext>()//租户-PgSql数据库
             //.GetRequiredService<MySqlMigrationsDbContext>()//租户-MySql数据库
             //.GetRequiredService<SqlServerMigrationsDbContext>()//租户-SqlServer数据库

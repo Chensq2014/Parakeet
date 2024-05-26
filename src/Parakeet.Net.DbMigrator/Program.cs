@@ -26,7 +26,7 @@ class Program
             .WriteTo.Async(c => c.File("Logs/logs.txt"))
             .WriteTo.Async(c => c.Console())
             .CreateLogger();
-
+        var builder = CreateHostBuilder(args);
         await CreateHostBuilder(args).RunConsoleAsync();
     }
 
@@ -36,6 +36,15 @@ class Program
             .ConfigureLogging((context, logging) => logging.ClearProviders())
             .ConfigureServices((hostContext, services) =>
             {
+                //  ÷∂Øº”‘ÿ≈‰÷√
+                var configBuilder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                    //.AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                    .AddEnvironmentVariables();
+
+                services.AddSingleton<IConfiguration>(configBuilder.Build());
+
                 services.AddHostedService<DbMigratorHostedService>();
             });
 }

@@ -4,10 +4,8 @@ using Common.Dtos;
 using Common.Enums;
 using Common.EnumServices;
 using Common.Extensions;
-using Common.Helpers;
 using Common.Nacos;
 using Common.Storage;
-using Exceptionless;
 using Grpc.Core;
 using Grpc.Net.ClientFactory;
 using Localization.Resources.AbpUi;
@@ -16,7 +14,6 @@ using Medallion.Threading.Redis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -31,11 +28,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
-using OpenIddict.Validation.AspNetCore;
 using Parakeet.Net.Aop;
 using Parakeet.Net.EntityFrameworkCore;
 using Parakeet.Net.Extentions;
@@ -59,33 +54,26 @@ using System.Security.Claims;
 using System.Threading;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
-using Volo.Abp.AspNetCore.Mvc.Client;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
+using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Caching;
-using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
-using Volo.Abp.DistributedLocking;
-using Volo.Abp.FeatureManagement;
-using Volo.Abp.Http.Client.IdentityModel.Web;
-using Volo.Abp.Http.Client.Web;
 using Volo.Abp.Identity.Web;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.OpenIddict;
-using Volo.Abp.PermissionManagement.Web;
-using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.Web;
@@ -114,6 +102,7 @@ namespace Parakeet.Net.Web;
     typeof(AbpIdentityWebModule),
     typeof(AbpSettingManagementWebModule),
     typeof(AbpAccountWebOpenIddictModule),
+    //typeof(AbpAspNetCoreMvcUiBasicThemeModule),
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
@@ -191,7 +180,8 @@ public class NetWebModule : AbpModule
         ConfigureLocalizationServices();
         ConfigureAbpAntiForgerys();
         ConfigureFileUploadOptions();
-        
+        //ConfigureTheme();
+
         if (!hostingEnvironment.IsDevelopment())
         {
             //https 需要增加443端口
@@ -324,6 +314,7 @@ public class NetWebModule : AbpModule
 
         #endregion
 
+
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End ConfigureServices ....");
         //设置一个全局的解析Provider提供器，使用的地方不再依赖注入 待测试
 
@@ -338,7 +329,8 @@ public class NetWebModule : AbpModule
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpBundlingOptions)} ScriptBundles:{LeptonXLiteThemeBundles.Styles.Global},StyleBundles:{LeptonXLiteThemeBundles.Scripts.Global}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             options.ScriptBundles
                 //.Add(CustomerConsts.GlobalBundleName, bundle =>
-                .Configure(LeptonXLiteThemeBundles.Styles.Global, bundle =>
+                .Configure(LeptonXLiteThemeBundles.Styles.Global,//BasicThemeBundles.Styles.Global,//
+                bundle =>
                 {
                     bundle.AddFiles(
                         "/js/devextreme/cldr.min.js",
@@ -367,7 +359,7 @@ public class NetWebModule : AbpModule
                 });
 
             options.StyleBundles.Configure(
-                LeptonXLiteThemeBundles.Styles.Global,
+                LeptonXLiteThemeBundles.Styles.Global,//BasicThemeBundles.Styles.Global,//
                 bundle =>
                 {
                     bundle.AddFiles(
@@ -1070,6 +1062,21 @@ public class NetWebModule : AbpModule
 
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
             options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+        });
+    }
+
+    /// <summary>
+    /// 主题
+    /// </summary>
+    private void ConfigureTheme()
+    {
+        Configure<AbpThemingOptions>(options =>
+        {
+            //options.Themes.TryAdd<BasicTheme>();
+            //options.Themes.Add<LeptonXLiteTheme>();
+
+            //options.DefaultThemeName = BasicTheme.Name;
+            
         });
     }
 

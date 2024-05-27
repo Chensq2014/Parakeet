@@ -584,8 +584,9 @@ public class NetHttpApiHostModule : AbpModule
                     typeof(AbpUiResource)
                 );
 
-            options.Languages.Add(new LanguageInfo("en", "en", "English"));
-            options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+            //shared 模块已添加
+            //options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            //options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
         });
     }
 

@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AutoMapper.Internal;
+using Common;
 using Common.CacheMudule;
 using Common.Storage;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,11 +43,12 @@ public class NetDomainModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        Configure<AbpLocalizationOptions>(options =>
-        {
-            options.Languages.Add(new LanguageInfo("en", "en", "English", "gb"));
-            options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-        });
+        ////NetDomainSharedModule模块已添加
+        //Configure<AbpLocalizationOptions>(options =>
+        //{
+        //    options.Languages.Add(new LanguageInfo("en", "en", "English", "gb"));
+        //    options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+        //});
 
         Configure<AbpMultiTenancyOptions>(options =>
         {

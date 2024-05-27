@@ -102,7 +102,7 @@ namespace Parakeet.Net.Web;
     typeof(AbpIdentityWebModule),
     typeof(AbpSettingManagementWebModule),
     typeof(AbpAccountWebOpenIddictModule),
-    //typeof(AbpAspNetCoreMvcUiBasicThemeModule),
+    typeof(AbpAspNetCoreMvcUiBasicThemeModule),
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
@@ -329,7 +329,7 @@ public class NetWebModule : AbpModule
             Log.Logger.Error($"{{0}}", $"{CacheKeys.LogCount++}、Configure配置{nameof(AbpBundlingOptions)} ScriptBundles:{LeptonXLiteThemeBundles.Styles.Global},StyleBundles:{LeptonXLiteThemeBundles.Scripts.Global}....ConfigureServices中的{options.GetType().Name}委托日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
             options.ScriptBundles
                 //.Add(CustomerConsts.GlobalBundleName, bundle =>
-                .Configure(LeptonXLiteThemeBundles.Styles.Global,//BasicThemeBundles.Styles.Global,//
+                .Configure(BasicThemeBundles.Styles.Global,//LeptonXLiteThemeBundles.Styles.Global,//
                 bundle =>
                 {
                     bundle.AddFiles(
@@ -359,7 +359,7 @@ public class NetWebModule : AbpModule
                 });
 
             options.StyleBundles.Configure(
-                LeptonXLiteThemeBundles.Styles.Global,//BasicThemeBundles.Styles.Global,//
+                BasicThemeBundles.Styles.Global,//LeptonXLiteThemeBundles.Styles.Global,//
                 bundle =>
                 {
                     bundle.AddFiles(
@@ -1060,8 +1060,9 @@ public class NetWebModule : AbpModule
                     typeof(AbpUiResource)
                 );
 
-            options.Languages.Add(new LanguageInfo("en", "en", "English"));
-            options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+            //shared模块已添加
+            //options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            //options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
         });
     }
 

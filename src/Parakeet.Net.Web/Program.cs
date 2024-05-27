@@ -1,14 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Common;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Parakeet.Net.Web;
 
@@ -48,6 +47,7 @@ public class Program
                     //}
 
                     SerialLogConfig(config);
+                    //config.ReadFrom.Configuration(context.Configuration);
 
                 });//使用了 UseSerilog() 扩展方法来启动 Serilog 替换内置 Logger 组件;
             await builder.AddApplicationAsync<NetWebModule>();
@@ -84,8 +84,8 @@ public class Program
             //// 将配置传给 Serilog 的提供程序 已在webBuilder.UseSerilog中使用配置文件替换
             //.ReadFrom.Configuration(Configuration)
 #if DEBUG
-            //.MinimumLevel.Debug()
-            .MinimumLevel.Error()
+            .MinimumLevel.Debug()
+            //.MinimumLevel.Error()
 #else
                 //.MinimumLevel.Information()
                 //.MinimumLevel.Error()

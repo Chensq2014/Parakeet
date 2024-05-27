@@ -20,6 +20,9 @@ using Volo.Abp.TenantManagement;
 using Parakeet.Net.Aop;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Common.Interfaces;
+using Parakeet.Net.BackgroundWorks;
+using System.Threading.Tasks;
+using Volo.Abp.BackgroundWorkers;
 
 namespace Parakeet.Net;
 
@@ -141,7 +144,9 @@ public class NetApplicationModule : AbpModule
         base.OnPreApplicationInitialization(context);
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetApplicationModule)} End OnPreApplicationInitialization ....");
     }
-    public override void OnApplicationInitialization(ApplicationInitializationContext context)
+
+
+    public override async Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetApplicationModule)} Start OnApplicationInitialization ....");
 
@@ -168,6 +173,7 @@ public class NetApplicationModule : AbpModule
 
         //第三种方式：
         //context.AddBackgroundWorker<ClearTempDataBackgroundWorker>();
+        await context.AddBackgroundWorkerAsync<EventConsumerBackgroundWorker>();
         #endregion
 
         base.OnApplicationInitialization(context);

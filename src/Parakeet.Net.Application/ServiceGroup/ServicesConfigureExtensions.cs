@@ -1,4 +1,5 @@
-﻿using Common.Dtos;
+﻿using Common;
+using Common.Dtos;
 using Common.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Parakeet.Net.Filters;
@@ -39,7 +40,7 @@ namespace Parakeet.Net.ServiceGroup
             services.Configure<ROClientOptionDto>(configuration.GetSection("App:MicroServices:ROClient:Option"));
             services.Configure<AlibabaSdkOption>(configuration.GetSection("App:MicroServices:AlibabaSdk:Option"));
             services.Configure<RecordConfig>(configuration.GetSection("RecordConfig"));
-
+            services.Configure<BackGroundWorkerOptionDto>(configuration.GetSection(CommonConsts.BackGroundSectionName));
 
             services.Configure<WeixinOptionDto>(configuration.GetSection(WeixinOptionDto.ConfigKey));
 

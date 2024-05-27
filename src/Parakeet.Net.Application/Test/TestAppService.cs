@@ -1,4 +1,6 @@
 ﻿using Common.CustomAttributes;
+using Common.Dtos;
+using Common.Events;
 using Common.Helpers;
 using Common.RabbitMQModule.Core;
 using Common.RabbitMQModule.Producers;
@@ -23,6 +25,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Caching;
+using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.MultiTenancy;
 
 namespace Parakeet.Net.Test
@@ -40,6 +44,12 @@ namespace Parakeet.Net.Test
         private readonly IOperationScoped _scopedOperation2;
         private readonly IChongqingJianWeiApi _chongqingJianWeiApi;
         private readonly ReverseControlClient _client;
+
+
+        private IDistributedCache<InputIdDto<bool>> _taskCache => LazyServiceProvider.LazyGetRequiredService<IDistributedCache<InputIdDto<bool>>>();
+        private IDistributedEventBus EventBus { get; set; }
+
+        private static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
         //private readonly IServiceProvider _serviceProvider;
         private readonly IRabbitMQEventBusContainer _eventBusContainer;
@@ -83,6 +93,7 @@ namespace Parakeet.Net.Test
             _passwordHasher = passwordHasher;
             _eventBusContainer = eventBusContainer;
             _currentTenant = currentTenant;
+            EventBus = NullDistributedEventBus.Instance;
         }
 
 
@@ -367,7 +378,7 @@ namespace Parakeet.Net.Test
         /// ROClientTest
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseWrapper> ROClientTest()
+        public async Task<ROClient.Models.ResponseWrapper> ROClientTest()
         {
             var serialNo = "50010810050005";//"51010710050001";//"50011910050002"
             var replies = await _client.ExecutePersonDeleteCommandAsync(serialNo, new PersonDeletedModel
@@ -436,5 +447,71 @@ namespace Parakeet.Net.Test
 
         #endregion
 
+
+        #region  测试后台任务消费事件逻辑
+
+        /// <summary>
+        /// ConsumerEvent
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Common.Dtos.ResponseWrapper>> ConsumerEvent()
+        {
+            var consumerResult = new List<Common.Dtos.ResponseWrapper>();
+            var items = Enumerable.Range(0, 10).ToList();
+            await Parallel.ForEachAsync(items, async (item, cancalToken) =>
+            {
+                Logger.LogInformation($"并发循环 执行{item}");
+
+                //业务逻辑
+                //using (CurrentTenant.Change(Guid.NewGuid(),"租户名称"))//如需切换租户逻辑
+                {
+                    var details = Enumerable.Range(0, 10).ToList();
+                    foreach (var detail in details)
+                    {
+                        var cacheKey = $"{item}_{detail}";
+                        //await _semaphoreSlim.WaitAsync();
+                        try
+                        {
+                            var cacheObj = await _taskCache.GetAsync(cacheKey);
+                            if (cacheObj?.Id == true)
+                            {
+                                Logger.LogInformation($"上一次定时作业进行中，忽略本次定时执行！cacheKey:{cacheKey}");
+                                break;
+                            }
+
+                            #region 调用事件代替
+
+                            var result = new Common.Dtos.ResponseWrapper
+                            {
+                                Message = $"已触发事件：{detail}"
+                            };
+                            result.Messages.Add(result.Message);
+                            consumerResult.Add(result);
+
+                            //触发事件逻辑
+                            await EventBus.PublishAsync(new RemoveCacheEvent(cacheKey));
+
+                            #endregion
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogException(ex);
+                            await _taskCache.RemoveAsync(cacheKey);
+                        }
+                        finally
+                        {
+                            //_semaphoreSlim.Release();
+                        }
+
+                        Logger.LogInformation($"处理事件完毕 cacheKey={cacheKey}");
+                    }
+                }
+
+            });
+
+            return consumerResult;
+        }
+
+        #endregion
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Nest;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Parakeet.Net.GrpcService;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -403,6 +404,55 @@ public class ConsoleDemoService : ITransientDependency
 
 
             //Console.ReadKey();
+
+            //循环查找目录里的json文件，读取并过滤其内容
+            var directoryPath = Directory.GetCurrentDirectory();
+            foreach (var filePath in Directory.GetFiles(directoryPath, "*.json", SearchOption.AllDirectories))
+            {
+                var jsonContent = File.ReadAllText(filePath);
+                //var jsonObject = JObject.Parse(jsonContent);
+                //var obj = JsonConvert.DeserializeObject<object>(jsonContent);
+                var searchStr = "特征字符串";
+                var matchedTokens = new List<JToken>();
+                using (JsonTextReader reader = new JsonTextReader(new StringReader(jsonContent)))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.Value != null && reader.Value.ToString().Contains(searchStr))
+                        {
+                            JToken token = JToken.ReadFrom(reader);
+                            matchedTokens.Add(token);
+                            Console.WriteLine("匹配json:");
+                            Console.WriteLine(token.ToString());
+                            //break;
+                        }
+                    }
+                }
+            }
+
+            void FindAndAddMatchedObjects(JToken jsonToken, string searchStr, List<JToken> matchedObjects)
+            {
+                switch (jsonToken.Type)
+                {
+                    case JTokenType.Object:
+                        foreach (var child in jsonToken.Children<JProperty>())
+                        {
+                            FindAndAddMatchedObjects(child.Value, searchStr, matchedObjects);
+                        }
+                        break;
+                    case JTokenType.Array:
+                        foreach (var item in jsonToken.Children())
+                        {
+                            FindAndAddMatchedObjects(item, searchStr, matchedObjects);
+                        }
+                        break;
+                    case JTokenType.String when jsonToken.ToString().Contains(searchStr):
+                        matchedObjects.Add(jsonToken);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion

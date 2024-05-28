@@ -41,6 +41,7 @@ namespace Parakeet.Net.ServiceGroup
             services.Configure<AlibabaSdkOption>(configuration.GetSection("App:MicroServices:AlibabaSdk:Option"));
             services.Configure<RecordConfig>(configuration.GetSection("RecordConfig"));
             services.Configure<BackGroundWorkerOptionDto>(configuration.GetSection(CommonConsts.BackGroundSectionName));
+            services.Configure<AzureOptionDto>(configuration.GetSection(CommonConsts.AzureSectionName));
 
             services.Configure<WeixinOptionDto>(configuration.GetSection(WeixinOptionDto.ConfigKey));
 

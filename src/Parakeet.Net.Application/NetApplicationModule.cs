@@ -23,11 +23,13 @@ using Common.Interfaces;
 using Parakeet.Net.BackgroundWorks;
 using System.Threading.Tasks;
 using Volo.Abp.BackgroundWorkers;
+using Common.RabbitMQModule;
 
 namespace Parakeet.Net;
 
 [DependsOn(
     typeof(CommonModule),
+    typeof(CustomRabbitMQModule),
     typeof(NetDomainModule),
     typeof(NetMultiTenancyModule),
     typeof(AbpAccountApplicationModule),

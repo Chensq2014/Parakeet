@@ -1,6 +1,8 @@
 ﻿using Common.CustomAttributes;
 using Common.Dtos;
+using Common.Entities;
 using Common.Events;
+using Common.Extensions;
 using Common.Helpers;
 using Common.RabbitMQModule.Core;
 using Common.RabbitMQModule.Producers;
@@ -9,7 +11,9 @@ using Common.Users;
 using Exceptionless;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -21,6 +25,7 @@ using Parakeet.Net.ServiceGroup.JianWei.HttpDtos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -28,12 +33,15 @@ using System.Threading.Tasks;
 using Volo.Abp.Caching;
 using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.MultiTenancy;
+using static Volo.Abp.TenantManagement.TenantManagementPermissions;
 
 namespace Parakeet.Net.Test
 {
     //[UserCacheLock]
     public class TestAppService : CustomerAppService, ITestAppService
     {
+        private ITenantStore _tenantStore => LazyServiceProvider.LazyGetRequiredService<ITenantStore>();
+        private IWebHostEnvironment _env => LazyServiceProvider.LazyGetRequiredService<IWebHostEnvironment>();
         private ICurrentTenant _currentTenant;
         //IPasswordHasher<AppUser> 要在模块中注册
         private readonly IPasswordHasher<AppUser> _passwordHasher;
@@ -447,7 +455,6 @@ namespace Parakeet.Net.Test
 
         #endregion
 
-
         #region  测试后台任务消费事件逻辑
 
         /// <summary>
@@ -511,6 +518,84 @@ namespace Parakeet.Net.Test
 
             return consumerResult;
         }
+
+        #endregion
+
+        #region 数据库升级
+
+        /// <summary>
+        /// 数据库自动升级
+        /// </summary>
+        /// <returns></returns>
+        public async Task Upgrade()
+        {
+            var tenants = new List<Project>();
+            await Parallel.ForEachAsync(tenants, async (tenant, cancellationToken) =>
+            {
+                #region 数据结构更新sql
+
+                //var tenantId = Guid.Parse(tenant.Id);
+
+                //using (CurrentTenant.Change(tenantId){}
+
+                await ExecuteSql(tenant);
+
+                #endregion
+
+            });
+
+        }
+
+
+        /// <summary>
+        /// 执行sql
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        private async Task ExecuteSql(Project project)
+        {
+            try
+            {
+                var tenantConfiguration = await _tenantStore.FindAsync(project.Id);
+                var conn = tenantConfiguration.ConnectionStrings.Default;
+                var builder = new SqlConnectionStringBuilder(conn);
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+                    var upgradeSqlDir = $@"{_env.ContentRootPath}\UpgradeSql\xxx";
+                    FileExtension.CreateFolderIfNeeded(upgradeSqlDir);
+                    var dirInfo = new DirectoryInfo(upgradeSqlDir);
+                    foreach (var file in dirInfo.GetFiles())
+                    {
+                        if (file.Extension.Contains("sql"))
+                        {
+                            var sql = $"select [MigrationId] from [__EFMigrationsHistory] where [MigrationId]='{Path.GetFileNameWithoutExtension(file.Name)}'";
+                            using (SqlCommand command = new SqlCommand(sql, connection))
+                            {
+                                var reader = command.ExecuteReader();
+                                if (reader.HasRows == false)
+                                {
+                                    var script = File.ReadAllText(file.FullName);
+                                    using (SqlCommand cmd = new SqlCommand(script, connection))
+                                    {
+                                        if (await cmd.ExecuteNonQueryAsync() > -1)
+                                        {
+                                            Logger.LogInformation($"【{project.Id}_{project.Name}】更新成功!");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Logger.LogInformation($"更新完毕!");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"更新失败，请确保项目数据库存在！{ex.Message}_{ex.StackTrace}_{ex.Source}");
+            }
+        }
+
 
         #endregion
     }

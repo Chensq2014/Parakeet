@@ -1,14 +1,19 @@
 ﻿using Common;
 using Common.Dtos;
+using Common.Extensions;
 using Common.Storage;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Parakeet.Net.Filters;
 using Parakeet.Net.LocationAreas;
 using Parakeet.Net.ServiceGroup.AlibabaSdk;
 using Parakeet.Net.ServiceGroup.Esign;
 using Parakeet.Net.ServiceGroup.JianWei;
+using Parakeet.Net.ServiceGroup.JianWei.HttpApis;
 using Parakeet.Net.ServiceGroup.Sign;
 using Serilog;
+using System;
+using WebApiClientCore.Serialization.JsonConverters;
 
 namespace Parakeet.Net.ServiceGroup
 {
@@ -42,6 +47,7 @@ namespace Parakeet.Net.ServiceGroup
             services.Configure<RecordConfig>(configuration.GetSection("RecordConfig"));
             services.Configure<BackGroundWorkerOptionDto>(configuration.GetSection(CommonConsts.BackGroundSectionName));
             services.Configure<AzureOptionDto>(configuration.GetSection(CommonConsts.AzureSectionName));
+            services.Configure<AppConfigOptionDto>(configuration.GetSection(CommonConsts.AppSectionName));
 
             services.Configure<WeixinOptionDto>(configuration.GetSection(WeixinOptionDto.ConfigKey));
 
@@ -58,15 +64,18 @@ namespace Parakeet.Net.ServiceGroup
             //        c.GlobalFilters.Add(defaultServiceTokenAttribute);
             //    });
 
-            ////重庆建委接口url，过滤器配置
-            //services.AddHttpApi<IChongqingJianWeiApi>()
-            //    .ConfigureHttpApiConfig(c =>
-            //    {
-            //        Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、重庆建委1.0接口IChongqingJianWeiApi，host 过滤器等配置 Host:{configuration.GetSection("App:MicroServices:ChongqingJianWei:ServerRootAddress")}");
-            //        c.HttpHost = new Uri(configuration.GetValue<string>("App:MicroServices:ChongqingJianWei:ServerRootAddress"));
-            //        c.FormatOptions.DateTimeFormat = CommonConsts.DateTimeFormatString;
-            //        c.GlobalFilters.Add(new ChongqingJianWeiAppKeyAttribute());
-            //    });
+            //重庆建委接口url，过滤器配置
+            services.AddHttpApi<IChongqingJianWeiApi>()
+               .ConfigureHttpApi(c =>
+               {
+                    Log.Logger.Information($"{{0}}", $"{CacheKeys.LogCount++}、重庆建委1.0接口IChongqingJianWeiApi，host 过滤器等配置 Host:{configuration.GetSection("App:MicroServices:ChongqingJianWei:ServerRootAddress")}");
+                    c.HttpHost = new Uri("http://test");//configuration.GetValue<string>("App:MicroServices:ChongqingJianWei:ServerRootAddress")
+                   //c.FormatOptions.DateTimeFormat = CommonConsts.DateTimeFormatString;
+                   // 符合国情的不标准时间格式，有些接口就是这么要求必须不标准
+                   c.JsonSerializeOptions.Converters.Add(new JsonDateTimeConverter(CommonConsts.DateTimeFormatString));
+
+                   //c.GlobalFilters.Add(new ChongqingJianWeiAppKeyAttribute());
+                });
 
             ////金格签章接口url，过滤器配置 服务端是金格的免费测试接口，可以使用
             //services.AddHttpApi<ISignerApi>()

@@ -6,6 +6,7 @@ using Common.EnumServices;
 using Common.Extensions;
 using Common.Nacos;
 using Common.Storage;
+using Common.Test;
 using Grpc.Core;
 using Grpc.Net.ClientFactory;
 using Localization.Resources.AbpUi;
@@ -29,6 +30,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Parakeet.Net.Aop;
@@ -67,6 +69,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.BackgroundWorkers;
 using Volo.Abp.Caching;
 using Volo.Abp.Data;
 using Volo.Abp.Identity.Web;
@@ -1490,8 +1493,14 @@ public class NetWebModule : AbpModule
 
 
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、SeedData默认数据生成 第一次运行即可....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-        //ExtraSeedData(context);//ExtraSeedData默认数据生成 第一次运行即可 一般不需要在这里执行
+        
+        var appConfigOptions = context.ServiceProvider.GetRequiredService<IOptions<AppConfigOptionDto>>()?.Value;
+        if (appConfigOptions.IsAutoUpgrade)
+        {
+            context.ServiceProvider.GetRequiredService<ITestAppService>().Upgrade();
+        }
 
+        //ExtraSeedData(context);//ExtraSeedData默认数据生成 第一次运行即可 一般不需要在这里执行
         Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、Module启动顺序_{nameof(NetWebModule)} End OnApplicationInitialization ....线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
 
     }

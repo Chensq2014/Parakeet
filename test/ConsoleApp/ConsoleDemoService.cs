@@ -3310,6 +3310,11 @@ public class ConsoleDemoService : ITransientDependency
         }
 
         #endregion
+
+
+
+
+
     }
 
 
@@ -3927,4 +3932,45 @@ public class ConsoleDemoService : ITransientDependency
 
 
 
+
+    /// <summary>
+    /// 冒泡排序
+    /// </summary>
+    static void BubbleSort()
+    {
+        var array = new int[5]; //Enumerable.Range(1, 5).ToArray();
+
+        // 创建一个Random对象用于生成随机数
+        var random = new Random();
+        // 使用for循环填充数组随机数
+        for (int i = 0; i < array.Length; i++)
+        {
+            // 生成1到100之间的随机数（Next方法的上限是排外的，所以用101来包含100）
+            array[i] = random.Next(1, 101);
+        }
+
+        Console.WriteLine($"intArray 排序前:{string.Join(",", array)}");
+
+        int temp = 0;
+        bool swapped;
+        for (int i = 0; i < array.Length; i++)
+        {
+            swapped = false;
+            for (int j = 0; j < array.Length - 1 - i; j++)
+            {
+                if (array[j] > array[j + 1])
+                {
+                    temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                    if (!swapped)
+                        swapped = true;
+                }
+            }
+            if (!swapped)
+                return;
+        }
+
+        Console.WriteLine($"intArray 排序后:{string.Join(",", array)}");
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Common.CustomAttributes;
+﻿using Common.Cache;
+using Common.CustomAttributes;
 using Common.Dtos;
 using Common.Entities;
 using Common.Events;
@@ -22,6 +23,7 @@ using Parakeet.Net.ROClient;
 using Parakeet.Net.ROClient.Models;
 using Parakeet.Net.ServiceGroup.JianWei.HttpApis;
 using Parakeet.Net.ServiceGroup.JianWei.HttpDtos;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,7 +35,6 @@ using System.Threading.Tasks;
 using Volo.Abp.Caching;
 using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.MultiTenancy;
-using static Volo.Abp.TenantManagement.TenantManagementPermissions;
 
 namespace Parakeet.Net.Test
 {
@@ -78,6 +79,8 @@ namespace Parakeet.Net.Test
 
         private int _batchHandlerCount = 0;
         #endregion
+
+        private IServiceExchangeRedisClient _customRedisClient => LazyServiceProvider.LazyGetService<IServiceExchangeRedisClient>(serviceProvider => serviceProvider.Resolve<IServiceExchangeRedisClient>($"ServiceExchange"));
 
         public TestAppService(
             ICurrentTenant currentTenant,
@@ -520,6 +523,46 @@ namespace Parakeet.Net.Test
         }
 
         #endregion
+
+
+        #region redis 测试
+
+        public async Task RedisTest()
+        {
+            var db = await _customRedisClient.GetRedisClientAsync(1);
+
+            //// 假设你已经有了 ConnectionMultiplexer 实例  
+            //ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(EnvironmentHelper.ExchangeRedisConn);
+            //IDatabase db = redis.GetDatabase();
+
+
+            // 创建一个有序集合的键  
+            string sortedSetKey = "my-sorted-set";
+
+            // 添加一些元素到有序集合中  
+            db.SortedSetAdd(sortedSetKey, "element1", 1); // 第三个参数是元素的分数（score）  
+            db.SortedSetAdd(sortedSetKey, "element2", 2);
+            db.SortedSetAdd(sortedSetKey, "element3", 3);
+
+            // 获取有序集合中的所有元素（按分数排序）  
+            var sortedSetMembers = db.SortedSetRangeByRank(sortedSetKey);
+            foreach (var member in sortedSetMembers)
+            {
+                Console.WriteLine($"Member: {member}, Score: {db.SortedSetScore(sortedSetKey, member)}");
+            }
+
+            // 你可以根据需要执行其他有序集合操作，如删除元素、获取指定范围的元素等  
+
+            // ...  
+
+            // 当你完成所有操作后，关闭连接（通常作为应用程序关闭的一部分）  
+            //redis.Close();
+
+            // 注意：在实际应用中，建议使用 using 语句来确保 ConnectionMultiplexer 正确关闭
+        }
+
+        #endregion
+
 
         #region 数据库升级
 

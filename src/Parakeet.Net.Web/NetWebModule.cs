@@ -183,6 +183,7 @@ public class NetWebModule : AbpModule
         ConfigureLocalizationServices();
         ConfigureAbpAntiForgerys();
         ConfigureFileUploadOptions();
+        ConfigureAbpCommonOptions();
         //ConfigureTheme();
 
         if (!hostingEnvironment.IsDevelopment())
@@ -1070,6 +1071,17 @@ public class NetWebModule : AbpModule
     }
 
     /// <summary>
+    /// ≈‰÷√abp≈‰÷√œÓ
+    /// </summary>
+    private void ConfigureAbpCommonOptions()
+    {
+        //Configure<AbpDataFilterOptions>(options =>
+        //{
+        //    options.DefaultStates[typeof(ISoftDelete)] = new DataFilterState(isEnabled: false);
+        //});
+    }
+
+    /// <summary>
     /// ÷˜Ã‚
     /// </summary>
     private void ConfigureTheme()
@@ -1083,6 +1095,7 @@ public class NetWebModule : AbpModule
             
         });
     }
+    
 
     #endregion
 

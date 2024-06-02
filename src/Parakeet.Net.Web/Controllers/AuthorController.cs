@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -8,6 +9,7 @@ namespace Parakeet.Net.Controllers
     /// <summary>
     /// 作者简介
     /// </summary>
+    [AllowAnonymous]
     [Route("/api/parakeet/author/[action]")]
     public class AuthorController : NetController
     {

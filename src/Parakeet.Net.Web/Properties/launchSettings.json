@@ -4,7 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "https://localhost:23517",
-      "sslPort": 23517
+      "sslPort": 443
     }
   },
   "profiles": {
@@ -21,6 +21,7 @@
       "applicationUrl": "https://localhost:23517",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;Parakeet.Net.HttpApi",
         "AppName": "parakeet",
         "SelfUrl": "https://localhost:23517",
         "GUID_TYPE": "0",

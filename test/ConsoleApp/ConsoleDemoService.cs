@@ -261,6 +261,10 @@ public class ConsoleDemoService : ITransientDependency
             ////Input: s = "rat", t = "car"
             ////Output: false
 
+            //方法1、使用原生 IsAnagram 直接题意判断 复杂度太高，代码太low了
+            //方法2、//循环一遍s 每一个字符出现后，直接去t里面splice掉第一个出现的位置，然后循环s之后，t的长度应该变为0 面试官启发
+            //方法3、//循环一遍t 每一个tWord在s中indexOf操作找到不为空且index不同  自己想的 但不知道能使用index 题目说不能使用类库和linq
+
             //var parameterS = Console.ReadLine();
             //var parameterT = Console.ReadLine();
 
@@ -275,16 +279,56 @@ public class ConsoleDemoService : ITransientDependency
                 var result = s.Length == t.Length;
                 if (result)
                 {
-                    var sLetterDic = GetLetterDic(s);
-                    var tLetterDic = GetLetterDic(t);
-                    foreach (var tLetter in t)
+
+                    #region 方法三、 可以使用indexOf等字符串函数情况下 自己想的 循环一遍t 每一个tWord在s中indexOf操作找到不为空且index不同  自己想的 但不知道能使用index 题目说不能使用类库和linq
+                    var preIndex = -1;
+                    foreach (var letter in t)
                     {
-                        result = sLetterDic.ContainsKey(tLetter) && sLetterDic[tLetter] == tLetterDic[tLetter];
-                        if (!result)
-                        {
-                            break;
-                        }
+                        var index = s.IndexOf(letter);
+                        result = index != -1 && index != preIndex;
                     }
+
+
+                    #endregion
+
+                    #region 方法二、面试官启发 循环一遍s 每一个字符出现后，直接去t里面splice掉第一个出现的位置，然后循环s之后，t的长度应该变为0 面试官启发
+
+                    //foreach (var letter in s)
+                    //{
+                    //    var index = t.IndexOf(letter);
+                    //    t = t.Remove(index, 1);
+                    //}
+                    //result = t.Length == 0;
+
+
+                    #endregion
+
+                    #region  方法1、使用原生 IsAnagram 直接题意判断 复杂度太高，代码太low了
+
+                    //var sLetterDic = GetLetterDic(s);
+                    //var tLetterDic = GetLetterDic(t);
+                    ////foreach (var tLetter in t)
+                    ////{
+                    ////    result = sLetterDic.ContainsKey(tLetter) && sLetterDic[tLetter] == tLetterDic[tLetter];
+                    ////    if (!result)
+                    ////    {
+                    ////        break;
+                    ////    }
+                    ////}
+                    //foreach (var dic in sLetterDic)
+                    //{
+                    //    result = tLetterDic.ContainsKey(dic.Key);
+                    //    if (result)
+                    //    {
+                    //        if (sLetterDic[dic.Key] != tLetterDic[dic.Key])
+                    //        {
+                    //            result = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+
+                    #endregion
                 }
                 return result;
             }
@@ -305,6 +349,9 @@ public class ConsoleDemoService : ITransientDependency
                 }
                 return letterDic;
             }
+
+
+
         }
 
         #endregion
@@ -3993,21 +4040,22 @@ public class ConsoleDemoService : ITransientDependency
     /// <returns></returns>
     public int BinarySearch(int[] nums, int target)
     {
-        int left = 0, right = nums.Length - 1; 
-        while (left <= right) { 
+        int left = 0, right = nums.Length - 1;
+        while (left <= right)
+        {
             int mid = left + (right - left) / 2;
-            if (nums[mid] == target) 
-            { 
-                return mid; 
-            } 
-            else if (nums[mid] < target) 
-            { 
-                left = mid + 1; 
-            } 
-            else 
-            { 
-                right = mid - 1; 
-            } 
+            if (nums[mid] == target)
+            {
+                return mid;
+            }
+            else if (nums[mid] < target)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid - 1;
+            }
         }
         return -1;
 
@@ -4026,29 +4074,32 @@ public class ConsoleDemoService : ITransientDependency
     /// <returns></returns>
     public int StrStr(string haystack, string needle)
     {
-        if (string.IsNullOrEmpty(needle)) {
-            return 0; 
+        if (string.IsNullOrEmpty(needle))
+        {
+            return 0;
         }
         int n = haystack.Length;
-        int m = needle.Length; 
-        if (n < m) { 
+        int m = needle.Length;
+        if (n < m)
+        {
             return -1;
         }
-        for (int i = 0; i <= n - m; i++) 
-        { 
-            int j; 
-            for (j = 0; j < m; j++) 
-            { 
-                if (haystack[i + j] != needle[j]) 
-                { 
-                    break; 
+        for (int i = 0; i <= n - m; i++)
+        {
+            int j;
+            for (j = 0; j < m; j++)
+            {
+                if (haystack[i + j] != needle[j])
+                {
+                    break;
                 }
-            } 
-            if (j == m) {
-                return i; 
-            } 
+            }
+            if (j == m)
+            {
+                return i;
+            }
         }
-        return -1; 
+        return -1;
     }
 
 
@@ -4056,25 +4107,25 @@ public class ConsoleDemoService : ITransientDependency
     /// 选择排序
     /// </summary>
     /// <param name="nums"></param>
-    public void SelectionSort(int[] nums) 
-    { 
+    public void SelectionSort(int[] nums)
+    {
         int n = nums.Length;
         for (int i = 0; i < n - 1; i++)
-        { 
-            int minIndex = i; 
-            for (int j = i + 1; j < n; j++) 
-            { 
-                if (nums[j] < nums[minIndex]) 
+        {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++)
+            {
+                if (nums[j] < nums[minIndex])
                 {
-                    minIndex = j; 
-                } 
-            } 
+                    minIndex = j;
+                }
+            }
             if (minIndex != i)
-            { 
+            {
                 int temp = nums[i];
                 nums[i] = nums[minIndex];
-                nums[minIndex] = temp; 
-            } 
-        } 
+                nums[minIndex] = temp;
+            }
+        }
     }
 }

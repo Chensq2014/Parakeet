@@ -1,7 +1,10 @@
 ﻿using CollectLog.EntityFramworkCore;
+using Common;
 using Common.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Primitives;
 using Serilog;
 using System.Reflection;
 using System.ServiceProcess;
@@ -27,6 +30,7 @@ namespace CollectLog
         public System.Timers.Timer Timer { get; set; }
 
         private FileSystemWatcher _watcher;
+        PhysicalFileProvider _phyFileProvider;
 
         private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         public Collector()
@@ -43,7 +47,7 @@ namespace CollectLog
                 .UseNpgsql(Conn, options =>
                 {
                     options.EnableRetryOnFailure();
-                    //options.CommandTimeout(CommonConsts.CommandTimeOut);
+                    options.CommandTimeout(CommonConsts.CommandTimeOut);
                 })
                 .Options;
             DbContext = new CollectlogDbContext(dbOptions);
@@ -62,6 +66,15 @@ namespace CollectLog
             //Timer.Elapsed += OnTimerElapsed;
             //Timer.Enabled = true;
             //Timer.Start();
+
+
+            ////使用_phyFileProvider
+            //_phyFileProvider = new PhysicalFileProvider(FilePath);
+            //ChangeToken.OnChange(
+            //    changeTokenProducer: () => _phyFileProvider.Watch(FilePath),
+            //    changeTokenConsumer: () => { OnFileChanged(null, null); });
+
+
 
         }
 

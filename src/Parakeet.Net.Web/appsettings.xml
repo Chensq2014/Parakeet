@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <AllowedHosts>*</AllowedHosts>
+  <TodayXML>0604-XML</TodayXML>
+  <RabbitMQOptions>
+    <HostName>localhost-xml</HostName>
+    <UserName>guest-xml</UserName>
+    <Password>guest-xml</Password>
+  </RabbitMQOptions>
+</configuration>

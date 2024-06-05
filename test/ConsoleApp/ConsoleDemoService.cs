@@ -309,6 +309,12 @@ public class ConsoleDemoService : ITransientDependency
 
         #endregion
 
+        #region 冒泡排序
+        {
+            BubbleSort();
+        }
+        #endregion
+
         #region ReadSnpData()
 
         {

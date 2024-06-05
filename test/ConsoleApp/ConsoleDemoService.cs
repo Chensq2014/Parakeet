@@ -3973,4 +3973,102 @@ public class ConsoleDemoService : ITransientDependency
 
         Console.WriteLine($"intArray 排序后:{string.Join(",", array)}");
     }
+
+
+    /// <summary>
+    /// 二分法
+    ///  // 没有找到目标值}//调用int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    ///  int target = 6;
+    ///  int index = BinarySearch(nums, target);
+    ///  Console.WriteLine(index);
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public int BinarySearch(int[] nums, int target)
+    {
+        int left = 0, right = nums.Length - 1; 
+        while (left <= right) { 
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) 
+            { 
+                return mid; 
+            } 
+            else if (nums[mid] < target) 
+            { 
+                left = mid + 1; 
+            } 
+            else 
+            { 
+                right = mid - 1; 
+            } 
+        }
+        return -1;
+
+    }
+
+
+
+    /// <summary>
+    /// //调用 string haystack = "欢迎公众号：DOTNET开发跳槽";
+    /// string needle = "NET";
+    /// int index = StrStr(haystack, needle);
+    /// Console.WriteLine(index);//结果为：9
+    /// </summary>
+    /// <param name="haystack"></param>
+    /// <param name="needle"></param>
+    /// <returns></returns>
+    public int StrStr(string haystack, string needle)
+    {
+        if (string.IsNullOrEmpty(needle)) {
+            return 0; 
+        }
+        int n = haystack.Length;
+        int m = needle.Length; 
+        if (n < m) { 
+            return -1;
+        }
+        for (int i = 0; i <= n - m; i++) 
+        { 
+            int j; 
+            for (j = 0; j < m; j++) 
+            { 
+                if (haystack[i + j] != needle[j]) 
+                { 
+                    break; 
+                }
+            } 
+            if (j == m) {
+                return i; 
+            } 
+        }
+        return -1; 
+    }
+
+
+    /// <summary>
+    /// 选择排序
+    /// </summary>
+    /// <param name="nums"></param>
+    public void SelectionSort(int[] nums) 
+    { 
+        int n = nums.Length;
+        for (int i = 0; i < n - 1; i++)
+        { 
+            int minIndex = i; 
+            for (int j = i + 1; j < n; j++) 
+            { 
+                if (nums[j] < nums[minIndex]) 
+                {
+                    minIndex = j; 
+                } 
+            } 
+            if (minIndex != i)
+            { 
+                int temp = nums[i];
+                nums[i] = nums[minIndex];
+                nums[minIndex] = temp; 
+            } 
+        } 
+    }
 }

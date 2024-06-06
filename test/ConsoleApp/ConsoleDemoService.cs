@@ -23,6 +23,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Guids;
+using static FreeSql.Internal.GlobalFilter;
 
 namespace Parakeet.Net.ConsoleApp;
 
@@ -214,40 +215,42 @@ public class ConsoleDemoService : ITransientDependency
         #region Guid.Parse 有序Guid生成 测试
 
         {
-            var guidOne = _guidGenerator.Create();
-            var guidTwo = _guidGenerator.Create();
-            var guidThree = _guidGenerator.Create();
+            //var guidOne = _guidGenerator.Create();
+            //var guidTwo = _guidGenerator.Create();
+            //var guidThree = _guidGenerator.Create();
 
-            Console.WriteLine($" guidOne:{guidOne}\r\n guidTwo:{guidTwo}\r\n guidThree:{guidThree}");
-            Console.ReadKey();
-
-            ////Console.WriteLine($"{Guid.Parse("e9f8e91180e941759adf1a85944ada50")}");//Guid.Parse 可以添加上短横线
-            var option = new AbpSequentialGuidGeneratorOptions
-            {
-                //DefaultSequentialGuidType = SequentialGuidType.SequentialAtEnd//sqlserver=>SequentialAtEnd
-                //DefaultSequentialGuidType = SequentialGuidType.SequentialAsBinary
-                DefaultSequentialGuidType = SequentialGuidType.SequentialAsString//mysql=>SequentialAsString
-            };
-            var optionWarpper = new OptionsWrapper<AbpSequentialGuidGeneratorOptions>(option);
-            ////由timeStamp二进制转换的一定时间顺序的guid 够用约5900年，满足大部分项目
-            var sequentialGuidGenerator = new SequentialGuidGenerator(optionWarpper);
-            //var sequenceGuidNext1 = sequentialGuidGenerator.Create();
-            //var sequenceGuidNext2 = sequentialGuidGenerator.Create();
-            //var guid = SimpleGuidGenerator.Instance.Create();//=>等同于Guid.NewGuid();
-            //Console.WriteLine($"sequenceGuidNext1:{sequenceGuidNext1}\nsequenceGuidNext2:{sequenceGuidNext2}\nsimpleGuid:{guid}");
+            //Console.WriteLine($" guidOne:{guidOne}\r\n guidTwo:{guidTwo}\r\n guidThree:{guidThree}");
             //Console.ReadKey();
 
-            //var sqType = WorkType.设计;
-            Console.WriteLine($"打印SequentialGuidType枚举字符串");
-            Console.WriteLine($"{SequentialGuidType.SequentialAsString}");
-            Console.WriteLine($"{SequentialGuidType.SequentialAsBinary}");
-            Console.WriteLine($"{SequentialGuidType.SequentialAtEnd}");
-            //Console.WriteLine($"sqType:{sqType}");
-            //Console.ReadKey();
+            //////Console.WriteLine($"{Guid.Parse("e9f8e91180e941759adf1a85944ada50")}");//Guid.Parse 可以添加上短横线
+            //var option = new AbpSequentialGuidGeneratorOptions
+            //{
+            //    //DefaultSequentialGuidType = SequentialGuidType.SequentialAtEnd//sqlserver=>SequentialAtEnd
+            //    //DefaultSequentialGuidType = SequentialGuidType.SequentialAsBinary
+            //    DefaultSequentialGuidType = SequentialGuidType.SequentialAsString//mysql=>SequentialAsString
+            //};
+            //var optionWarpper = new OptionsWrapper<AbpSequentialGuidGeneratorOptions>(option);
+            //////由timeStamp二进制转换的一定时间顺序的guid 够用约5900年，满足大部分项目
+            //var sequentialGuidGenerator = new SequentialGuidGenerator(optionWarpper);
+            ////var sequenceGuidNext1 = sequentialGuidGenerator.Create();
+            ////var sequenceGuidNext2 = sequentialGuidGenerator.Create();
+            ////var guid = SimpleGuidGenerator.Instance.Create();//=>等同于Guid.NewGuid();
+            ////Console.WriteLine($"sequenceGuidNext1:{sequenceGuidNext1}\nsequenceGuidNext2:{sequenceGuidNext2}\nsimpleGuid:{guid}");
+            ////Console.ReadKey();
+
+            ////var sqType = WorkType.设计;
+            //Console.WriteLine($"打印SequentialGuidType枚举字符串");
+            //Console.WriteLine($"{SequentialGuidType.SequentialAsString}");
+            //Console.WriteLine($"{SequentialGuidType.SequentialAsBinary}");
+            //Console.WriteLine($"{SequentialGuidType.SequentialAtEnd}");
+            ////Console.WriteLine($"sqType:{sqType}");
+            ////Console.ReadKey();
         }
         #endregion
 
-        #region 同位数练习
+        #region 算法
+
+        #region IsAnagram 同位数练习
         {
 
             ////Given two strings s and t, return true if t is an anagram of s, and false otherwise.
@@ -281,11 +284,12 @@ public class ConsoleDemoService : ITransientDependency
                 {
 
                     #region 方法三、 可以使用indexOf等字符串函数情况下 自己想的 循环一遍t 每一个tWord在s中indexOf操作找到不为空且index不同  自己想的 但不知道能使用index 题目说不能使用类库和linq
-                    var preIndex = -1;
+                    var preIndexs = new List<int> { -1 };
                     foreach (var letter in t)
                     {
                         var index = s.IndexOf(letter);
-                        result = index != -1 && index != preIndex;
+                        preIndexs.Add(index);
+                        result = !preIndexs.Contains(index);
                     }
 
 
@@ -293,12 +297,12 @@ public class ConsoleDemoService : ITransientDependency
 
                     #region 方法二、面试官启发 循环一遍s 每一个字符出现后，直接去t里面splice掉第一个出现的位置，然后循环s之后，t的长度应该变为0 面试官启发
 
-                    //foreach (var letter in s)
-                    //{
-                    //    var index = t.IndexOf(letter);
-                    //    t = t.Remove(index, 1);
-                    //}
-                    //result = t.Length == 0;
+                    foreach (var letter in s)
+                    {
+                        var index = t.IndexOf(letter);
+                        t = t.Remove(index, 1);
+                    }
+                    result = t.Length == 0;
 
 
                     #endregion
@@ -351,25 +355,451 @@ public class ConsoleDemoService : ITransientDependency
             }
 
 
-
         }
 
         #endregion
 
-        #region 冒泡排序
+        #region 排序 算法
         {
-            BubbleSort();
+            //BubbleSort();
+
+            /// <summary>
+            /// 冒泡排序
+            /// 比较相邻的元素。如果第一个比第二个大，就交换他们两个。
+            /// 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。
+            /// 针对所有的元素重复以上的步骤，除了最后一个。
+            /// 持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。
+            /// </summary>
+            void BubbleSort()
+            {
+                var array = new int[5]; //Enumerable.Range(1, 5).ToArray();
+
+                // 创建一个Random对象用于生成随机数
+                var random = new Random();
+                // 使用for循环填充数组随机数
+                for (int i = 0; i < array.Length; i++)
+                {
+                    // 生成1到100之间的随机数（Next方法的上限是排外的，所以用101来包含100）
+                    array[i] = random.Next(1, 101);
+                }
+
+                Console.WriteLine($"intArray 排序前:{string.Join(",", array)}");
+
+                int temp = 0;
+                bool swapped;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    swapped = false;
+                    for (int j = 0; j < array.Length - 1 - i; j++)
+                    {
+                        if (array[j] > array[j + 1])
+                        {
+                            temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                            if (!swapped)
+                                swapped = true;
+                        }
+                    }
+                    if (!swapped)
+                        return;
+                }
+
+                Console.WriteLine($"intArray 排序后:{string.Join(",", array)}");
+            }
+
+            /// <summary>
+            /// 二分法查找
+            ///  // 没有找到目标值}//调用int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            ///  int target = 6;
+            ///  int index = BinarySearch(nums, target);
+            ///  Console.WriteLine(index);
+            /// </summary>
+            /// <param name="nums"></param>
+            /// <param name="target"></param>
+            /// <returns></returns>
+            int BinarySearch(int[] nums, int target)
+            {
+                var findIndex = -1;
+                int leftIndex = 0;
+                int rightIndex = nums.Length - 1;
+                int midIndex = rightIndex / 2;
+                while (leftIndex <= rightIndex)
+                {
+                    if (nums[midIndex] == target)
+                    {
+                        findIndex = midIndex;
+                        break;
+                    }
+                    else if (nums[midIndex] < target)
+                    {
+                        leftIndex = midIndex + 1;
+                    }
+                    else
+                    {
+                        rightIndex = midIndex - 1;
+                    }
+                    midIndex = leftIndex + (rightIndex - leftIndex) / 2;
+                }
+                Console.WriteLine($"findIndex={findIndex}");
+                return findIndex;
+            }
+
+            /// <summary>
+            /// //调用 string haystack = "DOTNET开发";
+            /// string needle = "NET";
+            /// int index = StrStr(haystack, needle);
+            /// Console.WriteLine(index);
+            /// </summary>
+            /// <param name="haystack"></param>
+            /// <param name="needle"></param>
+            /// <returns></returns>
+            int SubStr(string haystack, string needle)
+            {
+                if (string.IsNullOrEmpty(needle))
+                {
+                    return 0;
+                }
+                int n = haystack.Length;
+                int m = needle.Length;
+                if (n < m)
+                {
+                    return -1;
+                }
+                for (int i = 0; i <= n - m; i++)
+                {
+                    int j;
+                    for (j = 0; j < m; j++)
+                    {
+                        if (haystack[i + j] != needle[j])
+                        {
+                            break;
+                        }
+                    }
+                    if (j == m)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            /// <summary>
+            /// 选择排序
+            /// 首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。
+            /// 再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。
+            /// </summary>
+            /// <param name="nums"></param>
+            void SelectionSort(int[] nums)
+            {
+                int n = nums.Length;
+                for (int i = 0; i < n - 1; i++)
+                {
+                    int minIndex = i;
+                    for (int j = i + 1; j < n; j++)
+                    {
+                        if (nums[j] < nums[minIndex])
+                        {
+                            minIndex = j;
+                        }
+                    }
+                    if (minIndex != i)
+                    {
+                        int temp = nums[i];
+                        nums[i] = nums[minIndex];
+                        nums[minIndex] = temp;
+                    }
+                }
+            }
+
+
+            //InsertionSort([5, 4, 3, 2, 1]);
+            //Console.ReadLine();
+
+            /// <summary>
+            /// 插入排序
+            /// </summary>
+            void InsertionSort(int[] array)
+            {
+                Console.WriteLine($"排序前:{string.Join(",", array)}");
+                //for (int i = 1; i < array.Length; i++)
+                //{
+                //    int temp = array[i];
+                //    for (int j = i - 1; j >= 0; j--)
+                //    {
+                //        if (array[j] > temp)
+                //        {
+                //            array[j + 1] = array[j];
+                //            array[j] = temp;
+                //        }
+                //        else
+                //        {
+                //            break;
+                //        }
+                //    }
+                //    Console.WriteLine($"第{i}次排序后：{string.Join(",", array)}");
+                //}
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    var temp = array[0];
+                    for (int j = 1; j < array.Length - i; j++)
+                    {
+                        if (array[j] <= temp)
+                        {
+                            array[j - 1] = array[j];
+                            array[j] = temp;
+                        }
+                    }
+                    Console.WriteLine($"第{i}次排序后：{string.Join(",", array)}");
+
+                }
+
+                Console.WriteLine($"排序后：{string.Join(",", array)}");
+            }
+
+
+            //目的是求最大和 而不是每个子序列的和然后排序得来 不能使用笨办法
+            int[] nums = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+            int maxSum = FindMaximumSubarraySum(nums);
+            Console.WriteLine("Maximum contiguous sum is " + maxSum);
+
+
+            int FindMaximumSubarraySum(int[] nums)
+            {
+                int maxSoFar = nums[0];//初始化最大和为数组的第一个元素
+                int currMax = nums[0];//当前子数组和
+
+                foreach (var item in nums)
+                {
+                    currMax = Math.Max(item, currMax + item);//currMax + item 代表连续的几个数相加 转换为与前一个和相加大于自己
+                    maxSoFar = Math.Max(maxSoFar, currMax);//更新最大和
+                }
+
+                return maxSoFar;
+            }
+
+
+            //KaotiFive();//Matlab 考题5 采取逆向思维
+            //Console.ReadLine();
+
+
+            //% 问题：水手、猴子和椰子问题：五个水手带了一只猴子来到南太平洋的一个荒岛上，发现那里有一大堆椰子.由于旅途
+            //% 的颠簸，大家都很疲倦，很快就入睡了.第一个水手醒来后，把椰子平分成五堆，将多余的一只给了猴子，他私藏了
+            //% 一堆后便又去睡了.第二、第三、第四、第五个水手也陆续起来，和第一个水手一样，把椰子分成五堆，恰多一只
+            //% 给猴子，私藏一堆，再去入睡.天亮以后，大家把余下的椰子重新等分成五堆，每人分一堆，正好余一只再给猴子.
+            //% 试问原先最少有多少只椰子？
+            //% 提示：采取逆向思维的方法，从后往前推断，用matlab编写程序求出原先的椰子数目，建立模型，循环
+            long KaotiFive()
+            {
+                long i = 1;
+                long k = 1;
+                long x = 1;
+                for (i = 1; i < 100000000000000; i++)
+                {
+                    x = i;
+                    for (k = 1; k <= 6; k++)
+                    {
+
+                        x = 5 * x + 1;
+                        if (x % 4 == 0)
+                        {
+                            x = x / 4;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (k >= 6)
+                    {
+                        Console.WriteLine($"最后一次每个水手分到:{i}个椰子");
+                        break;
+                    }
+                }
+                Console.WriteLine($"原来的椰子数目至少为:{x}个");
+                return x;
+            }
+
         }
+
         #endregion
 
-        #region ReadSnpData()
-
+        #region  二分搜索算法应用 题目:100房子，2个鸡蛋，鸡蛋会在某一层摔碎，找出最坏情况的最优解。
         {
-            //SnpCompute.ReadSnpData();
-            //Console.ReadKey();
+
+            ////理解题意：最坏情况就是尝试次数最大?  最优解 看看尝试次数最大的值? 
+            ////假设楼层数f=100，鸡蛋个数e=2   
+
+            //int eggs = 2;
+            //int floors = 100;
+            //int result = SupperEggDrop(eggs, floors);
+            //Console.WriteLine("The minimum number of attempts in the worst case is: " + result);
+
+            //Console.ReadLine();
+
+
+            //基本思路是，对于给定的楼层数 N 和鸡蛋数 K，我们假设在第 X 层楼扔下鸡蛋。
+            //如果鸡蛋碎了，我们就需要用剩下的 K-1 个鸡蛋和 X-1 层楼来找出摔碎点；
+            //如果鸡蛋没碎，我们就需要用 K 个鸡蛋和 N-X 层楼来找出摔碎点。
+            //我们需要取这两种情况下的最大尝试次数，然后加1（加上当前的这次尝试）。
+
+            //我们可以定义一个二维数组 dp[K][N] 来保存这个问题的解，其中 dp[k][n] 表示有 k 个鸡蛋和 n 层楼时所需的最少尝试次数。
+            //然后我们可以从底部开始填充这个数组，直到找到 dp[2][100]。
+
+            int SupperEggDrop(int k, int n)
+            {
+                // 创建一个二维数组来保存解  
+                Console.WriteLine($"{k}个鸡蛋，{n}层楼示例:");
+                int[,] dp = new int[k + 1, n + 1];
+
+                // 初始化边界条件  
+                for (int i = 1; i <= k; i++)
+                {
+                    dp[i, 0] = 0; // 没有楼层时不需要尝试  
+                    if (n > 0)
+                    {
+                        dp[i, 1] = 1; // 一层楼时只需要尝试一次  
+                    }
+                }
+
+                for (int j = 1; j <= n; j++)
+                {
+                    dp[1, j] = j; // 一个鸡蛋时需要尝试最多j次  
+                }
+
+                Console.WriteLine($"初始二维数组(0-1层楼尝试次数)后:");
+                for (int i = 0; i <= k; i++)
+                {
+                    for (int j = 0; j <= n; j++)
+                    {
+                        Console.Write($"{dp[i, j]} ");
+                    }
+                    Console.WriteLine();
+                }
+
+
+
+                // 动态规划填充数组  从2个鸡蛋开始
+                for (int i = 2; i <= k; i++)
+                {
+                    for (int j = 2; j <= n; j++)
+                    {
+                        dp[i, j] = j; // 最坏情况下需要尝试j次  
+                        for (int x = 1; x < j; x++)
+                        {
+                            //如果鸡蛋碎了，我们就需要用剩下的 K-1 个鸡蛋和 X-1 层楼来找出摔碎点；
+                            //如果鸡蛋没碎，我们就需要用 K 个鸡蛋和 N-X 层楼来找出摔碎点+1(加上当前这次尝试)
+                            dp[i, j] = Math.Min(dp[i, j], Math.Max(dp[i - 1, x - 1], dp[i, j - x]) + 1);
+                            // 选择使得最大尝试次数最小的x  
+                        }
+                    }
+                }
+
+                Console.WriteLine($"从2个鸡蛋开始 动态规划填充数组填充数组后:");
+                for (int i = 0; i <= k; i++)
+                {
+                    for (int j = 0; j <= n; j++)
+                    {
+                        Console.Write($"{dp[i, j]} ");
+                    }
+                    Console.WriteLine();
+                }
+
+
+                // 返回结果  
+                return dp[k, n];
+            }
+
+
+            //二分搜索算法通常用于在已排序的数组中查找特定的元素。然而，对于“鸡蛋掉落”问题，
+            //我们需要使用二分搜索的思想来优化尝试次数，但并不能直接使用传统的二分搜索算法。
+
+            //在这个问题中，我们可以使用二分搜索的思想来逼近最优的楼层数，从而最小化在最坏情况下所需的尝试次数。
+            //具体做法是，对于当前的尝试次数m和楼层数f，我们可以选择一个中间楼层mid，然后假设在这个楼层扔下鸡蛋：
+
+            //1、如果鸡蛋碎了，那么我们需要在前mid层楼中继续寻找摔碎点，这时我们还有e - 1个鸡蛋和mid层楼。
+            //2、如果鸡蛋没碎，那么我们需要在剩下的f - mid层楼中继续寻找摔碎点，这时我们还有k个鸡蛋和f - mid层楼。
+            //我们需要找到一个mid，使得上述两种情况下所需的尝试次数最大，但不超过当前的尝试次数m。我们可以从m = 1开始，逐步增加m的值，直到找到一个m，使得我们可以使用e个鸡蛋在f层楼中确定摔碎点。
+
+            int SupperEggDrop0(int e, int f)
+            {
+                //创建一个二维数组来保存子问题的解
+                var dp = new int[e + 1, f + 1];
+
+                //初始化dp数组
+                for (int i = 0; i <= e; i++)
+                {
+                    for (int j = 0; j <= f; j++)
+                    {
+                        dp[i, j] = int.MaxValue / 2;//使用一个较大的初始值
+                    }
+                }
+
+                //边界条件
+                for (int i = 0; i <= e; i++)
+                {
+                    dp[i, 0] = 0;//没有楼层时  尝试次数为0
+                    if (f > 0)
+                    {
+                        dp[i, 1] = 1;//只有一层楼时 尝试次数为1
+                    }
+                }
+
+                Console.WriteLine($"初始二维数组(0-1层楼尝试次数) 且剩余填充最大数:");
+                for (int i = 0; i <= e; i++)
+                {
+                    for (int j = 0; j <= f; j++)
+                    {
+                        Console.Write($"{dp[i, j]} ");
+                    }
+                    Console.WriteLine();
+                }
+
+
+                for (int floors = 1; floors <= f; floors++)
+                {
+                    for (int eggs = 1; eggs <= e; eggs++)
+                    {
+                        //尝试次数从1开始逐渐增加 
+                        for (int attempts = 1; ; attempts++)
+                        {
+                            int leftMax = 0;//二分法左侧楼层所需最大尝试数
+                            int rightMin = int.MaxValue;//二分法右侧楼层所需最小尝试数
+
+                            //找到最优的分割楼层mid
+                            for (int mid = 1; mid <= floors; mid++)
+                            {
+                                leftMax = Math.Max(leftMax, dp[eggs - 1, mid - 1]);// 鸡蛋碎了，下侧楼层所需的最大尝试次数 
+                                rightMin = Math.Min(rightMin, dp[eggs, floors - mid] + 1);// 鸡蛋没碎 上侧楼层所需的最小尝试次数加1(当前这次尝试)
+
+                                // 如果下侧楼层所需的最大尝试次数和上侧楼层所需的最小尝试次数之和不超过当前尝试次数  
+                                // 那么我们可以减少尝试次数  
+                                if (leftMax + rightMin > attempts)
+                                    break;
+                            }
+
+                            // 找到了最优解，记录到dp数组中  
+                            dp[eggs, floors] = attempts;
+
+                            // 如果已经找到了最优解，则退出内层循环  
+                            if (leftMax + rightMin == attempts)
+                                break;
+                        }
+                    }
+                }
+
+                // 返回结果  
+                return dp[e, f];
+            }
         }
 
+
         #endregion
+
+        #endregion
+
+
 
         #region Json测试
 
@@ -3983,149 +4413,4 @@ public class ConsoleDemoService : ITransientDependency
         return input;
     }
 
-
-
-
-    /// <summary>
-    /// 冒泡排序
-    /// </summary>
-    static void BubbleSort()
-    {
-        var array = new int[5]; //Enumerable.Range(1, 5).ToArray();
-
-        // 创建一个Random对象用于生成随机数
-        var random = new Random();
-        // 使用for循环填充数组随机数
-        for (int i = 0; i < array.Length; i++)
-        {
-            // 生成1到100之间的随机数（Next方法的上限是排外的，所以用101来包含100）
-            array[i] = random.Next(1, 101);
-        }
-
-        Console.WriteLine($"intArray 排序前:{string.Join(",", array)}");
-
-        int temp = 0;
-        bool swapped;
-        for (int i = 0; i < array.Length; i++)
-        {
-            swapped = false;
-            for (int j = 0; j < array.Length - 1 - i; j++)
-            {
-                if (array[j] > array[j + 1])
-                {
-                    temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                    if (!swapped)
-                        swapped = true;
-                }
-            }
-            if (!swapped)
-                return;
-        }
-
-        Console.WriteLine($"intArray 排序后:{string.Join(",", array)}");
-    }
-
-
-    /// <summary>
-    /// 二分法
-    ///  // 没有找到目标值}//调用int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    ///  int target = 6;
-    ///  int index = BinarySearch(nums, target);
-    ///  Console.WriteLine(index);
-    /// </summary>
-    /// <param name="nums"></param>
-    /// <param name="target"></param>
-    /// <returns></returns>
-    public int BinarySearch(int[] nums, int target)
-    {
-        int left = 0, right = nums.Length - 1;
-        while (left <= right)
-        {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] == target)
-            {
-                return mid;
-            }
-            else if (nums[mid] < target)
-            {
-                left = mid + 1;
-            }
-            else
-            {
-                right = mid - 1;
-            }
-        }
-        return -1;
-
-    }
-
-
-
-    /// <summary>
-    /// //调用 string haystack = "欢迎公众号：DOTNET开发跳槽";
-    /// string needle = "NET";
-    /// int index = StrStr(haystack, needle);
-    /// Console.WriteLine(index);//结果为：9
-    /// </summary>
-    /// <param name="haystack"></param>
-    /// <param name="needle"></param>
-    /// <returns></returns>
-    public int StrStr(string haystack, string needle)
-    {
-        if (string.IsNullOrEmpty(needle))
-        {
-            return 0;
-        }
-        int n = haystack.Length;
-        int m = needle.Length;
-        if (n < m)
-        {
-            return -1;
-        }
-        for (int i = 0; i <= n - m; i++)
-        {
-            int j;
-            for (j = 0; j < m; j++)
-            {
-                if (haystack[i + j] != needle[j])
-                {
-                    break;
-                }
-            }
-            if (j == m)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
-    /// <summary>
-    /// 选择排序
-    /// </summary>
-    /// <param name="nums"></param>
-    public void SelectionSort(int[] nums)
-    {
-        int n = nums.Length;
-        for (int i = 0; i < n - 1; i++)
-        {
-            int minIndex = i;
-            for (int j = i + 1; j < n; j++)
-            {
-                if (nums[j] < nums[minIndex])
-                {
-                    minIndex = j;
-                }
-            }
-            if (minIndex != i)
-            {
-                int temp = nums[i];
-                nums[i] = nums[minIndex];
-                nums[minIndex] = temp;
-            }
-        }
-    }
 }

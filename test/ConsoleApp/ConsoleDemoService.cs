@@ -23,7 +23,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Guids;
-using static FreeSql.Internal.GlobalFilter;
 
 namespace Parakeet.Net.ConsoleApp;
 
@@ -45,7 +44,68 @@ public class ConsoleDemoService : ITransientDependency
         //netcore默认为utf-8 支持多种编码
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-        #region 算法
+
+        #region 二面 业务
+        {
+            //1、二维数组 存放 学生 成绩    合并学生 各科成绩  有重复的 用分号隔开
+
+            var students = new List<StudentRecord>();
+
+            var student1 = new StudentRecord { Name = "张三", Shuxue = "80", YuWen = "70" };
+            var student2 = new StudentRecord { Name = "李四", Shuxue = "81", YuWen = "60" };
+            var student3 = new StudentRecord { Name = "张三", YuWen = "50" };
+            students.Add(student1);
+            students.Add(student2);
+            students.Add(student3);
+
+            var result = GetMergeRecord(students, record => record.Name);
+
+            foreach (var record in result)
+            {
+                Console.WriteLine($"{record.Name}:{record.Shuxue} {record.YuWen}");
+            }
+            //Console.ReadLine();
+
+            List<StudentRecord> GetMergeRecord(List<StudentRecord> records, Func<StudentRecord, string> express)
+            {
+                return records.GroupBy(express).Select(x => new StudentRecord
+                {
+                    Name = x.Key,
+                    Shuxue = $"{string.Join(";", x.Select(y => y.Shuxue))}",
+                    YuWen = $"{string.Join(";", x.Select(y => y.YuWen))}"
+                }).ToList();
+            }
+
+            //改进：使用成员方法 动态添加学科与分数
+            student1.AddScore("Yuwen", 89);
+            student2.AddScore("Yuwen", 89);
+            student3.AddScore("Yuwen", 89);
+            student1.AddScore("Yuwen", 80);
+            student2.AddScore("Yuwen", 81);
+            student1.AddScore("Yuwen", 83);
+
+            student1.AddScore("ShuXue", 99);
+            student2.AddScore("ShuXue", 99);
+            student3.AddScore("ShuXue", 99);
+            student1.AddScore("ShuXue", 90);
+            student2.AddScore("ShuXue", 91);
+            student1.AddScore("ShuXue", 93);
+
+
+            student1.AddScore("English", 100);
+
+
+            Console.WriteLine($"第二种方式:使用字典数组展示学生合并后的成绩:");
+            foreach (var student in students)
+            {
+                Console.WriteLine(student);
+            }
+            Console.ReadLine();
+        }
+        
+        #endregion
+
+        #region 一面 算法
 
         #region IsAnagram 同位数练习
         {
@@ -748,7 +808,6 @@ public class ConsoleDemoService : ITransientDependency
         #endregion
 
         #endregion
-
 
         #region 配置文件配置加密测试
 
@@ -3312,10 +3371,10 @@ public class ConsoleDemoService : ITransientDependency
             };
 
 
-            var result = ExpMapper<LocationArea, LocationAreaDto>.Trans(LocationArea);
-            Console.WriteLine($"泛型表达式目录树映射返回结果:{result.Name}");
-            result = ExpMapper<LocationArea, LocationAreaDto>.Trans(new LocationArea { Name = "Test2" });
-            Console.WriteLine($"泛型表达式目录树映射返回结果:{result.Name}");
+            //var result = ExpMapper<LocationArea, LocationAreaDto>.Trans(LocationArea);
+            //Console.WriteLine($"泛型表达式目录树映射返回结果:{result.Name}");
+            //result = ExpMapper<LocationArea, LocationAreaDto>.Trans(new LocationArea { Name = "Test2" });
+            //Console.WriteLine($"泛型表达式目录树映射返回结果:{result.Name}");
 
             //long common = 0;
             //long generic = 0;
@@ -3893,20 +3952,20 @@ public class ConsoleDemoService : ITransientDependency
             #region 使用默认sql-cli 查询
 
             {
-                var result = await client.Sql.QueryAsync(q => q.Query("select id form test"));
-                var dataTable = new DataTable();
-                dataTable.Columns.AddRange(result.Columns.Select(m => new DataColumn(m.Name, ReflectTypeHelper.GetTypeByEsTypeString(m.Type))).ToArray());
-                foreach (var resultRow in result.Rows)
-                {
-                    var row = dataTable.NewRow();
-                    for (var columIndex = 0; columIndex < result.Columns.Count; columIndex++)
-                    {
-                        row[columIndex] = Convert.ChangeType(resultRow[columIndex].As<object>(), dataTable.Columns[columIndex].DataType);
-                        //Console.WriteLine($"Name:{colums[columIndex].Name} Type:{colums[columIndex].Type}_{dataTable.Columns[columIndex].DataType} value:{row[columIndex]}");
-                    }
-                    dataTable.Rows.Add(row);
-                }
-                var json = JsonConvert.SerializeObject(dataTable);
+                //var result = await client.Sql.QueryAsync(q => q.Query("select id form test"));
+                //var dataTable = new DataTable();
+                //dataTable.Columns.AddRange(result.Columns.Select(m => new DataColumn(m.Name, ReflectTypeHelper.GetTypeByEsTypeString(m.Type))).ToArray());
+                //foreach (var resultRow in result.Rows)
+                //{
+                //    var row = dataTable.NewRow();
+                //    for (var columIndex = 0; columIndex < result.Columns.Count; columIndex++)
+                //    {
+                //        row[columIndex] = Convert.ChangeType(resultRow[columIndex].As<object>(), dataTable.Columns[columIndex].DataType);
+                //        //Console.WriteLine($"Name:{colums[columIndex].Name} Type:{colums[columIndex].Type}_{dataTable.Columns[columIndex].DataType} value:{row[columIndex]}");
+                //    }
+                //    dataTable.Rows.Add(row);
+                //}
+                //var json = JsonConvert.SerializeObject(dataTable);
             }
             #endregion
         }

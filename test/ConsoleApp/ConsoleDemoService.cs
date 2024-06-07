@@ -45,209 +45,6 @@ public class ConsoleDemoService : ITransientDependency
         //netcore默认为utf-8 支持多种编码
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-
-        #region 配置文件配置加密测试
-
-        {
-            #region ConnectionStrings
-
-            var node = "ConnectionStrings";
-            Console.WriteLine($"\"{node}\":{{");
-            var dbKey = "Default";
-            var key = $"{node}:{dbKey}";
-            var conn = _configuration[key];
-            var encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //var dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
-
-            dbKey = "Portal";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            dbKey = "MySql";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            dbKey = "PgSql";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            dbKey = "SqlServer";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            dbKey = "Write";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            dbKey = "Read";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
-            Console.WriteLine($"}},");
-
-
-            #endregion
-
-            #region Redis
-
-            node = "Redis";
-            Console.WriteLine($"\"{node}\":{{");
-
-            dbKey = "Configuration";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            dbKey = "CsRedisConfiguration";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-
-            Console.WriteLine($"    \"InstanceName\": \"parakeet\",");
-            Console.WriteLine($"    \"ConnectionStrings\": \"localhost\",");
-            Console.WriteLine($"    \"DatabaseId\": 1");
-            Console.WriteLine($"}},");
-
-            #endregion
-
-            #region AuthServer
-
-            node = "AuthServer";
-            Console.WriteLine($"\"{node}\":{{");
-            Console.WriteLine($"    \"Authority\": \"https://localhost:50000\",");
-            Console.WriteLine($"    \"RequireHttpsMetadata\": true,");
-            Console.WriteLine($"    \"ClientId\": \"Parakeet_Web\",");
-
-            dbKey = "ClientSecret";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
-
-            Console.WriteLine($"    \"IsContainerized\": false");
-            Console.WriteLine($"}},");
-
-            #endregion
-
-            #region Settings
-
-            node = "Settings";
-            Console.WriteLine($"\"{node}\":{{");
-
-            Console.WriteLine($"      \"DefaultFromAddress\": \"chensq0523@foxmail.com\", //\"chenshuangquan@xywgzs1.onexmail.com\",");
-            Console.WriteLine($"      \"DefaultFromDisplayName\": \"Chensq\",");
-            Console.WriteLine($"      \"Smtp.Host\": \"smtp.qq.com\", //\"smtp.exmail.qq.com\", //");
-            Console.WriteLine($"      \"Smtp.Port\": \"587\", //\"465\", //");
-            Console.WriteLine($"      \"Smtp.UserName\": \"chensq0523@foxmail.com\",");
-
-            dbKey = "Smtp.Password";
-            key = $"{node}:{dbKey}";
-            conn = _configuration[key];
-            encryptStr = EncodingEncryptHelper.Encrypt(conn);
-            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
-            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
-            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
-            Console.WriteLine($"      \"{dbKey}\": \"{encryptStr}\",");
-
-            Console.WriteLine($"      \"Smtp.EnableSsl\": \"false\", //\"true\",//587端口在emailsender配置中不允许ssl加密  465才可以");
-            Console.WriteLine($"      \"Smtp.UseDefaultCredentials\": \"fasle\",");
-            Console.WriteLine($"      \"Abp.Mailing.DefaultFromAddress\": \"chensq0523@foxmail.com\",");
-            Console.WriteLine($"      \"Abp.Mailing.DefaultFromDisplayName\": \"Chensq\",");
-            Console.WriteLine($"      \"Abp.Mailing.Smtp.Host\": \"smtp.qq.com\", //\"smtp.exmail.qq.com\", //");
-            Console.WriteLine($"      \"Abp.Mailing.Smtp.Port\": \"587\", //\"465\", //");
-            Console.WriteLine($"      \"Abp.Mailing.Smtp.UserName\": \"chensq0523@foxmail.com\", //\"chenshuangquan@xywgzs1.onexmail.com\",");
-            Console.WriteLine($"      \"Abp.Mailing.{dbKey}\": \"{encryptStr}\",");
-            Console.WriteLine($"      \"Abp.Mailing.Smtp.EnableSsl\": \"false\", //\"true\",//587端口在emailsender配置中不允许ssl加密  465才可以");
-            Console.WriteLine($"      \"Abp.Mailing.Smtp.UseDefaultCredentials\": \"false\"");
-
-            Console.WriteLine($"}},");
-
-            #endregion
-        }
-
-        #endregion
-
-
-        #region Guid.Parse 有序Guid生成 测试
-
-        {
-            //var guidOne = _guidGenerator.Create();
-            //var guidTwo = _guidGenerator.Create();
-            //var guidThree = _guidGenerator.Create();
-
-            //Console.WriteLine($" guidOne:{guidOne}\r\n guidTwo:{guidTwo}\r\n guidThree:{guidThree}");
-            //Console.ReadKey();
-
-            //////Console.WriteLine($"{Guid.Parse("e9f8e91180e941759adf1a85944ada50")}");//Guid.Parse 可以添加上短横线
-            //var option = new AbpSequentialGuidGeneratorOptions
-            //{
-            //    //DefaultSequentialGuidType = SequentialGuidType.SequentialAtEnd//sqlserver=>SequentialAtEnd
-            //    //DefaultSequentialGuidType = SequentialGuidType.SequentialAsBinary
-            //    DefaultSequentialGuidType = SequentialGuidType.SequentialAsString//mysql=>SequentialAsString
-            //};
-            //var optionWarpper = new OptionsWrapper<AbpSequentialGuidGeneratorOptions>(option);
-            //////由timeStamp二进制转换的一定时间顺序的guid 够用约5900年，满足大部分项目
-            //var sequentialGuidGenerator = new SequentialGuidGenerator(optionWarpper);
-            ////var sequenceGuidNext1 = sequentialGuidGenerator.Create();
-            ////var sequenceGuidNext2 = sequentialGuidGenerator.Create();
-            ////var guid = SimpleGuidGenerator.Instance.Create();//=>等同于Guid.NewGuid();
-            ////Console.WriteLine($"sequenceGuidNext1:{sequenceGuidNext1}\nsequenceGuidNext2:{sequenceGuidNext2}\nsimpleGuid:{guid}");
-            ////Console.ReadKey();
-
-            ////var sqType = WorkType.设计;
-            //Console.WriteLine($"打印SequentialGuidType枚举字符串");
-            //Console.WriteLine($"{SequentialGuidType.SequentialAsString}");
-            //Console.WriteLine($"{SequentialGuidType.SequentialAsBinary}");
-            //Console.WriteLine($"{SequentialGuidType.SequentialAtEnd}");
-            ////Console.WriteLine($"sqType:{sqType}");
-            ////Console.ReadKey();
-        }
-        #endregion
-
         #region 算法
 
         #region IsAnagram 同位数练习
@@ -359,7 +156,7 @@ public class ConsoleDemoService : ITransientDependency
 
         #endregion
 
-        #region 排序 算法
+        #region 排序等基础数据结构操作算法
         {
             //BubbleSort();
 
@@ -456,6 +253,10 @@ public class ConsoleDemoService : ITransientDependency
             /// <returns></returns>
             int SubStr(string haystack, string needle)
             {
+                //字串判断 是不是可以使用splice方法 然后判断母串前后的长度差，如果有差异说明直接字串，indexof就能找出位置了
+
+                return haystack.IndexOf(needle);
+
                 if (string.IsNullOrEmpty(needle))
                 {
                     return 0;
@@ -559,27 +360,6 @@ public class ConsoleDemoService : ITransientDependency
             }
 
 
-            //目的是求最大和 而不是每个子序列的和然后排序得来 不能使用笨办法
-            int[] nums = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
-            int maxSum = FindMaximumSubarraySum(nums);
-            Console.WriteLine("Maximum contiguous sum is " + maxSum);
-
-
-            int FindMaximumSubarraySum(int[] nums)
-            {
-                int maxSoFar = nums[0];//初始化最大和为数组的第一个元素
-                int currMax = nums[0];//当前子数组和
-
-                foreach (var item in nums)
-                {
-                    currMax = Math.Max(item, currMax + item);//currMax + item 代表连续的几个数相加 转换为与前一个和相加大于自己
-                    maxSoFar = Math.Max(maxSoFar, currMax);//更新最大和
-                }
-
-                return maxSoFar;
-            }
-
-
             //KaotiFive();//Matlab 考题5 采取逆向思维
             //Console.ReadLine();
 
@@ -621,14 +401,184 @@ public class ConsoleDemoService : ITransientDependency
                 return x;
             }
 
+            //二叉树中序遍历
+            //var root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3)));
+            //var nodes = new List<int>();
+            //root.InorderTraversal(root, nodes);
+            //Console.WriteLine($"nodes 中序遍历后:{string.Join(",",nodes)}");
+            //Console.ReadLine();
+
+
         }
 
         #endregion
 
-        #region  二分搜索算法应用 题目:100房子，2个鸡蛋，鸡蛋会在某一层摔碎，找出最坏情况的最优解。
+        #region  leetCode 实践
         {
 
-            ////理解题意：最坏情况就是尝试次数最大?  最优解 看看尝试次数最大的值? 
+            ////目的是求最大和 而不是每个子序列的和然后排序得来 不能使用笨办法
+            //int[] nums = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+            //int maxSum = FindMaximumSubarraySum(nums);
+            //Console.WriteLine("Maximum contiguous sum is " + maxSum);
+
+
+            int FindMaximumSubarraySum(int[] nums)
+            {
+                int maxSoFar = nums[0];//初始化最大和为数组的第一个元素
+                int currMax = nums[0];//当前子数组和
+
+                foreach (var item in nums)
+                {
+                    currMax = Math.Max(item, currMax + item);//currMax + item 代表连续的几个数相加 转换为与前一个和相加大于自己
+                    maxSoFar = Math.Max(maxSoFar, currMax);//更新最大和
+                }
+
+                return maxSoFar;
+            }
+
+            //两数之和 转换思路为 减法 寻找剩余字段是否再之前遍历的数据里  
+            //保存之前遍历数据的数组下标 就需要一个字典了
+            //int[] arrayNum = [2, 7, 11, 15];
+            //var target = 9;
+            //Console.WriteLine($"和为{target}的下标:{string.Join(",", FindIndexs(arrayNum, target))}");
+            //Console.ReadLine();
+
+            IList<int> FindIndexs(int[] nums, int target)
+            {
+                //初始化一个字典存放数组 值与在数组中的下标数据
+                Dictionary<int, int> numIndexDic = new Dictionary<int, int>();
+                var indexs = new List<int>();
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (!numIndexDic.ContainsKey(nums[i]))
+                    {
+                        numIndexDic.Add(nums[i], i);
+                    }
+
+                    if (i > 0)
+                    {
+                        var findNum = target - nums[i];
+                        if (numIndexDic.ContainsKey(findNum))
+                        {
+                            //找到了
+                            var index = numIndexDic[findNum];
+                            indexs.Add(index);
+                            indexs.Add(i);
+                            break;
+                        }
+                    }
+
+                }
+                return indexs;
+            }
+
+
+
+            //string[] arrayStr = ["eata", "teaa", "tana", "atea", "nata", "bata"];
+            //GroupAnagrams(arrayStr);
+            //Console.ReadLine();
+            List<List<string>> GroupAnagrams(string[] strArray)
+            {
+                Dictionary<string, List<string>> dics = new Dictionary<string, List<string>>();
+
+                foreach (var str in strArray)
+                {
+                    char[] chr = str.ToCharArray();
+                    Array.Sort(chr);
+                    var key = new string(chr);
+
+                    //dic的key 对应value：存储key相同的原始单词列表，取出list，如果没有当前单词的key 则创建空list
+                    if (dics.ContainsKey(key))
+                    {
+                        dics[key].Add(str);
+                    }
+                    else
+                    {
+                        dics.Add(key, new List<string> { str });
+                    }
+                }
+                foreach (var dic in dics)
+                {
+                    Console.WriteLine($"{dic.Key}:{string.Join(",", dic.Value)}");
+                }
+                return dics.Select(x => x.Value).ToList();
+            }
+
+            //给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
+            //请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
+            //var arrayNum = new[] { 100, 4, 200, 1, 3, 2 };
+            //var lenth = LongestConsecutive(arrayNum);
+            //Console.WriteLine($"连续字序列度{lenth}");
+            //Console.ReadLine();
+            int LongestConsecutive(int[] nums)
+            {
+                var count = 1;
+                var maxCount = 1;
+                nums = nums.OrderBy(x => x).ToArray();
+                var pre = nums[0];
+                //var consecutiveList = new List<int>();
+                foreach (var num in nums)
+                {
+                    if (num - pre == 1)
+                    {
+                        //consecutiveList.Add(num);
+                        count++;
+                    }
+                    else
+                    {
+                        maxCount = Math.Max(maxCount, count);
+                        count = 1;
+                    }
+                    pre = num;
+                }
+                return maxCount;
+            }
+
+
+            ////leetcode原题：一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 10 级的台阶总共有多少种跳法
+            //var total = GetJumpStep(10);
+            //Console.ReadLine();
+
+            //递归 空间复杂度
+            int GetJumpNumber(int level)
+            {
+                var step = 0;
+                if (level == 0)
+                {
+                    step = 1;
+                }
+                if (level <= 2)
+                {
+                    step = level;
+                }
+                if (level >= 3)
+                {
+                    step = GetJumpNumber(level - 1) + GetJumpNumber(level - 2);//循环体空间复杂度不行 改用动态规划
+                }
+                return step;
+            }
+
+
+            //转换为动态规划 计算 
+            int GetJumpStep(int level)
+            {
+                var dp = new int[1, level + 1];
+
+                dp[0, 0] = 0;//没有台阶的时候是不需要跳的
+                dp[0, 1] = 1;
+                dp[0, 2] = 2;
+
+                //后面的动态计算出来
+                for (int i = 3; i <= level; i++)
+                {
+                    dp[0, i] = dp[0, i - 1] + dp[0, i - 2];
+                    Console.WriteLine($"dp[0,{i}]={dp[0, i]}");
+                }
+                return dp[0, level];
+            }
+
+            //题目:100房子，2个鸡蛋，鸡蛋会在某一层摔碎，找出最坏情况的最优解。
+            ////理解题意：最坏情况就是尝试次数最大?  最优解 最坏情况的最小尝试次数? 
             ////假设楼层数f=100，鸡蛋个数e=2   
 
             //int eggs = 2;
@@ -800,6 +750,206 @@ public class ConsoleDemoService : ITransientDependency
         #endregion
 
 
+        #region 配置文件配置加密测试
+
+        {
+            #region ConnectionStrings
+
+            var node = "ConnectionStrings";
+            Console.WriteLine($"\"{node}\":{{");
+            var dbKey = "Default";
+            var key = $"{node}:{dbKey}";
+            var conn = _configuration[key];
+            var encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //var dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
+
+            dbKey = "Portal";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            dbKey = "MySql";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            dbKey = "PgSql";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            dbKey = "SqlServer";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            dbKey = "Write";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            dbKey = "Read";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\" ");
+            Console.WriteLine($"}},");
+
+
+            #endregion
+
+            #region Redis
+
+            node = "Redis";
+            Console.WriteLine($"\"{node}\":{{");
+
+            dbKey = "Configuration";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            dbKey = "CsRedisConfiguration";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+
+            Console.WriteLine($"    \"InstanceName\": \"parakeet\",");
+            Console.WriteLine($"    \"ConnectionStrings\": \"localhost\",");
+            Console.WriteLine($"    \"DatabaseId\": 1");
+            Console.WriteLine($"}},");
+
+            #endregion
+
+            #region AuthServer
+
+            node = "AuthServer";
+            Console.WriteLine($"\"{node}\":{{");
+            Console.WriteLine($"    \"Authority\": \"https://localhost:50000\",");
+            Console.WriteLine($"    \"RequireHttpsMetadata\": true,");
+            Console.WriteLine($"    \"ClientId\": \"Parakeet_Web\",");
+
+            dbKey = "ClientSecret";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"    \"{dbKey}\": \"{encryptStr}\",");
+
+            Console.WriteLine($"    \"IsContainerized\": false");
+            Console.WriteLine($"}},");
+
+            #endregion
+
+            #region Settings
+
+            node = "Settings";
+            Console.WriteLine($"\"{node}\":{{");
+
+            Console.WriteLine($"      \"DefaultFromAddress\": \"chensq0523@foxmail.com\", //\"chenshuangquan@xywgzs1.onexmail.com\",");
+            Console.WriteLine($"      \"DefaultFromDisplayName\": \"Chensq\",");
+            Console.WriteLine($"      \"Smtp.Host\": \"smtp.qq.com\", //\"smtp.exmail.qq.com\", //");
+            Console.WriteLine($"      \"Smtp.Port\": \"587\", //\"465\", //");
+            Console.WriteLine($"      \"Smtp.UserName\": \"chensq0523@foxmail.com\",");
+
+            dbKey = "Smtp.Password";
+            key = $"{node}:{dbKey}";
+            conn = _configuration[key];
+            encryptStr = EncodingEncryptHelper.Encrypt(conn);
+            //dEncryptStr = EncodingEncryptHelper.DEncrypt(encryptStr);
+            //Console.WriteLine($"{key}={conn}\n加密后：encryptStr={encryptStr}\n解密后：dEncryptStr={dEncryptStr}");
+            //Console.WriteLine($"{key}==dEncryptStr? {conn == dEncryptStr}");
+            Console.WriteLine($"      \"{dbKey}\": \"{encryptStr}\",");
+
+            Console.WriteLine($"      \"Smtp.EnableSsl\": \"false\", //\"true\",//587端口在emailsender配置中不允许ssl加密  465才可以");
+            Console.WriteLine($"      \"Smtp.UseDefaultCredentials\": \"fasle\",");
+            Console.WriteLine($"      \"Abp.Mailing.DefaultFromAddress\": \"chensq0523@foxmail.com\",");
+            Console.WriteLine($"      \"Abp.Mailing.DefaultFromDisplayName\": \"Chensq\",");
+            Console.WriteLine($"      \"Abp.Mailing.Smtp.Host\": \"smtp.qq.com\", //\"smtp.exmail.qq.com\", //");
+            Console.WriteLine($"      \"Abp.Mailing.Smtp.Port\": \"587\", //\"465\", //");
+            Console.WriteLine($"      \"Abp.Mailing.Smtp.UserName\": \"chensq0523@foxmail.com\", //\"chenshuangquan@xywgzs1.onexmail.com\",");
+            Console.WriteLine($"      \"Abp.Mailing.{dbKey}\": \"{encryptStr}\",");
+            Console.WriteLine($"      \"Abp.Mailing.Smtp.EnableSsl\": \"false\", //\"true\",//587端口在emailsender配置中不允许ssl加密  465才可以");
+            Console.WriteLine($"      \"Abp.Mailing.Smtp.UseDefaultCredentials\": \"false\"");
+
+            Console.WriteLine($"}},");
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Guid.Parse 有序Guid生成 测试
+
+        {
+            //var guidOne = _guidGenerator.Create();
+            //var guidTwo = _guidGenerator.Create();
+            //var guidThree = _guidGenerator.Create();
+
+            //Console.WriteLine($" guidOne:{guidOne}\r\n guidTwo:{guidTwo}\r\n guidThree:{guidThree}");
+            //Console.ReadKey();
+
+            //////Console.WriteLine($"{Guid.Parse("e9f8e91180e941759adf1a85944ada50")}");//Guid.Parse 可以添加上短横线
+            //var option = new AbpSequentialGuidGeneratorOptions
+            //{
+            //    //DefaultSequentialGuidType = SequentialGuidType.SequentialAtEnd//sqlserver=>SequentialAtEnd
+            //    //DefaultSequentialGuidType = SequentialGuidType.SequentialAsBinary
+            //    DefaultSequentialGuidType = SequentialGuidType.SequentialAsString//mysql=>SequentialAsString
+            //};
+            //var optionWarpper = new OptionsWrapper<AbpSequentialGuidGeneratorOptions>(option);
+            //////由timeStamp二进制转换的一定时间顺序的guid 够用约5900年，满足大部分项目
+            //var sequentialGuidGenerator = new SequentialGuidGenerator(optionWarpper);
+            ////var sequenceGuidNext1 = sequentialGuidGenerator.Create();
+            ////var sequenceGuidNext2 = sequentialGuidGenerator.Create();
+            ////var guid = SimpleGuidGenerator.Instance.Create();//=>等同于Guid.NewGuid();
+            ////Console.WriteLine($"sequenceGuidNext1:{sequenceGuidNext1}\nsequenceGuidNext2:{sequenceGuidNext2}\nsimpleGuid:{guid}");
+            ////Console.ReadKey();
+
+            ////var sqType = WorkType.设计;
+            //Console.WriteLine($"打印SequentialGuidType枚举字符串");
+            //Console.WriteLine($"{SequentialGuidType.SequentialAsString}");
+            //Console.WriteLine($"{SequentialGuidType.SequentialAsBinary}");
+            //Console.WriteLine($"{SequentialGuidType.SequentialAtEnd}");
+            ////Console.WriteLine($"sqType:{sqType}");
+            ////Console.ReadKey();
+        }
+        #endregion
 
         #region Json测试
 

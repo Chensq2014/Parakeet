@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using Nest;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NUglify.Helpers;
 using Parakeet.Net.GrpcService;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -44,65 +45,101 @@ public class ConsoleDemoService : ITransientDependency
         //netcore默认为utf-8 支持多种编码
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+        #region 
+
+        #endregion
 
         #region 二面 业务
         {
-            //1、二维数组 存放 学生 成绩    合并学生 各科成绩  有重复的 用分号隔开
+            ////1、二维数组 存放 学生 成绩    合并学生 各科成绩  有重复的 用分号隔开
 
-            var students = new List<StudentRecord>();
+            //var students = new List<StudentRecord>();
 
-            var student1 = new StudentRecord { Name = "张三", Shuxue = "80", YuWen = "70" };
-            var student2 = new StudentRecord { Name = "李四", Shuxue = "81", YuWen = "60" };
-            var student3 = new StudentRecord { Name = "张三", YuWen = "50" };
-            students.Add(student1);
-            students.Add(student2);
-            students.Add(student3);
+            //var student1 = new StudentRecord { Name = "张三", Shuxue = "80", YuWen = "70" };
+            //var student2 = new StudentRecord { Name = "李四", Shuxue = "81", YuWen = "60" };
+            //var student3 = new StudentRecord { Name = "张三", YuWen = "50" };
+            //students.Add(student1);
+            //students.Add(student2);
+            //students.Add(student3);
 
-            var result = GetMergeRecord(students, record => record.Name);
-
-            foreach (var record in result)
-            {
-                Console.WriteLine($"{record.Name}:{record.Shuxue} {record.YuWen}");
-            }
+            //var result = GetMergeRecord(students, record => record.Name);
+            //Console.WriteLine($"第1种方式:直接使用集合group");
+            //foreach (var record in result)
+            //{
+            //    Console.WriteLine($"{record.Name}:{record.Shuxue} {record.YuWen}");
+            //}
             //Console.ReadLine();
 
-            List<StudentRecord> GetMergeRecord(List<StudentRecord> records, Func<StudentRecord, string> express)
-            {
-                return records.GroupBy(express).Select(x => new StudentRecord
-                {
-                    Name = x.Key,
-                    Shuxue = $"{string.Join(";", x.Select(y => y.Shuxue))}",
-                    YuWen = $"{string.Join(";", x.Select(y => y.YuWen))}"
-                }).ToList();
-            }
-
-            //改进：使用成员方法 动态添加学科与分数
-            student1.AddScore("Yuwen", 89);
-            student2.AddScore("Yuwen", 89);
-            student3.AddScore("Yuwen", 89);
-            student1.AddScore("Yuwen", 80);
-            student2.AddScore("Yuwen", 81);
-            student1.AddScore("Yuwen", 83);
-
-            student1.AddScore("ShuXue", 99);
-            student2.AddScore("ShuXue", 99);
-            student3.AddScore("ShuXue", 99);
-            student1.AddScore("ShuXue", 90);
-            student2.AddScore("ShuXue", 91);
-            student1.AddScore("ShuXue", 93);
+            //List<StudentRecord> GetMergeRecord(List<StudentRecord> records, Func<StudentRecord, string> express)
+            //{
+            //    return records.GroupBy(express).Select(x => new StudentRecord
+            //    {
+            //        Name = x.Key,
+            //        Shuxue = $"{string.Join(";", x.Select(y => y.Shuxue))}",
+            //        YuWen = $"{string.Join(";", x.Select(y => y.YuWen))}"
+            //    }).ToList();
+            //}
 
 
-            student1.AddScore("English", 100);
+            //student1.AddSubject(new SubjectRecord { Name = "Yuwen", Score = "70" });
+            //student1.AddSubject(new SubjectRecord { Name = "Yuwen", Score = "50" });
+            //student3.AddSubject(new SubjectRecord { Name = "Shuxue", Score = "80" });
+            //student2.AddSubject(new SubjectRecord { Name = "Shuxue", Score = "81" });
+            //student2.AddSubject(new SubjectRecord { Name = "Yuwen", Score = "60" });
+
+            //Console.WriteLine($"第1.5种方式:使用子表");
+            //foreach (var groupItem in students.GroupBy(x => x.Name).ToList())
+            //{
+            //    var student = groupItem.First();
+            //    if (groupItem.Count() > 1)
+            //    {
+            //        student.AddSubjects(groupItem.Where(x=>x.Id!=student.Id).SelectMany(x=>x.Subjects).ToList());
+            //    }
+            //    Console.WriteLine(student.GetSubjectsDisplay());
+            //}
+            //Console.ReadLine();
 
 
-            Console.WriteLine($"第二种方式:使用字典数组展示学生合并后的成绩:");
-            foreach (var student in students)
-            {
-                Console.WriteLine(student);
-            }
-            Console.ReadLine();
+
+            ////改进：使用成员方法 动态添加学科与分数
+            //student1.AddScore("Yuwen", "89");
+            //student2.AddScore("Yuwen", "89");
+            //student3.AddScore("Yuwen", "89");
+            //student1.AddScore("Yuwen", "80");
+            //student2.AddScore("Yuwen", "81");
+            //student1.AddScore("Yuwen", "83");
+
+            //student1.AddScore("ShuXue", "99");
+            //student2.AddScore("ShuXue", "99");
+            //student3.AddScore("ShuXue", "99");
+            //student1.AddScore("ShuXue", "90");
+            //student2.AddScore("ShuXue", "91");
+            //student1.AddScore("ShuXue", "93");
+
+
+            //student1.AddScore("English", "100");
+
+
+            //Console.WriteLine($"第二种方式:使用字典数组展示学生合并后的成绩:");
+
+            //var group = students.GroupBy(x => x.Name).ToList();
+            //foreach (var groupItem in group)
+            //{
+            //    var first = groupItem.First();
+            //    foreach (var student in groupItem)
+            //    {
+            //        if (student.Id != first.Id)
+            //        {
+            //            student.SubjectScores.ForEach(x => first.AddScore(x.Key, string.Join(";", x.Value)));
+            //        }
+            //    }
+            //    Console.WriteLine(first);
+            //}
+            //Console.ReadLine();
+
+
         }
-        
+
         #endregion
 
         #region 一面 算法
@@ -353,11 +390,10 @@ public class ConsoleDemoService : ITransientDependency
             /// <param name="nums"></param>
             void SelectionSort(int[] nums)
             {
-                int n = nums.Length;
-                for (int i = 0; i < n - 1; i++)
+                for (int i = 0; i < nums.Length - 1; i++)
                 {
                     int minIndex = i;
-                    for (int j = i + 1; j < n; j++)
+                    for (int j = i + 1; j < nums.Length; j++)
                     {
                         if (nums[j] < nums[minIndex])
                         {
@@ -469,12 +505,160 @@ public class ConsoleDemoService : ITransientDependency
             //Console.ReadLine();
 
 
+            //回文字符串 验证 使用堆栈呀
+            //ValidateHuiwenStr();
+            bool ValidateHuiwenStr(string huiwenStr = "abcdedcba")
+            {
+                //var stack=new Stack<char>();
+                //foreach (var item in huiwenStr)
+                //{
+                //    stack.Push(item);
+                //}
+                var result = false;
+                for (var index = 0; index < huiwenStr.Length; index++)
+                {
+                    if (index > huiwenStr.Length / 2)
+                    {
+                        break;
+                    }
+                    result = huiwenStr[index] == huiwenStr[huiwenStr.Length - index - 1];
+                }
+                return result;
+            }
+
         }
 
         #endregion
 
         #region  leetCode 实践
         {
+
+            //给你一个 非空 整数数组 nums ，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+
+            //你必须设计并实现线性时间复杂度的算法来解决此问题，且该算法只使用常量额外空间。
+
+
+            //这种思路 牛逼了 去重累加*2-非去重累加=原本数组单着这个数
+            int FindOnceNum(int[] nums)
+            {            
+                return nums.Distinct().Sum(x=>x) * 2 - nums.Sum(x => x);
+            }
+
+
+            ////给定一个字符串 s ，通过将字符串 s 中的每个字母转变大小写，我们可以获得一个新的字符串。
+
+            ////返回 所有可能得到的字符串集合 。以 任意顺序 返回输出。
+
+            //Console.WriteLine($"大小写字串:{string.Join(",", GetStrList().Distinct())}");
+            //Console.ReadLine();
+            List<string> GetStrList(List<string> result = null, string str = "a1b2", int index = 0)
+            {
+                //var dic = new Dictionary<int, List<string>>();
+                //var charDic = new Dictionary<int, List<char>>();
+                result ??= new List<string>();
+                var sbUpper = new StringBuilder(str);
+                var sbLower = new StringBuilder(str);
+                var item = str[index];
+                if (str[index] >= 'a' && str[index] <= 'z' || str[index] >= 'A' && str[index] <= 'Z')
+                {
+                    sbUpper[index] = char.ToUpper(str[index]);
+                    sbLower[index] = char.ToLower(str[index]);
+                    result.Add(sbUpper.ToString());
+                    result.Add(sbLower.ToString());
+                }
+
+                if (index + 1 < str.Length)
+                {
+                    GetStrList(result, sbUpper.ToString(), index + 1);
+                    GetStrList(result, sbLower.ToString(), index + 1);
+                }
+                return result;
+            };
+
+
+            //一个 2D 网格中的 峰值 是指那些 严格大于 其相邻格子(上、下、左、右)的元素。
+            //给你一个 从 0 开始编号 的 m x n 矩阵 mat ，其中任意两个相邻格子的值都 不相同 。找出 任意一个 峰值 mat[i][j] 并 返回其位置[i, j] 。
+            //你可以假设整个矩阵周边环绕着一圈值为 - 1 的格子。
+            //要求必须写出时间复杂度为 O(m log(n)) 或 O(n log(m)) 的算法
+
+            //理论：可以根据中间位置找 上下左右比较，如果找到比自己大的就直接把位置切换到大的一个数 递归 上下左右，一直找到第一个返回即可
+
+
+
+            //int[,] mattrix = { { 10, 20, 15 }, { 21, 30, 14 }, { 7, 16, 32 } };//{ { 1, 4 }, { 3, 2 } };
+
+            //FindPeakGrid(mattrix);
+            //Console.ReadLine();
+            //0(m*n) 去找
+            int[,] FindPeakGrid(int[,] mat)
+            {
+                int m = mat.GetLength(0);
+                var n = mat.GetLength(1);
+                var newMat = new int[m + 2, n + 2];
+                for (var i = 0; i < newMat.GetLength(0); i++)
+                {
+                    for (var j = 0; j < newMat.GetLength(1); j++)
+                    {
+                        if (i == 0 || j == 0 || i == m + 1 || j == n + 1)
+                        {
+                            newMat[i, j] = -1;
+                        }
+                        else
+                        {
+                            newMat[i, j] = mat[i - 1, j - 1];
+                        }
+                    }
+                }
+
+                Console.WriteLine();
+                Console.WriteLine($"打印填充默认数据的二维数组：");
+                var displayStr = string.Empty;
+                for (int i = 0; i < newMat.GetLength(0); i++)
+                {
+                    for (int j = 0; j < newMat.GetLength(1); j++)
+                    {
+                        Console.Write(newMat[i, j] + " ");
+                        if (!(i == 0 || j == 0 || i == m + 1 || j == n + 1))
+                        {
+                            if (newMat[i, j] > newMat[i - 1, j] && newMat[i, j] > newMat[i, j - 1] && newMat[i, j] > newMat[i + 1, j] && newMat[i, j] > newMat[i, j + 1])
+                            {
+                                displayStr = $"{displayStr} [{i - 1},{j - 1}]:{newMat[i, j]}";
+
+                                //找到就可以直接return
+                            }
+                            //if (newMat[i, j] > newMat[i-1,j]+ newMat[i, j-1]+ newMat[i+1, j]+ newMat[i, j+ 1])
+                            //{
+                            //    displayStr = $"{displayStr} [{i - 1},{j - 1}]:{newMat[i, j]}";
+
+                            //    //找到就可以直接return
+                            //}
+                        }
+                    }
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine();
+                Console.WriteLine($"原二维数组：");
+
+                for (int i = 0; i < mat.GetLength(0); i++)
+                {
+                    for (int j = 0; j < mat.GetLength(1); j++)
+                    {
+                        Console.Write(mat[i, j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+
+
+
+                Console.WriteLine();
+                Console.WriteLine($"打印原二维数组满足条件的下标与值：");
+                Console.WriteLine($"{displayStr}");
+
+
+                return newMat;
+            }
+
 
             ////目的是求最大和 而不是每个子序列的和然后排序得来 不能使用笨办法
             //int[] nums = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };

@@ -182,8 +182,12 @@ public class ConsoleDemoService : ITransientDependency
                     foreach (var letter in t)
                     {
                         var index = s.IndexOf(letter);
-                        preIndexs.Add(index);
                         result = !preIndexs.Contains(index);
+                        if (!result)
+                        {
+                            break;
+                        }
+                        preIndexs.Add(index);
                     }
 
 
@@ -194,6 +198,11 @@ public class ConsoleDemoService : ITransientDependency
                     foreach (var letter in s)
                     {
                         var index = t.IndexOf(letter);
+                        if (index == -1)
+                        {
+                            result = false;
+                            break;
+                        }
                         t = t.Remove(index, 1);
                     }
                     result = t.Length == 0;
@@ -767,6 +776,7 @@ public class ConsoleDemoService : ITransientDependency
                     {
                         //consecutiveList.Add(num);
                         count++;
+                        maxCount = Math.Max(maxCount, count);
                     }
                     else
                     {
@@ -789,7 +799,7 @@ public class ConsoleDemoService : ITransientDependency
                 var step = 0;
                 if (level == 0)
                 {
-                    step = 1;
+                    step = 0;
                 }
                 if (level <= 2)
                 {
@@ -806,19 +816,19 @@ public class ConsoleDemoService : ITransientDependency
             //转换为动态规划 计算 
             int GetJumpStep(int level)
             {
-                var dp = new int[1, level + 1];
+                var dp = new int[level + 1];
 
-                dp[0, 0] = 0;//没有台阶的时候是不需要跳的
-                dp[0, 1] = 1;
-                dp[0, 2] = 2;
+                dp[0] = 0;//没有台阶的时候是不需要跳的
+                dp[1] = 1;
+                dp[2] = 2;
 
                 //后面的动态计算出来
                 for (int i = 3; i <= level; i++)
                 {
-                    dp[0, i] = dp[0, i - 1] + dp[0, i - 2];
-                    Console.WriteLine($"dp[0,{i}]={dp[0, i]}");
+                    dp[i] = dp[i - 1] + dp[i - 2];
+                    Console.WriteLine($"dp[{i}]={dp[i]}");
                 }
-                return dp[0, level];
+                return dp[level];
             }
 
             //题目:100房子，2个鸡蛋，鸡蛋会在某一层摔碎，找出最坏情况的最优解。

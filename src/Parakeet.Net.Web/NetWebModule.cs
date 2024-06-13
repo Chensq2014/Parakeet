@@ -523,7 +523,6 @@ public class NetWebModule : AbpModule
         var configuration = context.Services.GetConfiguration();
 
 
-
         #region 客户端 密码模式 注意 如果要给第三方使用token 就不要再AddCookie()【如果AddCookie 第三方Header里面就必须传递cookie】
 
         ////通过添加AddAuthentication注册了AuthenticationService, AuthenticationHandlerProvider,AuthenticationSchemeProvider这三个对象
@@ -629,20 +628,6 @@ public class NetWebModule : AbpModule
         ////});
         #endregion
 
-        #region 回退策略FallbackPolicy 默认为 null
-
-        //// 未提供IAuthorizeData时CombineAsync(IAuthorizationPolicyProvider, IEnumerable<IAuthorizeData>)使用的回退授权策略。
-        //// 因此，如果资源没有IAuthorizeData实例，AuthorizationMiddleware 将使用回退策略。
-        //// 如果资源具有任何IAuthorizeData， 则将评估它们而不是回退策略。默认情况下，回退策略为 null，
-        //// 除非您的管道中有 AuthorizationMiddleware，否则通常不会产生任何影响。
-        //// 默认IAuthorizationService不以任何方式使用它。
-        //context.Services.AddAuthorization(options =>
-        //{
-        //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        //        .RequireAuthenticatedUser()
-        //        .Build();
-        //});
-        #endregion
 
 
         #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
@@ -661,12 +646,6 @@ public class NetWebModule : AbpModule
     {
         Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureAuthentication...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         var configuration = context.Services.GetConfiguration();
-
-        #region 最基础认证--自定义Handler 只要Scheme【解决方案不同】 就可以多个Scheme
-        ////services.AddAuthentication().AddCookie();-->
-        ////services.AddAuthenticationCore();//本质
-        //context.Services.AddAuthenticationCore(options => options.AddScheme<CustomHandler>("CustomScheme", "DemoScheme"));
-        #endregion
 
 
         #region 授权:基于角色||策略授权
@@ -701,6 +680,22 @@ public class NetWebModule : AbpModule
         //context.Services.AddSingleton<IAuthorizationHandler, OtherMailHandler>();
         //context.Services.AddSingleton<IAuthorizationHandler, QQMailHandler>();
 
+        #endregion
+
+
+        #region 回退策略FallbackPolicy 默认为 null
+
+        //// 未提供IAuthorizeData时CombineAsync(IAuthorizationPolicyProvider, IEnumerable<IAuthorizeData>)使用的回退授权策略。
+        //// 因此，如果资源没有IAuthorizeData实例，AuthorizationMiddleware 将使用回退策略。
+        //// 如果资源具有任何IAuthorizeData， 则将评估它们而不是回退策略。默认情况下，回退策略为 null，
+        //// 除非您的管道中有 AuthorizationMiddleware，否则通常不会产生任何影响。
+        //// 默认IAuthorizationService不以任何方式使用它。
+        //context.Services.AddAuthorization(options =>
+        //{
+        //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //        .RequireAuthenticatedUser()
+        //        .Build();
+        //});
         #endregion
 
 

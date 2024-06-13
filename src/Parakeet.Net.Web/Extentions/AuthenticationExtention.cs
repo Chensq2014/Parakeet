@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
@@ -31,66 +32,66 @@ namespace Parakeet.Net.Web.Extentions
                 {
                     options.IsDynamicClaimsEnabled = true;
                 });
-                //.AddAuthentication(options =>
-                //{
-                //    options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//替换为你的默认认证方案名称
-                //    options.DefaultChallengeScheme = "oidc";
-                //    options.DefaultSignInScheme = "oidc";
-                //})
-                ////.AddCookie("Cookies", options =>
-                ////{
-                ////    options.ExpireTimeSpan = TimeSpan.FromDays(365);
-                ////    options.CheckTokenExpiration();
-                ////})
-                //.AddAbpOpenIdConnect("oidc", options =>
-                //{
-                //    options.Authority = configuration["AuthServer:Authority"];
-                //    options.RequireHttpsMetadata = configuration.GetValue<bool>("AuthServer:RequireHttpsMetadata");
-                //    options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+            //.AddAuthentication(options =>
+            //{
+            //    options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//替换为你的默认认证方案名称
+            //    options.DefaultChallengeScheme = "oidc";
+            //    options.DefaultSignInScheme = "oidc";
+            //})
+            ////.AddCookie("Cookies", options =>
+            ////{
+            ////    options.ExpireTimeSpan = TimeSpan.FromDays(365);
+            ////    options.CheckTokenExpiration();
+            ////})
+            //.AddAbpOpenIdConnect("oidc", options =>
+            //{
+            //    options.Authority = configuration["AuthServer:Authority"];
+            //    options.RequireHttpsMetadata = configuration.GetValue<bool>("AuthServer:RequireHttpsMetadata");
+            //    options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
 
-                //    options.ClientId = configuration["AuthServer:ClientId"];
-                //    options.ClientSecret = configuration["AuthServer:ClientSecret"];
-                //    //options.ClientSecret = EncodingEncryptHelper.DEncrypt(configuration["AuthServer:ClientSecret"]);
+            //    options.ClientId = configuration["AuthServer:ClientId"];
+            //    options.ClientSecret = configuration["AuthServer:ClientSecret"];
+            //    //options.ClientSecret = EncodingEncryptHelper.DEncrypt(configuration["AuthServer:ClientSecret"]);
 
-                //    options.UsePkce = true;
-                //    options.SaveTokens = true;
-                //    options.GetClaimsFromUserInfoEndpoint = true;
-                //    //options.ReturnUrlParameter=//options.RedirectUri = "https://your-app-url/signin-oidc";
-                //    //options.SignedOutRedirectUri//options.PostLogoutRedirectUri = "https://your-app-url/logout";
+            //    options.UsePkce = true;
+            //    options.SaveTokens = true;
+            //    options.GetClaimsFromUserInfoEndpoint = true;
+            //    //options.ReturnUrlParameter=//options.RedirectUri = "https://your-app-url/signin-oidc";
+            //    //options.SignedOutRedirectUri//options.PostLogoutRedirectUri = "https://your-app-url/logout";
 
-                //    options.Scope.Add("openid");
-                //    options.Scope.Add("profile");
-                //    options.Scope.Add("roles");
-                //    options.Scope.Add("email");
-                //    options.Scope.Add("phone");
-                //    options.Scope.Add("parakeet");
-                //})
-                ////.AddJwtBearer("Bearer", options =>
-                ////{
-                ////    options.TokenValidationParameters = new TokenValidationParameters
-                ////    {
-                ////        // The signing key must match!
-                ////        //ValidateIssuerSigningKey = true,
-                ////        //IssuerSigningKey = ,
-                ////        // Validate the JWT Issuer (iss)claim
-                ////        ValidateIssuer = true,
-                ////        ValidIssuer = "Issuer",
-                ////        // Validate the JWT Audience (aud) claim
-                ////        ValidateAudience = true,
-                ////        ValidAudience = "Audience",
-                ////        // Validate the token expiry
-                ////        ValidateLifetime = true,
-                ////        // If you want to allow a certain amount of clock drift, set that here
-                ////        ClockSkew = TimeSpan.Zero,
-                ////        RequireExpirationTime = true
-                ////    };
-                ////    options.Events = new JwtBearerEvents
-                ////    {
-                ////        OnMessageReceived = OnJwtBearerMessageReceived,
-                ////        OnAuthenticationFailed = OnJwtBearerAuthenticationFailed
-                ////    };
-                ////})
-                //.AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(), CommonConsts.AzureAdSectionName, OpenIdConnectDefaults.AuthenticationScheme);
+            //    options.Scope.Add("openid");
+            //    options.Scope.Add("profile");
+            //    options.Scope.Add("roles");
+            //    options.Scope.Add("email");
+            //    options.Scope.Add("phone");
+            //    options.Scope.Add("parakeet");
+            //})
+            ////.AddJwtBearer("Bearer", options =>
+            ////{
+            ////    options.TokenValidationParameters = new TokenValidationParameters
+            ////    {
+            ////        // The signing key must match!
+            ////        //ValidateIssuerSigningKey = true,
+            ////        //IssuerSigningKey = ,
+            ////        // Validate the JWT Issuer (iss)claim
+            ////        ValidateIssuer = true,
+            ////        ValidIssuer = "Issuer",
+            ////        // Validate the JWT Audience (aud) claim
+            ////        ValidateAudience = true,
+            ////        ValidAudience = "Audience",
+            ////        // Validate the token expiry
+            ////        ValidateLifetime = true,
+            ////        // If you want to allow a certain amount of clock drift, set that here
+            ////        ClockSkew = TimeSpan.Zero,
+            ////        RequireExpirationTime = true
+            ////    };
+            ////    options.Events = new JwtBearerEvents
+            ////    {
+            ////        OnMessageReceived = OnJwtBearerMessageReceived,
+            ////        OnAuthenticationFailed = OnJwtBearerAuthenticationFailed
+            ////    };
+            ////})
+            //.AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(), CommonConsts.AzureAdSectionName, OpenIdConnectDefaults.AuthenticationScheme);
 
 
             #region IdentityServer
@@ -166,7 +167,9 @@ namespace Parakeet.Net.Web.Extentions
 
             #endregion
 
-
+            //替换IClaimsTransformation 默认实现
+            //context.Services.Replace(ServiceDescriptor.Singleton<IAuthenticationHandler, CustomAuthenticationHandler>());
+            context.Services.Replace(ServiceDescriptor.Singleton<IClaimsTransformation, CustomNoopClaimsTransformation>());
         }
 
 

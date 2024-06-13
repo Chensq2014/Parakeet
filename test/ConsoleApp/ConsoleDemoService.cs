@@ -45,7 +45,66 @@ public class ConsoleDemoService : ITransientDependency
         //netcore默认为utf-8 支持多种编码
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-        #region 
+        #region 三面 项目信息+算法
+        //给你一个字符串 s，找到 s 中最长的回文子串。
+        //示例 1：
+        //输入：s = "babad"
+        //输出："bab"
+        //解释："aba" 同样是符合题意的答案。
+        //示例 2：
+        //输入：s = "cbbd"
+        //输出："bb"
+
+        //思路： 从中间往两边找  中间这个数下标为（长度为奇）s.length/2  或者(长度为偶数)s.length/2 ，s.length/2-1
+
+
+
+        ////这个方法只适用于 str参数全部为回文时 
+        //int LongestPalindrome(string str = "babad")
+        //{
+
+        //    var maxLenth = 0;
+        //    if (str.Length == 1)
+        //    {
+        //        maxLenth = 1;
+        //        return maxLenth;
+        //    }
+        //    var length = str.Length;
+        //    if (length % 2 == 0)
+        //    {
+        //        //偶数长度 两个下标分别往不同方向前进，比较两个方向的字符串是否相等，相等说明就是回文子串,直到找到不相等的为止
+        //        var leftIndex = length / 2 - 1;
+        //        var rightIndex = length / 2;
+
+        //        while (str[leftIndex] == str[rightIndex])
+        //        {
+        //            maxLenth++;
+        //            leftIndex--;
+        //            rightIndex++;
+        //            if (leftIndex < 0 || rightIndex >= length)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //奇数
+        //        var middleIndex = length / 2;
+        //        var moveIndex = 1;
+        //        while (str[middleIndex - moveIndex] == str[middleIndex + moveIndex])
+        //        {
+        //            maxLenth++;
+        //            moveIndex++;
+        //            if (middleIndex - moveIndex < 0 || middleIndex + moveIndex >= length)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    return maxLenth;
+        //}
+
 
         #endregion
 
@@ -549,8 +608,8 @@ public class ConsoleDemoService : ITransientDependency
 
             //这种思路 牛逼了 去重累加*2-非去重累加=原本数组单着这个数
             int FindOnceNum(int[] nums)
-            {            
-                return nums.Distinct().Sum(x=>x) * 2 - nums.Sum(x => x);
+            {
+                return nums.Distinct().Sum(x => x) * 2 - nums.Sum(x => x);
             }
 
 

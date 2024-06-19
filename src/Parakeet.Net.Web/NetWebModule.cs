@@ -1229,20 +1229,6 @@ public class NetWebModule : AbpModule
         #endregion
         //app.UseHttpsRedirection();
 
-        #region Cookie 策略中间件
-        //Cookie 策略中间件 (UseCookiePolicy) 使应用符合欧盟一般数据保护条例 (GDPR) 规定
-        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、策略中间件 (UseCookiePolicy) 使应用符合欧盟一般数据保护条例 (GDPR) 规定....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-        #endregion
-        app.UseCookiePolicy();
-
-        #region 会话中间件
-        //会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 
-        //如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件
-
-        //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
-        #endregion
-        app.UseSession();
-
         ////自定义Use中间件逻辑
         //app.Use(next =>
         //{
@@ -1300,6 +1286,20 @@ public class NetWebModule : AbpModule
         //            "Cache-Control", $"public, max-age=604800");
         //    }
         //});
+
+        #region Cookie 策略中间件
+        //Cookie 策略中间件 (UseCookiePolicy) 使应用符合欧盟一般数据保护条例 (GDPR) 规定
+        Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、策略中间件 (UseCookiePolicy) 使应用符合欧盟一般数据保护条例 (GDPR) 规定....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        #endregion
+        app.UseCookiePolicy();
+
+        #region 会话中间件 最好放静态文件之后 因为只有动态数据才需要session
+        //会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 
+        //如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件
+
+        //Log.Warning($"{{0}}", $"{CacheKeys.LogCount++}、会话中间件 (UseSession) 建立和维护会话状态(内部直接设置cookie  key value相关 设置，更新有效期的方式达到存储seesion会话)。 如果应用使用会话状态，请在 Cookie 策略中间件之后和 MVC 中间件之前调用会话中间件....Configure中的组装管道流程日志 线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
+        #endregion
+        app.UseSession();
 
         #region 用于路由请求的路由中间件
 

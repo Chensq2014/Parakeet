@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\..\Common\Config\common.props" />
+  <Import Project="..\Common\Config\common.props" />
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Common.Shared\Common.Shared.csproj" />
+    <ProjectReference Include="..\Common\Common.Shared\Common.Shared.csproj" />
   </ItemGroup>
 
 </Project>

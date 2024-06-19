@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\..\..\Common\Config\common.props" />
+	<Import Project="..\Common\Config\common.props" />
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -9,8 +9,8 @@
 
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
-		<ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
+		<ProjectReference Include="..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
+		<ProjectReference Include="..\Common\Common\Common.csproj" />
 		<ProjectReference Include="..\Parakeet.Net.Application\Parakeet.Net.Application.csproj" />
 		<ProjectReference Include="..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
 	</ItemGroup>

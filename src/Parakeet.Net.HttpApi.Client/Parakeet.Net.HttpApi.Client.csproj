@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\..\Common\Config\common.props" />
+  <Import Project="..\Common\Config\common.props" />
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Common.Shared\Common.Shared.csproj" />
+    <ProjectReference Include="..\Common\Common.Shared\Common.Shared.csproj" />
     <ProjectReference Include="..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
   </ItemGroup>
 

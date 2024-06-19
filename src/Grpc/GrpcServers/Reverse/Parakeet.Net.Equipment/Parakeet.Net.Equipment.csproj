@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="..\..\..\..\..\..\Common\Config\common.props" />
+	<Import Project="..\..\..\..\Common\Config\common.props" />
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
@@ -20,9 +20,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\..\..\Common\Common.Entities\Common.Entities.csproj" />
+		<ProjectReference Include="..\..\..\..\Common\Common.Entities\Common.Entities.csproj" />
 		<ProjectReference Include="..\..\..\..\Parakeet.Net.Application.Contracts\Parakeet.Net.Application.Contracts.csproj" />
-		<ProjectReference Include="..\..\..\..\..\..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
+		<ProjectReference Include="..\..\..\..\Common\Core\Common.RabbitMQModule\Common.RabbitMQModule.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -523,6 +523,14 @@ public class NetWebModule : AbpModule
         var configuration = context.Services.GetConfiguration();
 
 
+        #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
+
+        //注意:如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
+        //你应该确保只在应用程序的启动过程中调用AddAuthentication一次，并在该调用中配置所有必要的认证方案和选项。
+        //如果你需要添加多个认证处理器或方案，你可以使用AddAuthentication的链式调用方法来配置它们，而不是多次调用AddAuthentication。
+        context.AddCommonAuthentication();
+        #endregion
+
         #region 客户端 密码模式 注意 如果要给第三方使用token 就不要再AddCookie()【如果AddCookie 第三方Header里面就必须传递cookie】
 
         ////通过添加AddAuthentication注册了AuthenticationService, AuthenticationHandlerProvider,AuthenticationSchemeProvider这三个对象
@@ -630,11 +638,6 @@ public class NetWebModule : AbpModule
 
 
 
-        #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
-
-        //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
-        context.AddCommonAuthentication();
-        #endregion
     }
 
 

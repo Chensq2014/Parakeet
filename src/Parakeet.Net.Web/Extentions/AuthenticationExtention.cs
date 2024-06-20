@@ -23,7 +23,9 @@ namespace Parakeet.Net.Web.Extentions
     {
         public static void AddCommonAuthentication(this ServiceConfigurationContext context)
         {
-            //注意 如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
+            //注意:如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
+            //你应该确保只在应用程序的启动过程中调用AddAuthentication一次，并在该调用中配置所有必要的认证方案和选项。
+            //如果你需要添加多个认证处理器或方案，你可以使用AddAuthentication的链式调用方法来配置它们，而不是多次调用AddAuthentication。
             var configuration = context.Services.GetConfiguration();
 
             context.Services

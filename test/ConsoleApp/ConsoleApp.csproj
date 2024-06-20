@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\src\Common\Config\common.props" />
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+	  <RootNamespace>Parakeet.Net.ConsoleApp</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parakeet.Net.Application.Tests\Parakeet.Net.Application.Tests.csproj" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="Protos\CustomMath.proto" GrpcServices="Client" />
+		<Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.62.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.26.1" />
+		<PackageReference Include="Grpc" Version="2.46.6" />
+		<PackageReference Include="Grpc.Tools" Version="2.63.0" PrivateAssets="All" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,147 @@
+﻿
+<div id="grid-area-treeList" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        function initAreaTreeGrid() {
+            var config = dxConfig.treeList('/api/parakeet/location-area/area-tree-list');
+            config.dataSource = DevExpress.data.AspNet.createStore({
+                key: 'id',
+                loadUrl: '/api/parakeet/location-area/area-tree-list',
+                insertUrl: '/api/parakeet/location-area/area-tree-list',
+                updateUrl: '/api/parakeet/location-area/area-tree-list',
+                deleteUrl: '/api/parakeet/location-area/area-tree-list'
+            });
+            config.levelSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?name=DeepLevelType');
+            var areaParents = syncGet('/api/parakeet/locationArea/parent-select-list?id=');
+            config.areaParentSelects = dxConfig.selectBox(areaParents);
+            //config.refreshFunc = arguments.callee; //initAreaTreeGrid 函数本身
+            config.gridId = 'grid-area-treeList';
+            config.gridSelector = '#' + config.gridId;
+            config.editing.allowAdding = true;
+            config.editing.allowDeleting = true;
+            config.editing.allowUpdating = true;
+            config.searchPanel.visible = true;
+            //config.editing.mode = 'batch';
+            config.editing.texts = { addRow: '添加根节点' };
+            config.columns = [
+                {
+                    dataField: 'id',
+                    caption: '序号',
+                    sortIndex: 0,
+                    sortOrder: 'asc',
+                    visible: false
+                },
+                {
+                    dataField: 'name',
+                    caption: '名称',
+                    minWidth: 200,
+                    validationRules: [
+                        { type: 'required', message: '名称为必填项' },
+                        {
+                            type: 'pattern',
+                            pattern: /^[a-zA-Z\u4e00-\u9fa5]+[a-zA-Z0-9\u4e00-\u9fa5_]*$/i, // /^[A-Za-z0-9\s]+$/i,
+                            message: '名称只能由中文、字母、数字和下划线组成且以中文或字母开头'
+                        },
+                        {
+                            type: 'fieldsUnique',
+                            checkUrl: '/api/parakeet/location-area/check-fields',
+                            message: '同级节点名称重复',
+                            fields: ['ParentId']
+                        }
+                    ]
+                },
+                {
+                    dataField: 'code',
+                    caption: '编码',
+                    minWidth: 100,
+                    validationRules: [
+                        { type: 'required', message: '编码必填项' },
+                        {
+                            type: 'pattern',
+                            pattern: /^[0-9]*$/i,
+                            message: '编码只能由数字构成'
+                        },
+                        { type: 'fieldUnique', checkUrl: '/api/parakeet/location-area/check-field', message: '编码重复' }
+                    ]
+                },
+                //{
+                //    dataField: 'parentCode',
+                //    caption: '父级编码',
+                //    minWidth: 100,
+                //    allowEditing: false
+                //},
+                {
+                    dataField: 'level',
+                    caption: '层级',
+                    minWidth: 50,
+                    allowEditing: false,
+                    lookup: config.levelSelects
+                },
+                {
+                    dataField: 'parentId',
+                    caption: '父级',
+                    minWidth: 100,
+                    sortIndex: 0,
+                    sortOrder: 'asc',
+                    allowEditing: false,
+                    lookup: config.areaParentSelects
+                }
+            ];
+            config.onInitNewRow = function (e) {
+                e.data.parentId = $.isEmptyObject(e.data.parentId) ? null : e.data.parentId;
+            };
+
+            //config.onEditingStart = function (e) {
+            //    if (e.column.dataField === 'parentId') {
+            //        e.column.lookup.dataSource = syncGet('/api/parakeet/locationArea/parent-select-list?id=' + e.data.id);//, { id: e.data.id }
+            //        //if (!e.data.parentId) {
+            //        //    e.cancel = true;
+            //        //} else {
+            //        //}
+            //    }
+            //    //e.component.selectRowsByIndexes(e.component.getRowIndexByKey(e.key));
+            //};
+
+            //config.onEditorPreparing = function (e) {
+            //    debugger;
+            //    //// treelist
+            //    //if (e.row && e.row.node) {
+            //    //    e.row.data.Level = e.row.node.level;
+            //    //    //if (e.dataField === "InputTaxRate" && e.row.node.children.length > 0) {
+            //    //    //    //e.editorElement.parent().parent().attr("read-only", true);
+            //    //    //    e.cancel = false;
+            //    //    //}
+            //    //};
+            //};
+
+            //config.onRowValidating = function (e) {
+            //    var rowData = e.oldData ? e.oldData : e.newData;
+            //    if (!rowData.ParentId) {
+            //        if (!rowData.Code) {
+            //            e.isValid = false;
+            //            e.errorText = '必须填写根级节点编码';
+            //        }
+            //    }
+            //};
+
+            //config.onToolbarPreparing = function (e) {
+            //    //var items = e.toolbarOptions.items;
+            //    $.each(e.toolbarOptions.items, function (index, item) {
+            //        if (item.name === 'addRowButton') {
+            //        }
+            //    });
+            //};
+
+            gridSugar(config);
+            config.component = $(config.gridSelector).dxTreeList(config).dxTreeList('instance');
+        }
+
+        $(function () {
+            initAreaTreeGrid();
+        });
+
+    </script>
+}
+

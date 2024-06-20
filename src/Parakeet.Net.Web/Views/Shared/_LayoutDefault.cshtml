@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="小鹦鹉工作室" />
+    <meta name="description" content="致力于复杂业务系统定制！咨询服务热线:17772433927" />
+    <meta name="author" content="小鹦鹉工作室" />
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.png" />
+    <title>NetCore</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Bootstrap Core CSS  v4.3.1-->
+    @*<link href="~/css/devextreme/bootstrap.css" rel="stylesheet" />*@
+    <!-- Bootstrap Core CSS v3.3.7-->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="~/lib/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="~/css/colors/default.css" id="theme" rel="stylesheet">
+    <!-- devextreme CSS -->
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    <!-- 谷歌字体 CSS -->
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <!-- animation CSS -->
+    <link href="~/css/animateDefault.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/css/styleDefault.css" rel="stylesheet">
+    @await RenderSectionAsync("styles", false)
+
+    <!-- jQuery 2.1.4-->
+    <!--<script src="~/lib/jquery/dist/jquery.min.js"></script>-->
+    <!-- jQuery 3.4.1-->
+    <script src="~/js/devextreme/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript v4.3.1-->
+    <!--<script src="~/js/devextreme/bootstrap.js"></script>-->
+    <!-- Bootstrap Core JavaScript v3.3.7-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- JavaScripts modernizr 放在head标签内，兼容Ie -->
+    <script src="~/js/modernizr.js"></script>
+</head>
+
+<body class="fix-header">
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- End Preloader -->
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Topbar header - style you can find in pages.scss -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="/">
+                        <!-- Logo icon image, you can use font-icon also -->
+                        <b>
+                            <!--This is dark logo icon-->
+                            <img src="~/images/admin-logo.png" alt="home" class="dark-logo" />
+                            <!--This is light logo icon-->
+                            <img src="~/images/admin-logo-dark.png" alt="home" class="light-logo" />
+                        </b>
+                        <!-- Logo text image you can use text also -->
+                        <span class="hidden-xs">
+                            <!--This is dark logo text-->
+                            <img src="~/images/admin-text.png" alt="home" class="dark-logo" />
+                            <!--This is light logo text-->
+                            <img src="~/images/admin-text-dark.png" alt="home" class="light-logo" />
+                        </span>
+                    </a>
+                </div>
+                <!-- /Logo -->
+                <ul class="nav navbar-top-links navbar-left">
+                    <li><a class="open-close waves-effect waves-light"><i class="ti-menu"></i></a></li>
+                </ul>
+                @await Component.InvokeAsync("TopNavigation")
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <div class="navbar-default sidebar" role="navigation">
+            @await Component.InvokeAsync("MenuNavigation")
+        </div>
+        <!-- End Left Sidebar -->
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!--Main Region-->
+                @RenderBody()
+                <!--End Main Region-->
+                <!-- Right Sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> 皮肤面板 <span><i class="ti-close right-side-toggle"></i></span> </div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>浅色侧边栏</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" data-theme="gray" class="yellow-theme">3</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme">4</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                                <li><b>深色侧边栏</b></li>
+                                <br />
+                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                                <li><a href="javascript:void(0)" data-theme="gray-dark" class="yellow-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme working">12</a></li>
+                            </ul>
+                            <ul class="m-t-20 all-demos">
+                                <li><b>期待更多模板...</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Right Sidebar -->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> @DateTime.Now.Year &copy; 小鹦鹉工作室 </footer>
+        </div>
+        <!-- End Page Content -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Menu Plugin JavaScript -->
+    <script src="~/lib/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--Style Switcher -->
+    <script src="~/lib/styleswitcher/jQuery.style.switcher.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="~/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/js/waves.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="~/js/custom.js"></script>
+
+    <!-- DevExtreme cldr & globalize jszip all mvc data SCRIPTS  -->
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+    <script src="~/js/devextreme/jszip.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/vectormap-data/world.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js" asp-append-version="true"></script>
+
+    <!-- DevExtreme Localization SCRIPTS  本地化-->
+    <script src="~/js/devextreme/localization/dx.messages.zh.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/localization/supplemental.js" asp-append-version="true"></script>
+    <script src="~/js/devextreme/localization/zh.js" asp-append-version="true"></script>
+
+    <!-- DevExtreme Extension SCRIPTS  devextreme扩展-->
+    <script src="~/plugins/devextreme/dx.extension.js" asp-append-version="true"></script>
+    <script src="~/plugins/devextreme/dx.page.extension.js" asp-append-version="true"></script>
+    <script src="~/plugins/devextreme/common.js" asp-append-version="true"></script>
+
+    <!-- dxDragFiles SCRIPTS  -->
+    <script src="~/plugins/drags/dxDragFiles.js" asp-append-version="true"></script>
+
+    <!-- jquery-validation SCRIPTS 验证-->
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- site SCRIPTS  -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- abp -->
+    <script src="~/libs/abp/utils/abp-utils.umd.min.js"></script>
+    <script src="~/libs/abp/core/abp.js"></script>
+    <script src="~/Abp/ApplicationConfigurationScript"></script>
+    <script src="~/Abp/ServiceProxyScript"></script>
+    @await RenderSectionAsync("scripts", false)
+</body>
+</html>

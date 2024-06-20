@@ -1,0 +1,508 @@
+﻿
+<div id="grid-section" class="show-grid"></div>
+@section scripts
+{
+<script type='text/javascript'>
+
+    $(function() {
+
+        var chargeTypeSelects = dxConfig.selectEnumBox('/api/parakeet/enum/enum-type-item-key-name-descriptions?Name=ChargeType');
+        initSectionGrid();
+
+        function initSectionGrid() {
+            var config = dxConfig.editGrid('/api/parakeet/section');
+            config.gridId = 'grid-section';
+            config.gridSelector = '#' + config.gridId;
+            config.editing.allowAdding = true;
+            config.editing.allowDeleting = true;
+            config.editing.allowUpdating = true;
+            config.searchPanel.visible = true;
+            config.groupPanel = {
+                visible: true,
+                emptyPanelText: '拖动列头到此分组'
+            };
+            config.grouping = {
+                autoExpandAll: true
+            };
+            //config.remoteOperations.summary = false;
+            //config.remoteOperations.grouping = true;
+            //config.remoteOperations.groupPaging = true;
+            //config.remoteOperations= {
+            //    summary: true,
+            //    grouping: true,
+            //    groupPaging: false,
+            //    paging: false,
+            //    sorting: false,
+            //    filtering: false
+            //};
+
+            config.columns = [
+                {
+                    dataField: 'id',
+                    caption: 'Id',
+                    allowEditing: false,
+                    visible: false //, dataType: 'Guid'
+                },
+                {
+                    dataField: 'name',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowGrouping: true,
+                    caption: '名称',
+                    validationRules: [
+                        { type: 'required', message: '名称为必填项' },
+                        //{ type: 'pattern', pattern: '^[^0-9]+$', message: '房号避免使用纯数字' },
+                        { type: 'fieldUnique', checkUrl: '/api/parakeet/section/check-field', message: '名称重复' }
+                        //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/house/check-fields', fields: ['SectionId'], message: '小区名重复' }
+                    ]
+                },
+                {
+                    dataField: 'locationAreaId',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowGrouping: true,
+                    //allowEditing: false,
+                    caption: '区域',
+                    lookup: dxConfig.selectBox('/api/parakeet/location-area/location-area-select-box?cancelValid=true'),
+                    validationRules: [{ type: "required", message: "区域必填项" }]
+                },
+                {
+                    dataField: 'projectId',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowGrouping: true,
+                    //allowEditing: false,
+                    caption: '项目',
+                    lookup: dxConfig.selectBoxTvExchange('/api/parakeet/project/project-select-list'),
+                    validationRules: [{ type: "required", message: "项目必填项" }]
+                },
+                {
+                    dataField: 'address',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowExporting: false,
+                    allowGrouping: true,
+                    caption: '地址'
+                },
+                {
+                    dataField: 'description',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowExporting: false,
+                    allowGrouping: true,
+                    caption: '描述'
+                },
+                {
+                    dataField: 'houseTotal',
+                    alignment: 'center',
+                    caption: '合计',
+                    cssClass: 'orange',
+                    //format: "currency",
+                    dataType: 'number',
+                    valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                    allowHeaderFiltering: false,
+                    allowGrouping: true,
+                    allowEditing: false
+                }
+            ];
+            config.summary = {
+                totalItems: [
+                    {
+                        column: 'houseTotal',
+                        summaryType: 'sum',
+                        //valueFormat: 'currency',
+                        valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                        alignByColumn: 'true', //alignment: 'right',
+                        showInGroupFooter: true,
+                        cssClass: 'red',
+                        //showInColumn: 'total',
+                        skipEmptyValues: true,
+                        displayFormat: '汇总:{0}'
+                        //customizeText: function (data) {
+                        //    debugger;
+                        //    return data.value;
+                        //}
+                    }
+                ]
+                , groupItems: [{
+                    column: 'name',
+                    summaryType: 'sum',//'count',//
+                    displayFormat: "{0} 分组汇总"
+                }]
+            };
+            config.export = {
+                enabled: true,
+                fileName: "各小区汇算表",
+                texts: {
+                    //excelFormat:"导出",
+                    exportAll: "导出所有数据",
+                    exportSelectedRows: "导出选中行"
+                }
+            };
+            config.onInitNewRow = function(e) {
+                //e.data.key=new uuid();
+            };
+            config.onContentReady = function(e) {
+
+            };
+
+            config.onEditorPreparing = function(e) {
+                //&& e.parentType === 'filterRow'
+                if (e.dataField === 'locationAreaId') {
+                    e.editorName = 'dxDropDownBox';
+                    var dropDownBoxConfig =
+                        dxConfig.dropDownBox('/api/parakeet/location-area/location-area-tree?cancelValid=true');
+                    dropDownBoxConfig.width = '100%';
+                    //dropDownBoxConfig.valueExpr = 'id';
+                    //dropDownBoxConfig.displayExpr = 'name';
+                    dropDownBoxConfig.placeholder = e.lookup.valueMap[e.value];
+                    var treeView = getDxTreeViewConfig({
+                        selectionMode: 'single', //单选
+                        height: 500
+                    });
+                    getDxDropDownBoxConfig(dropDownBoxConfig, treeView, 'TreeView');
+
+                    dropDownBoxConfig.onValueChanged = function(arg) {
+                        if (arg.value != null) {
+                            e.setValue(arg.value);
+                            //$(e.editorElement).html(e.lookup.valueMap[arg.value]);
+                            //$(e.editorElement).text(e.lookup.valueMap[arg.value]);
+                            $(e.editorElement)[0].innerHTML = e.lookup.valueMap[arg.value];
+                            //$(e.editorElement)[0].outerText = e.lookup.valueMap[arg.value];
+                        }
+                    };
+                    e.editorOptions = dropDownBoxConfig;
+                }
+            };
+
+            config.onToolbarPreparing = function(e) {
+                //var items = e.toolbarOptions.items;
+                //$.each(items,
+                //    function (index, item) {
+                //        if (item.name === 'addRowButton') {
+                //            //var addFunc = item.options.onClick;
+                //            item.options.onClick = null;
+                //            item.options.onClick = function (f) {
+                //                //f.event.stopPropagation();
+                //                //跳转到联系我们页面
+                //                window.location = '/api/parakeet/section/create';
+                //            }
+                //        }
+                //    });
+                //items.push({
+                //    widget: 'dxButton',
+                //    options: {
+                //        text: '查看更多',
+                //        onClick: function (f) {
+                //            f.event.stopPropagation();
+                //            e.component.beginUpdate();
+                //            var visible = !e.component.columnOption('phone', 'visible');
+                //            e.component.columnOption('phone', 'visible', visible);
+                //            e.component.columnOption('qNumber', 'visible', visible);
+                //            e.component.columnOption('email', 'visible', visible);
+                //            e.component.columnOption('readTime', 'visible', visible);
+                //            if (visible) {
+                //                f.component.option('text', '隐藏');
+                //            } else {
+                //                f.component.option('text', '查看更多');
+                //            }
+                //            e.component.endUpdate();
+                //        }
+                //    },
+                //    location: 'after'
+                //});
+            };
+
+            config.masterDetail = {
+                enabled: true,
+                template: function(container, info) {
+                    var detailConfig = getSectionHouseConfig(info.data.id);
+                    $("<div class='section-master-grid' id='grid-master-section-" + info.data.id + "'>")
+                        .dxDataGrid(detailConfig)
+                        .appendTo(container);
+                }
+            };
+
+            gridSugar(config);
+            config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+
+        }
+
+        function getSectionHouseConfig(sectionId) {
+            var getUrl = '/api/parakeet/house/get?id=' + sectionId;
+            var config = dxConfig.editGrid(getUrl);
+            config.dataSource = DevExpress.data.AspNet.createStore({
+                key: 'id',
+                loadUrl: getUrl,
+                insertUrl: '/api/parakeet/house/insert',
+                updateUrl: '/api/parakeet/house/update',
+                deleteUrl: '/api/parakeet/house/delete'
+            });
+            config.editing.allowAdding = true;
+            config.editing.allowUpdating = true;
+            config.editing.allowDeleting = true;
+            config.columns = [
+                {
+                    dataField: 'id',
+                    caption: 'Id',
+                    allowEditing: false,
+                    visible: false //, dataType: 'Guid'
+                },
+                {
+                    dataField: 'number',
+                    alignment: 'center',
+                    caption: '房号',
+                    allowHeaderFiltering: false,
+                    validationRules: [
+                        { type: 'required', message: '房号为必填项' },
+                        //{ type: 'pattern', pattern: '^[^0-9]+$', message: '房号避免使用纯数字' },
+                        //{ type: 'fieldUnique', checkUrl: '/api/parakeet/house/check-field', message: '房号重复' },
+                        {
+                            type: 'fieldsUnique',
+                            checkUrl: '/api/parakeet/house/check-fields',
+                            fields: ['SectionId'],
+                            message: '房号重复'
+                        }
+                    ]
+                },
+                {
+                    dataField: 'buildingArea',
+                    alignment: 'center',
+                    caption: '建筑面积m²',
+                    dataType: 'number',
+                    valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                    allowHeaderFiltering: false,
+                    allowExporting: false,
+                    allowEditing: true
+                },
+                {
+                    dataField: 'useArea',
+                    alignment: 'center',
+                    caption: '使用面积m²',
+                    dataType: 'number',
+                    allowExporting: false,
+                    allowHeaderFiltering: false,
+                    valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                    allowEditing: true
+                },
+                {
+                    dataField: 'description',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowExporting: false,
+                    caption: '描述'
+                },
+                {
+                    dataField: 'total',
+                    alignment: 'center',
+                    caption: '合计',
+                    cssClass: 'orange',
+                    dataType: 'number',
+                    valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                    allowHeaderFiltering: false,
+                    allowEditing: false
+                }
+            ];
+            config.summary = {
+                totalItems: [
+                    {
+                        column: 'buildingArea',
+                        summaryType: 'sum',
+                        //valueFormat: 'currency',
+                        //valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                        displayFormat: '总面积:{0}',
+                        alignByColumn: 'true', //alignment: 'right',
+                        //showInGroupFooter: true,
+                        cssClass: 'red',
+                        //customizeText: function (data) {
+                        //    debugger;
+                        //    return data.value;
+                        //}
+                    },
+                    {
+                        column: 'total',
+                        summaryType: 'sum',
+                        valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                        displayFormat: '小区合计:{0}',
+                        alignByColumn: 'true', //alignment: 'right',
+                        showInGroupFooter: true,
+                        cssClass: 'red'
+                    }
+                ]
+            };
+            config.export = {
+                enabled: true,
+                fileName: "小区汇算表",
+                texts: {
+                    //excelFormat:"导出",
+                    exportAll: "导出所有数据",
+                    exportSelectedRows: "导出选中行"
+                }
+            };
+            config.onInitNewRow = function(e) {
+                e.data.sectionId = sectionId;
+            };
+            config.onContentReady = function(e) {
+                //
+            };
+            config.masterDetail = {
+                enabled: true,
+                template: function(container, info) {
+                    var detailConfig = getHouseProductConfig(info.data.id);
+                    $("<div class='house-master-grid' id='grid-master-house-" + info.data.id + "'>")
+                        .dxDataGrid(detailConfig)
+                        .appendTo(container);
+                }
+            };
+
+            gridSugar(config);
+            return config;
+        }
+
+        function getHouseProductConfig(houseId) {
+            var getUrl = '/api/parakeet/product/get?id=' + houseId;
+            var config = dxConfig.editGrid(getUrl);
+            config.dataSource = DevExpress.data.AspNet.createStore({
+                key: 'id',
+                loadUrl: getUrl,
+                insertUrl: '/api/parakeet/product/insert',
+                updateUrl: '/api/parakeet/product/update',
+                deleteUrl: '/api/parakeet/product/delete'
+            });
+            config.editing.allowAdding = true;
+            config.editing.allowUpdating = true;
+            config.editing.allowDeleting = true;
+            config.columns = [
+                {
+                    dataField: 'id',
+                    caption: 'Id',
+                    allowEditing: false,
+                    visible: false //, dataType: 'Guid'
+                },
+                {
+                    dataField: 'name',
+                    alignment: 'center',
+                    caption: '名称',
+                    allowHeaderFiltering: false,
+                    allowExporting: false,
+                    validationRules: [
+                        { type: 'required', message: '名称为必填项' },
+                        //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                        {
+                            type: 'fieldsUnique',
+                            checkUrl: '/api/parakeet/product/check-fields',
+                            fields: ["HouseId"],
+                            message: '名称重复'
+                        }
+                    ]
+                },
+                {
+                    dataField: 'chargeType',
+                    alignment: 'center',
+                    caption: '收费项目',
+                    minWidth: 50,
+                    allowEditing: true,
+                    lookup: chargeTypeSelects,
+                    validationRules: [
+                        { type: 'required', message: '收费项目为必填项' },
+                        {
+                            type: 'fieldsUnique',
+                            checkUrl: '/api/parakeet/product/check-fields',
+                            fields: ["HouseId"],
+                            message: '收费项目重复'
+                        }
+                    ]
+                },
+                {
+                    dataField: 'price',
+                    alignment: 'center',
+                    caption: '单价(元)/面积m²',
+                    dataType: 'number',
+                    valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                    allowHeaderFiltering: false,
+                    allowEditing: true
+                },
+                {
+                    dataField: 'amount',
+                    alignment: 'center',
+                    caption: '数量',
+                    dataType: 'number',
+                    valueFormat: { type: 'fixedPoint', precision: 2 }, //'count',
+                    allowHeaderFiltering: false,
+                    allowEditing: true
+                },
+                {
+                    dataField: 'description',
+                    alignment: 'center',
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowExporting: false,
+                    caption: '描述'
+                },
+                {
+                    dataField: 'total',
+                    alignment: 'center',
+                    caption: '合计',
+                    cssClass: 'orange',
+                    allowHeaderFiltering: false,
+                    allowEditing: false
+                }
+            ];
+            config.summary = {
+                totalItems: [
+                    //{
+                    //    column: 'price',
+                    //    summaryType: 'avg',
+                    //    //valueFormat: 'currency',
+                    //    //valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                    //    displayFormat: '均价:{0}',
+                    //    alignByColumn: 'true',//alignment: 'right',
+                    //    //showInGroupFooter: true,
+                    //    cssClass: 'red',
+                    //    //customizeText: function (data) {
+                    //    //    debugger;
+                    //    //    return data.value;
+                    //    //}
+                    //},
+                    {
+                        column: 'total',
+                        summaryType: 'sum',
+                        valueFormat: { type: 'fixedPoint', precision: 4 }, //'count',
+                        displayFormat: '合计:{0}',
+                        alignByColumn: 'true', //alignment: 'right',
+                        showInGroupFooter: true,
+                        cssClass: 'red'
+                    }
+                ]
+            };
+            config.export = {
+                enabled: true,
+                fileName: "房间汇算表",
+                texts: {
+                    //excelFormat:"导出",
+                    exportAll: "导出所有数据",
+                    exportSelectedRows: "导出选中行"
+                }
+            };
+            config.onInitNewRow = function(e) {
+                e.data.houseId = houseId;
+            };
+            config.onContentReady = function(e) {
+                //
+            };
+            gridSugar(config);
+            return config;
+        }
+
+    });
+
+
+</script>
+}
+

@@ -1,0 +1,681 @@
+﻿@section styles {
+    <style>
+        .deltag {
+            position: absolute;
+            margin: -5px 0 0 2px;
+            color: red;
+        }
+        /*批量上传文件区域样式*/
+        .upload-container {
+            height: 100px;
+            border: 1px solid lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+        }
+    </style>
+}
+<div id="grid-need" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+        //window.imageList = [];
+
+        function setDragCell() {
+            setTimeout(function () {
+                $.each($('.upload-container'),
+                    function (cIndex, container) {
+                        container.ondragover = function (e) { e.preventDefault(); };
+                        container.ondrop = function (e) {
+                            e.preventDefault();
+                            var files = e.dataTransfer.files;
+                            if (files.length) {
+                                var formData = new FormData();
+                                var noRequest = false;
+                                $.each(files,
+                                    function (fIndex, file) {
+                                        if (file.size > 2097152) {
+                                            errNotify('单个文件大小不能超过2MB');
+                                            noRequest = true;
+                                            return false;
+                                        }
+                                        formData.append('files', file);
+                                    });
+                                if (noRequest) {
+                                    return;
+                                }
+                                $.ajax({
+                                    url: '/api/parakeet/need/uploadFile?id=' +
+                                        $(container).data('key'), //url	指定提交表单数据的URL。	默认值：表单的action属性值
+                                    type: 'Post',
+                                    data: formData,
+                                    contentType: false,
+                                    processData: false,
+                                    beforeSend: function (xhr) {
+                                        showLoading();
+                                    },
+                                    success: function (res) {
+                                        if (res.status) {
+                                            sucNotify(res.msg);
+                                            initNeedGrid(); //config.component.refresh();
+                                        } else {
+                                            errNotify(res.msg);
+                                        }
+                                    },
+                                    error: function (res) {
+                                        errNotify(res.responseJSON.error.message);
+                                    },
+                                    complete: function (res) {
+                                        hideLoading();
+                                    }
+                                });
+                            }
+                        };
+                    });
+            },
+                2000);
+        }
+
+        function initNeedGrid() {
+            var config = dxConfig.editGrid('/api/parakeet/need');
+            config.gridId = 'grid-need';
+            config.gridSelector = '#' + config.gridId;
+            config.editing.allowAdding = true;
+            config.editing.allowDeleting = false;
+            config.editing.allowUpdating = true;
+            config.columns = [
+                {
+                    //虚拟的Order排序列，添加/编辑时 保证图片的唯一key值
+                    dataField: 'order',
+                    caption: '序号',
+                    width: 100,
+                    allowExporting: true,
+                    visible: false,
+                    allowEditing: false,
+                    //sortOrder: 'asc',
+                    //sortIndex: 0,
+                    cellTemplate: function (ele, info) {
+                        //info.value = info.rowIndex;
+                        info.data.order = info.data.order ? info.data.order : info.key;
+                        ele.html(info.data.order);
+                    }
+                },
+                {
+                    dataField: 'id',
+                    caption: 'Id',
+                    allowEditing: false,
+                    visible: false //, dataType: 'Guid'
+                },
+                {
+                    dataField: 'name',
+                    alignment: 'center',
+                    caption: '名称',
+                    validationRules: [
+                        { type: 'required', message: '名称为必填项' },
+                        //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                        { type: 'fieldUnique', checkUrl: '/api/parakeet/need/check-field', message: '名称重复' }
+                    ]
+                }, {
+                    dataField: 'phone',
+                    alignment: 'center',
+                    visible: false,
+                    caption: '电话',
+                    allowEditing: false,
+                    allowFiltering: true,
+                    allowHeaderFiltering: false,
+                    allowSearch: true,
+                    //validationRules: [
+                    //    { type: 'required', message: '电话为必填项' },
+                    //    {
+                    //        type: 'pattern',
+                    //        message: '请输入正确的电话号码',
+                    //        pattern: /^((0\d{2,3}-\d{7,8})|(1[3456789]\d{9}))$/i
+                    //    }
+                    //],
+                    customizeText: function (cellInfo) {
+                        return '******';
+                    }
+                }, {
+                    dataField: 'qNumber',
+                    alignment: 'center',
+                    visible: false,
+                    caption: 'QQ',
+                    allowEditing: false,
+                    allowHeaderFiltering: false,
+                    //validationRules: [
+                    //    {
+                    //        type: 'pattern',
+                    //        message: '请输入正确QQ号码',
+                    //        pattern: /^[1-9]\d{5,14}$/i
+                    //    }
+                    //],
+                    customizeText: function (cellInfo) {
+                        return '******';
+                    }
+                }, {
+                    dataField: 'email',
+                    alignment: 'center',
+                    visible: false,
+                    caption: '邮件',
+                    allowEditing: false,
+                    allowSorting: false,
+                    allowGrouping: false,
+                    allowHeaderFiltering: false,
+                    validationRules: [
+                        //{ type: 'required', message: '邮件必填' },
+                        {
+                            type: 'email',
+                            message: '请输入正确的Email'
+                        }
+                    ],
+                    customizeText: function (cellInfo) {
+                        return '******';
+                    }
+                }, {
+                    dataField: 'requirements',
+                    alignment: 'center', //visible: false,
+                    caption: '需求',
+                    allowEditing: true,
+                    allowHeaderFiltering: false,
+                    cellTemplate: function (ele, info) {
+                        $(ele).text(info.text);
+                        E('requirements-container' + info.data.Id).dxTooltip({
+                            target: $(ele),
+                            showEvent: 'mouseenter',
+                            hideEvent: 'mouseleave',
+                            position: 'top',
+                            contentTemplate: function (container) {
+                                container.html('您的需求:<p style="color:blue">' + info.data.requirements + '</p>');
+                            }
+                        });
+                    },
+                    validationRules: [
+                        { type: 'required', message: '需求必填' }
+                    ]
+                },
+                {
+                    dataField: 'images',
+                    alignment: 'center',
+                    caption: '图片',
+                    allowEditing: false,
+                    width: 200,
+                    minHeight: 100,
+                    allowHeaderFiltering: false,
+                    allowSorting: false,
+                    cellTemplate: function (ele, info) {
+                        //找出图片然后再使用gallary滚动显示
+                        //var attachments = info.data.attachments;
+                        //info.data.images = [];
+                        //$.each(attachments, function (aIndex, row) {
+                        //    info.data.images.push(row.attachment);
+                        //});
+                        //attachments.filter(function (row) {
+                        //    info.data.images.push(row.attachment);
+                        //    return row.isImage;
+                        //});
+                        //数据库图片附件转前端图片数据源
+                        info.data.imageSource = getAttachmentImages(info.data.attachments);
+                        info.value = info.data.imageSource;
+                        var key = info.data.order ? info.data.order : info.key;
+                        //使用gallary显示
+                        if ($.isFunction(initImageGallery)) {
+                            var div = document.createElement('div');
+                            var tagDiv = $(div).attr('id', key);
+                            tagDiv.css('height', '100px'); //.css('background', '#eee');
+                            var uploadContainer =
+                                $('<div class="upload-container" data-key="' + info.data.id + '"></div>');
+                            initImageGallery(tagDiv, info.data.imageSource);
+                            uploadContainer.append(tagDiv);
+                            ele.append(uploadContainer);
+                        }
+                    }
+                },
+                {
+                    dataField: 'attachementsString',
+                    alignment: 'left', //visible: false,
+                    caption: '附件',
+                    minWidth: 300,
+                    allowEditing: false,
+                    allowFiltering: false,
+                    allowHeaderFiltering: false,
+                    allowSorting: false,
+                    allowGrouping: false,
+                    cellTemplate: function (ele, info) {
+                        var attachments = info.data.attachments;
+                        $.each(attachments,
+                            function (aIndex, attachment) {
+                                var html = $('<div>');
+                                var groupConfig = {
+                                    items: [],
+                                    keyExpr: 'alignment',
+                                    stylingMode: 'outlined'
+                                };
+                                //if (attachment.isImage) { }
+                                //html.append('<a class="a-link" href="/api/parakeet/need/download?id=' + attachment.id + '">' + attachment.attachment.name +
+                                //    '</a><span class="deltag" data-attatchment-id="' + attachment.id + '">&nbsp;X</span><br/>');
+                                if (attachment.attachment.path) {
+                                    groupConfig.items.push({
+                                        icon: 'download',
+                                        type: 'default',
+                                        text: strStandardLenth(attachment.attachment.name, 8),
+                                        hint: attachment.attachment.name,
+                                        alignment: 'justify',
+                                        //width: 150,
+                                        onClick: function (f) {
+                                            f.event.stopPropagation();
+                                            window.location.href = '/api/parakeet/need/download?id=' + attachment.id;
+                                        }
+                                    });
+                                    groupConfig.items.push({
+                                        icon: 'remove',
+                                        type: 'danger',
+                                        alignment: 'justify',
+                                        hint: '删除',
+                                        onClick: function (f) {
+                                            f.event.stopPropagation();
+                                            syncPostDefault('/api/parakeet/need/removeAttachment',
+                                                { id: attachment.id },
+                                                function (res) {
+                                                    if (res.status) {
+                                                        sucNotify("删除成功！");
+                                                        getDataGrid('grid-need').refresh(); //info.component.refresh();
+                                                    }
+                                                });
+                                        }
+                                    });
+
+                                    html.dxButtonGroup(groupConfig).appendTo(ele);
+                                }
+                            });
+                        //(隐藏)上传按钮+下载连接
+                        var uploader = $('<div id="' + info.data.id + '" style="display:none;"></div>').dxFileUploader(
+                            { //
+                                icon: 'upload',
+                                selectButtonText: '上传', // '', //
+                                //uploadButtonText: "开始上传",
+                                labelText: "",
+                                name: 'uploadFile',
+                                uploadUrl: '/api/parakeet/need/uploadFile?id=' + info.data.id,
+                                uploadMode: 'instantly', //'useForm', //'useButtons',//
+                                //allowedFileExtensions: ['.jpg', '.jpeg', '.gif', '.png','.bmp'],
+                                accept: 'image/*',
+                                maxFileSize: 6291456, //6兆字节(MB)
+                                width: 150,
+                                //height: 100,
+                                value: [],
+                                multiple: true,
+                                showFileList: false,
+                                uploadFailedMessage: '上传失败，请检查文件名是否冲突!',
+                                uploadedMessage: '上传成功!',
+                                onUploadError: function (e) {
+                                    errNotify($.parseJSON(e.request.responseText).error.message);
+                                },
+                                onUploaded: function (f) {
+                                    sucNotify("上传成功!");
+                                    info.component.refresh();
+                                    hideLoading();
+                                }
+                            }).appendTo(ele);
+
+                        $('<div></div>').dxButtonGroup({
+                            keyExpr: 'alignment',
+                            stylingMode: 'outlined',
+                            items: [
+                                {
+                                    icon: 'upload',
+                                    type: 'default',
+                                    text: strStandardLenth('批量上传\xa0\xa0', 8),
+                                    hint: '批量上传',
+                                    alignment: 'justify',
+                                    //itemElement: uploader,
+                                    //width: 150,
+                                    //template: '<div style="width=200px;">work</div>',
+                                    onClick: function (f) {
+                                        f.event.stopPropagation();
+                                        ele.find('.dx-fileuploader-button').click();
+                                    }
+                                },
+                                {
+                                    icon: 'remove',
+                                    type: 'danger',
+                                    alignment: 'justify',
+                                    hint: '批量删除',
+                                    onClick: function (f) {
+                                        f.event.stopPropagation();
+                                        //删除所有附件
+                                        syncDelete('/api/parakeet/need/attachments',
+                                            { id: info.data.id },
+                                            function (res) {
+                                                if (res.status) {
+                                                    sucNotify("删除成功！");
+                                                    getDataGrid('grid-need').refresh(); //info.component.refresh();
+                                                }
+                                            });
+                                    }
+                                }
+                            ]
+                        }).appendTo(ele);
+
+                        $(ele).css({ cursor: 'pointer', color: 'blue' })
+                            .mouseover(function () {
+                                $(this).css('color', 'lightskyblue');
+                            }).mouseout(function () {
+                                $(this).css('color', 'blue');
+                            });
+                    }
+                },
+                {
+                    dataField: 'readTime',
+                    alignment: 'center',
+                    visible: false,
+                    caption: '读邮记录',
+                    allowFiltering: false,
+                    allowSorting: false,
+                    allowGrouping: false,
+                    allowEditing: false,
+                    cellTemplate: function (ele, info) {
+                        if (info.data.readTime) {
+                            $(ele).html(T(info.data.readTime, __DateFormat));
+                        }
+                    }
+                }
+            ];
+            config.onInitNewRow = function (e) {
+                //e.data.key=new uuid();
+            };
+            config.onContentReady = function (e) {
+                setDragCell();
+            };
+            config.onToolbarPreparing = function (e) {
+                var items = e.toolbarOptions.items;
+                $.each(items,
+                    function (index, item) {
+                        if (item.name === 'addRowButton') {
+                            //var addFunc = item.options.onClick;
+                            item.options.onClick = null;
+                            item.options.onClick = function (f) {
+                                //f.event.stopPropagation();
+                                //跳转到联系我们页面
+                                window.location = '/api/parakeet/need/create';
+                            }
+                        }
+                    });
+                items.push({
+                    widget: 'dxButton',
+                    options: {
+                        text: '查看更多',
+                        onClick: function (f) {
+                            f.event.stopPropagation();
+                            e.component.beginUpdate();
+                            var visible = !e.component.columnOption('phone', 'visible');
+                            e.component.columnOption('phone', 'visible', visible);
+                            e.component.columnOption('qNumber', 'visible', visible);
+                            e.component.columnOption('email', 'visible', visible);
+                            e.component.columnOption('readTime', 'visible', visible);
+                            if (visible) {
+                                f.component.option('text', '隐藏');
+                            } else {
+                                f.component.option('text', '查看更多');
+                            }
+                            e.component.endUpdate();
+                        }
+                    },
+                    location: 'after'
+                });
+            };
+            gridSugar(config);
+            config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+
+        }
+
+        $(function () {
+
+            initNeedGrid();
+
+            //删除按钮放在grid里面了
+            //$(document).on('click', '.deltag', function (e) {
+            //    //var id = $(this).attr('data-attatchment-id');//e.target==this
+            //    var id = $(e.target).data('attatchment-id');
+            //    syncPostDefault('/api/parakeet/need/removeAttachment',
+            //        { id: id },
+            //        function (res) {
+            //            if (res.status) {
+            //                sucNotify("删除成功！");
+            //                getDataGrid('grid-need').refresh();
+            //            }
+            //        });
+            //});
+            //这种方式 有时无效
+            //$('.deltag').on('click', function (e) {
+            //    //e.target==this
+            //    var id = $(e.target).data('attatchment-id');
+            //    syncPost('api/parakeet/removeAttachment',
+            //        { id: id },
+            //        function (res) {
+            //            if (res.Status) {
+            //                sucNotify("删除成功！");
+            //                getDataGrid('grid-need').refresh();
+            //            }
+            //        });
+            //});
+        });
+
+        //从后端也同步删除图片
+        function deleteImage(file) {
+            showLoading(function () {
+                syncPostDefault('/api/parakeet/need/removeAttachment',
+                    { id: file.Id },
+                    function (res) {
+                        if (res.status) {
+                            sucNotify("删除成功！");
+                            getDataGrid('grid-need').refresh();
+                        }
+                    });
+            });
+        }
+
+        //从后端返回的attachment图片附件在$target对象上初始化画廊控件
+        function initImageGallery($target, dataSource) {
+            showLoading(function () {
+                var config = dxConfig.gallery({
+                    dataSource: dataSource,
+                    height: 100,
+                    //width: '100%',
+                    loop: true,
+                    slideshowDelay: 5000,
+                    //elementAttr: {
+                    //    id: 'elementId',
+                    //    class: 'class-name'
+                    //},
+                    itemTemplate: function (item, index, itemElement) {
+                        $('<img id="' + item.Id + '">').attr('src', item.VirtualPath).addClass('dx-gallery-item-image')
+                            .attr('style', 'margin:5px;')
+                            .dxContextMenu({
+                                dataSource: [{ text: '删除', icon: 'remove' }],
+                                width: 100,
+                                target: '#' + item.Id,
+                                fileIndex: item.FileIndex,
+                                filePath: item.FilePath,
+                                virtualPath: item.VirtualPath,
+                                fileObj: item,
+                                onItemClick: function (f) {
+                                    dataSource =dataSource.filter(m => m.FileIndex !== f.component._options.fileIndex); 
+                                    $target.dxGallery('instance').option('dataSource', dataSource);
+                                    deleteImage(f.component._options.fileObj);
+                                }
+                            }).appendTo(itemElement);
+                        //$('<div>').addClass('item-file-name').text(item.FileName).appendTo(itemElement);
+                        return itemElement.css('text-align', 'center');
+                    },
+                    onItemClick: function (e) {
+                        //弹窗查看大图
+                        //var item = e.itemData;
+                        var itemPopupconfig = {
+                            //dataSource: window.imageList[index]["images"],
+                            //width: "100%",
+                            //height: "100%",
+                            //slideshowDelay: 3000,
+                            isGallery: true,
+                            loop: true,
+                            //fullScreen: true,
+                            showNavButtons: true,
+                            showIndicator: false,
+                            gridId: 'detail-gallery',
+                            popupId: 'detail-gallery-popup',
+                            title: '全屏预览',
+                            //btnOkText : '删除全部',//自定义
+                            contentTemplate: function (contentElement) {
+                                var enlargeDiv = $('<div></div>').css('text-align', 'center');
+                                initEnlargeImageGallery(enlargeDiv, dataSource);
+                                contentElement.html(enlargeDiv).css('text-align', 'center');
+                            }
+                        };
+                        showPopup(itemPopupconfig);
+                    }
+                });
+                $target.dxGallery(config);
+                hideLoading();
+            });
+        }
+
+
+        function initEnlargeImageGallery($target, dataSource) {
+            showLoading(function () {
+                var config = dxConfig.gallery({
+                    dataSource: dataSource,
+                    height: '100%',
+                    //width: '100%',
+                    loop: true,
+                    slideshowDelay: 5000,
+                    //elementAttr: {
+                    //    id: 'elementId',
+                    //    class: 'class-name'
+                    //},
+                    itemTemplate: function (item, index, itemElement) {
+                        $('<img id="enlarge-' + item.Id + '">').attr('src', item.VirtualPath)
+                            .addClass('dx-gallery-item-image')
+                            .attr('style', 'margin:5px;')
+                            .dxContextMenu({
+                                dataSource: [{ text: '删除', icon: 'remove' }],
+                                width: 100,
+                                target: '#enlarge-' + item.Id,
+                                fileIndex: item.FileIndex,
+                                filePath: item.FilePath,
+                                virtualPath: item.VirtualPath,
+                                fileObj: item,
+                                onItemClick: function (f) {
+                                    dataSource = dataSource.filter(m => m.FileIndex !== f.component._options.fileIndex); 
+                                    $target.dxGallery('instance').option('dataSource', dataSource);
+                                    deleteImage(f.component._options.fileObj);
+                                }
+                            }).appendTo(itemElement);
+                        //$('<div>').addClass('item-file-name').text(item.FileName).appendTo(itemElement);
+                        return itemElement.css('text-align', 'center');
+                    },
+                    onItemClick: function (e) {
+                        //弹窗查看大图
+                        var item = e.itemData;
+                        var itemPopupconfig = {
+                            //dataSource: window.imageList[index]["images"],
+                            //width: "100%",
+                            //height: "100%",
+                            //slideshowDelay: 3000,
+                            isGallery: true,
+                            loop: true,
+                            fullScreen: true,
+                            showNavButtons: true,
+                            showIndicator: false,
+                            gridId: 'detail-gallery',
+                            popupId: 'enlarge-detail-gallery-popup',
+                            title: '查看大图',
+                            //btnOkText : '删除全部',//自定义
+                            contentTemplate: function (contentElement) {
+                                var $img = $('<img id="enlarge-' + item.Id + '">').attr('src', item.VirtualPath)
+                                    .addClass('dx-gallery-item-image')
+                                    .dxContextMenu({
+                                        dataSource: [{ text: '删除', icon: 'remove' }],
+                                        width: 200,
+                                        target: '#enlarge-' + item.Id,
+                                        fileIndex: item.FileIndex,
+                                        filePath: item.FilePath,
+                                        virtualPath: item.VirtualPath,
+                                        fileObj: item, //item.FileObj 缓存当前item对象给context实例，便于从数据源中移除
+                                        onItemClick: function (f) {
+                                            dataSource =dataSource.filter(m => m.FileIndex !==f.component._options.fileIndex);
+                                            $target.dxGallery('instance')
+                                                .option('dataSource', dataSource); //g($target, dataSource);
+                                            deleteImage(f.component._options.fileObj);
+                                            hidePopup('enlarge-detail-gallery-popup'); //关闭popup
+                                        }
+                                    });
+                                contentElement.html($img).css('text-align', 'center');
+                            }
+                        };
+                        showPopup(itemPopupconfig);
+                    }
+                });
+                $target.dxGallery(config);
+                hideLoading();
+            });
+        }
+
+
+        //规范相同长度的文件名
+        function getStandardFileName(fileName) {
+            //var index = fileName.lastIndexOf('.');
+            //var standardFileName = fileName.substr(0, index);
+            //var extention = fileName.substr(index);
+            var standardFileName = fileName;
+            if (standardFileName) {
+                var length = getBLen(standardFileName);
+                if (length % 2 !== 0) {
+                    standardFileName += '\xa0';
+                    length += 1;
+                }
+                console.log('原始规范字符串长度:' + length);
+                if (length > 16) {
+                    standardFileName = standardFileName.substr(0, 14) + '\xa0\xa0';
+                } else {
+                    var dotText = '';
+                    for (var dotIndex = 0; dotIndex <= (16 - length) / 2; dotIndex++) {
+                        dotText += '\xa0\xa0';
+                        //dotIndex += 2;
+                    }
+                    console.log('空格长度:' + dotText.length);
+                    standardFileName = standardFileName + dotText;
+                }
+            }
+            console.log('字符串长度:' + getBLen(standardFileName));
+            return standardFileName;
+        }
+
+
+        //中英文长度计算统一
+        function getBLen(str) {
+            if (str == null) return 0;
+            if (typeof str != 'string') {
+                str += '';
+            }
+            return str.replace(/[^\x00-\xff]/g, '01').length;
+        }
+
+        //输出随机字符串
+        function randStr() {
+            //return Math.random().toString(36).substr(2);//去掉小数点以前的数字部分
+            return '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0';
+        }
+
+        //字符串调整为len位（len为字节数） 中文除外
+        function strStandardLenth(str, len) {
+            var length = str.length; //getBLen(str);//中文字符转为英文字符 长度//
+            if (length > len * 2) {
+                return str.substr(0, len * 2);
+            } else {
+                return strStandardLenth(str + randStr(), len);
+            }
+        };
+
+    </script>
+}
+

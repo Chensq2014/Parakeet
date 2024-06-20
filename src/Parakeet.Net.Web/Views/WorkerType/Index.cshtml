@@ -1,0 +1,72 @@
+﻿<div id="grid-workerType" class="show-grid"></div>
+@section scripts
+{
+    <script type='text/javascript'>
+
+        $(function () {
+
+            initWorkerTypeGrid();
+
+            function initWorkerTypeGrid() {
+                var config = dxConfig.editGrid('/api/parakeet/workerType');
+                config.gridId = 'grid-workerType';
+                config.gridSelector = '#' + config.gridId;
+                config.editing.allowAdding = true;
+                config.editing.allowDeleting = true;
+                config.editing.allowUpdating = true;
+                //config.searchPanel.visible = true;
+                config.columns = [
+                    {
+                        dataField: 'id',
+                        caption: 'Id',
+                        allowEditing: false,
+                        visible: false //, dataType: 'Guid'
+                    },
+                    {
+                        dataField: 'name',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '名称',
+                        validationRules: [
+                            { type: 'required', message: '名称为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '名称避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/workerType/check-field', message: '名称重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/workerType/check-fields', fields: ['LocationAreaId'], message: '名称重复' }
+                        ]
+                    },
+                    {
+                        dataField: 'code',
+                        alignment: 'center',
+                        allowFiltering: false,
+                        allowEditing: true,
+                        allowHeaderFiltering: false,
+                        caption: '编码',
+                        validationRules: [
+                            { type: 'required', message: '编码为必填项' },
+                            //{ type: 'pattern', pattern: '^[^0-9]+$', message: '编码避免使用纯数字' },
+                            { type: 'fieldUnique', checkUrl: '/api/parakeet/workerType/check-field', message: '编码重复' }
+                            //{ type: 'fieldsUnique', checkUrl: '/api/parakeet/workerType/check-fields', fields: ['LocationAreaId'], message: '编码重复' }
+                        ]
+                    }
+                ];
+                config.onInitNewRow = function (e) {
+                    //e.data.key=new uuid();
+                };
+                config.onContentReady = function (e) {
+
+                };
+                config.onToolbarPreparing = function (e) {
+                   
+                };
+                
+                gridSugar(config);
+                config.component = $(config.gridSelector).dxDataGrid(config).dxDataGrid('instance');
+            }
+
+        });
+
+
+    </script>
+}

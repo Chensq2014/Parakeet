@@ -1,0 +1,58 @@
+syntax = "proto3";//工具版本(规格)
+
+import "google/protobuf/empty.proto";//repeated集合
+option csharp_namespace = "Parakeet.Net.GrpcService";
+
+package CustomMathPackage;
+
+// The greeting service definition.
+service CustomMath {
+  // Sends a greeting
+  rpc SayHello (HelloRequestMath) returns (HelloReplyMath);
+  rpc Plus (RequestPara) returns (ResponseResult);
+  rpc SelfIncreaseClient (stream BathTheCatReq) returns (IntArrayModel);//stream 流式调用
+  rpc SelfIncreaseServer (IntArrayModel) returns (stream BathTheCatResp);
+  rpc SelfIncreaseDouble (stream BathTheCatReq) returns (stream BathTheCatResp);
+  rpc Count(google.protobuf.Empty) returns (CountResult);//无参数要指定 google.protobuf.Empty
+}
+
+// The request message containing the user's name.
+message HelloRequestMath {
+  string name = 1;//1代表第几个参数
+  int32 id=2;
+}
+
+// The response message containing the greetings.
+message HelloReplyMath {
+  string message = 1;
+}
+
+
+message RequestPara {
+  int32 iLeft = 1;
+  int32 iRight = 2;
+}
+
+
+message ResponseResult {
+  int32 Result = 1;
+  string Message = 2;
+}
+
+message BathTheCatReq {
+  int32 Id = 1;
+}
+
+message BathTheCatResp {
+  string Message = 1;
+}
+
+message IntArrayModel {
+  repeated int32 Number = 1;//repeated 集合  int32数组/集合
+}
+
+
+message CountResult {
+  int32 Count = 1;
+}
+

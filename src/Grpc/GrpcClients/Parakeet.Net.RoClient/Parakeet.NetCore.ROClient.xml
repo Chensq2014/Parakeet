@@ -1,0 +1,1869 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Parakeet.Net.ROClient</name>
+    </assembly>
+    <members>
+        <member name="T:Parakeet.Net.ROClient.DeviceType">
+            <summary>
+            环境(1001) | 视频(1002) | 塔吊(1003) | 升降机(1004) | 闸机(1005)，
+            人脸采集(1006) | 人员定位(1007) | LED屏(1008) | 运渣车(1009)
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Environment">
+            <summary>
+            环境
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Video">
+            <summary>
+            视频
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Crane">
+            <summary>
+            塔吊
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Lifter">
+            <summary>
+            升降机
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Gate">
+            <summary>
+            闸机
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.FaceAcquire">
+            <summary>
+            人脸采集
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Vehicle">
+            <summary>
+            车辆管理
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.PersonLocation">
+            <summary>
+            人员定位
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.LED">
+            <summary>
+            LED屏
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Unloading">
+            <summary>
+            卸料平台
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Climbing">
+            <summary>
+            爬架
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Foundationpit">
+            <summary>
+            基坑监测
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Watermeter">
+            <summary>
+            水表
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Electricitymeter">
+            <summary>
+            电表
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Gasmeter">
+            <summary>
+            气表
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.DeviceType.Weighbridge">
+            <summary>
+            地磅
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.TotalStation">
+            <summary>
+            全站仪机器人
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.FixInclino">
+            <summary>
+            固定式测斜仪
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.Reinforcement">
+            <summary>
+            钢筋计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.Crack">
+            <summary>
+            裂缝计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.AnchorCableDynamo">
+            <summary>
+            锚索计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.Osmo">
+            <summary>
+            渗压计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.EarthPressure">
+            <summary>
+            土压力计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.Vibro">
+            <summary>
+            测振仪
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.Tilt">
+            <summary>
+            倾角计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.StaticLevel">
+            <summary>
+            静力水准仪
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.AxialForce">
+            <summary>
+            轴力计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.Strain">
+            <summary>
+             应变计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.FPSensorType.WaterLevel">
+            <summary>
+            水位计
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VehicleType.Car">
+            <summary>
+            轿车
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VehicleType.SlagCar">
+            <summary>
+            渣土车
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VehicleType.TankCar">
+            <summary>
+            罐车
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VehicleType.Truck">
+            <summary>
+            运料车
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VehicleType.MixerTruck">
+            <summary>
+            混凝土搅拌车
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VehicleType.Other">
+            <summary>
+            其他
+            </summary>
+        </member>
+        <member name="T:Parakeet.Net.ROClient.VideoDirectType">
+            <summary>
+            视频云台指令类型
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.LIGHT_PWRON">
+            <summary>
+            接通灯光电源
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.WIPER_PWRON">
+            <summary>
+            接通雨刷开关
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.FAN_PWRON">
+            <summary>
+            接通风扇开关
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.HEATER_PWRON">
+            <summary>
+            接通加热器开关
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.AUX_PWRON1">
+            <summary>
+            接通辅助设备开关
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.AUX_PWRON2">
+            <summary>
+            接通辅助设备开关
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.SET_PRESET">
+            <summary>
+            设置预置点
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.CLE_PRESET">
+            <summary>
+            清除预置点
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.ZOOM_IN">
+            <summary>
+            焦距以速度SS变大(倍率变大)
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.ZOOM_OUT">
+            <summary>
+            焦距以速度SS变小(倍率变小)
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.FOCUS_NEAR">
+            <summary>
+            焦点以速度SS前调
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.FOCUS_FAR">
+            <summary>
+            焦点以速度SS后调
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.IRIS_OPEN">
+            <summary>
+            光圈以速度SS扩大
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.IRIS_CLOSE">
+            <summary>
+            光圈以速度SS缩小
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.TILT_UP">
+            <summary>
+            云台以SS的速度上仰
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.TILT_DOWN">
+            <summary>
+            云台以SS的速度下俯
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.PAN_LEFT">
+            <summary>
+            云台以SS的速度左转
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.PAN_RIGHT">
+            <summary>
+            云台以SS的速度右转
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.UP_LEFT">
+            <summary>
+            云台以SS的速度上仰和左转
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.UP_RIGHT">
+            <summary>
+            云台以SS的速度上仰和右转
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.DOWN_LEFT">
+            <summary>
+            云台以SS的速度下俯和左转
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.DOWN_RIGHT">
+            <summary>
+            云台以SS的速度下俯和右转
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.PAN_AUTO">
+            <summary>
+            云台以SS的速度左右自动扫描
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.FILL_PRE_SEQ">
+            <summary>
+            将预置点加入巡航序列
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.SET_SEQ_DWELL">
+            <summary>
+            设置巡航点停顿时间
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.SET_SEQ_SPEED">
+            <summary>
+            设置巡航速度
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.CLE_PRE_SEQ">
+            <summary>
+            将预置点从巡航序列中删除
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.STA_MEM_CRUISE">
+            <summary>
+            开始记录轨迹
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.STO_MEM_CRUISE">
+            <summary>
+            停止记录轨迹
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.RUN_CRUISE">
+            <summary>
+            开始轨迹
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.RUN_SEQ">
+            <summary>
+            开始巡航
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.STOP_SEQ">
+            <summary>
+            停止巡航
+            </summary>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.VideoDirectType.GOTO_PRESET">
+            <summary>
+            快球转到预置点
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.GrpcOption.Channel">
+            <summary>
+            构建含有 Authorization token的 Channel
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.GrpcOption.CallCredentials">
+            <summary>
+            获取Credentials
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.GrpcOption.GenerateToken(System.Int64)">
+            <summary>
+            生成token
+            </summary>
+            <param name="unixTimeStamp"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.CraneId">
+            <summary>
+            塔机在当前塔群中的编号
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.ShortArm">
+            <summary>
+            小臂长
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.LongArm">
+            <summary>
+            大臂长
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.TowerHatHeight">
+            <summary>
+            塔帽高/塔高 单位0.1m 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.BoomHeight">
+            <summary>
+            起重臂高(塔臂高) 单位0.1m 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.MaxLoadWeight">
+            <summary>
+            最大吊重 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.MaxTorque">
+            <summary>
+            最大力矩 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.HookWeight">
+            <summary>
+            吊钩重量 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.CompassAngle">
+            <summary>
+            塔机转角为0时与正北夹角，以右为正.范围：0-360
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.X">
+            <summary>
+            坐标x 单位0.1m 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.Y">
+            <summary>
+            坐标y 单位0.1m 2byte
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.CraneBasic.Fall">
+            <summary>
+            吊绳倍率
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Id">
+            <summary>
+            设备Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Name">
+            <summary>
+            设备名称
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.SerialNo">
+            <summary>
+            设备序列号(原始编码，非转发编码)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Type">
+            <summary>
+            设备类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Key">
+            <summary>
+            设备密钥
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.ParentArea">
+            <summary>
+            省，直辖市，自治区
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Area">
+            <summary>
+            地级市，自治州
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.SubArea">
+            <summary>
+            区县
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Longitude">
+            <summary>
+            经度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Latitude">
+            <summary>
+            纬度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.SupplierCode">
+            <summary>
+            供应商编码（持续更新中...）
+            筑智建(重庆)科技有限公司             0001  采集设备
+            上海宇叶电子科技有限公司	          0061	塔吊、升降机
+            安徽聚正科技有限公司	              0062	塔吊、升降机、卸料台
+            四川成都九晨科技有限公司	          0063	实名制
+            安徽合肥川达信息科技有限责任公司	  0064	环境、塔吊、升降机、卸料台
+            浙江大华技术股份有限公司	          0065	视频
+            浙江海康威视数字技术股份有限公司      0066	视频
+            深圳市翼慧通科技有限公司	          0067	实名制
+            威海精讯畅通电子科技有限公司	      0068	环境
+            山东仁科测控技术有限公司	          0069	环境
+            四川成都泰测科技有限公司	          0070	结构、基坑、隧道、大坝
+            浙江杭州宇泛智能科技有限公司	      0071	实名制
+            深圳智必选(臻识)科技有限公司	      0072	人脸识别
+            杭州力知电子技术有限公司	          0073	爬架
+            深圳润德电子技术有限公司	          0074	人员定位
+            厦门俊煜信息科技有限公司	          0000	人脸识别
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Enabled">
+            <summary>
+            是否可用
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.ProjectId">
+            <summary>
+            项目Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.Extendeds">
+            <summary>
+            扩展
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceAddedModel.KeySecrets">
+            <summary>
+            密钥
+            </summary>
+        </member>
+        <member name="T:Parakeet.Net.ROClient.Models.DeviceBasic">
+            <summary>
+            设备基础信息
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.Id">
+            <summary>
+            Basic Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.DeviceId">
+            <summary>
+            设备Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.SerialNo">
+            <summary>
+            接收设备唯一编码（设备真实设备序列号）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.FakeNo">
+            <summary>
+            转发设备唯一编码（对外提供设备序列号）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.RecordTime">
+            <summary>
+            记录采集时间
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.Name">
+            <summary>
+            设备名称
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.ProjectId">
+            <summary>
+            项目Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.ProjectCode">
+            <summary>
+            项目编码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.ProjectName">
+            <summary>
+            项目名称
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.SupplierId">
+            <summary>
+            供应商Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.SupplierCode">
+            <summary>
+            供应商编码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.SupplierName">
+            <summary>
+            供应商名称
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.Longitude">
+            <summary>
+            经度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceBasic.Latitude">
+            <summary>
+            纬度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceExtended.Area">
+            <summary>
+            转发区域
+            PS:不一定是设备所在区域,有可能是其他平台的编码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceExtended.Key">
+            <summary>
+            关键字
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceExtended.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceExtended.Tags">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceKeySecret.Area">
+            <summary>
+            转发区域
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceKeySecret.SupplierKeyId">
+            <summary>
+            供应商授权id，全局唯
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceKeySecret.SupplierKeySecret">
+            <summary>
+            供应商密钥值，用于请求签名，不在请求中传输，需要妥善保管
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceKeySecret.ProjectKeyId">
+            <summary>
+            项目授权id，全局唯一
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.DeviceKeySecret.ProjectKeySecret">
+            <summary>
+            项目密钥的值，用于请求签名，不在请求中传输，需要妥善保管
+            </summary>
+        </member>
+        <member name="T:Parakeet.Net.ROClient.Models.EnvironmentBasic">
+            <summary>
+            环境设备基础信息
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FaceModel.FaceId">
+            <summary>
+            图片唯一标识ID[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FaceModel.Image">
+            <summary>
+            Base64图片[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FaceModel.Url">
+            <summary>
+            图片Url地址(建议填些)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.TerminalId">
+            <summary>
+            终端传感器编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Sensor">
+            <summary>
+            传感器类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.PointNumber">
+            <summary>
+            测点编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.BasePoint">
+            <summary>
+            基准点
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Distance">
+            <summary>
+            与基准点的距离
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Length">
+            <summary>
+            传感器长度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Deep">
+            <summary>
+            传感器深度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Range">
+            <summary>
+            量程(设备最大测量值)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Span">
+            <summary>
+            跨度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.Coefficient">
+            <summary>
+            系数
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasic.InitialValue">
+            <summary>
+            初始读数(多个因素逗号隔开)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasicDelete.TerminalId">
+            <summary>
+            终端传感器编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasicDelete.Sensor">
+            <summary>
+            传感器类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalBasicDelete.PointNumber">
+            <summary>
+            测点编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.Sequence">
+            <summary>
+            必填项且是递增的
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.Type">
+            <summary>
+            指令类型
+            0x01:IP设置
+            0x02:缓存周期
+            0x03:校时
+            0x04:数据上报频率
+            0X05:设备工作模式
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.IP">
+            <summary>
+            IP设置
+            </summary>
+            <example>192.168.0.1: 0XC0 0XA8 0X00 0X01</example>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.CacheCycle">
+            <summary>
+            缓存周期（单位分钟）
+            </summary>
+            <example>360分钟: 0X01 0X68</example>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.Time">
+            <summary>
+            校时(14字节ASCII码)
+            </summary>
+            <example>20200715102315</example>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.Frequency">
+            <summary>
+            数据上报频率（单位秒）
+            </summary>
+            <example>360s：0X01 0X68</example>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.FPTerminalSetting.WorkingMode">
+            <summary>
+            设备工作模式
+            </summary>
+            <example>（模式一）0X01</example>
+        </member>
+        <member name="T:Parakeet.Net.ROClient.Models.GateBasic">
+            <summary>
+            闸机设备基础信息
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.LifterId">
+            <summary>
+            升降机吊笼编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.LiftName">
+            <summary>
+            升降机名字
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxWeight">
+            <summary>
+            最大载重
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxFloor">
+            <summary>
+            最大楼层
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MinFloor">
+            <summary>
+            最小楼层
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxHeight">
+            <summary>
+            最大高度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MinHeight">
+            <summary>
+            最小高度
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxSpeed">
+            <summary>
+            最大速度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxTilt">
+            <summary>
+            最大倾角
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxWindSpeed">
+            <summary>
+            最大风速
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.LifterBasic.MaxPeopleNumber">
+            <summary>
+            最大载人数
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.PersonnelId">
+            <summary>
+            人员唯一标识Id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.PersonnelCode">
+            <summary>
+            人员编号
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.Name">
+            <summary>
+            名字[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.Type">
+            <summary>
+            人员类型
+            1：白名单，2：黑名单，3：访客，4：陌生人
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.IdCard">
+            <summary>
+            身份证号码[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.IcCard">
+            <summary>
+            Ic卡号
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonAddedModel.Faces">
+            <summary>
+            人脸[必填]
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonDeletedModel.OnlyRemoveFromDevice">
+            <summary>
+            仅从设备移除
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonDeletedModel.PersonnelIds">
+            <summary>
+            目前只支持每次删除一个人员
+            用人员id（PersonId）标识[必填]
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.SensorId">
+            <summary>
+            传感器Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.WorkerId">
+            <summary>
+            工人Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.IdCard">
+            <summary>
+            身份证
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.WorkerType">
+            <summary>
+            工种
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.PersonnelType">
+            <summary>
+            注册人员类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.Tag">
+            <summary>
+            标记
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel.HeadImage">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonLocationBasicDeletedModel.SensorId">
+            <summary>
+            传感器Id
+            </summary>
+        </member>
+        <member name="T:Parakeet.Net.ROClient.Models.PersonRegisterModel">
+            <summary>
+            注册人员信息
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.PersonnelId">
+            <summary>
+            注册人员PersonnelId
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IdCard">
+            <summary>
+            身份证号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IcCard">
+            <summary>
+            IC卡
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Gender">
+            <summary>
+            性别(1:男,2:女)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Nation">
+            <summary>
+            名族
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Birthday">
+            <summary>
+            出生日期（yyyy-MM-dd）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Address">
+            <summary>
+            住址
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IssuedBy">
+            <summary>
+            发证机关
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.TermValidityStart">
+            <summary>
+            证件有效期起
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.TermValidityEnd">
+            <summary>
+            证件有效期止
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IdPhoto">
+            <summary>
+            身份证照片（base64）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Photo">
+            <summary>
+            现场人员可见光照片（base64）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.InfraredPhoto">
+            <summary>
+            现场人员红外照片（base64）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IdPhotoUrl">
+            <summary>
+            身份证照片Url
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.PhotoUrl">
+            <summary>
+            现场人员可见光照片Url
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.InfraredPhotoUrl">
+            <summary>
+            现场人员红外照片Url
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.PhoneNumber">
+            <summary>
+            联系电话
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.PersonnelType">
+            <summary>
+            注册人员类型 1采集劳务人员，2采集岗位人员
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.RegisterType">
+            <summary>
+            采集注册类型（3：人脸采集）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerNo">
+            <summary>
+            用户工号（建委下发的）
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.LaborCompanyId">
+            <summary>
+            劳务公司ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.LaborCompanyCode">
+            <summary>
+            劳务公司编码
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.LaborCompanyName">
+            <summary>
+            劳务公司名称
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerTypeId">
+            <summary>
+            工种ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerTypeCode">
+            <summary>
+            工种编码
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerTypeName">
+            <summary>
+            工种名称 工种 WorkTypeName Job
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkPostId">
+            <summary>
+            岗位ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkPostCode">
+            <summary>
+            岗位编码
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkPostName">
+            <summary>
+            岗位名称 AdminPostName AdminPost
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerGroupId">
+            <summary>
+            班组ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerGroupCode">
+            <summary>
+            班组编码
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.WorkerGroupName">
+            <summary>
+            班组名称 GroupName
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.AttendanceCardId">
+            <summary>
+            考勤卡ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.AttendanceCardNo">
+            <summary>
+            考勤卡号
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.GroupLeader">
+            <summary>
+            是否班组长
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Marital">
+            <summary>
+            婚姻状况
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.PoliticsType">
+            <summary>
+            政 治 面 貌 （ 0.中 共 党 员 1. 中共 预 备 党 员 2.共 青 团 员 3. 群 众）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IsJoin">
+            <summary>
+            是 否 加 入 公 会 (1 是，0 否)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.JoinTime">
+            <summary>
+            加入公会时间
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Education">
+            <summary>
+            学 历 （ 0= 小学 ,1= 初 中,2= 高 中,3= 中 专,4= 大 专,5= 本 科,6= 硕 士,7= 博 士,8= 文盲）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.HasBadMedicalHistory">
+            <summary>
+            是 否 有 重 病 史（0:无,1:有）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IsSpecial">
+            <summary>
+            是否特种人员(true 是/false 不是)
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.AttendanceCardType">
+            <summary>
+            考勤卡类别
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.AttendanceCardIssueDate">
+            <summary>
+            制卡时间
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.AttendanceCardIssuePic">
+            <summary>
+            制卡图片
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.EntryStatus">
+            <summary>
+            人员状态：
+            Entry： 在职
+            Exit： 离职
+            Locked：禁入
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.JoinDate">
+            <summary>
+            入职时间
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.LeaveDate">
+            <summary>
+            离职时间
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.Mode">
+            <summary>
+            考勤方式：
+            Face： 人脸识别
+            Eye： 虹膜识别
+            Finger： 指纹识别
+            Hand： 掌纹识别
+            IDCard： 身份证识别
+            RnCard： 实名卡
+            Error： 异常清退
+            Manuel： 一键开闸
+            ExitChannel： 应急通道
+            QRCode： 二维码识别
+            App： APP考勤
+            Other： 其他方式
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.ProjectId">
+            <summary>
+            项目ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.IdCardEncrypt">
+            <summary>
+            身份证sha1加密
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.CorpId">
+            <summary>
+            所属企业ID
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.CorpCode">
+            <summary>
+            企业编码 CompanyNo
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.CorpName">
+            <summary>
+            企业名称
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.UpdatedAt">
+            <summary>
+            最后更新时间
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.UserId">
+            <summary>
+            人员Id（建委下发的）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.PersonRegisterModel.ForwardOnly">
+            <summary>
+            是否下发到设备
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Id">
+            <summary>
+            项目Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Code">
+            <summary>
+            编码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.RegisterNo">
+            <summary>
+            安监备案号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.ParentArea">
+            <summary>
+            父级区域（省）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Area">
+            <summary>
+            项目区域（市）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.SubArea">
+            <summary>
+            子区域（区/县）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Enabled">
+            <summary>
+            是否激活
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Address">
+            <summary>
+            项目地址信息
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.StartDate">
+            <summary>
+            开始日期
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.EndDate">
+            <summary>
+            结束日期
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Path">
+            <summary>
+            项目封面图
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectAddedModel.Extendeds">
+            <summary>
+            项目扩展
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectExtended.Key">
+            <summary>
+            键
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectExtended.Value1">
+            <summary>
+            值1
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectExtended.Value2">
+            <summary>
+            值2
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectExtended.Value3">
+            <summary>
+            值3
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.Name">
+            <summary>
+            名称(不能重复)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.Code">
+            <summary>
+            编号(唯一)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.DeviceType">
+            <summary>
+            设备类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.Type">
+            <summary>
+            围栏类型(1:圆形,2:多边形)
+            暂不支持圆形
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.Action">
+            <summary>
+            围栏行为(1:禁止进入,0:禁止离开)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.AlarmTimes">
+            <summary>
+            报警次数
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.EffectivePeriodArray">
+            <summary>
+            生效时段（精确到分钟）
+            eg:"00:00-23:59"
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel.CoordArray">
+            <summary>
+            地理坐标（暂不支持圆形）
+            圆：{x_point: 22.548981, y_point: 114.086654, r: "500"}
+            多边形：[{"x_point":22.552697,"y_point":114.081751},{"x_point":22.551172,"y_point":114.084219},{ "x_point":22.550042,"y_point":114.082223}]
+            </summary>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.Models.Coord.#ctor(System.Double,System.Double)">
+            <summary>
+            构造坐标
+            </summary>
+            <param name="lng">经度</param>
+            <param name="lat">纬度</param>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.Coord.Latitude">
+            <summary>
+            纬度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.Coord.Longitude">
+            <summary>
+            经度
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceDeletedModel.Code">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceDeviceAddedModel.SensorId">
+            <summary>
+            传感器Id(默认1)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceDeviceAddedModel.Code">
+            <summary>
+            围栏编号
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceDeviceAddedModel.DeviceType">
+            <summary>
+            设备类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceDeviceAddedModel.Users">
+            <summary>
+            人员列表
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ProjectGeofenceDeviceAddedModel.Cars">
+            <summary>
+            车辆列表
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.GeoFenceUser.IdCard">
+            <summary>
+            身份证号码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.GeoFenceUser.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.GeoFenceCar.CarNumber">
+            <summary>
+            车牌号码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ResponseWrapper.Success">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ResponseWrapper.Code">
+            <summary>
+            响应码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ResponseWrapper.Count">
+            <summary>
+            总数量
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ResponseWrapper.Message">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.Models.ResponseWrapper.Succeed(System.String)">
+            <summary>
+            成功默认对象
+            </summary>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.Models.ResponseWrapper.Error(System.String,System.Int32)">
+            <summary>
+            错误默认对象
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.ResponseWrapper`1.Data">
+            <summary>
+            返回的泛型数据
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.Id">
+            <summary>
+            基础信息Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.Brand">
+            <summary>
+            品牌
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.Type">
+            <summary>
+            车辆类型
+            轿车:0
+            渣土车:1
+            罐车:2
+            运料车:3
+            混凝土搅拌车:4
+            其他:9
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.CarNumber">
+            <summary>
+            车牌
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.DriverId">
+            <summary>
+            驾驶员Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.DriverName">
+            <summary>
+            驾驶员姓名
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.DriverLicense">
+            <summary>
+            驾驶证
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.ExpirationTime">
+            <summary>
+            到期时间(yyyy-MM-dd)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.DriveEndTime">
+            <summary>
+            驾驶到期时间
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.Gender">
+            <summary>
+            驾驶员性别
+            男:1
+            女:2
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.Birthday">
+            <summary>
+            出生日期(yyyy-MM-dd)
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasic.PhoneNumber">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VehicleBasicDeleteModel.Id">
+            <summary>
+            车辆基础信息Id
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.SerialNo">
+            <summary>
+            转发编码
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.FakeNo">
+            <summary>
+            转发设备唯一编码（对外提供设备序列号）
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.CameraNo">
+            <summary>
+            摄像头编号，视频播放会以camNo排序，且系统默认camNo最小的序号为项目主摄像头。原则主摄像头应覆盖项目全貌
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.Area">
+            <summary>
+            拍摄区域
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.CoverUrl">
+            <summary>
+            视频封面图片
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.Models.VideoBasic.Source">
+            <summary>
+            可直接播放的视频流地址，如果该项有值平台会直接取该地址进行播放
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.VideoDirectSetting.DirectType">
+            <summary>
+            指令类型
+            </summary>
+        </member>
+        <member name="P:Parakeet.Net.ROClient.VideoDirectSetting.Parameter">
+            <summary>
+            数值(如飞行速度,移动速度等)
+            取值范围[1,7]
+            </summary>
+        </member>
+        <member name="T:Parakeet.Net.ROClient.ReverseControlClient">
+            <summary>
+            设备反控客户端
+            </summary>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.#ctor">
+            <summary>
+            默认构造函数
+            </summary>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            带参构造函数
+            </summary>
+            <param name="appId">授权Id</param>
+            <param name="appKey">授权Key</param>
+            <param name="appSecret">授权密钥</param>
+            <param name="host">host主机【本机带端口】</param>
+        </member>
+        <member name="F:Parakeet.Net.ROClient.ReverseControlClient._jsonSettings">
+            <summary>
+            驼峰序列化
+            </summary>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonsAddCommandAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{Parakeet.Net.ROClient.Models.PersonAddedModel})">
+            <summary>
+            多设备 批量下发人员
+            </summary>
+            <param name="serialNos">设备编码集合</param>
+            <param name="models">待下发人员集合</param>
+            <returns>返回批量下发结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonsAddCommandAsync(System.Collections.Generic.List{System.String},Parakeet.Net.ROClient.Models.PersonAddedModel)">
+            <summary>
+            多设备 批量下发单个人员
+            </summary>
+            <param name="serialNos">设备编码集合</param>
+            <param name="model">待下发人员</param>
+            <returns>返回批量下发结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonsAddCommandAsync(System.String,System.Collections.Generic.List{Parakeet.Net.ROClient.Models.PersonAddedModel})">
+            <summary>
+            单设备 批量下发多个人员
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="models">待下发人员集合</param>
+            <returns>返回批量下发结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonAddCommandAsync(System.String,Parakeet.Net.ROClient.Models.PersonAddedModel)">
+            <summary>
+            单设备单独下发单个人员
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">待下发人员</param>
+            <returns>返回下发结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonDeleteCommandAsync(System.String,Parakeet.Net.ROClient.Models.PersonDeletedModel)">
+            <summary>
+            删除人员(支持删除多条)
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">待删除人员信息</param>
+            <returns>返回删除人员结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonRegisterCommandAsync(System.String,System.Collections.Generic.List{Parakeet.Net.ROClient.Models.PersonRegisterModel})">
+            <summary>
+            单设备批量人员注册
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="models">待注册人员集合</param>
+            <returns>返回批量注册人员结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonRegisterCommandAsync(System.String,Parakeet.Net.ROClient.Models.PersonRegisterModel)">
+            <summary>
+            单设备单人员注册
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">待注册人员信息</param>
+            <returns>返回注册人员结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteFPTerminalSettingCommandAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{Parakeet.Net.ROClient.Models.FPTerminalSetting})">
+            <summary>
+            批量执行基坑终端设置命令
+            </summary>
+            <param name="serialNos">设备编码集合</param>
+            <param name="models">模型集合</param>
+            <returns>返回批量执行结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteFPTerminalSettingCommandAsync(System.String,Parakeet.Net.ROClient.Models.FPTerminalSetting)">
+            <summary>
+            执行基坑终端设置命令
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">模型</param>
+            <returns>返回执行结果</returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteVideoBasicCommandAsync(System.Collections.Generic.List{Parakeet.Net.ROClient.Models.VideoBasic})">
+            <summary>
+            执行视频基础数据上传
+            </summary>
+            <param name="videos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteVideoPTZCommandAsync(System.String,Parakeet.Net.ROClient.VideoDirectSetting)">
+            <summary>
+            执行视频云台控制命令
+            </summary>
+            <param name="serialNo"></param>
+            <param name="setting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonLocationBasicAddedCommand(System.String,Parakeet.Net.ROClient.Models.PersonLocationBasicAddedModel)">
+            <summary>
+            执行人员定位基础信息添加命令
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">基础信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecutePersonLocationBasicDeletedCommand(System.String,System.Int32)">
+            <summary>
+            执行人员定位基础信息删除命令
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="sensorId">传感器Id(默认1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteProjectGeofencingAddedCommand(System.String,Parakeet.Net.ROClient.Models.ProjectGeofenceAddedModel)">
+            <summary>
+            添加地理围栏
+            一个项目包含多个定位设备，serialNo选择其中任意一个即可
+            </summary>
+            <param name="serialNo"></param>
+            <param name="geofencing"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteProjectGeofencingDeletedCommand(System.String,Parakeet.Net.ROClient.Models.ProjectGeofenceDeletedModel)">
+            <summary>
+            删除项目中的地理围栏
+            一个项目包含多个定位设备，serialNo选择其中任意一个即可
+            </summary>
+            <param name="serialNo"></param>
+            <param name="geofencing"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteProjectGeofencingUserAddedCommand(System.String,Parakeet.Net.ROClient.Models.ProjectGeofenceDeviceAddedModel)">
+            <summary>
+            添加用户到地理围栏
+            一个项目包含多个定位设备，serialNo选择其中任意一个即可
+            </summary>
+            <param name="serialNo"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteVehicleBasicCommand(System.String,Parakeet.Net.ROClient.Models.VehicleBasic)">
+            <summary>
+            执行车辆基础信息设置命令
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="basic">基础数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:Parakeet.Net.ROClient.ReverseControlClient.ExecuteVehicleBasicDeletedCommand(System.String,Parakeet.Net.ROClient.Models.VehicleBasicDeleteModel)">
+            <summary>
+            执行车辆基础信息删除命令
+            </summary>
+            <param name="serialNo">设备编码</param>
+            <param name="model">基础数据</param>
+            <returns></returns>
+        </member>
+        <member name="T:Parakeet.Net.Protos.ReverseReflection">
+            <summary>Holder for reflection information generated from Reverse.proto</summary>
+        </member>
+        <member name="P:Parakeet.Net.Protos.ReverseReflection.Descriptor">
+            <summary>File descriptor for Reverse.proto</summary>
+        </member>
+        <member name="F:Parakeet.Net.Protos.ReverseRequest.SerialNoFieldNumber">
+            <summary>Field number for the "SerialNo" field.</summary>
+        </member>
+        <member name="F:Parakeet.Net.Protos.ReverseRequest.CommandFieldNumber">
+            <summary>Field number for the "Command" field.</summary>
+        </member>
+        <member name="F:Parakeet.Net.Protos.ReverseRequest.BodyFieldNumber">
+            <summary>Field number for the "Body" field.</summary>
+        </member>
+        <member name="F:Parakeet.Net.Protos.ReverseReply.SuccessFieldNumber">
+            <summary>Field number for the "Success" field.</summary>
+        </member>
+        <member name="F:Parakeet.Net.Protos.ReverseReply.CodeFieldNumber">
+            <summary>Field number for the "Code" field.</summary>
+        </member>
+        <member name="F:Parakeet.Net.Protos.ReverseReply.MessageFieldNumber">
+            <summary>Field number for the "Message" field.</summary>
+        </member>
+        <member name="P:Parakeet.Net.Protos.ReverseCommand.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Parakeet.Net.Protos.ReverseCommand.ReverseCommandClient">
+            <summary>Client for ReverseCommand</summary>
+        </member>
+        <member name="M:Parakeet.Net.Protos.ReverseCommand.ReverseCommandClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for ReverseCommand</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Parakeet.Net.Protos.ReverseCommand.ReverseCommandClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for ReverseCommand that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Parakeet.Net.Protos.ReverseCommand.ReverseCommandClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Parakeet.Net.Protos.ReverseCommand.ReverseCommandClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Parakeet.Net.Protos.ReverseCommand.ReverseCommandClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="M:System.SystemExtension.ToUnixTimeTicks(System.DateTime,System.Int32)">
+            <summary>
+            返回时间戳 Timestamp (默认10位,eg:1619061289)
+            </summary>
+            <param name="dateTime"></param>
+            <param name="length"></param>
+        </member>
+    </members>
+</doc>

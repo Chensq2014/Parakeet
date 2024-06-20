@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "Parakeet.Net.Protos";
+package reverse;
+
+service ReverseCommand {
+	rpc Execute (ReverseRequest) returns (ReverseReply);
+}
+
+message ReverseRequest {
+	string SerialNo = 1;
+	string Command = 2;
+	string Body = 3;
+}
+
+message ReverseReply {
+	bool Success = 1;
+	int32 Code = 2;
+	string Message = 3;
+}

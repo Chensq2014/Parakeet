@@ -1,0 +1,51 @@
+{
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Parakeet.Net.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;Parakeet.Net.HttpApi",
+        "AppName": "parakeet",
+        "SelfUrl": "https://localhost:23517",
+        "GUID_TYPE": "0",
+        "DATABASE_TYPE": "3",
+        "DATABASE_CONNECTION_STRING": "host=localhost;port=5432;database=parakeet2024;userid=postgres;pwd=123456;",
+        "CSREDISCONFIGURATIONBASE": "localhost:6379,password=,prefix=net",
+        "STACKREDISCONN": "127.0.0.1:6379",
+        "NACOS_URL": "http://localhost:8848",
+        "NACOS_ENABLE": "0",
+        "NACOS_ENVIRONMENT_VARIABLES_DATA_ID": "EnvironmentVariables",
+        "LOG_SEQ_URL": "http://localhost:9999",
+        "LOG_MINIMUM_LEVEL": "Information"
+      },
+      "applicationUrl": "https://localhost:23517"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "https://localhost:23517",
+      "sslPort": 443
+    }
+  }
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "Parakeet.Net.GrpcLessonServer";
+
+package Lesson;
+
+// The Lesson service definition.
+service Lesson {
+  // Sends a greeting
+  rpc FindLesson (LessonRequest) returns (LessonReply);
+}
+
+// The request message containing the user's name.
+message LessonRequest {
+	int32 Id = 1;
+}
+
+// The response message containing the greetings.
+message LessonReply {
+	LessonModel Lesson=1;
+	  message LessonModel {
+  		  int32 Id=1;
+		  string Name=2;
+		  string Remark=3;
+	  }
+}

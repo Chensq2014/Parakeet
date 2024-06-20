@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Parakeet.Net.ConsumerServer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "ASPNETCORE_ENVIRONMENT"
+      },
+      "applicationUrl": "https://localhost:5010;http://localhost:5009"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      //"launchBrowser": true,
+      //"launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}

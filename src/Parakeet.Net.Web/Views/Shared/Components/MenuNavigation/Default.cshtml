@@ -1,0 +1,215 @@
+﻿@using Parakeet.Net.Permissions
+@using Microsoft.AspNetCore.Authorization
+@{
+    var authorizationService = (IAuthorizationService)ViewData["Authority"];
+    //图标可以去fontawesome查找 http://www.fontawesome.com.cn/faicons/
+}
+<div class="sidebar-nav slimscrollsidebar">
+    <div class="sidebar-head">
+        <h3>
+            <span class="fa-fw open-close">
+                <i class="ti-close ti-menu"></i>
+            </span> <span class="hide-menu">菜单</span>
+        </h3>
+    </div>
+    <div class="user-profile m-t-30">
+        @*@if (User?.Identity != null)
+        {
+            <div class="dropdown user-pro-body">
+                <div>
+                    <img src="~/images/avatar.png" alt="user-img" class="img-circle">
+                </div>
+                <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    @User?.Identity?.Name
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu animated flipInY">
+                    <li role="separator" class="divider"></li>
+                    @if (User?.Identity?.Name is null)
+                    {
+                        <li>
+                            <a href="/account/login"><i class="ti-lock"></i> 登录</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-action="Logout" asp-controller="Account"><i class="fa fa-power-off"></i> 注销 </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }*@
+    </div>
+
+    <ul class="nav" id="side-menu">
+        <li>
+            <a href="/Home" class="waves-effect">
+                <i class="icon-home"></i> <span class="hide-menu">&nbsp;&nbsp;首页 </span>
+            </a>
+        </li>
+        <li class="devider"></li>
+        <li>
+            <a href="#" class="waves-effect">
+                <i class="icon-settings"></i> <span class="hide-menu">&nbsp;&nbsp;基础设置<span class="fa arrow"></span> </span>
+            </a>
+            <ul class="nav nav-second-level collapse">
+                @if (await authorizationService.IsGrantedAsync(LocationAreaPermissions.LocationAreas.Default))
+                {
+                    <li>
+                        <a href="/api/parakeet/areaTenant/areaTreeListIndex" class="waves-effect">
+                            <i class="icon-book-open"></i><span class="hide-menu">&nbsp;&nbsp;区域管理 </span>
+                        </a>
+                    </li>
+                }
+
+                @if (User.IsInRole("admin"))
+                {
+                    <li>
+                        <a href="/api/parakeet/areaTenant/index" class="waves-effect">
+                            <i class="icon-speedometer"></i><span class="hide-menu">&nbsp;&nbsp;区域租户管理 </span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+        <li class="devider"></li>
+        <li>
+            <a href="#" class="waves-effect">
+                <i class="icon-grid"></i> <span class="hide-menu">&nbsp;&nbsp;项目设置<span class="fa arrow"></span> </span>
+            </a>
+            <ul class="nav nav-second-level collapse in">
+
+                @if (await authorizationService.IsGrantedAsync(OrganizationPermissions.Organizations.Default))
+                {
+                    <li>
+                        <a href="~/api/parakeet/organization/index" class="waves-effect">
+                            <i class="ti-shopping-cart-full"></i><span class="hide-menu">&nbsp;&nbsp;组织机构管理 </span>
+                        </a>
+                    </li>
+                }
+
+                @if (await authorizationService.IsGrantedAsync(ProjectPermissions.Projects.Default))
+                {
+                    <li>
+                        <a href="~/api/parakeet/project/index" class="waves-effect">
+                            <i class="icon-briefcase"></i><span class="hide-menu">&nbsp;&nbsp;项目管理 </span>
+                        </a>
+                    </li>
+                }
+
+                @if (await authorizationService.IsGrantedAsync(SupplierPermissions.Supplier.Default))
+                {
+                    <li>
+                        <a href="/supplier-list" class="waves-effect">
+                            <i class="fa fa-life-ring"></i><span class="hide-menu">&nbsp;&nbsp;供应商 </span>
+                        </a>
+                    </li>
+                }
+
+                @if (await authorizationService.IsGrantedAsync(SupplierPermissions.Supplier.Default))
+                {
+                    <li>
+                        <a href="/threshold-list" class="waves-effect">
+                            <i class="fa fa-arrows-h"></i><span class="hide-menu">&nbsp;&nbsp;阈值管理 </span>
+                        </a>
+                    </li>
+                }
+                @if (await authorizationService.IsGrantedAsync(NeedPermissions.Needs.Default))
+                {
+                    <li>
+                        <a href="/api/parakeet/need/index" class="waves-effect">
+                            <i class="icon-book-open"></i><span class="hide-menu">&nbsp;&nbsp;需求管理 </span>
+                        </a>
+                    </li>
+                }
+                @if (await authorizationService.IsGrantedAsync(DeviceAnalogRulePermissions.DeviceAnalogRule.Default))
+                {
+                    <li>
+                        <a href="/deviceAnalogRule-list" class="waves-effect">
+                            <i class="icon-speedometer"></i><span class="hide-menu">&nbsp;&nbsp;数据模拟1 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/deviceAnalogRule-dx-list" class="waves-effect">
+                            <i class="fa fa-list-ul"></i><span class="hide-menu">&nbsp;&nbsp;数据模拟2 </span>
+                        </a>
+                    </li>
+                }
+                @if (await authorizationService.IsGrantedAsync(TestPermissions.Tests.Default))
+                {
+                    <li>
+                        <a href="/api/parakeet/author/index" class="waves-effect">
+                            <i class="icon-speedometer"></i><span class="hide-menu">&nbsp;&nbsp;关于作者 </span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="waves-effect">
+                <i class="icon-grid"></i> <span class="hide-menu">&nbsp;&nbsp;项目劳务<span class="fa arrow"></span> </span>
+            </a>
+            <ul class="nav nav-second-level collapse in">
+
+               @if (await authorizationService.IsGrantedAsync(WorkerTypePermissions.WorkerType.Default))
+                { 
+                    <li>
+                        <a href="/api/parakeet/section/workerType" class="waves-effect">
+                            <i class="fa fa-life-ring"></i><span class="hide-menu">&nbsp;&nbsp;工种管理 </span>
+                        </a>
+                    </li>
+                }
+                @if (await authorizationService.IsGrantedAsync(WorkerPermissions.Worker.Default))
+                {
+                    <li>
+                        <a href="/api/parakeet/section/worker" class="waves-effect">
+                            <i class="icon-speedometer"></i><span class="hide-menu">&nbsp;&nbsp;工人管理 </span>
+                        </a>
+                    </li>
+                } 
+                @if (await authorizationService.IsGrantedAsync(SectionPermissions.Sections.Default))
+                {
+                    <li>
+                        <a href="/api/parakeet/section/workerIndex" class="waves-effect">
+                            <i class="icon-credit-card"></i><span class="hide-menu">&nbsp;&nbsp;地块工人 </span>
+                        </a>
+                    </li>
+                 }
+
+                @if (await authorizationService.IsGrantedAsync(SectionPermissions.Sections.Report))
+                {
+                    <li>
+                        <a href="/api/parakeet/section/workerDetailIndex" class="waves-effect">
+                            <i class="icon-credit-card"></i><span class="hide-menu">&nbsp;&nbsp;工时统计 </span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="waves-effect">
+                <i class="icon-grid"></i> <span class="hide-menu">&nbsp;&nbsp;装修管理<span class="fa arrow"></span> </span>
+            </a>
+            <ul class="nav nav-second-level collapse in">
+                @if (await authorizationService.IsGrantedAsync(SectionPermissions.Sections.Default))
+                {
+                    <li>
+                        <a href="/api/parakeet/section/index" class="waves-effect">
+                            <i class="icon-credit-card"></i><span class="hide-menu">&nbsp;&nbsp;费用计算 </span>
+                        </a>
+                    </li>
+                }
+                @if (await authorizationService.IsGrantedAsync(SectionPermissions.Sections.Report))
+                {
+                    <li>
+                        <a href="/api/parakeet/section/productIndex" class="waves-effect">
+                            <i class="fa fa-jpy"></i><span class="hide-menu">&nbsp;&nbsp;产品汇总 </span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -50,9 +50,16 @@ public class Program
                     //config.ReadFrom.Configuration(context.Configuration);
 
                 });//使用了 UseSerilog() 扩展方法来启动 Serilog 替换内置 Logger 组件;
+            
+            //builder.Services.Add..  //向容器中注册服务
+            
             await builder.AddApplicationAsync<NetWebModule>();
             var app = builder.Build();
+
             await app.InitializeApplicationAsync();
+
+            //app.Use<T>();//use中间件
+
             await app.RunAsync();
             return 0;
         }

@@ -12,6 +12,7 @@ using Grpc.Net.ClientFactory;
 using Localization.Resources.AbpUi;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -42,6 +43,8 @@ using Parakeet.Net.Localization;
 using Parakeet.Net.Permissions;
 using Parakeet.Net.ServiceGroup;
 using Parakeet.Net.Web.Extentions;
+using Common.JWTExtend.RSA;
+using Common.JWTExtend;
 using Parakeet.Net.Web.Menus;
 using Serilog;
 using StackExchange.Redis;
@@ -53,6 +56,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
@@ -522,7 +526,6 @@ public class NetWebModule : AbpModule
         Log.Information($"{{0}}", $"{CacheKeys.LogCount++}、ConfigureAuthentication...ConfigureServices中的流程日志线程Id：【{Thread.CurrentThread.ManagedThreadId}】");
         var configuration = context.Services.GetConfiguration();
 
-
         #region AddAuthentication 只允许配置一次并且连续链式调用，保证在同一个builder里面包含所有配置(方案等命名空间一致)
 
         //注意:如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
@@ -809,11 +812,12 @@ public class NetWebModule : AbpModule
     {
         var apiSecurityScheme = new OpenApiSecurityScheme
         {
-            Description =
-                "JWT Authorization header using the bearer scheme. Example: \"Authorization: Bearer {token}\"",
+            Description = "JWT Authorization header using the bearer scheme. Example: \"Authorization: Bearer {token}\"",
             Name = "Authorization",
             In = ParameterLocation.Header,
-            Type = SecuritySchemeType.ApiKey
+            Type = SecuritySchemeType.ApiKey,
+            //BearerFormat = "JWT",
+            //Scheme = JwtBearerDefaults.AuthenticationScheme
         };
         var configuration = context.Services.GetConfiguration();
         context.Services.AddAbpSwaggerGenWithOAuth(
@@ -829,7 +833,7 @@ public class NetWebModule : AbpModule
                 options.CustomSchemaIds(type => type.FullName);
 
                 options.IncludeXmlCommentFiles()
-                    .AddSecurityDefinition("bearerAuth", apiSecurityScheme);
+                    .AddSecurityDefinition("bearerAuth", apiSecurityScheme);//添加安全定义
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -838,7 +842,7 @@ public class NetWebModule : AbpModule
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "bearerAuth"
+                                Id = "bearerAuth"//确保与AddSecurityDefinition第一个参数schemeName相同
                             }
                         },
                         new List<string>()

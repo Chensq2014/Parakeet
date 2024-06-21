@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<Import Project="..\Common\Config\common.props" />
 
@@ -76,6 +76,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	  <None Include="Views\Account\AuthorizeSchemes.cshtml" />
 	  <None Include="Views\Account\Index.cshtml" />
 	  <None Include="Views\Account\Login.cshtml" />

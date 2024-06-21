@@ -1,5 +1,8 @@
 ﻿using Common;
+using Common.Dtos;
 using Common.Helpers;
+using Common.JWTExtend;
+using Common.JWTExtend.RSA;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -12,7 +15,10 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Validation.AspNetCore;
 using System;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
@@ -23,23 +29,47 @@ namespace Parakeet.Net.Web.Extentions
     {
         public static void AddCommonAuthentication(this ServiceConfigurationContext context)
         {
+            var configuration = context.Services.GetConfiguration();
+
+            #region HS256 对称可逆加密
+            //builder.Services.AddScoped<IJWTService, JWTHSService>();
+            //builder.Services.Configure<JWTTokenOptions>(builder.Configuration.GetSection("JWTTokenOptions"));
+            #endregion
+
+            #region RS256 非对称可逆加密，需要获取一次公钥
+            //程序启动时，即初始化一组秘钥
+            string keyDir = Directory.GetCurrentDirectory();
+            if (!RSAHelper.TryGetKeyParameters(keyDir, true, out RSAParameters keyParams))
+            {
+                keyParams = RSAHelper.GenerateAndSaveKey(keyDir);
+            }
+
+            context.Services.AddScoped<IJWTService, JWTRSService>();
+            context.Services.Configure<JWTTokenOptions>(configuration.GetSection("JWTTokenOptions"));
+            var tokenOptions = new JWTTokenOptions();
+            configuration.Bind("JWTTokenOptions", tokenOptions);
+
+            #endregion
+
+
             //注意:如果多次AddAuthentication 就会创建多个builder造成冲突或命名空间不一致
             //你应该确保只在应用程序的启动过程中调用AddAuthentication一次，并在该调用中配置所有必要的认证方案和选项。
             //如果你需要添加多个认证处理器或方案，你可以使用AddAuthentication的链式调用方法来配置它们，而不是多次调用AddAuthentication。
-            var configuration = context.Services.GetConfiguration();
 
             context.Services
                 .ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)
                 .Configure<AbpClaimsPrincipalFactoryOptions>(options =>
                 {
                     options.IsDynamicClaimsEnabled = true;
-                });
-            //.AddAuthentication(options =>
-            //{
-            //    options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//替换为你的默认认证方案名称
-            //    options.DefaultChallengeScheme = "oidc";
-            //    options.DefaultSignInScheme = "oidc";
-            //})
+                })
+            .AddAuthentication(options =>
+            {
+                options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+                //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//替换为你的默认认证方案名称
+                //options.DefaultChallengeScheme = "oidc";
+                //options.DefaultSignInScheme = "oidc";
+            })
             ////.AddCookie("Cookies", options =>
             ////{
             ////    options.ExpireTimeSpan = TimeSpan.FromDays(365);
@@ -68,32 +98,34 @@ namespace Parakeet.Net.Web.Extentions
             //    options.Scope.Add("phone");
             //    options.Scope.Add("parakeet");
             //})
-            ////.AddJwtBearer("Bearer", options =>
-            ////{
-            ////    options.TokenValidationParameters = new TokenValidationParameters
-            ////    {
-            ////        // The signing key must match!
-            ////        //ValidateIssuerSigningKey = true,
-            ////        //IssuerSigningKey = ,
-            ////        // Validate the JWT Issuer (iss)claim
-            ////        ValidateIssuer = true,
-            ////        ValidIssuer = "Issuer",
-            ////        // Validate the JWT Audience (aud) claim
-            ////        ValidateAudience = true,
-            ////        ValidAudience = "Audience",
-            ////        // Validate the token expiry
-            ////        ValidateLifetime = true,
-            ////        // If you want to allow a certain amount of clock drift, set that here
-            ////        ClockSkew = TimeSpan.Zero,
-            ////        RequireExpirationTime = true
-            ////    };
-            ////    options.Events = new JwtBearerEvents
-            ////    {
-            ////        OnMessageReceived = OnJwtBearerMessageReceived,
-            ////        OnAuthenticationFailed = OnJwtBearerAuthenticationFailed
-            ////    };
-            ////})
-            //.AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(), CommonConsts.AzureAdSectionName, OpenIdConnectDefaults.AuthenticationScheme);
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // The signing key must match!
+                    //ValidateIssuerSigningKey = true,
+                    //IssuerSigningKey = ,
+                    // Validate the JWT Issuer (iss)claim
+                    ValidateIssuer = true,//是否验证Issuer
+                    ValidIssuer = tokenOptions.Issuer,//"Issuer"，这两项和前面签发jwt的设置一致,
+                    // Validate the JWT Audience (aud) claim
+                    ValidateAudience = true,//是否验证Audience
+                    ValidAudience = tokenOptions.Audience,//"Audience",
+                    // Validate the token expiry
+                    ValidateLifetime = true,//是否验证失效时间
+                    // If you want to allow a certain amount of clock drift, set that here
+                    ClockSkew = TimeSpan.Zero,
+                    RequireExpirationTime = true,
+                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
+                };
+                //options.Events = new JwtBearerEvents
+                //{
+                //    OnMessageReceived = OnJwtBearerMessageReceived,
+                //    OnAuthenticationFailed = OnJwtBearerAuthenticationFailed
+                //};
+            })
+            .AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(), CommonConsts.AzureAdSectionName, OpenIdConnectDefaults.AuthenticationScheme);
 
 
             #region IdentityServer
@@ -198,7 +230,7 @@ namespace Parakeet.Net.Web.Extentions
         {
             return Task.CompletedTask;
         }
- 
+
     }
 
 }

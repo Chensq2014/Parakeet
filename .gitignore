@@ -262,3 +262,5 @@ paket-files/
 **/*.key
 **/*.rsa
 /deploy/*
+/src/Parakeet.Net.Web/key.json
+/src/Parakeet.Net.Web/key.public.json

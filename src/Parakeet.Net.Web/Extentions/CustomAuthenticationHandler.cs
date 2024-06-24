@@ -9,7 +9,6 @@ namespace Parakeet.Net.Web.Extentions
     /// <summary>
     /// 自定义hander
     /// </summary>
-    //[Dependency(ReplaceServices=true)]
     public class CustomAuthenticationHandler : IAuthenticationHandler
     {
         public Task InitializeAsync(AuthenticationScheme scheme, HttpContext context)

@@ -13,6 +13,7 @@ using Common.Dtos;
 using Parakeet.Net.Aop;
 using Volo.Abp;
 using Volo.Abp.Modularity;
+using Common;
 
 namespace Parakeet.Net.GrpcLessonServer
 {
@@ -37,7 +38,7 @@ namespace Parakeet.Net.GrpcLessonServer
             #region jwt 校验 Hs
 
             var tokenOptions = new JWTTokenOptions();
-            context.Services.GetConfiguration().Bind("JWTTokenOptions", tokenOptions);
+            context.Services.GetConfiguration().Bind(CommonConsts.JWTTokenSectionName, tokenOptions);
 
             //鉴权
             context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

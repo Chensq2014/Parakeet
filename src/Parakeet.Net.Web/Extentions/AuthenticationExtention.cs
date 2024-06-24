@@ -2,7 +2,6 @@
 using Common.Dtos;
 using Common.Helpers;
 using Common.JWTExtend;
-using Common.JWTExtend.RSA;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -31,23 +30,24 @@ namespace Parakeet.Net.Web.Extentions
         {
             var configuration = context.Services.GetConfiguration();
 
-            #region HS256 对称可逆加密
+            #region HS256 对称可逆加密 加密key 可以自定义一个字符串，加解密都是对称的使用同样的加密key 
             //builder.Services.AddScoped<IJWTService, JWTHSService>();
-            //builder.Services.Configure<JWTTokenOptions>(builder.Configuration.GetSection("JWTTokenOptions"));
+            //builder.Services.Configure<JWTTokenOptions>(builder.Configuration.GetSection(CommonConsts.JWTTokenSectionName));
             #endregion
 
-            #region RS256 非对称可逆加密，需要获取一次公钥
+            #region RS256 非对称可逆加密，产生key与publickey(组对) 需要获取一次公钥给三方服务，加密key为生成token密钥
+            context.Services.AddScoped<IJWTService, JWTRSService>();
+            context.Services.Configure<JWTTokenOptions>(configuration.GetSection(CommonConsts.JWTTokenSectionName));
+            var tokenOptions = new JWTTokenOptions();
+            configuration.Bind(CommonConsts.JWTTokenSectionName, tokenOptions);
+            //这里的tokenOptions.SecurityKey其实没有意义了,换成下面的密钥 keyParams
+
             //程序启动时，即初始化一组秘钥
             string keyDir = Directory.GetCurrentDirectory();
             if (!RSAHelper.TryGetKeyParameters(keyDir, true, out RSAParameters keyParams))
             {
                 keyParams = RSAHelper.GenerateAndSaveKey(keyDir);
             }
-
-            context.Services.AddScoped<IJWTService, JWTRSService>();
-            context.Services.Configure<JWTTokenOptions>(configuration.GetSection("JWTTokenOptions"));
-            var tokenOptions = new JWTTokenOptions();
-            configuration.Bind("JWTTokenOptions", tokenOptions);
 
             #endregion
 
@@ -64,7 +64,7 @@ namespace Parakeet.Net.Web.Extentions
                 })
             .AddAuthentication(options =>
             {
-                options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+                options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;//JwtBearerDefaults.AuthenticationScheme;
                 //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 //options.DefaultScheme = "Cookies";//OpenIdConnectDefaults.AuthenticationScheme;//替换为你的默认认证方案名称
                 //options.DefaultChallengeScheme = "oidc";
@@ -102,9 +102,35 @@ namespace Parakeet.Net.Web.Extentions
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // The signing key must match!
-                    //ValidateIssuerSigningKey = true,
-                    //IssuerSigningKey = ,
+
+                    ////自定义校验规则，可以新登录后将之前的无效
+                    ////当JWT使用非对称加密算法时，IssuerSigningKey 是私钥，用于生成JWT的签名。
+                    ////公钥用于验证JWT的签名，但不是IssuerSigningKey。
+                    ////当JWT使用对称加密算法时，IssuerSigningKey 是共享的对称密钥，用于签名和验证JWT。
+                    ////在实际应用中，你应根据你的安全需求和使用的JWT库来配置适当的签名算法和密钥。
+                    ////The signing key must match!
+                    //ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                    //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey)),
+                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                    IssuerSigningKey = new RsaSecurityKey(keyParams),
+
+                    IssuerSigningKeyValidator = (m, n, z) =>
+                    {
+                        Console.WriteLine("This is IssuerSigningKeyValidator");
+                        return true;
+                    },//自定义校验过程
+
+                    IssuerValidator = (m, n, z) =>
+                    {
+                        Console.WriteLine("This is IssuerValidator");
+                        return "http://localhost:5726";
+                    },//自定义校验过程
+                    AudienceValidator = (m, n, z) =>
+                    {
+                        Console.WriteLine("This is AudienceValidator");
+                        return true;
+                        //return m != null && m.FirstOrDefault().Equals(this.Configuration["Audience"]);
+                    },
                     // Validate the JWT Issuer (iss)claim
                     ValidateIssuer = true,//是否验证Issuer
                     ValidIssuer = tokenOptions.Issuer,//"Issuer"，这两项和前面签发jwt的设置一致,
@@ -115,15 +141,35 @@ namespace Parakeet.Net.Web.Extentions
                     ValidateLifetime = true,//是否验证失效时间
                     // If you want to allow a certain amount of clock drift, set that here
                     ClockSkew = TimeSpan.Zero,
-                    RequireExpirationTime = true,
-                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
+                    RequireExpirationTime = true
                 };
-                //options.Events = new JwtBearerEvents
-                //{
-                //    OnMessageReceived = OnJwtBearerMessageReceived,
-                //    OnAuthenticationFailed = OnJwtBearerAuthenticationFailed
-                //};
+                #region Events
+                //即提供了委托扩展，也可以直接new新对象，override方法
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = OnJwtBearerMessageReceived,
+                    OnAuthenticationFailed = OnJwtBearerAuthenticationFailed,
+                    OnChallenge = context =>
+                    {
+                        Console.WriteLine($"This JWT Authentication OnChallenge");
+                        context.Response.Headers["JWTChallenge"] = "expired";//告诉客户端是过期了
+                        return Task.CompletedTask;
+                    },
+                    OnForbidden = context =>
+                    {
+                        Console.WriteLine($"This JWT Authentication OnForbidden");
+                        context.Response.Headers["JWTForbidden"] = "1";//
+                        return Task.CompletedTask;
+                    },
+                    OnTokenValidated = context =>
+                    {
+                        Console.WriteLine($"This JWT Authentication OnTokenValidated");
+                        context.Response.Headers["JWTTokenValidated"] = "1";//
+                        return Task.CompletedTask;
+                    }
+                };
+                #endregion
             })
             .AddMicrosoftIdentityWebApp(context.Services.GetConfiguration(), CommonConsts.AzureAdSectionName, OpenIdConnectDefaults.AuthenticationScheme);
 

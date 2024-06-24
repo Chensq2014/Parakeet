@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using ConsoleApp.HttpClients;
 using Newtonsoft.Json;
 using Common.Dtos;
-using Common.Encrypts;
+using Common.Helpers;
 using Common.Extensions;
 
 namespace ConsoleApp.Area.Guizhou
@@ -580,7 +580,7 @@ namespace ConsoleApp.Area.Guizhou
         {
             var json = TextJsonConvert.SerializeObject(input);
             Console.WriteLine($"Json序列化data:{JsonConvert.DeserializeObject<object>(json)}");
-            var data = RsaEncrypt.EncryptByPublicKey(json, _keySecret.ProjectKeySecret);
+            var data = RSAHelper.EncryptByPublicKey(json, _keySecret.ProjectKeySecret);
 
 
             Console.WriteLine($"******************打印请求参数******************");

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 
@@ -14,9 +16,10 @@ namespace Parakeet.Net.Web.Controllers
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IServiceProvider _serviceProvider;
+        private static readonly string[] _summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
 
         public TestController(
-            IServiceScopeFactory serviceScopeFactory, 
+            IServiceScopeFactory serviceScopeFactory,
             IServiceProvider serviceProvider)
         {
             _serviceScopeFactory = serviceScopeFactory;
@@ -24,7 +27,7 @@ namespace Parakeet.Net.Web.Controllers
         }
 
         #region 判断serviceProvider来源
-        
+
         /// <summary> 
         /// 这个框架对controller注册 _scopeFactory 有区别
         /// 新建一个netcore项目做测试
@@ -34,7 +37,7 @@ namespace Parakeet.Net.Web.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public async Task<bool[]> JudgeScopeCtrl([FromServices]IServiceProvider serviceProvider,[FromServices]IServiceScopeFactory scopeFactory)
+        public async Task<bool[]> JudgeScopeCtrl([FromServices] IServiceProvider serviceProvider, [FromServices] IServiceScopeFactory scopeFactory)
         {
             var result = new[]
             {
@@ -82,10 +85,27 @@ namespace Parakeet.Net.Web.Controllers
                     Console.WriteLine($"休息好了！");
                 }
             });
-            
+
             Console.WriteLine($"返回数据");
             return await Task.FromResult(result);
         }
         #endregion
+
+
+        /// <summary> 
+        /// Enumerable DateOnly 测试
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(Name = "GetWeatherForecast")]
+        public IEnumerable<object> Get()
+        {
+            return Enumerable.Range(1, 5).Select(index => new
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = _summaries[Random.Shared.Next(_summaries.Length)]
+            })
+            .ToArray();
+        }
     }
 }

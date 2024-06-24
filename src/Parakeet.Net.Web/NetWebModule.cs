@@ -4,6 +4,7 @@ using Common.Dtos;
 using Common.Enums;
 using Common.EnumServices;
 using Common.Extensions;
+using Common.Json;
 using Common.Nacos;
 using Common.Storage;
 using Common.Test;
@@ -12,7 +13,6 @@ using Grpc.Net.ClientFactory;
 using Localization.Resources.AbpUi;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -43,8 +43,6 @@ using Parakeet.Net.Localization;
 using Parakeet.Net.Permissions;
 using Parakeet.Net.ServiceGroup;
 using Parakeet.Net.Web.Extentions;
-using Common.JWTExtend.RSA;
-using Common.JWTExtend;
 using Parakeet.Net.Web.Menus;
 using Serilog;
 using StackExchange.Redis;
@@ -56,7 +54,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Security.Cryptography;
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using System.Threading;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
@@ -73,7 +73,6 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
-using Volo.Abp.BackgroundWorkers;
 using Volo.Abp.Caching;
 using Volo.Abp.Data;
 using Volo.Abp.Identity.Web;
@@ -238,6 +237,15 @@ public class NetWebModule : AbpModule
                 //options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
                 //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;//序列化后驼峰命名规则
                 //options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.ReadCommentHandling = System.Text.Json.JsonCommentHandling.Skip;
+                options.JsonSerializerOptions.AllowTrailingCommas = true;
+                options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                //options.JsonSerializerOptions.Converters.Add(new NullableDateTimeJsonConverter());
+                //options.JsonSerializerOptions.Converters.Add(new NullableDateTimeOffsetJsonConverter());
+                //options.JsonSerializerOptions.Converters.Add(new DateTimeOffsetJsonConverter());
+                //options.JsonSerializerOptions.Converters.Add(new NullableGuidJsonConverter());
             })
             .AddRazorRuntimeCompilation();//修改cshtml后能自动编译
                                           //context.Services.AddControllers(options =>

@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Button Name="SelectSourceFile" Content="选择源文件" HorizontalAlignment="Left" Margin="552,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.069,-4.724" Height="35" Width="75" Click="SelectSourceFile_Click" />
+        <TextBox Name="Path" HorizontalAlignment="Left" Margin="129,78,0,0" TextWrapping="Wrap" Text="文件路径" VerticalAlignment="Top" Width="390" Height="22" TextChanged="TextBox_TextChanged" />
+        <Label Content="选择源文件" HorizontalAlignment="Left" Margin="45,75,0,0" VerticalAlignment="Top" />
+        <Button Content="开始统计" HorizontalAlignment="Left" Margin="552,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.913,3.644" Width="75" Height="32" Click="Button_Click" />
     </Grid>
 </Window>

@@ -9,6 +9,40 @@
 
 	<ItemGroup>
 		<PackageReference Include="jieba.NET" Version="0.42.2" />
+		<PackageReference Include="MiniExcel" Version="1.32.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Jieba\Resources\char_state_tab.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\cn_synonym.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\dict.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\idf.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\pos_prob_emit.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\pos_prob_start.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\pos_prob_trans.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\prob_emit.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\prob_trans.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Jieba\Resources\stopwords.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 	
 </Project>

@@ -69,6 +69,7 @@ namespace Parakeet.Net.TcpHost
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _logger.LogError($"{nameof(TcpHostService)}:stop");
             return Task.CompletedTask;
         }
 

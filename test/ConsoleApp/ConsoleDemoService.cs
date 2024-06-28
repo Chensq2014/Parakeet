@@ -2589,7 +2589,7 @@ public class ConsoleDemoService : ITransientDependency
                 #region 帝馨车控
                 //var loginInput = new
                 //{
-                //    LoginName = "筑智建科技",//.UrlEncode()//"筑智建科技"
+                //    LoginName = "科技",//.UrlEncode()//"科技"
                 //    LoginPassword = "123456",
                 //    LoginType = "ENTERPRISE",
                 //    language = "cn",
@@ -3270,7 +3270,7 @@ public class ConsoleDemoService : ITransientDependency
                 //    //IdPhoto = Utilities.Base64Phto2.RemoveBase64ImagePrefix(), //"123",//
                 //    Photo = Utilities.Base64Phto.RemoveBase64ImagePrefix(),
                 //    //InfraredPhoto = Utilities.Base64Phto3.RemoveBase64ImagePrefix(),
-                //    IssuedBy = "筑智建研发部",
+                //    IssuedBy = "研发部",
                 //    Name = "测试1",
                 //    Nation = "汉",
                 //    PersonnelId = personnelId,

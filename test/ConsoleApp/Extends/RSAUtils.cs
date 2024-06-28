@@ -469,8 +469,8 @@ namespace ConsoleApp.Extends
             {
                 unitCode = "915001060891260711",
                 projectId = "1270995441467150337",
-                projectName = "重庆筑智建科技(重庆)科技有限公司",
-                remark = "重庆筑智建科技(重庆)科技有限公司"
+                projectName = "重庆科技(重庆)科技有限公司",
+                remark = "重庆科技(重庆)科技有限公司"
             });
             var publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPSBIzE4YExjUIuNl0Wn7sWIFTAv9/NEIC8OfB4AO2rFZnR+i+2g6LN8NLzamNd4KUCLvr/4kSpDHSPfCNTBia5kMNLqjd51SYuZH4m6pzfbnFDZvrcpGhuoUIYm6YXC5Fxh4zb074Ko32YjSk/eexbA03FFk4rv9qxR8kvG/bHQIDAQAB";
 

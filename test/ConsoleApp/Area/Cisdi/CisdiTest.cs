@@ -14,9 +14,9 @@ namespace ConsoleApp.Area.Cisdi
     /// </summary>
     public static class CisdiTest
     {
-        public static string OrganizationId = "筑智建科技(重庆)有限公司";
-        public static string ClassId = "筑智建现场班组";
-        public static string UserId = "筑智建001";
+        public static string OrganizationId = "科技(重庆)有限公司";
+        public static string ClassId = "现场班组";
+        public static string UserId = "001";
 
         /// <summary>
         /// 测试环境 加密信息

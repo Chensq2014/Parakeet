@@ -62,9 +62,9 @@ namespace ConsoleApp.Area.Sichuan
         /// </summary>
         public static string UnitCode = "915001060891260711";
         /// <summary>
-        /// 重庆筑智建科技(重庆)科技有限公司
+        /// 重庆科技(重庆)科技有限公司
         /// </summary>
-        public static string ProjectName = "重庆筑智建科技(重庆)科技有限公司";
+        public static string ProjectName = "重庆科技(重庆)科技有限公司";
 
         /// <summary>
         /// Host

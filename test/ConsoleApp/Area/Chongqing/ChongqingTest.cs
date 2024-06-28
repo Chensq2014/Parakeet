@@ -1847,7 +1847,7 @@ namespace ConsoleApp.Area.Chongqing
         {
             var input = new
             {
-                LoginName= "筑智建科技",//"筑智建科技"
+                LoginName= "科技",//"科技"
                 LoginPassword = "123456",
                 LoginType = "ENTERPRISE",
                 language = "cn",
@@ -1871,7 +1871,7 @@ namespace ConsoleApp.Area.Chongqing
             //content.Headers.Add("Authorization", $"Bearer {(await GetAccessToken())?.Custom.Access_token}");
             content.Headers.Add("ContentType", "application/x-www-form-urlencoded");
             //content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            Console.WriteLine($"[筑智建科技]token请求发送");
+            Console.WriteLine($"[科技]token请求发送");
             return content;
         }
 
